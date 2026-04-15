@@ -4,23 +4,23 @@ import { Star } from "lucide-react";
 const testimonials = [
   {
     id: 1,
-    name: "Ava M.",
-    role: "Miami, FL",
-    text: "Amazing service from start to finish. The car arrived spotless and the whole experience felt first class.",
+    name: "Francesco F.",
+    role: "Toronto, ON",
+    text: "I run a private jet charter company and one my clients needed a Maybach on short notice and these guys took care of him and handled it perfectly. Had the vehicle cleaned and ready to go at the FBO in a 1.5 hours. Will definitely be using these guys again"",
     rating: 5,
   },
   {
     id: 2,
-    name: "Jordan T.",
-    role: "Fort Lauderdale, FL",
-    text: "Super smooth booking process and incredible attention to detail. I will absolutely book again.",
+    name: "Kiarash V.",
+    role: "Toronto, ON",
+    text: "Had an amazing experience renting from them. Went down with family for the weekend & wanted to experience Miami properly so we got the Lussaro Maybach! The car was awesome! Smooth and easy process from start to finish, highly recommended!",
     rating: 5,
   },
   {
     id: 3,
-    name: "Chris R.",
-    role: "Boca Raton, FL",
-    text: "Luxury experience exactly as promised. Professional, on time, and the vehicle was perfect.",
+    name: "Chase S.",
+    role: "Fort Lauderdale, FL",
+    text: "Overall great experience! Robert provided excellent service, communicated properly and assisted with any questions we had. The Lamborghini Urus was delivered on time and as described! Would highly recommend booking with this company.",
     rating: 5,
   },
 ];
