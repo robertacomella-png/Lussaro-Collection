@@ -10,7 +10,7 @@ export default function HeroSection() {
     <section className="relative h-[90vh] md:h-[60vh] w-full overflow-hidden bg-black">
       <div className="absolute inset-0">
         <picture>
-          <source media="(min-width: 768px)" srcSet="https://ik.imagekit.io/8i3ae7fac/cars-15.jpg" />
+          <source media="(min-width: 768px)" srcSet="https://ik.imagekit.io/8i3ae7fac/cars-14.jpg" />
           <img
             src="https://ik.imagekit.io/8i3ae7fac/cars-11.jpg"
             alt="Luxury Fleet"
