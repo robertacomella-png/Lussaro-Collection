@@ -46,7 +46,7 @@ import { useEffect } from "react";
 function App() {
   useEffect(() => {
     const setTitle = () => {
-      document.title = "Lussaro Collection";
+      document.title = "Rent With Lussaro";
     };
 
     setTitle();
