@@ -41,12 +41,18 @@ const AuthenticatedApp = () => {
   );
 };
 
-
 import { useEffect } from "react";
 
 function App() {
   useEffect(() => {
-    document.title = "Lussaro Collection";
+    const setTitle = () => {
+      document.title = "Lussaro Collection";
+    };
+
+    setTitle();
+    const interval = setInterval(setTitle, 500);
+
+    return () => clearInterval(interval);
   }, []);
 
 
