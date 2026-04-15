@@ -34,7 +34,7 @@ const AuthenticatedApp = () => {
   // Render the main app
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/Home" replace />} />
+      <Route path="/" element={<Home />} />
       <Route path="/Home" element={<Home />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
