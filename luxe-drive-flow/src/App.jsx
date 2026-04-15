@@ -42,8 +42,13 @@ const AuthenticatedApp = () => {
 };
 
 
+import { useEffect } from "react";
+
 function App() {
-  document.title = "Lussaro Collection";
+  useEffect(() => {
+    document.title = "Lussaro Collection";
+  }, []);
+
 
   return (
     <AuthProvider>
