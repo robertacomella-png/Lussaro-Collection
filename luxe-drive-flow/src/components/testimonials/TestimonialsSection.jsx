@@ -6,7 +6,7 @@ const testimonials = [
     id: 1,
     name: "Francesco F.",
     role: "Toronto, ON",
-    text: "I run a private jet charter company and one my clients needed a Maybach on short notice and these guys took care of him and handled it perfectly. Had the vehicle cleaned and ready to go at the FBO in a 1.5 hours. Will definitely be using these guys again"",
+    text: "I run a private jet charter company and one my clients needed a Maybach on short notice and these guys took care of him and handled it perfectly. Had the vehicle cleaned and ready to go at the FBO in a 1.5 hours. Will definitely be using these guys again",
     rating: 5,
   },
   {
