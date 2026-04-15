@@ -43,6 +43,7 @@ const AuthenticatedApp = () => {
 
 
 function App() {
+  document.title = "Lussaro Collection";
 
   return (
     <AuthProvider>
