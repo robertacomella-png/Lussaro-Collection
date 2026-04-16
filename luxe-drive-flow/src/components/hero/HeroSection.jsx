@@ -73,8 +73,7 @@ export default function HeroSection() {
                 Explore the Fleet
               </button>
 
-              {/* Mobile: 2 side-by-side buttons */}
-              <div className="grid grid-cols-2 gap-3 w-full md:hidden">
+              <div className="grid grid-cols-2 gap-4 w-full md:hidden">
                 <a
                   href="https://wa.me/16452487305"
                   target="_blank"
@@ -95,7 +94,6 @@ export default function HeroSection() {
                 </button>
               </div>
 
-              {/* Desktop: original WhatsApp button */}
               <a
                 href="https://wa.me/16452487305"
                 target="_blank"
@@ -171,7 +169,7 @@ export default function HeroSection() {
               <div className="px-6 md:px-8 pb-7 pt-5">
                 <div className="flex items-start gap-3 mb-4">
                   <div className="w-11 h-11 rounded-full bg-white flex items-center justify-center shrink-0">
-                    <MapPin className="w-5 h-5 text-[#c9a96e]" />
+                    <MapPin className="w-5 h-5 text-black" />
                   </div>
 
                   <div>
