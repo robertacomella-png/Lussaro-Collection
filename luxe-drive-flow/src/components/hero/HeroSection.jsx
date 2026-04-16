@@ -82,16 +82,16 @@ export default function HeroSection() {
                 >
                   WhatsApp
                   <MessageCircle className="w-4 h-4 text-[#25D366]" />
-              </a>
+                </a>
 
-              <button
-                type="button"
-                onClick={() => setLocationOpen(true)}
-                className="flex items-center justify-center gap-2 border border-[#c9a96e]/50 text-white px-4 py-3.5 rounded-full text-sm font-medium hover:bg-[#c9a96e]/10 transition-all duration-300 backdrop-blur-sm"
-              >
-                Find Us
-                <MapPin className="w-4 h-4 text-[#c9a96e]" />
-              </button>
+                <button
+                  type="button"
+                  onClick={() => setLocationOpen(true)}
+                  className="flex items-center justify-center gap-2 border border-[#c9a96e]/50 text-white px-4 py-3.5 rounded-full text-sm font-medium hover:bg-[#c9a96e]/10 transition-all duration-300 backdrop-blur-sm"
+                >
+                  Find Us
+                  <MapPin className="w-4 h-4 text-[#c9a96e]" />
+                </button>
               </div>
 
               <a
@@ -100,8 +100,8 @@ export default function HeroSection() {
                 rel="noopener noreferrer"
                 className="hidden md:flex w-full sm:w-auto items-center justify-center gap-2 border border-[#25D366]/40 text-white px-8 py-3.5 rounded-full text-sm font-medium hover:bg-[#25D366]/10 hover:border-[#25D366] transition-all duration-300"
               >
-                <MessageCircle className="w-4 h-4 text-[#25D366]" />
                 Book via WhatsApp
+                <MessageCircle className="w-4 h-4 text-[#25D366]" />
               </a>
             </div>
           </motion.div>
@@ -145,7 +145,7 @@ export default function HeroSection() {
                 <div className="h-[220px] md:h-[280px] w-full overflow-hidden">
                   <iframe
                     title="Lussaro Collection Location"
-                    src="https://www.google.com/maps?q=900%20Biscayne%20Blvd%20Miami%20FL%2033132&z=15&output=embed"
+                    src="https://www.google.com/maps?q=Lussaro%20Collection&z=16&output=embed"
                     width="100%"
                     height="100%"
                     style={{ border: 0 }}
@@ -177,7 +177,7 @@ export default function HeroSection() {
                       Location
                     </p>
                     <h3 className="text-white text-2xl md:text-3xl font-semibold tracking-tight">
-                      Find Us
+                      Lussaro Collection
                     </h3>
                   </div>
                 </div>
