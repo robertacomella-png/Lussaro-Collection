@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
-import { FaWhatsapp } from "react-icons/fa";
+import { ChevronDown, MessageCircle } from "lucide-react";
 
 export default function HeroSection() {
   const scrollToFleet = () => {
