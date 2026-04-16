@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/navbar/Navbar";
 
 const galleryImages = [
   "/gallery-1.jpg",
