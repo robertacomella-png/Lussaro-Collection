@@ -48,7 +48,6 @@ export default function Gallery() {
     if (selectedIndex !== null) {
       const previous = document.body.style.overflow;
       document.body.style.overflow = "hidden";
-
       return () => {
         document.body.style.overflow = previous;
       };
@@ -87,7 +86,7 @@ export default function Gallery() {
   }, [selectedIndex]);
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-white text-black">
       <Navbar />
 
       <section id="top" className="relative pt-28 md:pt-32 pb-12 md:pb-16">
@@ -107,13 +106,13 @@ export default function Gallery() {
                 <h1 className="text-4xl sm:text-5xl md:text-7xl font-semibold tracking-tight leading-none">
                   Gallery
                 </h1>
-                <p className="text-white/55 text-sm md:text-base mt-5 max-w-2xl leading-relaxed">
+                <p className="text-black/55 text-sm md:text-base mt-5 max-w-2xl leading-relaxed">
                   A closer look at the vehicles, moments, and details that define
                   the Lussaro experience.
                 </p>
               </div>
 
-              <p className="text-white/30 text-xs md:text-sm">
+              <p className="text-black/30 text-xs md:text-sm">
                 {galleryImages.length} images
               </p>
             </div>
@@ -132,11 +131,11 @@ export default function Gallery() {
                 onClick={() => openViewer(index)}
                 className="group mb-4 md:mb-5 block w-full break-inside-avoid cursor-pointer"
               >
-                <div className="overflow-hidden rounded-[24px] bg-white/[0.03] shadow-[0_0_0_1px_rgba(255,255,255,0.05)] transition-all duration-500 group-hover:shadow-[0_8px_30px_rgba(0,0,0,0.35)]">
+                <div className="overflow-hidden rounded-[24px] bg-black/[0.03] shadow-[0_0_0_1px_rgba(0,0,0,0.05)] transition-all duration-500 group-hover:shadow-[0_10px_30px_rgba(0,0,0,0.12)]">
                   <img
                     src={src}
                     alt={`Gallery image ${index + 1}`}
-                    className="w-full h-auto object-cover rounded-[24px] transition-transform duration-700 ease-out group-hover:scale-[1.02] group-hover:brightness-105"
+                    className="block w-full h-auto object-cover rounded-[24px] transition-transform duration-700 ease-out group-hover:scale-[1.02] group-hover:brightness-[1.03]"
                     loading="lazy"
                   />
                 </div>
@@ -175,7 +174,7 @@ export default function Gallery() {
               </button>
             </div>
 
-            <div className="absolute inset-0 flex items-center justify-center px-4 sm:px-8 md:px-16 pb-28 md:pb-36">
+            <div className="absolute inset-0 flex items-center justify-center px-4 sm:px-8 md:px-20 pb-28 md:pb-36">
               <motion.div
                 key={selectedImage}
                 drag="x"
@@ -194,7 +193,7 @@ export default function Gallery() {
                 <img
                   src={selectedImage}
                   alt="Expanded gallery image"
-                  className="max-w-full max-h-[82vh] md:max-h-[84vh] object-contain rounded-[26px] shadow-[0_20px_80px_rgba(0,0,0,0.55)] select-none"
+                  className="block max-w-full max-h-[82vh] md:max-h-[84vh] object-contain rounded-[26px] shadow-[0_20px_80px_rgba(0,0,0,0.55)] select-none"
                   draggable={false}
                 />
               </motion.div>
@@ -203,7 +202,7 @@ export default function Gallery() {
             <button
               type="button"
               onClick={showPrev}
-              className="hidden md:inline-flex absolute left-6 top-1/2 -translate-y-1/2 z-20 items-center justify-center w-12 h-12 rounded-full bg-white/10 hover:bg-white/15 border border-white/10 transition-colors backdrop-blur-md"
+              className="absolute left-4 md:left-6 top-1/2 -translate-y-1/2 z-30 inline-flex items-center justify-center w-11 h-11 md:w-12 md:h-12 rounded-full bg-white/10 hover:bg-white/15 border border-white/10 transition-colors backdrop-blur-md"
             >
               <ChevronLeft className="w-5 h-5 text-white" />
             </button>
@@ -211,7 +210,7 @@ export default function Gallery() {
             <button
               type="button"
               onClick={showNext}
-              className="hidden md:inline-flex absolute right-6 top-1/2 -translate-y-1/2 z-20 items-center justify-center w-12 h-12 rounded-full bg-white/10 hover:bg-white/15 border border-white/10 transition-colors backdrop-blur-md"
+              className="absolute right-4 md:right-6 top-1/2 -translate-y-1/2 z-30 inline-flex items-center justify-center w-11 h-11 md:w-12 md:h-12 rounded-full bg-white/10 hover:bg-white/15 border border-white/10 transition-colors backdrop-blur-md"
             >
               <ChevronRight className="w-5 h-5 text-white" />
             </button>
@@ -246,7 +245,7 @@ export default function Gallery() {
                         <img
                           src={src}
                           alt={`Thumbnail ${index + 1}`}
-                          className="w-16 h-16 md:w-20 md:h-20 object-cover rounded-2xl"
+                          className="block w-16 h-16 md:w-20 md:h-20 object-cover rounded-2xl"
                           draggable={false}
                         />
                       </button>
