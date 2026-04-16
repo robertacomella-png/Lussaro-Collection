@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, MessageCircle } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 
 const navLinks = [
   { label: "Fleet", href: "#fleet" },
@@ -11,6 +12,7 @@ const navLinks = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -20,6 +22,12 @@ export default function Navbar() {
 
   const handleNav = (href) => {
     setMobileOpen(false);
+
+    if (location.pathname !== "/") {
+      window.location.href = `/${href}`;
+      return;
+    }
+
     const el = document.querySelector(href);
 
     if (el) {
@@ -42,13 +50,12 @@ export default function Navbar() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <button
-            type="button"
-            onClick={() => handleNav("#top")}
+          <Link
+            to="/"
             className="text-white text-lg font-semibold tracking-tight cursor-pointer"
           >
             LUSSARO<span className="text-[#c9a96e]">COLLECTION</span>
-          </button>
+          </Link>
 
           <div className="hidden md:flex items-center gap-3">
             {navLinks.map((link) => (
@@ -62,12 +69,13 @@ export default function Navbar() {
               </button>
             ))}
 
-            <a
-              href="/gallery"
+            <Link
+              to="/gallery"
               className="px-4 py-2 rounded-full text-white/60 hover:text-white text-sm font-light transition-all duration-300 hover:scale-105 cursor-pointer"
+              onClick={() => setMobileOpen(false)}
             >
               Gallery
-            </a>
+            </Link>
 
             <a
               href="https://wa.me/16452487305"
@@ -114,16 +122,20 @@ export default function Navbar() {
               </motion.button>
             ))}
 
-            <motion.a
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
               transition={{ delay: navLinks.length * 0.08 }}
-              href="/gallery"
-              className="text-white text-2xl font-light tracking-tight cursor-pointer px-4 py-2"
             >
-              Gallery
-            </motion.a>
+              <Link
+                to="/gallery"
+                onClick={() => setMobileOpen(false)}
+                className="text-white text-2xl font-light tracking-tight cursor-pointer px-4 py-2"
+              >
+                Gallery
+              </Link>
+            </motion.div>
 
             <motion.a
               initial={{ opacity: 0, y: 20 }}
