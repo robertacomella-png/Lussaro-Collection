@@ -90,7 +90,7 @@ export default function HeroSection() {
                 className="flex items-center justify-center gap-2 border border-[#c9a96e]/50 text-white px-4 py-3.5 rounded-full text-sm font-medium hover:bg-[#c9a96e]/10 transition-all duration-300 backdrop-blur-sm"
               >
                 Find Us
-                <MapPin className="w-4 h-4 text-black" />
+                <MapPin className="w-4 h-4 text-[#c9a96e]" />
               </button>
               </div>
 
