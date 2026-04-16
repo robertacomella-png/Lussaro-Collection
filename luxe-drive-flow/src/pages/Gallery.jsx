@@ -106,13 +106,13 @@ export default function Gallery() {
                 <h1 className="text-4xl sm:text-5xl md:text-7xl font-semibold tracking-tight leading-none">
                   Gallery
                 </h1>
-                <p className="text-black/55 text-sm md:text-base mt-5 max-w-2xl leading-relaxed">
+                <p className="text-white/55 text-sm md:text-base mt-5 max-w-2xl leading-relaxed">
                   A closer look at the vehicles, moments, and details that define
                   the Lussaro experience.
                 </p>
               </div>
 
-              <p className="text-black/30 text-xs md:text-sm">
+              <p className="text-white/30 text-xs md:text-sm">
                 {galleryImages.length} images
               </p>
             </div>
@@ -131,7 +131,7 @@ export default function Gallery() {
                 onClick={() => openViewer(index)}
                 className="group mb-4 md:mb-5 block w-full break-inside-avoid cursor-pointer"
               >
-                <div className="overflow-hidden rounded-[24px] bg-black/[0.03] shadow-[0_0_0_1px_rgba(0,0,0,0.05)] transition-all duration-500 group-hover:shadow-[0_10px_30px_rgba(0,0,0,0.12)]">
+                <div className="overflow-hidden rounded-[24px] bg-white/[0.03] shadow-[0_0_0_1px_rgba(255,255,255,0.05)] transition-all duration-500 group-hover:shadow-[0_10px_30px_rgba(0,0,0,0.18)]">
                   <img
                     src={src}
                     alt={`Gallery image ${index + 1}`}
@@ -202,7 +202,7 @@ export default function Gallery() {
             <button
               type="button"
               onClick={showPrev}
-              className="absolute left-4 md:left-6 top-1/2 -translate-y-1/2 z-30 inline-flex items-center justify-center w-11 h-11 md:w-12 md:h-12 rounded-full bg-white/10 hover:bg-white/15 border border-white/10 transition-colors backdrop-blur-md"
+              className="hidden md:inline-flex absolute left-6 top-1/2 -translate-y-1/2 z-30 items-center justify-center w-12 h-12 rounded-full bg-white/10 hover:bg-white/15 border border-white/10 transition-colors backdrop-blur-md"
             >
               <ChevronLeft className="w-5 h-5 text-white" />
             </button>
@@ -210,7 +210,7 @@ export default function Gallery() {
             <button
               type="button"
               onClick={showNext}
-              className="absolute right-4 md:right-6 top-1/2 -translate-y-1/2 z-30 inline-flex items-center justify-center w-11 h-11 md:w-12 md:h-12 rounded-full bg-white/10 hover:bg-white/15 border border-white/10 transition-colors backdrop-blur-md"
+              className="hidden md:inline-flex absolute right-6 top-1/2 -translate-y-1/2 z-30 items-center justify-center w-12 h-12 rounded-full bg-white/10 hover:bg-white/15 border border-white/10 transition-colors backdrop-blur-md"
             >
               <ChevronRight className="w-5 h-5 text-white" />
             </button>
