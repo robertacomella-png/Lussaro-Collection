@@ -54,7 +54,6 @@ export default function Navbar() {
               Gallery
             </Link>
 
-            {/* FIND US BUTTON */}
             <button
               type="button"
               onClick={() => setLocationOpen(true)}
@@ -64,7 +63,6 @@ export default function Navbar() {
               <MapPin className="w-4 h-4 text-black" />
             </button>
 
-            {/* CONTACT BUTTON */}
             <a
               href="https://wa.me/16452487305"
               target="_blank"
@@ -86,7 +84,6 @@ export default function Navbar() {
         </div>
       </motion.nav>
 
-      {/* MOBILE MENU */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -128,7 +125,6 @@ export default function Navbar() {
         )}
       </AnimatePresence>
 
-      {/* GOOGLE MAP POPUP */}
       <AnimatePresence>
         {locationOpen && (
           <motion.div
@@ -139,36 +135,77 @@ export default function Navbar() {
             onClick={() => setLocationOpen(false)}
           >
             <motion.div
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 18 }}
-              className="w-full max-w-2xl rounded-2xl overflow-hidden bg-[#111] border border-white/10"
+              initial={{ opacity: 0, y: 18, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 18, scale: 0.98 }}
+              transition={{ duration: 0.25 }}
+              className="w-full max-w-2xl rounded-[28px] overflow-hidden bg-[#111] border border-white/10 shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
-              <iframe
-                title="Location"
-                src="https://www.google.com/maps?q=900%20Biscayne%20Blvd%20Miami%20FL%2033132&z=15&output=embed"
-                width="100%"
-                height="300"
-                style={{ border: 0 }}
-              />
+              <div className="relative">
+                <div className="h-[220px] md:h-[280px] w-full overflow-hidden">
+                  <iframe
+                    title="Lussaro Collection Location"
+                    src="https://www.google.com/maps?q=Lussaro%20Collection%2C%20900%20Biscayne%20Blvd%2C%20Miami%2C%20FL%2033132&z=16&output=embed"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    className="w-full h-full"
+                  />
+                </div>
 
-              <div className="p-6">
-                <h3 className="text-white text-xl font-semibold mb-2">
-                  900 Biscayne Blvd
-                </h3>
-                <p className="text-white/60 text-sm mb-4">
-                  Miami, FL 33132
+                <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#111] to-transparent pointer-events-none" />
+
+                <button
+                  type="button"
+                  onClick={() => setLocationOpen(false)}
+                  className="absolute top-4 right-4 inline-flex items-center justify-center w-10 h-10 rounded-full bg-black/45 hover:bg-black/60 border border-white/10 transition-colors backdrop-blur-md"
+                >
+                  <X className="w-5 h-5 text-white" />
+                </button>
+              </div>
+
+              <div className="px-6 md:px-8 pb-7 pt-5">
+                <div className="flex items-start gap-3 mb-4">
+                  <div className="w-11 h-11 rounded-full bg-white flex items-center justify-center shrink-0">
+                    <MapPin className="w-5 h-5 text-black" />
+                  </div>
+
+                  <div>
+                    <p className="text-[#c9a96e] tracking-[0.25em] uppercase text-[11px] font-medium mb-1">
+                      Location
+                    </p>
+                    <h3 className="text-white text-2xl md:text-3xl font-semibold tracking-tight">
+                      Lussaro Collection
+                    </h3>
+                  </div>
+                </div>
+
+                <p className="text-white/80 text-sm md:text-base leading-relaxed mb-6">
+                  900 Biscayne Blvd, Miami, FL 33132
                 </p>
 
-                <a
-                  href="https://www.google.com/maps/search/?api=1&query=900+Biscayne+Blvd+Miami+FL+33132"
-                  target="_blank"
-                  className="inline-flex items-center gap-2 bg-white text-black px-5 py-2 rounded-full text-sm font-medium hover:bg-[#c9a96e] transition-all duration-300"
-                >
-                  Open in Maps
-                  <MapPin className="w-4 h-4 text-[#c9a96e]" />
-                </a>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <a
+                    href="https://maps.app.goo.gl/RidmvBDNjdWNofCU6"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 bg-white text-black px-6 py-3 rounded-full text-sm font-medium hover:bg-[#c9a96e] hover:text-black transition-all duration-300"
+                  >
+                    Open in Google Maps
+                    <MapPin className="w-4 h-4 text-black" />
+                  </a>
+
+                  <button
+                    type="button"
+                    onClick={() => setLocationOpen(false)}
+                    className="inline-flex items-center justify-center px-6 py-3 rounded-full text-sm font-medium text-white border border-white/15 hover:bg-white/5 transition-all duration-300"
+                  >
+                    Close
+                  </button>
+                </div>
               </div>
             </motion.div>
           </motion.div>
