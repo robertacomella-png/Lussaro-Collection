@@ -37,9 +37,12 @@ export default function Navbar() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <a href="#" className="text-white text-lg font-semibold tracking-tight">
+          <button
+            onClick={() => handleNav("#top")}
+            className="text-white text-lg font-semibold tracking-tight"
+          >
             LUSSARO<span className="text-[#c9a96e]">COLLECTION</span>
-          </a>
+          </button>
 
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
