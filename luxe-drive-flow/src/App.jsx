@@ -38,6 +38,7 @@ const AuthenticatedApp = () => {
       <Route path="/" element={<Home />} />
       <Route path="/Home" element={<Home />} />
       <Route path="*" element={<PageNotFound />} />
+      <Route path="/gallery" element={<Gallery />} />
     </Routes>
   );
 };
