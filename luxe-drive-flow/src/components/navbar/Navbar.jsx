@@ -18,11 +18,17 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const handleNav = (href) => {
-    setMobileOpen(false);
-    const el = document.querySelector(href);
-    el?.scrollIntoView({ behavior: "smooth" });
-  };
+const handleNav = (href) => {
+  setMobileOpen(false);
+  const el = document.querySelector(href);
+
+  if (el) {
+    const yOffset = -80; // adjust if needed (your navbar height)
+    const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+
+    window.scrollTo({ top: y, behavior: "smooth" });
+  }
+};
 
   return (
     <>
