@@ -67,9 +67,9 @@ export default function HeroSection() {
             target="_blank"
             rel="noopener noreferrer"
             className="w-full sm:w-auto flex items-center justify-center gap-2 border border-[#25D366]/40 text-white px-8 py-3.5 rounded-full text-sm font-medium hover:bg-[#25D366]/10 hover:border-[#25D366] transition-all duration-300"
-         > 
-            <FaWhatsapp className="w-5 h-5 text-[#25D366]" />
-            Book via Whatsapp  
+          >
+            <MessageCircle className="w-4 h-4 text-[#25D366]" />
+             Book via WhatsApp
         </a>
         </motion.div>
       </div>
