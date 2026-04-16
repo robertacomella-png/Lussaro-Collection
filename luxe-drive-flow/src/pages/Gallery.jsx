@@ -46,10 +46,11 @@ export default function Gallery() {
 
   useEffect(() => {
     if (selectedIndex !== null) {
-      const previous = document.body.style.overflow;
+      const previousOverflow = document.body.style.overflow;
       document.body.style.overflow = "hidden";
+
       return () => {
-        document.body.style.overflow = previous;
+        document.body.style.overflow = previousOverflow;
       };
     }
   }, [selectedIndex]);
@@ -90,7 +91,7 @@ export default function Gallery() {
       <Navbar />
 
       <section id="top" className="relative pt-28 md:pt-32 pb-12 md:pb-16">
-        <div className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1800px] mx-auto px-6 md:px-8">
           <motion.div
             initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
@@ -122,21 +123,21 @@ export default function Gallery() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.08 }}
-            className="columns-2 md:columns-3 xl:columns-4 2xl:columns-5 gap-4 md:gap-5 [column-fill:_balance]"
+            className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 md:gap-5"
           >
             {galleryImages.map((src, index) => (
               <button
                 key={src}
                 type="button"
                 onClick={() => openViewer(index)}
-                className="group mb-4 md:mb-5 block w-full break-inside-avoid cursor-pointer"
+                className="group block w-full text-left"
               >
                 <div className="overflow-hidden rounded-[24px] bg-white/[0.03] shadow-[0_0_0_1px_rgba(255,255,255,0.05)] transition-all duration-500 group-hover:shadow-[0_10px_30px_rgba(0,0,0,0.18)]">
                   <img
                     src={src}
                     alt={`Gallery image ${index + 1}`}
-                    className="block w-full h-auto object-cover rounded-[24px] transition-transform duration-700 ease-out group-hover:scale-[1.02] group-hover:brightness-[1.03]"
                     loading="lazy"
+                    className="block w-full aspect-[4/5] object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02] group-hover:brightness-[1.03]"
                   />
                 </div>
               </button>
@@ -193,8 +194,8 @@ export default function Gallery() {
                 <img
                   src={selectedImage}
                   alt="Expanded gallery image"
-                  className="block max-w-full max-h-[82vh] md:max-h-[84vh] object-contain rounded-[26px] shadow-[0_20px_80px_rgba(0,0,0,0.55)] select-none"
                   draggable={false}
+                  className="block max-w-full max-h-[82vh] md:max-h-[84vh] object-contain rounded-[26px] shadow-[0_20px_80px_rgba(0,0,0,0.55)] select-none"
                 />
               </motion.div>
             </div>
@@ -245,8 +246,8 @@ export default function Gallery() {
                         <img
                           src={src}
                           alt={`Thumbnail ${index + 1}`}
-                          className="block w-16 h-16 md:w-20 md:h-20 object-cover rounded-2xl"
                           draggable={false}
+                          className="block w-16 h-16 md:w-20 md:h-20 object-cover"
                         />
                       </button>
                     );
