@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, MessageCircle } from "lucide-react";
+import { Menu, X, MessageCircle, MapPin } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 const navLinks = [
@@ -96,11 +96,7 @@ export default function Navbar() {
               className="inline-flex items-center gap-2 bg-white text-black text-sm px-5 py-2 rounded-full font-medium hover:bg-[#c9a96e] hover:text-black transition-all duration-500"
             >
               Find Us
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Google_Maps_icon_%282020%29.svg"
-                alt="Google Maps"
-                className="w-4 h-4 shrink-0"
-              />
+              <MapPin className="w-4 h-4 text-[#c9a96e]" />
             </button>
 
             <a
@@ -176,11 +172,7 @@ export default function Navbar() {
               className="inline-flex items-center gap-2 bg-white text-black text-lg px-8 py-3 rounded-full font-medium mt-2"
             >
               Find Us
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Google_Maps_icon_%282020%29.svg"
-                alt="Google Maps"
-                className="w-5 h-5 shrink-0"
-              />
+              <MapPin className="w-5 h-5 text-[#c9a96e]" />
             </motion.button>
 
             <motion.a
@@ -245,11 +237,7 @@ export default function Navbar() {
               <div className="px-6 md:px-8 pb-7 pt-5">
                 <div className="flex items-start gap-3 mb-4">
                   <div className="w-11 h-11 rounded-full bg-white flex items-center justify-center shrink-0">
-                    <img
-                      src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Google_Maps_icon_%282020%29.svg"
-                      alt="Google Maps"
-                      className="w-5 h-5"
-                    />
+                    <MapPin className="w-5 h-5 text-[#c9a96e]" />
                   </div>
 
                   <div>
@@ -274,11 +262,7 @@ export default function Navbar() {
                     className="inline-flex items-center justify-center gap-2 bg-white text-black px-6 py-3 rounded-full text-sm font-medium hover:bg-[#c9a96e] hover:text-black transition-all duration-300"
                   >
                     Open in Google Maps
-                    <img
-                      src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Google_Maps_icon_%282020%29.svg"
-                      alt="Google Maps"
-                      className="w-4 h-4"
-                    />
+                    <MapPin className="w-4 h-4 text-[#c9a96e]" />
                   </a>
 
                   <button
