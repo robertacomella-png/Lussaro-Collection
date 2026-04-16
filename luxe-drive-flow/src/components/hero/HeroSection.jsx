@@ -65,8 +65,7 @@ export default function HeroSection() {
             href="https://wa.me/16452487305"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full sm:w-auto text-center border border-white/30 text-white px-8 py-3.5 rounded-full text-sm font-medium hover:bg-white/10 transition-all duration-500"
-          >
+            className="w-full sm:w-auto text-center border border-white/30 text-white px-8 py-3.5 rounded-full text-sm font-medium hover:bg-white/10 transition-all duration-500"          >
             Book via WhatsApp
           </a>
         </motion.div>
