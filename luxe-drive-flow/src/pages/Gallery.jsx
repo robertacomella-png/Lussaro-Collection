@@ -4,18 +4,15 @@ import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import Navbar from "@/components/navbar/Navbar";
 
 const galleryImages = [
-  "/gallery-1.jpg",
-  "/gallery-2.jpg",
-  "/gallery-3.jpg",
-  "/gallery-4.jpg",
-  "/gallery-5.jpg",
-  "/gallery-6.jpg",
-  "/gallery-7.jpg",
-  "/gallery-8.jpg",
-  "/gallery-9.jpg",
-  "/gallery-10.jpg",
-  "/gallery-11.jpg",
-  "/gallery-12.jpg",
+  "/gallery/gallery-1.jpg",
+  "/gallery/gallery-2.jpg",
+  "/gallery/gallery-3.jpg",
+  "/gallery/gallery-4.jpg",
+  "/gallery/gallery-5.jpg",
+  "/gallery/gallery-6.jpg",
+  "/gallery/gallery-7.jpg",
+  "/gallery/gallery-8.jpg",
+  "/gallery/gallery-9.jpg",
 ];
 
 export default function Gallery() {
