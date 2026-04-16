@@ -65,7 +65,7 @@ export default function HeroSection() {
             href="https://wa.me/16452487305"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full sm:w-auto flex items-center justify-center gap-2 bg-white/10 border border-[#25D366]/40 text-white px-8 py-3.5 rounded-full text-sm font-medium hover:bg-[#25D366]/15 hover:border-[#25D366] transition-all duration-300 backdrop-blur-sm"          >
+            className="w-full sm:w-auto flex items-center justify-center gap-2 bg-white/10 border-[2px] border-[#25D366]/40 text-white px-8 py-3.5 rounded-full text-sm font-medium hover:bg-[#25D366]/15 hover:border-[#25D366] transition-all duration-300 backdrop-blur-sm"          >
             <MessageCircle className="w-4 h-4 text-[#25D366]" />
              Book via WhatsApp
         </a>
