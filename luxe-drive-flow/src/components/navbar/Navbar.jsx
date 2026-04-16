@@ -61,7 +61,7 @@ export default function Navbar() {
               className="inline-flex items-center gap-2 bg-white text-black text-sm px-5 py-2 rounded-full font-medium hover:bg-[#c9a96e] hover:text-black transition-all duration-300"
             >
               Find Us
-              <MapPin className="w-4 h-4 text-[#c9a96e]" />
+              <MapPin className="w-4 h-4 text-black" />
             </button>
 
             {/* CONTACT BUTTON */}
@@ -112,7 +112,7 @@ export default function Navbar() {
               className="inline-flex items-center gap-2 bg-white text-black text-lg px-8 py-3 rounded-full font-medium hover:bg-[#c9a96e] transition-all duration-300"
             >
               Find Us
-              <MapPin className="w-5 h-5 text-[#c9a96e]" />
+              <MapPin className="w-5 h-5 text-black" />
             </button>
 
             <a
