@@ -146,7 +146,7 @@ export default function Navbar() {
                 <div className="h-[220px] md:h-[280px] w-full overflow-hidden">
                   <iframe
                     title="Lussaro Collection Location"
-                    src="https://www.google.com/maps?q=Lussaro%20Collection%2C%20900%20Biscayne%20Blvd%2C%20Miami%2C%20FL%2033132&z=16&output=embed"
+                    src="https://www.google.com/maps?q=Lussaro%20Collection&z=16&output=embed"
                     width="100%"
                     height="100%"
                     style={{ border: 0 }}
