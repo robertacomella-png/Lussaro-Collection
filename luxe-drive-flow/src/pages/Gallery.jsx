@@ -86,7 +86,7 @@ export default function Gallery() {
   }, [selectedIndex]);
 
   return (
-    <div className="min-h-screen bg-white text-black">
+    <div className="min-h-screen bg-black text-white">
       <Navbar />
 
       <section id="top" className="relative pt-28 md:pt-32 pb-12 md:pb-16">
