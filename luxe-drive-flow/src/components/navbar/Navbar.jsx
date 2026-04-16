@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, MessageCircle, MapPin } from "lucide-react";
+import { Menu, X, MessageCircle } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 const navLinks = [
@@ -19,6 +19,18 @@ export default function Navbar() {
     const onScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const onKeyDown = (e) => {
+      if (e.key === "Escape") {
+        setLocationOpen(false);
+        setMobileOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
 
   const handleNav = (href) => {
@@ -81,17 +93,21 @@ export default function Navbar() {
             <button
               type="button"
               onClick={() => setLocationOpen(true)}
-              className="inline-flex items-center gap-2 bg-white text-black text-sm px-5 py-2 rounded-full font-medium hover:bg-[#c9a96e] hover:text-white transition-all duration-500"
+              className="inline-flex items-center gap-2 bg-white text-black text-sm px-5 py-2 rounded-full font-medium hover:bg-[#c9a96e] hover:text-black transition-all duration-500"
             >
               Find Us
-              <MapPin className="w-4 h-4 text-[#c9a96e]" />
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Google_Maps_icon_%282020%29.svg"
+                alt="Google Maps"
+                className="w-4 h-4 shrink-0"
+              />
             </button>
 
             <a
               href="https://wa.me/16452487305"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-white text-black text-sm px-5 py-2 rounded-full font-medium hover:bg-[#c9a96e] hover:text-white transition-all duration-500 relative z-[1000]"
+              className="inline-flex items-center gap-2 bg-white text-black text-sm px-5 py-2 rounded-full font-medium hover:bg-[#c9a96e] hover:text-black transition-all duration-500 relative z-[1000]"
             >
               Contact Us
               <MessageCircle className="w-4 h-4 text-[#25D366]" />
@@ -160,7 +176,11 @@ export default function Navbar() {
               className="inline-flex items-center gap-2 bg-white text-black text-lg px-8 py-3 rounded-full font-medium mt-2"
             >
               Find Us
-              <MapPin className="w-5 h-5 text-[#c9a96e]" />
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Google_Maps_icon_%282020%29.svg"
+                alt="Google Maps"
+                className="w-5 h-5 shrink-0"
+              />
             </motion.button>
 
             <motion.a
@@ -171,10 +191,10 @@ export default function Navbar() {
               href="https://wa.me/16452487305"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-[#c9a96e] text-white text-lg px-8 py-3 rounded-full font-medium mt-2 cursor-pointer"
+              className="inline-flex items-center gap-2 bg-[#c9a96e] text-black text-lg px-8 py-3 rounded-full font-medium mt-2 cursor-pointer"
             >
               Contact Us
-              <MessageCircle className="w-5 h-5 text-white" />
+              <MessageCircle className="w-5 h-5 text-[#25D366]" />
             </motion.a>
           </motion.div>
         )}
@@ -186,7 +206,7 @@ export default function Navbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[2000] bg-black/70 backdrop-blur-sm flex items-center justify-center px-4"
+            className="fixed inset-0 z-[2000] bg-black/75 backdrop-blur-md flex items-center justify-center px-4"
             onClick={() => setLocationOpen(false)}
           >
             <motion.div
@@ -194,62 +214,81 @@ export default function Navbar() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 18, scale: 0.98 }}
               transition={{ duration: 0.25 }}
-              className="w-full max-w-xl rounded-3xl bg-[#111] border border-white/10 p-6 md:p-8 shadow-2xl"
+              className="w-full max-w-2xl rounded-[28px] overflow-hidden bg-[#111] border border-white/10 shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex items-start justify-between gap-4 mb-6">
-                <div>
-                  <p className="text-[#c9a96e] tracking-[0.25em] uppercase text-[11px] font-medium mb-3">
-                    Location
-                  </p>
-                  <h3 className="text-white text-2xl md:text-3xl font-semibold tracking-tight">
-                    Find Us
-                  </h3>
+              <div className="relative">
+                <div className="h-[220px] md:h-[280px] w-full overflow-hidden">
+                  <iframe
+                    title="Lussaro Collection Location"
+                    src="https://www.google.com/maps?q=900%20Biscayne%20Blvd%20Miami%20FL%2033132&z=15&output=embed"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    className="w-full h-full"
+                  />
                 </div>
+
+                <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#111] to-transparent pointer-events-none" />
 
                 <button
                   type="button"
                   onClick={() => setLocationOpen(false)}
-                  className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 transition-colors"
+                  className="absolute top-4 right-4 inline-flex items-center justify-center w-10 h-10 rounded-full bg-black/45 hover:bg-black/60 border border-white/10 transition-colors backdrop-blur-md"
                 >
                   <X className="w-5 h-5 text-white" />
                 </button>
               </div>
 
-              <div className="rounded-2xl overflow-hidden border border-white/10 mb-5">
-                <iframe
-                  title="Lussaro Collection Location"
-                  src="https://www.google.com/maps?q=900%20Biscayne%20Blvd%20Miami%20FL%2033132&z=15&output=embed"
-                  width="100%"
-                  height="300"
-                  style={{ border: 0 }}
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                />
-              </div>
+              <div className="px-6 md:px-8 pb-7 pt-5">
+                <div className="flex items-start gap-3 mb-4">
+                  <div className="w-11 h-11 rounded-full bg-white flex items-center justify-center shrink-0">
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Google_Maps_icon_%282020%29.svg"
+                      alt="Google Maps"
+                      className="w-5 h-5"
+                    />
+                  </div>
 
-              <p className="text-white/80 text-sm md:text-base leading-relaxed mb-6">
-                900 Biscayne Blvd, Miami, FL 33132
-              </p>
+                  <div>
+                    <p className="text-[#c9a96e] tracking-[0.25em] uppercase text-[11px] font-medium mb-1">
+                      Location
+                    </p>
+                    <h3 className="text-white text-2xl md:text-3xl font-semibold tracking-tight">
+                      Find Us
+                    </h3>
+                  </div>
+                </div>
 
-              <div className="flex flex-col sm:flex-row gap-3">
-                <a
-                  href="https://www.google.com/maps/search/?api=1&query=900+Biscayne+Blvd+Miami+FL+33132"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 bg-white text-black px-6 py-3 rounded-full text-sm font-medium hover:bg-[#c9a96e] hover:text-white transition-all duration-300"
-                >
-                  Open in Google Maps
-                  <MapPin className="w-4 h-4" />
-                </a>
+                <p className="text-white/80 text-sm md:text-base leading-relaxed mb-6">
+                  900 Biscayne Blvd, Miami, FL 33132
+                </p>
 
-                <button
-                  type="button"
-                  onClick={() => setLocationOpen(false)}
-                  className="inline-flex items-center justify-center px-6 py-3 rounded-full text-sm font-medium text-white border border-white/15 hover:bg-white/5 transition-all duration-300"
-                >
-                  Close
-                </button>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <a
+                    href="https://www.google.com/maps/search/?api=1&query=900+Biscayne+Blvd+Miami+FL+33132"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 bg-white text-black px-6 py-3 rounded-full text-sm font-medium hover:bg-[#c9a96e] hover:text-black transition-all duration-300"
+                  >
+                    Open in Google Maps
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Google_Maps_icon_%282020%29.svg"
+                      alt="Google Maps"
+                      className="w-4 h-4"
+                    />
+                  </a>
+
+                  <button
+                    type="button"
+                    onClick={() => setLocationOpen(false)}
+                    className="inline-flex items-center justify-center px-6 py-3 rounded-full text-sm font-medium text-white border border-white/15 hover:bg-white/5 transition-all duration-300"
+                  >
+                    Close
+                  </button>
+                </div>
               </div>
             </motion.div>
           </motion.div>
