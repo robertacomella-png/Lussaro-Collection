@@ -6,7 +6,6 @@ const navLinks = [
   { label: "Fleet", href: "#fleet" },
   { label: "How It Works", href: "#process" },
   { label: "Testimonials", href: "#testimonials" },
-  { label: "Gallery", href: "/gallery" },
 ];
 
 export default function Navbar() {
@@ -36,7 +35,7 @@ export default function Navbar() {
         initial={{ y: -80 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6, delay: 0.5 }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        className={`fixed top-0 left-0 right-0 z-[999] transition-all duration-500 ${
           scrolled
             ? "bg-black/80 backdrop-blur-xl border-b border-white/[0.06]"
             : "bg-transparent"
@@ -44,28 +43,37 @@ export default function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <button
+            type="button"
             onClick={() => handleNav("#top")}
-            className="text-white text-lg font-semibold tracking-tight"
+            className="text-white text-lg font-semibold tracking-tight cursor-pointer"
           >
             LUSSARO<span className="text-[#c9a96e]">COLLECTION</span>
           </button>
 
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-3">
             {navLinks.map((link) => (
               <button
                 key={link.label}
+                type="button"
                 onClick={() => handleNav(link.href)}
-                className="text-white/60 hover:text-white text-sm font-light transition-all duration-300 hover:scale-105 cursor-pointer"
+                className="px-4 py-2 rounded-full text-white/60 hover:text-white text-sm font-light transition-all duration-300 hover:scale-105 cursor-pointer"
               >
                 {link.label}
               </button>
             ))}
 
             <a
+              href="/gallery"
+              className="px-4 py-2 rounded-full text-white/60 hover:text-white text-sm font-light transition-all duration-300 hover:scale-105 cursor-pointer"
+            >
+              Gallery
+            </a>
+
+            <a
               href="https://wa.me/16452487305"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-white text-black text-sm px-5 py-2 rounded-full font-medium hover:bg-[#c9a96e] hover:text-white transition-all duration-500"
+              className="inline-flex items-center gap-2 bg-white text-black text-sm px-5 py-2 rounded-full font-medium hover:bg-[#c9a96e] hover:text-white transition-all duration-500 relative z-[1000]"
             >
               Contact Us
               <MessageCircle className="w-4 h-4 text-[#25D366]" />
@@ -73,8 +81,9 @@ export default function Navbar() {
           </div>
 
           <button
+            type="button"
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden text-white"
+            className="md:hidden text-white cursor-pointer"
           >
             {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -88,17 +97,18 @@ export default function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-black/95 backdrop-blur-xl flex flex-col items-center justify-center gap-8"
+            className="fixed inset-0 z-[998] bg-black/95 backdrop-blur-xl flex flex-col items-center justify-center gap-8 md:hidden"
           >
             {navLinks.map((link, i) => (
               <motion.button
                 key={link.label}
+                type="button"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 20 }}
                 transition={{ delay: i * 0.08 }}
                 onClick={() => handleNav(link.href)}
-                className="text-white text-2xl font-light tracking-tight"
+                className="text-white text-2xl font-light tracking-tight cursor-pointer px-4 py-2"
               >
                 {link.label}
               </motion.button>
@@ -109,10 +119,21 @@ export default function Navbar() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
               transition={{ delay: navLinks.length * 0.08 }}
+              href="/gallery"
+              className="text-white text-2xl font-light tracking-tight cursor-pointer px-4 py-2"
+            >
+              Gallery
+            </motion.a>
+
+            <motion.a
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ delay: (navLinks.length + 1) * 0.08 }}
               href="https://wa.me/16452487305"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-[#c9a96e] text-white text-lg px-8 py-3 rounded-full font-medium mt-4"
+              className="inline-flex items-center gap-2 bg-[#c9a96e] text-white text-lg px-8 py-3 rounded-full font-medium mt-4 cursor-pointer"
             >
               Contact Us
               <MessageCircle className="w-5 h-5 text-white" />
