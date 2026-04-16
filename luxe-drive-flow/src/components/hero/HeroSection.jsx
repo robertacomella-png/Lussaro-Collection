@@ -27,7 +27,7 @@ export default function HeroSection() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-[#c9a96e] tracking-[0.3em] uppercase text-xs md:text-sm font-medium mb-4"
         >
-          Miami Ecotic Car Rentals
+          Miami Exotic Car Rentals
         </motion.p>
 
         <motion.h1
