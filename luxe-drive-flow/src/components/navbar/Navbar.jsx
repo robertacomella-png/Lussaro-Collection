@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, MessageCircle } from "lucide-react";
+import { Menu, X, MessageCircle, MapPin } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 const navLinks = [
@@ -12,6 +12,7 @@ const navLinks = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [locationOpen, setLocationOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -77,6 +78,15 @@ export default function Navbar() {
               Gallery
             </Link>
 
+            <button
+              type="button"
+              onClick={() => setLocationOpen(true)}
+              className="inline-flex items-center gap-2 bg-white text-black text-sm px-5 py-2 rounded-full font-medium hover:bg-[#c9a96e] hover:text-white transition-all duration-500"
+            >
+              Find Us
+              <MapPin className="w-4 h-4 text-[#c9a96e]" />
+            </button>
+
             <a
               href="https://wa.me/16452487305"
               target="_blank"
@@ -137,19 +147,111 @@ export default function Navbar() {
               </Link>
             </motion.div>
 
-            <motion.a
+            <motion.button
+              type="button"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
               transition={{ delay: (navLinks.length + 1) * 0.08 }}
+              onClick={() => {
+                setMobileOpen(false);
+                setLocationOpen(true);
+              }}
+              className="inline-flex items-center gap-2 bg-white text-black text-lg px-8 py-3 rounded-full font-medium mt-2"
+            >
+              Find Us
+              <MapPin className="w-5 h-5 text-[#c9a96e]" />
+            </motion.button>
+
+            <motion.a
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ delay: (navLinks.length + 2) * 0.08 }}
               href="https://wa.me/16452487305"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-[#c9a96e] text-white text-lg px-8 py-3 rounded-full font-medium mt-4 cursor-pointer"
+              className="inline-flex items-center gap-2 bg-[#c9a96e] text-white text-lg px-8 py-3 rounded-full font-medium mt-2 cursor-pointer"
             >
               Contact Us
               <MessageCircle className="w-5 h-5 text-white" />
             </motion.a>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {locationOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[2000] bg-black/70 backdrop-blur-sm flex items-center justify-center px-4"
+            onClick={() => setLocationOpen(false)}
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 18, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 18, scale: 0.98 }}
+              transition={{ duration: 0.25 }}
+              className="w-full max-w-xl rounded-3xl bg-[#111] border border-white/10 p-6 md:p-8 shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-start justify-between gap-4 mb-6">
+                <div>
+                  <p className="text-[#c9a96e] tracking-[0.25em] uppercase text-[11px] font-medium mb-3">
+                    Location
+                  </p>
+                  <h3 className="text-white text-2xl md:text-3xl font-semibold tracking-tight">
+                    Find Us
+                  </h3>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setLocationOpen(false)}
+                  className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 transition-colors"
+                >
+                  <X className="w-5 h-5 text-white" />
+                </button>
+              </div>
+
+              <div className="rounded-2xl overflow-hidden border border-white/10 mb-5">
+                <iframe
+                  title="Lussaro Collection Location"
+                  src="https://www.google.com/maps?q=900%20Biscayne%20Blvd%20Miami%20FL%2033132&z=15&output=embed"
+                  width="100%"
+                  height="300"
+                  style={{ border: 0 }}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+              </div>
+
+              <p className="text-white/80 text-sm md:text-base leading-relaxed mb-6">
+                900 Biscayne Blvd, Miami, FL 33132
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-3">
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=900+Biscayne+Blvd+Miami+FL+33132"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 bg-white text-black px-6 py-3 rounded-full text-sm font-medium hover:bg-[#c9a96e] hover:text-white transition-all duration-300"
+                >
+                  Open in Google Maps
+                  <MapPin className="w-4 h-4" />
+                </a>
+
+                <button
+                  type="button"
+                  onClick={() => setLocationOpen(false)}
+                  className="inline-flex items-center justify-center px-6 py-3 rounded-full text-sm font-medium text-white border border-white/15 hover:bg-white/5 transition-all duration-300"
+                >
+                  Close
+                </button>
+              </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
