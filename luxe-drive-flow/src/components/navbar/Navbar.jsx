@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, MessageCircle } from "lucide-react";
 
 const navLinks = [
   { label: "Fleet", href: "#fleet" },
@@ -18,17 +18,16 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-const handleNav = (href) => {
-  setMobileOpen(false);
-  const el = document.querySelector(href);
+  const handleNav = (href) => {
+    setMobileOpen(false);
+    const el = document.querySelector(href);
 
-  if (el) {
-    const yOffset = -80; // adjust if needed (your navbar height)
-    const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
-
-    window.scrollTo({ top: y, behavior: "smooth" });
-  }
-};
+    if (el) {
+      const yOffset = -80;
+      const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+  };
 
   return (
     <>
@@ -55,17 +54,21 @@ const handleNav = (href) => {
               <button
                 key={link.label}
                 onClick={() => handleNav(link.href)}
-                className="text-white/50 hover:text-white text-sm font-light transition-colors duration-300"
+                className="text-white/60 hover:text-white text-sm font-light transition-all duration-300 hover:scale-105 cursor-pointer"
               >
                 {link.label}
               </button>
             ))}
-            <button
-              onClick={() => handleNav("#fleet")}
-              className="bg-white text-black text-sm px-5 py-2 rounded-full font-medium hover:bg-[#c9a96e] hover:text-white transition-all duration-500"
+
+            <a
+              href="https://wa.me/16452487305"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-white text-black text-sm px-5 py-2 rounded-full font-medium hover:bg-[#c9a96e] hover:text-white transition-all duration-500"
             >
-              Book Now
-            </button>
+              Contact Us
+              <MessageCircle className="w-4 h-4 text-[#25D366]" />
+            </a>
           </div>
 
           <button
@@ -99,16 +102,20 @@ const handleNav = (href) => {
                 {link.label}
               </motion.button>
             ))}
-            <motion.button
+
+            <motion.a
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
               transition={{ delay: navLinks.length * 0.08 }}
-              onClick={() => handleNav("#fleet")}
-              className="bg-[#c9a96e] text-white text-lg px-8 py-3 rounded-full font-medium mt-4"
+              href="https://wa.me/16452487305"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-[#c9a96e] text-white text-lg px-8 py-3 rounded-full font-medium mt-4"
             >
-              Book Now
-            </motion.button>
+              Contact Us
+              <MessageCircle className="w-5 h-5 text-white" />
+            </motion.a>
           </motion.div>
         )}
       </AnimatePresence>
