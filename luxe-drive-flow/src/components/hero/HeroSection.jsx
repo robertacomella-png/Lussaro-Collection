@@ -63,7 +63,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
-            className="w-full max-w-[360px] md:max-w-[420px] mt-32 md:mt-0"
+            className="w-full max-w-[360px] md:max-w-[420px] mt-70 md:mt-0"
           >
             <div className="flex flex-col gap-1 md:gap-4 items-center w-full">
               <button
