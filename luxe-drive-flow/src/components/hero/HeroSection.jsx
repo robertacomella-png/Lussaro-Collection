@@ -65,7 +65,7 @@ export default function HeroSection() {
             transition={{ duration: 0.8, delay: 0.8 }}
             className="w-full max-w-[360px] md:max-w-[420px] mt-32 md:mt-0"
           >
-            <div className="flex flex-col gap-3 md:gap-4 items-center w-full">
+            <div className="flex flex-col gap-2 md:gap-4 items-center w-full">
               <button
                 onClick={scrollToFleet}
                 className="w-full bg-white text-black px-8 py-3.5 rounded-full text-sm font-medium hover:bg-[#c9a96e] hover:text-white transition-all duration-500"
