@@ -74,12 +74,12 @@ export default function HeroSection() {
               </button>
 
               {/* Mobile buttons */}
-              <div className="grid grid-cols-2 gap-2 w-[85%] mx-auto md:hidden">
+              <div className="grid grid-cols-2 gap-[6px] w-full md:hidden">
                 <a
                   href="https://wa.me/16452487305"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 border border-[#25D366]/50 text-white px-3 py-3 rounded-full text-sm font-medium hover:bg-[#25D366]/10 transition-all duration-300 backdrop-blur-sm"
+                  className="flex items-center justify-center gap-2 border border-[#25D366]/50 text-white px-3 py-3.5 rounded-full text-sm font-medium hover:bg-[#25D366]/10 transition-all duration-300 backdrop-blur-sm"
                 >
                   WhatsApp
                   <MessageCircle className="w-4 h-4 text-[#25D366]" />
@@ -88,7 +88,7 @@ export default function HeroSection() {
                 <button
                   type="button"
                   onClick={() => setLocationOpen(true)}
-                  className="flex items-center justify-center gap-2 border border-[#c9a96e]/50 text-white px-3 py-3 rounded-full text-sm font-medium hover:bg-[#c9a96e]/10 transition-all duration-300 backdrop-blur-sm"
+                  className="flex items-center justify-center gap-2 border border-[#c9a96e]/50 text-white px-3 py-3.5 rounded-full text-sm font-medium hover:bg-[#c9a96e]/10 transition-all duration-300 backdrop-blur-sm"
                 >
                   Find Us
                   <MapPin className="w-4 h-4 text-[#c9a96e]" />
