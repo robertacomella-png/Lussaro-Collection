@@ -17,6 +17,9 @@ const galleryImages = [
 
 export default function Gallery() {
   const [selectedIndex, setSelectedIndex] = useState(null);
+  const [screenWidth, setScreenWidth] = useState(
+    typeof window !== "undefined" ? window.innerWidth : 1440
+  );
   const thumbnailStripRef = useRef(null);
 
   const selectedImage =
@@ -31,24 +34,27 @@ export default function Gallery() {
   }, []);
 
   const showPrev = useCallback(() => {
-    setSelectedIndex((prev) => {
-      if (prev === null) return 0;
-      return (prev - 1 + galleryImages.length) % galleryImages.length;
-    });
+    setSelectedIndex((prev) =>
+      prev === null ? 0 : (prev - 1 + galleryImages.length) % galleryImages.length
+    );
   }, []);
 
   const showNext = useCallback(() => {
-    setSelectedIndex((prev) => {
-      if (prev === null) return 0;
-      return (prev + 1) % galleryImages.length;
-    });
+    setSelectedIndex((prev) =>
+      prev === null ? 0 : (prev + 1) % galleryImages.length
+    );
+  }, []);
+
+  useEffect(() => {
+    const onResize = () => setScreenWidth(window.innerWidth);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
   }, []);
 
   useEffect(() => {
     if (selectedIndex !== null) {
       const previousOverflow = document.body.style.overflow;
       document.body.style.overflow = "hidden";
-
       return () => {
         document.body.style.overflow = previousOverflow;
       };
@@ -86,12 +92,18 @@ export default function Gallery() {
     return `${selectedIndex + 1} / ${galleryImages.length}`;
   }, [selectedIndex]);
 
+  const columns = useMemo(() => {
+    if (screenWidth >= 1024) return 5;
+    if (screenWidth >= 768) return 3;
+    return 2;
+  }, [screenWidth]);
+
   return (
     <div className="min-h-screen bg-black text-white">
       <Navbar />
 
       <section id="top" className="relative pt-28 md:pt-32 pb-12 md:pb-16">
-        <div className="w-full max-w-none mx-auto px-6 md:px-8">
+        <div className="w-full px-5 md:px-8">
           <motion.div
             initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
@@ -123,7 +135,8 @@ export default function Gallery() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.08 }}
-            className="grid grid-cols-2 md:grid-cols-3 lg:[grid-template-columns:repeat(5,minmax(0,1fr))] gap-4 md:gap-5"
+            className="grid gap-4 md:gap-5"
+            style={{ gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` }}
           >
             {galleryImages.map((src, index) => (
               <button
@@ -137,7 +150,7 @@ export default function Gallery() {
                     src={src}
                     alt={`Gallery image ${index + 1}`}
                     loading="lazy"
-                    className="block w-full aspect-[4/5] object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02] group-hover:brightness-[1.03]"
+                    className="block w-full aspect-[4/5] object-cover rounded-[24px] transition-transform duration-700 ease-out group-hover:scale-[1.02] group-hover:brightness-[1.03]"
                   />
                 </div>
               </button>
@@ -203,7 +216,7 @@ export default function Gallery() {
             <button
               type="button"
               onClick={showPrev}
-              className="hidden md:inline-flex absolute left-4 lg:left-6 top-1/2 -translate-y-1/2 z-40 items-center justify-center w-11 h-11 lg:w-12 lg:h-12 rounded-full bg-white/10 hover:bg-white/15 border border-white/10 transition-colors backdrop-blur-md"
+              className="hidden md:flex absolute left-6 top-1/2 -translate-y-1/2 z-[60] items-center justify-center w-12 h-12 rounded-full bg-white/10 hover:bg-white/15 border border-white/10 backdrop-blur-md"
             >
               <ChevronLeft className="w-5 h-5 text-white" />
             </button>
@@ -211,7 +224,7 @@ export default function Gallery() {
             <button
               type="button"
               onClick={showNext}
-              className="hidden md:inline-flex absolute right-4 lg:right-6 top-1/2 -translate-y-1/2 z-40 items-center justify-center w-11 h-11 lg:w-12 lg:h-12 rounded-full bg-white/10 hover:bg-white/15 border border-white/10 transition-colors backdrop-blur-md"
+              className="hidden md:flex absolute right-6 top-1/2 -translate-y-1/2 z-[60] items-center justify-center w-12 h-12 rounded-full bg-white/10 hover:bg-white/15 border border-white/10 backdrop-blur-md"
             >
               <ChevronRight className="w-5 h-5 text-white" />
             </button>
