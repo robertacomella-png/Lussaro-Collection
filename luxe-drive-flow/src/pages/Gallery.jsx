@@ -91,7 +91,7 @@ export default function Gallery() {
       <Navbar />
 
       <section id="top" className="relative pt-28 md:pt-32 pb-12 md:pb-16">
-        <div className="max-w-[1800px] mx-auto px-6 md:px-8">
+        <div className="w-full max-w-none mx-auto px-6 md:px-8">
           <motion.div
             initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
@@ -123,7 +123,7 @@ export default function Gallery() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.08 }}
-            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-5"
+            className="grid grid-cols-2 md:grid-cols-3 lg:[grid-template-columns:repeat(5,minmax(0,1fr))] gap-4 md:gap-5"
           >
             {galleryImages.map((src, index) => (
               <button
