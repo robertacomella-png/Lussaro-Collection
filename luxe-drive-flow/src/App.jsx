@@ -8,6 +8,7 @@ import UserNotRegisteredError from "@/components/UserNotRegisteredError";
 import Home from "./pages/Home";
 import Gallery from "./pages/Gallery";
 import { useEffect } from "react";
+import WidgetVisibility from "@/components/fleet/WidgetVisibility";
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } =
