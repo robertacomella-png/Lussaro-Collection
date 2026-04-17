@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, MessageCircle, MapPin } from "lucide-react";
+import { MessageCircle, MapPin, X } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
   const [locationOpen, setLocationOpen] = useState(false);
 
   useEffect(() => {
@@ -18,7 +17,6 @@ export default function Navbar() {
     const onKeyDown = (e) => {
       if (e.key === "Escape") {
         setLocationOpen(false);
-        setMobileOpen(false);
       }
     };
 
@@ -74,56 +72,17 @@ export default function Navbar() {
             </a>
           </div>
 
-          <button
-            type="button"
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden text-white cursor-pointer"
-          >
-            {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
-        </div>
-      </motion.nav>
-
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[998] bg-black/95 backdrop-blur-xl flex flex-col items-center justify-center gap-6 md:hidden"
-          >
+          {/* Mobile only: static Gallery button */}
+          <div className="md:hidden">
             <Link
               to="/gallery"
-              onClick={() => setMobileOpen(false)}
-              className="text-white text-2xl font-light tracking-tight"
+              className="inline-flex items-center justify-center bg-white text-black text-sm px-5 py-2 rounded-full font-medium hover:bg-[#c9a96e] hover:text-black transition-all duration-300"
             >
               Gallery
             </Link>
-
-            <button
-              type="button"
-              onClick={() => {
-                setMobileOpen(false);
-                setLocationOpen(true);
-              }}
-              className="inline-flex items-center gap-2 bg-white text-black text-lg px-8 py-3 rounded-full font-medium hover:bg-[#c9a96e] transition-all duration-300"
-            >
-              Find Us
-              <MapPin className="w-5 h-5 text-black" />
-            </button>
-
-            <a
-              href="https://wa.me/16452487305"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-white text-black text-lg px-8 py-3 rounded-full font-medium hover:bg-[#c9a96e] transition-all duration-300"
-            >
-              Contact Us
-              <MessageCircle className="w-5 h-5 text-[#25D366]" />
-            </a>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+        </div>
+      </motion.nav>
 
       <AnimatePresence>
         {locationOpen && (
