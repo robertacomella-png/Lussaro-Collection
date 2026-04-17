@@ -63,17 +63,18 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
-            className="w-full max-w-xs sm:max-w-none mt-32 md:mt-0"
+            className="w-full max-w-[360px] md:max-w-[420px] mt-32 md:mt-0"
           >
-            <div className="flex flex-col gap-4 items-center">
+            <div className="flex flex-col gap-3 md:gap-4 items-center w-full">
               <button
                 onClick={scrollToFleet}
-                className="w-full sm:w-auto bg-white text-black px-8 py-3.5 rounded-full text-sm font-medium hover:bg-[#c9a96e] hover:text-white transition-all duration-500"
+                className="w-full bg-white text-black px-8 py-3.5 rounded-full text-sm font-medium hover:bg-[#c9a96e] hover:text-white transition-all duration-500"
               >
                 Explore the Fleet
               </button>
 
-              <div className="grid grid-cols-2 gap-4 w-full md:hidden">
+              {/* Mobile buttons */}
+              <div className="grid grid-cols-2 gap-3 w-full md:hidden">
                 <a
                   href="https://wa.me/16452487305"
                   target="_blank"
@@ -94,11 +95,12 @@ export default function HeroSection() {
                 </button>
               </div>
 
+              {/* Desktop WhatsApp button */}
               <a
                 href="https://wa.me/16452487305"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hidden md:flex w-full sm:w-auto items-center justify-center gap-2 border border-[#25D366]/40 text-white px-8 py-3.5 rounded-full text-sm font-medium hover:bg-[#25D366]/10 hover:border-[#25D366] transition-all duration-300"
+                className="hidden md:flex w-full items-center justify-center gap-2 border border-[#25D366]/40 text-white px-8 py-3.5 rounded-full text-sm font-medium hover:bg-[#25D366]/10 hover:border-[#25D366] transition-all duration-300"
               >
                 Book via WhatsApp
                 <MessageCircle className="w-4 h-4 text-[#25D366]" />
