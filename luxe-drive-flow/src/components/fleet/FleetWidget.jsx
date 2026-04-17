@@ -1,30 +1,44 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 
 export default function FleetWidget() {
-  const containerRef = useRef(null);
-
   useEffect(() => {
-    if (!containerRef.current) return;
+    const container = document.getElementById("fleet-widget-container");
+    if (!container) return;
 
-    containerRef.current.innerHTML = "";
+    container.innerHTML = "";
 
-    const script = document.createElement("script");
-    script.src = "https://getautoflow.io/fleet-widget.js";
-    script.async = true;
-    script.setAttribute("data-widget-id", "Ov8zdTMWBJMRhG2gdon5xhd8n383");
-    script.setAttribute("data-theme", "dark");
-    script.setAttribute("data-color", "#bfa673");
-    script.setAttribute("data-company", "Lussaro Collection LLC");
-    script.setAttribute("data-language", "en");
+    const oldScript = document.getElementById("autoflow-fleet-script");
+    if (oldScript) {
+      oldScript.remove();
+    }
 
-    containerRef.current.appendChild(script);
+    const timeout = setTimeout(() => {
+      const script = document.createElement("script");
+      script.id = "autoflow-fleet-script";
+      script.src = "https://getautoflow.io/fleet-widget.js";
+      script.async = true;
+      script.setAttribute("data-widget-id", "Ov8zdTMWBJMRhG2gdon5xhd8n383");
+      script.setAttribute("data-theme", "dark");
+      script.setAttribute("data-color", "#bfa673");
+      script.setAttribute("data-company", "Lussaro Collection LLC");
+      script.setAttribute("data-language", "en");
+      document.body.appendChild(script);
+    }, 300);
 
     return () => {
-      if (containerRef.current) {
-        containerRef.current.innerHTML = "";
-      }
+      clearTimeout(timeout);
+
+      const script = document.getElementById("autoflow-fleet-script");
+      if (script) script.remove();
+
+      const widgetContainer = document.getElementById("fleet-widget-container");
+      if (widgetContainer) widgetContainer.innerHTML = "";
     };
   }, []);
 
-  return <div id="fleet-widget-container" ref={containerRef} />;
+  return (
+    <div className="w-full">
+      <div id="fleet-widget-container" />
+    </div>
+  );
 }
