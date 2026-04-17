@@ -1,19 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export default function FleetWidget() {
+  const containerRef = useRef(null);
+
   useEffect(() => {
-    const oldScript = document.querySelector(
-      'script[src="https://getautoflow.io/fleet-widget.js"]'
-    );
+    if (!containerRef.current) return;
 
-    if (oldScript) {
-      oldScript.remove();
-    }
-
-    const container = document.getElementById("fleet-widget-container");
-    if (container) {
-      container.innerHTML = "";
-    }
+    containerRef.current.innerHTML = "";
 
     const script = document.createElement("script");
     script.src = "https://getautoflow.io/fleet-widget.js";
@@ -23,15 +16,15 @@ export default function FleetWidget() {
     script.setAttribute("data-color", "#bfa673");
     script.setAttribute("data-company", "Lussaro Collection LLC");
     script.setAttribute("data-language", "en");
-    document.body.appendChild(script);
+
+    containerRef.current.appendChild(script);
 
     return () => {
-      const widgetContainer = document.getElementById("fleet-widget-container");
-      if (widgetContainer) {
-        widgetContainer.innerHTML = "";
+      if (containerRef.current) {
+        containerRef.current.innerHTML = "";
       }
     };
   }, []);
 
-  return <div id="fleet-widget-container" />;
+  return <div id="fleet-widget-container" ref={containerRef} />;
 }
