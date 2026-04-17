@@ -6,6 +6,7 @@ import ProcessSection from "../components/process/ProcessSection";
 import TestimonialsSection from "../components/testimonials/TestimonialsSection";
 import CTASection from "../components/cta/CTASection";
 import Footer from "../components/footer/Footer";
+import FleetWidget from "@/components/fleet/FleetWidget";
 
 export default function Home() {
   return (
