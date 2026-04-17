@@ -63,23 +63,23 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
-            className="w-full max-w-[360px] md:max-w-none mt-32 md:mt-0"
+            className="w-full max-w-[360px] md:max-w-[420px] mt-32 md:mt-0"
           >
             <div className="flex flex-col gap-3 md:gap-4 items-center w-full">
               <button
                 onClick={scrollToFleet}
-                className="w-full md:w-auto md:min-w-[320px] bg-white text-black px-8 md:px-10 py-3.5 rounded-full text-sm font-medium hover:bg-[#c9a96e] hover:text-white transition-all duration-500"
+                className="w-full bg-white text-black px-8 py-3.5 rounded-full text-sm font-medium hover:bg-[#c9a96e] hover:text-white transition-all duration-500"
               >
                 Explore the Fleet
               </button>
 
               {/* Mobile buttons */}
-              <div className="grid grid-cols-2 gap-3 w-full md:hidden">
+              <div className="grid grid-cols-2 gap-2 w-[85%] mx-auto md:hidden">
                 <a
                   href="https://wa.me/16452487305"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 border border-[#25D366]/50 text-white px-4 py-3.5 rounded-full text-sm font-medium hover:bg-[#25D366]/10 transition-all duration-300 backdrop-blur-sm"
+                  className="flex items-center justify-center gap-2 border border-[#25D366]/50 text-white px-3 py-3 rounded-full text-sm font-medium hover:bg-[#25D366]/10 transition-all duration-300 backdrop-blur-sm"
                 >
                   WhatsApp
                   <MessageCircle className="w-4 h-4 text-[#25D366]" />
@@ -88,7 +88,7 @@ export default function HeroSection() {
                 <button
                   type="button"
                   onClick={() => setLocationOpen(true)}
-                  className="flex items-center justify-center gap-2 border border-[#c9a96e]/50 text-white px-4 py-3.5 rounded-full text-sm font-medium hover:bg-[#c9a96e]/10 transition-all duration-300 backdrop-blur-sm"
+                  className="flex items-center justify-center gap-2 border border-[#c9a96e]/50 text-white px-3 py-3 rounded-full text-sm font-medium hover:bg-[#c9a96e]/10 transition-all duration-300 backdrop-blur-sm"
                 >
                   Find Us
                   <MapPin className="w-4 h-4 text-[#c9a96e]" />
@@ -100,7 +100,7 @@ export default function HeroSection() {
                 href="https://wa.me/16452487305"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hidden md:flex md:min-w-[320px] w-auto items-center justify-center gap-2 border border-[#25D366]/40 text-white px-8 md:px-10 py-3.5 rounded-full text-sm font-medium hover:bg-[#25D366]/10 hover:border-[#25D366] transition-all duration-300"
+                className="hidden md:flex w-full items-center justify-center gap-2 border border-[#25D366]/40 text-white px-8 py-3.5 rounded-full text-sm font-medium hover:bg-[#25D366]/10 hover:border-[#25D366] transition-all duration-300"
               >
                 Book via WhatsApp
                 <MessageCircle className="w-4 h-4 text-[#25D366]" />
