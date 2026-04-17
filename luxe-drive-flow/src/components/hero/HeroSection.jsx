@@ -74,7 +74,7 @@ export default function HeroSection() {
               </button>
 
               {/* Mobile buttons */}
-              <div className="grid grid-cols-2 gap-[6px] w-full md:hidden">
+              <div className="grid grid-cols-2 gap-4 w-full md:hidden">
                 <a
                   href="https://wa.me/16452487305"
                   target="_blank"
