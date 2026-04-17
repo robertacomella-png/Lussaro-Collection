@@ -123,7 +123,7 @@ export default function Gallery() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.08 }}
-            className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 md:gap-5"
+            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-5"
           >
             {galleryImages.map((src, index) => (
               <button
@@ -203,7 +203,7 @@ export default function Gallery() {
             <button
               type="button"
               onClick={showPrev}
-              className="hidden md:inline-flex absolute left-6 top-1/2 -translate-y-1/2 z-30 items-center justify-center w-12 h-12 rounded-full bg-white/10 hover:bg-white/15 border border-white/10 transition-colors backdrop-blur-md"
+              className="hidden md:inline-flex absolute left-4 lg:left-6 top-1/2 -translate-y-1/2 z-40 items-center justify-center w-11 h-11 lg:w-12 lg:h-12 rounded-full bg-white/10 hover:bg-white/15 border border-white/10 transition-colors backdrop-blur-md"
             >
               <ChevronLeft className="w-5 h-5 text-white" />
             </button>
@@ -211,7 +211,7 @@ export default function Gallery() {
             <button
               type="button"
               onClick={showNext}
-              className="hidden md:inline-flex absolute right-6 top-1/2 -translate-y-1/2 z-30 items-center justify-center w-12 h-12 rounded-full bg-white/10 hover:bg-white/15 border border-white/10 transition-colors backdrop-blur-md"
+              className="hidden md:inline-flex absolute right-4 lg:right-6 top-1/2 -translate-y-1/2 z-40 items-center justify-center w-11 h-11 lg:w-12 lg:h-12 rounded-full bg-white/10 hover:bg-white/15 border border-white/10 transition-colors backdrop-blur-md"
             >
               <ChevronRight className="w-5 h-5 text-white" />
             </button>
