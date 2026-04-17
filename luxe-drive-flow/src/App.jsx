@@ -57,6 +57,7 @@ function App() {
     <AuthProvider>
       <QueryClientProvider client={queryClientInstance}>
         <Router>
+          <WidgetVisibility />
           <AuthenticatedApp />
         </Router>
         <Toaster />
