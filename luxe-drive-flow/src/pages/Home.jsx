@@ -15,6 +15,7 @@ export default function Home() {
       <HeroSection />
       <div id="experience">
         <FleetSection />
+        <FleetWidget />
       </div>
       <ExperienceSection />
       <div id="process">
