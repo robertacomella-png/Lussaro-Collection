@@ -10,6 +10,7 @@ import Gallery from "./pages/Gallery";
 import { useEffect } from "react";
 import WidgetVisibility from "@/components/fleet/WidgetVisibility";
 import Terms from "@/pages/Terms";
+import Privacy from "@/pages/Privacy";
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } =
@@ -39,6 +40,7 @@ const AuthenticatedApp = () => {
       <Route path="/gallery" element={<Gallery />} />
       <Route path="*" element={<PageNotFound />} />
       <Route path="/terms" element={<Terms />} />
+      <Route path="/privacy" element={<Privacy />} />
     </Routes>
   );
 };
