@@ -7,6 +7,7 @@ export const fleet = [
     price: 999,
     power: 641,
     miles: 100,
+    zeroToSixty: "3.1s",
     image: "https://ik.imagekit.io/8i3ae7fac/IMG_3317.jpg",
   },
   {
@@ -17,6 +18,7 @@ export const fleet = [
     price: 899,
     power: 550,
     miles: 100,
+    zeroToSixty: "4.5s",
     image: "https://ik.imagekit.io/8i3ae7fac/cars-07.jpg",
   },
 ];
