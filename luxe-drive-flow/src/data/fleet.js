@@ -7,7 +7,7 @@ export const fleet = [
     price: 1099,
     power: 641,
     miles: 100,
-    zeroToSixty: "3.1s",
+    zeroToSixty: "3.3s",
     description:
       "The Lamborghini Urus is pure Miami energy—fast, bold, and built to dominate the streets. With supercar performance in an SUV, it delivers explosive power and head-turning style wherever you go. From South Beach to Brickell, this is how you stand out and own the road.",
 
