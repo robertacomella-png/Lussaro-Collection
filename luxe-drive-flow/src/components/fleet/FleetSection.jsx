@@ -5,11 +5,8 @@ import FleetCard from "./FleetCard";
 import { fleet } from "@/data/fleet";
 
 export default function FleetSection() {
-  const [sortBy, setSortBy] = useState("price");
   const [activeCar, setActiveCar] = useState(null);
   const [activeImage, setActiveImage] = useState(0);
-
-  });
 
   useEffect(() => {
     if (activeCar) {
@@ -50,26 +47,8 @@ export default function FleetSection() {
           </p>
         </motion.div>
 
-        <div className="flex justify-center mb-10">
-          <div className="grid grid-cols-3 gap-3 w-full max-w-2xl">
-            {["price", "make", "year"].map((item) => (
-              <button
-                key={item}
-                onClick={() => setSortBy(item)}
-                className={`rounded-full border px-4 py-3 text-sm transition ${
-                  sortBy === item
-                    ? "bg-black text-white border-black"
-                    : "border-black/10 text-black hover:bg-black hover:text-white"
-                }`}
-              >
-                {item.charAt(0).toUpperCase() + item.slice(1)}
-              </button>
-            ))}
-          </div>
-        </div>
-
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-          {sortedFleet.map((car) => (
+          {fleet.map((car) => (
             <FleetCard key={car.id} car={car} onOpen={setActiveCar} />
           ))}
         </div>
@@ -152,7 +131,7 @@ export default function FleetSection() {
                       </p>
 
                       <p className="text-[#c9a96e] text-3xl md:text-4xl font-semibold tracking-tight leading-none">
-                        ${activeCar.price}
+                        ${activeCar.price.toLocaleString()}
                         <span className="text-white/45 text-sm font-normal ml-1">
                           /day
                         </span>
