@@ -21,9 +21,9 @@ export const fleet = [
     zeroToSixty: "4.5s",
     images: [
       "https://ik.imagekit.io/8i3ae7fac/cars-07.jpg",
-      "https://ik.imagekit.io/8i3ae7fac/cars-07.jpg",
-      "https://ik.imagekit.io/8i3ae7fac/cars-07.jpg",
-      "https://ik.imagekit.io/8i3ae7fac/cars-07.jpg",
+      "https://ik.imagekit.io/8i3ae7fac/cars-11.jpg?updatedAt=1776280620514",
+      "https://ik.imagekit.io/8i3ae7fac/default-image.jpg?updatedAt=1776279192213",
+      "https://ik.imagekit.io/8i3ae7fac/sample-video.mp4?updatedAt=1776279192491",
       ],
   },
   {
