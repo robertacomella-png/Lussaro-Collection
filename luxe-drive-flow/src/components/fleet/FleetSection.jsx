@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, MessageCircle } from "lucide-react";
+import { X } from "lucide-react";
 import FleetCard from "./FleetCard";
 import { fleet } from "@/data/fleet";
 
@@ -32,6 +32,8 @@ export default function FleetSection() {
   return (
     <section id="fleet" className="bg-[#f7f5f0] py-16 md:py-24">
       <div className="max-w-7xl mx-auto px-4 md:px-6">
+
+        {/* HEADER */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -48,11 +50,11 @@ export default function FleetSection() {
           </h2>
 
           <p className="text-[#0a0a0a]/50 mt-4 text-base md:text-lg font-light max-w-xl mx-auto">
-            Each vehicle in our collection is meticulously maintained and detailed
-            to showroom standards.
+            Each vehicle in our collection is meticulously maintained.
           </p>
         </motion.div>
 
+        {/* FILTER */}
         <div className="flex justify-center mb-10">
           <div className="grid grid-cols-3 gap-3 w-full max-w-2xl">
             {["price", "make", "year"].map((item) => (
@@ -71,6 +73,7 @@ export default function FleetSection() {
           </div>
         </div>
 
+        {/* GRID */}
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {sortedFleet.map((car) => (
             <FleetCard key={car.id} car={car} onOpen={setActiveCar} />
@@ -78,6 +81,7 @@ export default function FleetSection() {
         </div>
       </div>
 
+      {/* MODAL */}
       <AnimatePresence>
         {activeCar && (
           <motion.div
@@ -95,116 +99,91 @@ export default function FleetSection() {
               onClick={(e) => e.stopPropagation()}
               className="relative w-full max-w-6xl max-h-[92vh] overflow-y-auto rounded-[30px] md:rounded-[36px] bg-[#111] border border-white/10 shadow-[0_30px_120px_rgba(0,0,0,0.65)]"
             >
+
+              {/* CLOSE */}
               <button
-                type="button"
                 onClick={() => setActiveCar(null)}
-                className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-black/50 hover:bg-black/70 border border-white/10 backdrop-blur-md flex items-center justify-center transition"
+                className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-black/50 hover:bg-black/70 border border-white/10 flex items-center justify-center"
               >
                 <X className="w-5 h-5 text-white" />
               </button>
 
-              <div className="grid lg:grid-cols-[1.2fr_0.8fr] gap-6 md:gap-8 p-3 md:p-6">
-                <div>
-                  <div className="overflow-hidden rounded-[24px] bg-black">
-                    <motion.img
-                      key={(activeCar.images?.[activeImage] || activeCar.image)}
-                      src={activeCar.images?.[activeImage] || activeCar.image}
-                      alt={activeCar.name}
-                      initial={{ opacity: 0.65, scale: 1.015 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.28 }}
-                      className="w-full aspect-[4/3] md:aspect-[16/10] object-cover"
-                    />
-                  </div>
+              <div className="grid lg:grid-cols-[1.2fr_0.8fr] gap-6 md:gap-8 p-4 md:p-6">
 
-                  <div className="grid grid-cols-4 gap-2 md:gap-3 mt-3">
-                    {(activeCar.images || [activeCar.image]).map((img, index) => (
-                      <button
-                        key={img}
-                        type="button"
-                        onClick={() => setActiveImage(index)}
-                        className={`overflow-hidden rounded-2xl border transition ${
-                          activeImage === index
-                            ? "border-[#c9a96e] opacity-100"
-                            : "border-white/10 opacity-55 hover:opacity-85"
-                        }`}
-                      >
+                {/* LEFT - IMAGES */}
+                <div>
+                  <img
+                    src={activeCar.images?.[activeImage]}
+                    className="w-full rounded-[22px] object-cover"
+                  />
+
+                  <div className="grid grid-cols-4 gap-2 mt-3">
+                    {activeCar.images.map((img, i) => (
+                      <button key={i} onClick={() => setActiveImage(i)}>
                         <img
                           src={img}
-                          alt=""
-                          className="w-full aspect-[4/3] object-cover"
+                          className={`rounded-xl border ${
+                            i === activeImage
+                              ? "border-[#c9a96e]"
+                              : "border-white/10 opacity-60"
+                          }`}
                         />
                       </button>
                     ))}
                   </div>
                 </div>
 
-                <div className="text-white px-1 md:px-0 pb-2 md:py-4 flex flex-col justify-center">
-                  <p className="text-[#c9a96e] tracking-[0.25em] uppercase text-[10px] md:text-xs mb-3">
-                    {activeCar.make} • {activeCar.year}
-                  </p>
+                {/* RIGHT - CONTENT */}
+                <div className="text-white flex flex-col">
 
-                  <h3 className="text-3xl md:text-5xl font-semibold tracking-tight leading-none mb-4">
-                    {activeCar.name}
-                  </h3>
-
-                  <p className="text-white/60 text-sm md:text-base leading-relaxed mb-6">
-                    {activeCar.description}
-                  </p>
-
-                  <div className="mb-6">
-                    <p className="text-white/40 text-xs uppercase tracking-[0.22em] mb-2">
-                      Starting At
-                    </p>
-
-                    <p className="text-[#c9a96e] text-4xl md:text-5xl font-semibold tracking-tight">
-                      ${activeCar.price}
-                      <span className="text-white/45 text-sm font-normal ml-1">
-                        /day
-                      </span>
-                    </p>
-                  </div>
-
-                  <div className="grid grid-cols-3 gap-2 md:gap-3 mb-6">
-                    <div className="rounded-2xl bg-white/[0.045] px-2 py-3 text-center">
-                      <p className="text-white text-lg md:text-2xl font-semibold">
-                        {activeCar.zeroToSixty}
-                      </p>
-                      <p className="text-white/35 text-[10px] md:text-xs mt-1">
-                        0–60
-                      </p>
-                    </div>
-
-                    <div className="rounded-2xl bg-white/[0.045] px-2 py-3 text-center">
-                      <p className="text-white text-lg md:text-2xl font-semibold">
-                        {activeCar.power}
-                      </p>
-                      <p className="text-white/35 text-[10px] md:text-xs mt-1">
-                        HP
-                      </p>
-                    </div>
-
-                    <div className="rounded-2xl bg-white/[0.045] px-2 py-3 text-center">
-                      <p className="text-white text-lg md:text-2xl font-semibold">
-                        {activeCar.miles}
-                      </p>
-                      <p className="text-white/35 text-[10px] md:text-xs mt-1">
-                        mi/day
-                      </p>
-                    </div>
-                  </div>
-
+                  {/* 🔥 TOP CTA */}
                   <a
                     href={`https://wa.me/16452487305?text=${encodeURIComponent(
                       `Hi, I'm interested in booking the ${activeCar.name}.`
                     )}`}
                     target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 w-full bg-[#c9a96e] text-black py-4 rounded-full text-sm font-semibold hover:bg-white transition"
+                    className="w-full bg-[#c9a96e] text-black py-4 rounded-full text-sm font-semibold text-center mb-6 hover:bg-white transition"
                   >
-                    Book Now
-                    <MessageCircle className="w-4 h-4" />
+                    Reserve Now
                   </a>
+
+                  <p className="text-[#c9a96e] text-xs uppercase mb-2">
+                    {activeCar.make} • {activeCar.year}
+                  </p>
+
+                  <h3 className="text-3xl md:text-5xl font-semibold mb-4">
+                    {activeCar.name}
+                  </h3>
+
+                  {/* PRICE */}
+                  <p className="text-[#c9a96e] text-4xl md:text-5xl mb-6">
+                    ${activeCar.price}
+                    <span className="text-white/50 text-sm"> /day</span>
+                  </p>
+
+                  {/* SPECS */}
+                  <div className="grid grid-cols-3 gap-3 mb-8">
+                    <div className="bg-white/5 p-3 rounded-xl text-center">
+                      <p>{activeCar.zeroToSixty}</p>
+                      <p className="text-xs text-white/40">0–60</p>
+                    </div>
+
+                    <div className="bg-white/5 p-3 rounded-xl text-center">
+                      <p>{activeCar.power}</p>
+                      <p className="text-xs text-white/40">HP</p>
+                    </div>
+
+                    <div className="bg-white/5 p-3 rounded-xl text-center">
+                      <p>{activeCar.miles}</p>
+                      <p className="text-xs text-white/40">Miles/day</p>
+                    </div>
+                  </div>
+
+                  {/* DESCRIPTION AT BOTTOM */}
+                  <p className="text-white/70 text-sm leading-relaxed">
+                    {activeCar.description}
+                  </p>
+
                 </div>
               </div>
             </motion.div>
