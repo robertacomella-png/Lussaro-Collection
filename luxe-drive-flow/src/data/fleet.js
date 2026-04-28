@@ -41,7 +41,7 @@ export const fleet = [
    },
 
   {
-    id: 3,
+    id: 1,
     name: "Huracan Evo",
     make: "Lamborghini",
     year: 2023,
