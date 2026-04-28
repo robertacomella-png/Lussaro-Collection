@@ -40,10 +40,10 @@ export const fleet = [
   },
   {
     id: 3,
-    name: "GLS 600 Maybach",
-    make: "Mercedes-Benz",
+    name: "Huracan EVO",
+    make: "Lamborghini",
     year: 2023,
-    price: 899,
+    price: 1,399,
     power: 550,
     miles: 100,
     zeroToSixty: "4.5s",
