@@ -9,11 +9,6 @@ export default function FleetSection() {
   const [activeCar, setActiveCar] = useState(null);
   const [activeImage, setActiveImage] = useState(0);
 
-  const sortedFleet = [...fleet].sort((a, b) => {
-    if (sortBy === "price") return b.price - a.price;
-    if (sortBy === "year") return b.year - a.year;
-    if (sortBy === "make") return a.make.localeCompare(b.make);
-    return 0;
   });
 
   useEffect(() => {
