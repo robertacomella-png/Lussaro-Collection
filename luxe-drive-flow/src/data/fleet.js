@@ -15,6 +15,7 @@ export const fleet = [
       "https://ik.imagekit.io/8i3ae7fac/IMG_3317.jpg",
       "https://ik.imagekit.io/8i3ae7fac/IMG_2643%203.jpg",
       "https://ik.imagekit.io/8i3ae7fac/IMG_2670%203.jpg",
+      "https://ik.imagekit.io/8i3ae7fac/IMG_2671%203.jpg?updatedAt=1777400814022",
      
     ],
   },
