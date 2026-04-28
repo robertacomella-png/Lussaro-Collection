@@ -9,7 +9,7 @@ export const fleet = [
     miles: 100,
     zeroToSixty: "3.1s",
     description:
-      "This isn’t just a rental. It’s a feeling. The moment you step into the Lamborghini Urus, everything changes. The engine starts with a deep, aggressive roar, and instantly you feel it. Power, confidence, attention. Every light turns into a moment. Every street feels like it’s yours. Driving through Miami, people don’t just notice, they stare. Heads turn, cameras come out, and for that time behind the wheel, you’re not just another person on the road. You’re the one everyone’s watching. Press the gas and the Urus responds instantly. The acceleration pushes you back into your seat, mixing adrenaline with control. It’s fast, it’s loud, it’s alive, while still wrapped in pure luxury and comfort. Whether you’re pulling up to a restaurant in Brickell, cruising Ocean Drive at night, or making an entrance anywhere in the city, this is more than transportation. It’s presence.",
+      "The Lamborghini Urus is pure Miami energy—fast, bold, and built to dominate the streets. With supercar performance in an SUV, it delivers explosive power and head-turning style wherever you go. From South Beach to Brickell, this is how you stand out and own the road.",
 
     images: [
       "https://ik.imagekit.io/8i3ae7fac/IMG_3317.jpg",
