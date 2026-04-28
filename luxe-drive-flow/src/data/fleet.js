@@ -43,7 +43,7 @@ export const fleet = [
     name: "Huracan EVO",
     make: "Lamborghini",
     year: 2023,
-    price: 1,399,
+    price: 1399,
     power: 550,
     miles: 100,
     zeroToSixty: "4.5s",
