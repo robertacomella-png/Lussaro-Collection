@@ -14,7 +14,7 @@ export default function FleetCard({ car, onOpen }) {
       <div className="p-3">
         <div className="overflow-hidden rounded-[18px]">
           <img
-            src={car.image}
+            src={car.images?.[0] || car.image}
             alt={car.name}
             className="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-[1.03]"
           />
@@ -23,13 +23,10 @@ export default function FleetCard({ car, onOpen }) {
 
       <div className="px-4 pb-4 text-white">
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-lg md:text-xl font-semibold">
-            {car.name}
-          </h3>
+          <h3 className="text-lg md:text-xl font-semibold">{car.name}</h3>
           <ShieldCheck className="w-5 h-5 text-[#c9a96e]" />
         </div>
 
-        {/* 🔥 PRICE (kept strong like before) */}
         <div className="mb-3">
           <p className="text-[#c9a96e] text-2xl md:text-3xl font-semibold">
             ${car.price}
@@ -37,14 +34,12 @@ export default function FleetCard({ car, onOpen }) {
           </p>
         </div>
 
-        {/* 🔥 CLEAN METRICS */}
         <div className="flex justify-between text-xs text-white/60 mb-4">
           <span>{car.zeroToSixty}</span>
           <span>{car.power}hp</span>
           <span>{car.miles}mi/day</span>
         </div>
 
-        {/* BOOK BUTTON */}
         <a
           href={`https://wa.me/16452487305?text=${message}`}
           target="_blank"
