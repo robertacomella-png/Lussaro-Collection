@@ -19,7 +19,12 @@ export const fleet = [
     power: 550,
     miles: 100,
     zeroToSixty: "4.5s",
-    image: "https://ik.imagekit.io/8i3ae7fac/cars-07.jpg",
+    images: [
+      "https://ik.imagekit.io/8i3ae7fac/cars-07.jpg",
+      https://ik.imagekit.io/8i3ae7fac/cars-07.jpg",
+      https://ik.imagekit.io/8i3ae7fac/cars-07.jpg",
+      https://ik.imagekit.io/8i3ae7fac/cars-07.jpg",
+      ],
   },
   {
     id: 2,
