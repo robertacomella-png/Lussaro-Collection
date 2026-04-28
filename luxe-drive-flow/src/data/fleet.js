@@ -4,7 +4,7 @@ export const fleet = [
     name: "Lamborghini Urus",
     make: "Lamborghini",
     year: 2023,
-    price: 999,
+    price: 1099,
     power: 641,
     miles: 100,
     zeroToSixty: "3.1s",
@@ -25,12 +25,12 @@ export const fleet = [
     name: "GLS 600 Maybach",
     make: "Mercedes-Benz",
     year: 2023,
-    price: 899,
+    price: 999,
     power: 550,
     miles: 100,
-    zeroToSixty: "4.5s",
+    zeroToSixty: "4.6s",
     description:
-      "This isn’t about speed. It’s about how you feel when everything around you slows down. Step into the Mercedes-Maybach GLS 600 and you’re instantly surrounded by silence, comfort, and presence. The doors close softly, shutting out the noise of the city, and for a moment, it feels like Miami belongs to you. Every detail inside is designed to make you feel elevated. The leather, the ambient lighting, the space to stretch out and relax. Whether you’re sitting in the driver’s seat or being driven, it’s not just a ride, it’s an experience of pure luxury. Cruising through Miami, the Maybach doesn’t need to be loud to stand out. It carries a quiet confidence. People notice without you trying. It’s the kind of presence that speaks without saying a word. This is the vehicle for nights that matter. For arriving calm, composed, and unforgettable. For turning a simple drive into something that feels exclusive.",
+      "The Mercedes-Maybach GLS 600 is Miami luxury at its finest—effortless, bold, and impossible to ignore. Glide through the city in total comfort with a whisper-smooth ride and a handcrafted interior that feels like a private jet on wheels. Whether it’s a night in Brickell or a pull-up in South Beach, this is how you make an entrance.",
 
     images: [
       "https://ik.imagekit.io/8i3ae7fac/maybach.jpg",
@@ -44,9 +44,9 @@ export const fleet = [
     price: 1399,
     power: 650,
     miles: 100,
-    zeroToSixty: "3.0s",
+    zeroToSixty: "3.2s",
     description:
-      "This isn’t about speed. It’s about how you feel when everything around you slows down. Step into the Mercedes-Maybach GLS 600 and you’re instantly surrounded by silence, comfort, and presence. The doors close softly, shutting out the noise of the city, and for a moment, it feels like Miami belongs to you. Every detail inside is designed to make you feel elevated. The leather, the ambient lighting, the space to stretch out and relax. Whether you’re sitting in the driver’s seat or being driven, it’s not just a ride, it’s an experience of pure luxury. Cruising through Miami, the Maybach doesn’t need to be loud to stand out. It carries a quiet confidence. People notice without you trying. It’s the kind of presence that speaks without saying a word. This is the vehicle for nights that matter. For arriving calm, composed, and unforgettable. For turning a simple drive into something that feels exclusive.",
+      "The Lamborghini Huracán EVO is built for Miami—loud, fast, and impossible to miss. With its screaming V10 and razor-sharp handling, it delivers pure adrenaline every time you hit the gas. Whether you’re cruising Ocean Drive or making a statement in Brickell, this is how you turn every head in the city.",
 
     images: [
       "https://ik.imagekit.io/8i3ae7fac/huracan%20evo.jpg",
@@ -57,12 +57,12 @@ export const fleet = [
     name: "Huracan STO",
     make: "Lamborghini",
     year: 2023,
-    price: 1899,
-    power: 650,
+    price: 1699,
+    power: 630,
     miles: 100,
-    zeroToSixty: "3.1s",
+    zeroToSixty: "3.0s",
     description:
-      "This isn’t about speed. It’s about how you feel when everything around you slows down. Step into the Mercedes-Maybach GLS 600 and you’re instantly surrounded by silence, comfort, and presence. The doors close softly, shutting out the noise of the city, and for a moment, it feels like Miami belongs to you. Every detail inside is designed to make you feel elevated. The leather, the ambient lighting, the space to stretch out and relax. Whether you’re sitting in the driver’s seat or being driven, it’s not just a ride, it’s an experience of pure luxury. Cruising through Miami, the Maybach doesn’t need to be loud to stand out. It carries a quiet confidence. People notice without you trying. It’s the kind of presence that speaks without saying a word. This is the vehicle for nights that matter. For arriving calm, composed, and unforgettable. For turning a simple drive into something that feels exclusive.",
+      "The Lamborghini Huracán STO is a race car built for the streets—raw, aggressive, and made to dominate Miami. With its screaming V10 and track-inspired design, every drive feels like an adrenaline rush. From Ocean Drive to Brickell, this is how you make an unforgettable entrance.",
 
     images: [
       "https://ik.imagekit.io/8i3ae7fac/sto.jpg",
@@ -74,11 +74,11 @@ export const fleet = [
     make: "Mecedes-Benz",
     year: 2023,
     price: 799,
-    power: 553,
+    power: 577,
     miles: 100,
-    zeroToSixty: "4.5s",
+    zeroToSixty: "4.2s",
     description:
-      "This isn’t about speed. It’s about how you feel when everything around you slows down. Step into the Mercedes-Maybach GLS 600 and you’re instantly surrounded by silence, comfort, and presence. The doors close softly, shutting out the noise of the city, and for a moment, it feels like Miami belongs to you. Every detail inside is designed to make you feel elevated. The leather, the ambient lighting, the space to stretch out and relax. Whether you’re sitting in the driver’s seat or being driven, it’s not just a ride, it’s an experience of pure luxury. Cruising through Miami, the Maybach doesn’t need to be loud to stand out. It carries a quiet confidence. People notice without you trying. It’s the kind of presence that speaks without saying a word. This is the vehicle for nights that matter. For arriving calm, composed, and unforgettable. For turning a simple drive into something that feels exclusive.",
+      "The Mercedes-AMG G63 is pure Miami presence—bold, powerful, and impossible to ignore. With its iconic design and roaring twin-turbo V8, it delivers luxury and performance in one statement package. Whether you’re cruising South Beach or pulling up anywhere in the city, this is how you stand out without trying.",
 
     images: [
       "https://ik.imagekit.io/8i3ae7fac/gwag.jpg",
@@ -89,12 +89,12 @@ export const fleet = [
     name: "Cullinan",
     make: "Rolls Royce",
     year: 2022,
-    price: 1499,
-    power: 650,
+    price: 1399,
+    power: 563,
     miles: 100,
-    zeroToSixty: "4.5s",
+    zeroToSixty: "4.9s",
     description:
-      "This isn’t about speed. It’s about how you feel when everything around you slows down. Step into the Mercedes-Maybach GLS 600 and you’re instantly surrounded by silence, comfort, and presence. The doors close softly, shutting out the noise of the city, and for a moment, it feels like Miami belongs to you. Every detail inside is designed to make you feel elevated. The leather, the ambient lighting, the space to stretch out and relax. Whether you’re sitting in the driver’s seat or being driven, it’s not just a ride, it’s an experience of pure luxury. Cruising through Miami, the Maybach doesn’t need to be loud to stand out. It carries a quiet confidence. People notice without you trying. It’s the kind of presence that speaks without saying a word. This is the vehicle for nights that matter. For arriving calm, composed, and unforgettable. For turning a simple drive into something that feels exclusive.",
+      "The Rolls-Royce Cullinan is the pinnacle of Miami luxury—effortless, commanding, and unmistakably elite. With its whisper-quiet ride and handcrafted interior, every drive feels like a private experience. Whether you’re arriving in South Beach or gliding through the city, this is how you move with true presence.",
 
     images: [
       "https://ik.imagekit.io/8i3ae7fac/rolls.jpg",
