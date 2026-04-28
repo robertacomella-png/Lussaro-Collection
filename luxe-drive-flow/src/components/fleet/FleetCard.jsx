@@ -73,8 +73,7 @@ export default function FleetCard({ car, onOpen }) {
           onClick={(e) => e.stopPropagation()}
           className="flex items-center justify-center gap-2 w-full bg-[#c9a96e] text-black py-2.5 md:py-3 rounded-xl text-sm md:text-base font-semibold hover:bg-white transition"
         >
-          Book
-          <MessageCircle className="w-4 h-4" />
+          Reserve Now
         </a>
       </div>
     </button>
