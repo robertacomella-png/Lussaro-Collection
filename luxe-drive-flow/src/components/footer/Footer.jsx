@@ -61,7 +61,7 @@ export default function Footer() {
 
             <li>
               <a
-                href="https://g.page/r/9nEuwbuyZzhGTQscA"
+                href="https://maps.app.goo.gl/9nEuwbuyZzhGTQscA"
                 target="_blank"
                 className="hover:text-white"
               >
