@@ -23,29 +23,37 @@ export default function FleetCard({ car }) {
           <ShieldCheck className="w-6 h-6 text-[#c9a96e] shrink-0" />
         </div>
 
-        <div className="grid grid-cols-3 gap-3 border-t border-white/10 pt-4 mb-5">
+        <div className="mt-5 border-t border-white/10 pt-5">
+          <p className="text-white/45 text-xs uppercase tracking-[0.22em] mb-2">
+            Starting At
+          </p>
+
+          <p className="text-[#c9a96e] text-4xl font-semibold tracking-tight">
+            ${car.price}
+            <span className="text-white/55 text-sm font-normal"> / day</span>
+          </p>
+
+          <p className="text-white/40 text-xs mt-2">
+            {car.miles} miles per day included
+          </p>
+        </div>
+
+        <div className="grid grid-cols-3 gap-4 mt-6 mb-6 text-center">
           <div>
-            <p className="text-white/40 text-xs mb-1">Price</p>
-            <p className="text-[#c9a96e] text-xl font-semibold">
-              ${car.price}
-              <span className="text-white text-xs font-normal">/Day</span>
+            <p className="text-white text-2xl font-semibold">
+              {car.zeroToSixty}
             </p>
+            <p className="text-white/40 text-xs mt-1">(0–60)</p>
           </div>
 
           <div>
-            <p className="text-white/40 text-xs mb-1">Power</p>
-            <p className="text-[#c9a96e] text-xl font-semibold">
-              {car.power}
-              <span className="text-white text-xs font-normal">HP</span>
-            </p>
+            <p className="text-white text-2xl font-semibold">{car.power}hp</p>
+            <p className="text-white/40 text-xs mt-1">Power</p>
           </div>
 
           <div>
-            <p className="text-white/40 text-xs mb-1">Miles</p>
-            <p className="text-[#c9a96e] text-xl font-semibold">
-              {car.miles}
-              <span className="text-white text-xs font-normal">/Day</span>
-            </p>
+            <p className="text-white text-2xl font-semibold">{car.miles}</p>
+            <p className="text-white/40 text-xs mt-1">Miles/day</p>
           </div>
         </div>
 
