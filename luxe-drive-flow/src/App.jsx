@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 import Gallery from "./pages/Gallery";
 import { useEffect } from "react";
 import WidgetVisibility from "@/components/fleet/WidgetVisibility";
+import Terms from "@/pages/Terms";
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } =
