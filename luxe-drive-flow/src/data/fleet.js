@@ -38,4 +38,24 @@ export const fleet = [
       "https://ik.imagekit.io/8i3ae7fac/default-image.jpg",
     ],
   },
+   },
+
+  {
+    id: 3,
+    name: "Huracan Evo",
+    make: "Lamborghini",
+    year: 2023,
+    price: 1,299,
+    power: 650,
+    miles: 100,
+    zeroToSixty: "3.0s",
+    description:
+      "This isn’t about speed. It’s about how you feel when everything around you slows down. Step into the Mercedes-Maybach GLS 600 and you’re instantly surrounded by silence, comfort, and presence. The doors close softly, shutting out the noise of the city, and for a moment, it feels like Miami belongs to you. Every detail inside is designed to make you feel elevated. The leather, the ambient lighting, the space to stretch out and relax. Whether you’re sitting in the driver’s seat or being driven, it’s not just a ride, it’s an experience of pure luxury. Cruising through Miami, the Maybach doesn’t need to be loud to stand out. It carries a quiet confidence. People notice without you trying. It’s the kind of presence that speaks without saying a word. This is the vehicle for nights that matter. For arriving calm, composed, and unforgettable. For turning a simple drive into something that feels exclusive.",
+
+    images: [
+      "https://ik.imagekit.io/8i3ae7fac/cars-07.jpg",
+      "https://ik.imagekit.io/8i3ae7fac/cars-11.jpg",
+      "https://ik.imagekit.io/8i3ae7fac/default-image.jpg",
+    ],
+  },
 ];
