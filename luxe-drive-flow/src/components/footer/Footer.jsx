@@ -51,7 +51,7 @@ export default function Footer() {
           <ul className="space-y-2 text-white/60 text-sm">
             <li>
               <a
-                href="https://instagram.com/YOURHANDLE"
+                href="https://instagram.com/lussarocollection"
                 target="_blank"
                 className="hover:text-white"
               >
@@ -61,7 +61,7 @@ export default function Footer() {
 
             <li>
               <a
-                href="https://g.page/r/YOURGOOGLELINK"
+                href="https://g.page/r/9nEuwbuyZzhGTQscA"
                 target="_blank"
                 className="hover:text-white"
               >
