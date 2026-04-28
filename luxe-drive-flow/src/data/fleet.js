@@ -9,7 +9,7 @@ export const fleet = [
     miles: 100,
     zeroToSixty: "3.1s",
     description:
-      "The Lamborghini Urus delivers supercar performance in SUV form. Aggressive, fast, and built for presence.",
+      "This isn’t just a rental. It’s a feeling. The moment you step into the Lamborghini Urus, everything changes. The engine starts with a deep, aggressive roar, and instantly you feel it. Power, confidence, attention. Every light turns into a moment. Every street feels like it’s yours. Driving through Miami, people don’t just notice, they stare. Heads turn, cameras come out, and for that time behind the wheel, you’re not just another person on the road. You’re the one everyone’s watching. Press the gas and the Urus responds instantly. The acceleration pushes you back into your seat, mixing adrenaline with control. It’s fast, it’s loud, it’s alive, while still wrapped in pure luxury and comfort. Whether you’re pulling up to a restaurant in Brickell, cruising Ocean Drive at night, or making an entrance anywhere in the city, this is more than transportation. It’s presence.",
 
     images: [
       "https://ik.imagekit.io/8i3ae7fac/IMG_3317.jpg",
@@ -28,7 +28,7 @@ export const fleet = [
     miles: 100,
     zeroToSixty: "4.5s",
     description:
-      "The Mercedes-Maybach GLS 600 is built for comfort and status. Ultra-luxury interior, smooth ride, and effortless presence.",
+      "This isn’t about speed. It’s about how you feel when everything around you slows down. Step into the Mercedes-Maybach GLS 600 and you’re instantly surrounded by silence, comfort, and presence. The doors close softly, shutting out the noise of the city, and for a moment, it feels like Miami belongs to you. Every detail inside is designed to make you feel elevated. The leather, the ambient lighting, the space to stretch out and relax. Whether you’re sitting in the driver’s seat or being driven, it’s not just a ride, it’s an experience of pure luxury. Cruising through Miami, the Maybach doesn’t need to be loud to stand out. It carries a quiet confidence. People notice without you trying. It’s the kind of presence that speaks without saying a word. This is the vehicle for nights that matter. For arriving calm, composed, and unforgettable. For turning a simple drive into something that feels exclusive.",
 
     images: [
       "https://ik.imagekit.io/8i3ae7fac/cars-07.jpg",
