@@ -1,21 +1,84 @@
 export default function Footer() {
   return (
-    <footer className="bg-[#0a0a0a] border-t border-white/[0.06] py-12">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="text-white text-lg font-semibold tracking-tight">
-            LUSSARO<span className="text-[#c9a96e]">COLLECTION</span>
-          </div>
+    <footer className="bg-black text-white pt-16 pb-10 border-t border-white/10">
+      <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-10">
 
-          <div className="flex items-center gap-8">
-            <a href="#" className="text-white/30 text-sm hover:text-white/60 transition-colors">Privacy</a>
-            <a href="#" className="text-white/30 text-sm hover:text-white/60 transition-colors">Terms</a>
-            <a href="#" className="text-white/30 text-sm hover:text-white/60 transition-colors">Instagram</a>
-          </div>
-
-          <p className="text-white/20 text-xs">
-            © {new Date().getFullYear()} Lussaro Collection. All rights reserved.
+        {/* BRAND */}
+        <div>
+          <h3 className="text-[#c9a96e] text-xl font-semibold mb-3">
+            Lussaro Collection
+          </h3>
+          <p className="text-white/50 text-sm leading-relaxed max-w-xs">
+            Luxury car rental experience in Miami. Designed for those who expect more.
           </p>
+        </div>
+
+        {/* NAV */}
+        <div>
+          <h4 className="text-white text-sm uppercase tracking-[0.2em] mb-4">
+            Explore
+          </h4>
+          <ul className="space-y-2 text-white/60 text-sm">
+            <li><a href="#fleet" className="hover:text-white">Fleet</a></li>
+            <li><a href="#contact" className="hover:text-white">Contact</a></li>
+          </ul>
+        </div>
+
+        {/* CONTACT */}
+        <div>
+          <h4 className="text-white text-sm uppercase tracking-[0.2em] mb-4">
+            Contact
+          </h4>
+          <ul className="space-y-2 text-white/60 text-sm">
+            <li>Miami, Florida</li>
+            <li>
+              <a
+                href="https://wa.me/16452487305"
+                target="_blank"
+                className="hover:text-white"
+              >
+                WhatsApp Booking
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        {/* SOCIAL */}
+        <div>
+          <h4 className="text-white text-sm uppercase tracking-[0.2em] mb-4">
+            Follow Us
+          </h4>
+          <ul className="space-y-2 text-white/60 text-sm">
+            <li>
+              <a
+                href="https://instagram.com/YOURHANDLE"
+                target="_blank"
+                className="hover:text-white"
+              >
+                Instagram
+              </a>
+            </li>
+
+            <li>
+              <a
+                href="https://g.page/r/YOURGOOGLELINK"
+                target="_blank"
+                className="hover:text-white"
+              >
+                Google Reviews
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      {/* LEGAL */}
+      <div className="max-w-7xl mx-auto px-6 mt-12 pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between gap-4 text-white/40 text-xs">
+        <p>© {new Date().getFullYear()} Lussaro Collection. All rights reserved.</p>
+
+        <div className="flex gap-6">
+          <a href="/terms" className="hover:text-white">Terms of Service</a>
+          <a href="/privacy" className="hover:text-white">Privacy Policy</a>
         </div>
       </div>
     </footer>
