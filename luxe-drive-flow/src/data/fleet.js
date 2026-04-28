@@ -42,9 +42,9 @@ export const fleet = [
     make: "Lamborghini",
     year: 2023,
     price: 1399,
-    power: 550,
+    power: 650,
     miles: 100,
-    zeroToSixty: "4.5s",
+    zeroToSixty: "3.0s",
     description:
       "This isn’t about speed. It’s about how you feel when everything around you slows down. Step into the Mercedes-Maybach GLS 600 and you’re instantly surrounded by silence, comfort, and presence. The doors close softly, shutting out the noise of the city, and for a moment, it feels like Miami belongs to you. Every detail inside is designed to make you feel elevated. The leather, the ambient lighting, the space to stretch out and relax. Whether you’re sitting in the driver’s seat or being driven, it’s not just a ride, it’s an experience of pure luxury. Cruising through Miami, the Maybach doesn’t need to be loud to stand out. It carries a quiet confidence. People notice without you trying. It’s the kind of presence that speaks without saying a word. This is the vehicle for nights that matter. For arriving calm, composed, and unforgettable. For turning a simple drive into something that feels exclusive.",
 
@@ -54,13 +54,13 @@ export const fleet = [
   },
 {
     id: 4,
-    name: "Huracan EVO",
+    name: "Huracan STO",
     make: "Lamborghini",
     year: 2023,
-    price: 1399,
-    power: 550,
+    price: 1899,
+    power: 650,
     miles: 100,
-    zeroToSixty: "4.5s",
+    zeroToSixty: "3.1s",
     description:
       "This isn’t about speed. It’s about how you feel when everything around you slows down. Step into the Mercedes-Maybach GLS 600 and you’re instantly surrounded by silence, comfort, and presence. The doors close softly, shutting out the noise of the city, and for a moment, it feels like Miami belongs to you. Every detail inside is designed to make you feel elevated. The leather, the ambient lighting, the space to stretch out and relax. Whether you’re sitting in the driver’s seat or being driven, it’s not just a ride, it’s an experience of pure luxury. Cruising through Miami, the Maybach doesn’t need to be loud to stand out. It carries a quiet confidence. People notice without you trying. It’s the kind of presence that speaks without saying a word. This is the vehicle for nights that matter. For arriving calm, composed, and unforgettable. For turning a simple drive into something that feels exclusive.",
 
@@ -70,11 +70,11 @@ export const fleet = [
   },
   {
     id: 5,
-    name: "Huracan EVO",
-    make: "Lamborghini",
+    name: "G63",
+    make: "Mecedes-Benz",
     year: 2023,
-    price: 1399,
-    power: 550,
+    price: 799,
+    power: 553,
     miles: 100,
     zeroToSixty: "4.5s",
     description:
@@ -86,11 +86,11 @@ export const fleet = [
   },
 {
     id: 6,
-    name: "Huracan EVO",
-    make: "Lamborghini",
-    year: 2023,
-    price: 1399,
-    power: 550,
+    name: "Cullinan",
+    make: "Rolls Royce",
+    year: 2022,
+    price: 1499,
+    power: 650,
     miles: 100,
     zeroToSixty: "4.5s",
     description:
