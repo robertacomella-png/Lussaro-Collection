@@ -26,6 +26,8 @@ export default function FleetSection() {
   return (
     <section id="fleet" className="bg-[#f7f5f0] py-16 md:py-24">
       <div className="max-w-7xl mx-auto px-4 md:px-6">
+
+        {/* HEADER */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -47,6 +49,7 @@ export default function FleetSection() {
           </p>
         </motion.div>
 
+        {/* GRID */}
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {fleet.map((car) => (
             <FleetCard key={car.id} car={car} onOpen={setActiveCar} />
@@ -54,6 +57,7 @@ export default function FleetSection() {
         </div>
       </div>
 
+      {/* MODAL */}
       <AnimatePresence>
         {activeCar && (
           <motion.div
@@ -71,15 +75,18 @@ export default function FleetSection() {
               onClick={(e) => e.stopPropagation()}
               className="relative w-full max-w-6xl max-h-[92vh] overflow-y-auto rounded-[30px] md:rounded-[36px] bg-[#111] border border-white/10 shadow-[0_30px_120px_rgba(0,0,0,0.65)]"
             >
+
+              {/* CLOSE */}
               <button
-                type="button"
                 onClick={() => setActiveCar(null)}
-                className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-black/50 hover:bg-black/70 border border-white/10 backdrop-blur-md flex items-center justify-center transition"
+                className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-black/50 hover:bg-black/70 border border-white/10 flex items-center justify-center"
               >
                 <X className="w-5 h-5 text-white" />
               </button>
 
               <div className="grid lg:grid-cols-[1.2fr_0.8fr] gap-6 md:gap-8 p-3 md:p-6">
+
+                {/* IMAGES */}
                 <div>
                   <div className="overflow-hidden rounded-[24px] bg-black">
                     <motion.img
@@ -97,17 +104,15 @@ export default function FleetSection() {
                     {getImages(activeCar).map((img, index) => (
                       <button
                         key={img}
-                        type="button"
                         onClick={() => setActiveImage(index)}
-                        className={`overflow-hidden rounded-2xl border transition ${
+                        className={`overflow-hidden rounded-2xl border ${
                           activeImage === index
-                            ? "border-[#c9a96e] opacity-100"
-                            : "border-white/10 opacity-55 hover:opacity-85"
+                            ? "border-[#c9a96e]"
+                            : "border-white/10 opacity-60"
                         }`}
                       >
                         <img
                           src={img}
-                          alt=""
                           className="w-full aspect-[4/3] object-cover"
                         />
                       </button>
@@ -115,24 +120,29 @@ export default function FleetSection() {
                   </div>
                 </div>
 
-                <div className="text-white px-1 md:px-0 pb-2 md:py-4 flex flex-col justify-center">
-                  <p className="text-[#c9a96e] tracking-[0.25em] uppercase text-[10px] md:text-xs mb-3">
-                    {activeCar.make} • {activeCar.year}
+                {/* CONTENT */}
+                <div className="text-white flex flex-col justify-center">
+
+                  {/* MAKE */}
+                  <p className="text-[#c9a96e] tracking-[0.25em] uppercase text-xs mb-3">
+                    {activeCar.make}
                   </p>
 
-                  <h3 className="text-3xl md:text-5xl font-semibold tracking-tight leading-none mb-5">
+                  {/* TITLE */}
+                  <h3 className="text-3xl md:text-5xl font-semibold mb-5">
                     {activeCar.name}
                   </h3>
 
+                  {/* PRICE + BUTTON */}
                   <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-6">
                     <div>
                       <p className="text-white/40 text-xs uppercase tracking-[0.22em] mb-2">
                         Starting At
                       </p>
 
-                      <p className="text-[#c9a96e] text-3xl md:text-4xl font-semibold tracking-tight leading-none">
+                      <p className="text-[#c9a96e] text-3xl md:text-4xl font-semibold">
                         ${activeCar.price.toLocaleString()}
-                        <span className="text-white/45 text-sm font-normal ml-1">
+                        <span className="text-white/45 text-sm ml-1">
                           /day
                         </span>
                       </p>
@@ -144,44 +154,42 @@ export default function FleetSection() {
                       )}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center bg-[#c9a96e] text-black px-7 py-3.5 rounded-full text-sm font-semibold hover:bg-white transition sm:min-w-[170px]"
+                      className="inline-flex items-center justify-center bg-[#c9a96e] text-black px-7 py-3.5 rounded-full text-sm font-semibold hover:bg-white transition"
                     >
                       Reserve Now
                     </a>
                   </div>
 
-                  <div className="grid grid-cols-3 gap-2 md:gap-3 mb-8">
-                    <div className="rounded-2xl bg-white/[0.045] px-2 py-3 text-center">
-                      <p className="text-white text-lg md:text-2xl font-semibold">
-                        {activeCar.zeroToSixty}
-                      </p>
-                      <p className="text-white/35 text-[10px] md:text-xs mt-1">
-                        0–60
-                      </p>
+                  {/* SPECS */}
+                  <div className="grid grid-cols-3 gap-3 mb-8">
+                    <div className="bg-white/5 p-3 rounded-xl text-center">
+                      <p>{activeCar.zeroToSixty}</p>
+                      <p className="text-xs text-white/40">0–60</p>
                     </div>
 
-                    <div className="rounded-2xl bg-white/[0.045] px-2 py-3 text-center">
-                      <p className="text-white text-lg md:text-2xl font-semibold">
-                        {activeCar.power}
-                      </p>
-                      <p className="text-white/35 text-[10px] md:text-xs mt-1">
-                        HP
-                      </p>
+                    <div className="bg-white/5 p-3 rounded-xl text-center">
+                      <p>{activeCar.power}</p>
+                      <p className="text-xs text-white/40">HP</p>
                     </div>
 
-                    <div className="rounded-2xl bg-white/[0.045] px-2 py-3 text-center">
-                      <p className="text-white text-lg md:text-2xl font-semibold">
-                        {activeCar.miles}
-                      </p>
-                      <p className="text-white/35 text-[10px] md:text-xs mt-1">
-                        mi/day
-                      </p>
+                    <div className="bg-white/5 p-3 rounded-xl text-center">
+                      <p>{activeCar.miles}</p>
+                      <p className="text-xs text-white/40">Miles/day</p>
                     </div>
                   </div>
 
-                  <p className="text-white/70 text-[14px] md:text-[15px] leading-relaxed max-w-md">
-                    {activeCar.description}
-                  </p>
+                  {/* DESCRIPTION + DISCLAIMER */}
+                  <div className="max-w-md">
+                    <p className="text-white/70 text-sm leading-relaxed mb-4">
+                      {activeCar.description}
+                    </p>
+
+                    <p className="text-white/40 text-xs border-t border-white/10 pt-3">
+                      Must be 21+ with a valid driver’s license and full coverage insurance. 
+                      Security deposit required.
+                    </p>
+                  </div>
+
                 </div>
               </div>
             </motion.div>
