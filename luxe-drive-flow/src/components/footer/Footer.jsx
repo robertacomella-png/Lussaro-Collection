@@ -15,23 +15,31 @@ export default function Footer() {
           <h4 className="text-white text-sm uppercase tracking-[0.2em] mb-4">
             Explore
           </h4>
-          <ul className="space-y-2 text-white/60 text-sm">
-            <li>
-              <a href="/#fleet" className="hover:text-white">
-                Fleet
-              </a>
-            </li>
-            <li>
-              <a href="/gallery" className="hover:text-white">
-                Gallery
-              </a>
-            </li>
-            <li>
-              <a href="/exotic-car-rental-miami" className="hover:text-white">
-                Exotic Car Rental Miami
-              </a>
-            </li>
-          </ul>
+         <ul className="space-y-2 text-white/60 text-sm">
+  <li>
+    <a href="/#fleet" className="hover:text-white">
+      Fleet
+    </a>
+  </li>
+
+  <li>
+    <a href="/gallery" className="hover:text-white">
+      Gallery
+    </a>
+  </li>
+
+  <li>
+    <a href="/exotic-car-rental-miami" className="hover:text-white">
+      Exotic Car Rental Miami
+    </a>
+  </li>
+
+  <li>
+    <a href="/lamborghini-rental-miami" className="hover:text-white">
+      Lamborghini Rental Miami
+    </a>
+  </li>
+</ul>
         </div>
 
         <div>
