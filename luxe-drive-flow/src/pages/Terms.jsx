@@ -1,9 +1,11 @@
+import Navbar from "@/components/navbar/Navbar";
+
 export default function Terms() {
   return (
-    <div className="bg-black text-white min-h-screen px-6 py-20">
-      <div className="max-w-5xl mx-auto">
+    <div className="bg-black text-white min-h-screen">
+      <Navbar />
+      <div className="max-w-5xl mx-auto px-6 py-20">
         <h1 className="text-4xl md:text-5xl font-semibold mb-6">Terms of Service</h1>
-        <p className="text-sm uppercase tracking-[0.3em] text-[#c9a96e] mb-10">Effective Date: [Insert Date]</p>
 
         <div className="space-y-10 text-white/75 text-sm leading-relaxed">
           <p>
