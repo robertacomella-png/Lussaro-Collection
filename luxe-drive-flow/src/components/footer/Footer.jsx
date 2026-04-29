@@ -39,6 +39,12 @@ export default function Footer() {
       Lamborghini Rental Miami
     </a>
   </li>
+
+  <li>
+    <a href="/g-wagon-rental-miami" className="hover:text-white">
+      G-Wagon Rental Miami
+    </a>
+  </li>
 </ul>
         </div>
 

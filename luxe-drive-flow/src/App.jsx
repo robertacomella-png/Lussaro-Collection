@@ -13,6 +13,7 @@ import Terms from "@/pages/Terms";
 import Privacy from "@/pages/Privacy";
 import ExoticMiami from "@/pages/ExoticMiami";
 import LamborghiniMiami from "@/pages/LamborghiniMiami";
+import GWagonMiami from "@/pages/GWagonMiami";
 import Footer from "@/components/footer/Footer";
 
 const AuthenticatedApp = () => {
@@ -44,6 +45,7 @@ const AuthenticatedApp = () => {
       <Route path="/terms" element={<Terms />} />
       <Route path="/privacy" element={<Privacy />} />
       <Route path="/exotic-car-rental-miami" element={<ExoticMiami />} />
+      <Route path="/g-wagon-rental-miami" element={<GWagonMiami />} />
       <Route path="/lamborghini-rental-miami" element={<LamborghiniMiami />} />
       <Route path="*" element={<PageNotFound />} /> {/* ✅ ALWAYS LAST */}
     </Routes>
