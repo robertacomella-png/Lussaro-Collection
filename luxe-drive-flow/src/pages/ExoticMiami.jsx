@@ -1,9 +1,11 @@
+import Navbar from "@/components/navbar/Navbar";
 import FleetCard from "@/components/fleet/FleetCard";
 import { fleet } from "@/data/fleet";
 
 export default function ExoticMiami() {
   return (
     <div className="bg-[#f7f5f0] text-black">
+      <Navbar />
 
       {/* HERO */}
       <section className="max-w-7xl mx-auto px-6 pt-24 pb-16">
