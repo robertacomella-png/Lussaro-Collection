@@ -12,6 +12,7 @@ import WidgetVisibility from "@/components/fleet/WidgetVisibility";
 import Terms from "@/pages/Terms";
 import Privacy from "@/pages/Privacy";
 import ExoticMiami from "@/pages/ExoticMiami";
+import LamborghiniMiami from "@/pages/LamborghiniMiami";
 import Footer from "@/components/footer/Footer";
 
 const AuthenticatedApp = () => {
@@ -43,6 +44,7 @@ const AuthenticatedApp = () => {
       <Route path="/terms" element={<Terms />} />
       <Route path="/privacy" element={<Privacy />} />
       <Route path="/exotic-car-rental-miami" element={<ExoticMiami />} />
+      <Route path="/lamborghini-rental-miami" element={<LamborghiniMiami />} />
       <Route path="*" element={<PageNotFound />} /> {/* ✅ ALWAYS LAST */}
     </Routes>
   );
