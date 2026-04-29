@@ -12,6 +12,7 @@ import WidgetVisibility from "@/components/fleet/WidgetVisibility";
 import Terms from "@/pages/Terms";
 import Privacy from "@/pages/Privacy";
 import ExoticMiami from "@/pages/ExoticMiami";
+import Footer from "@/components/Footer"; // ✅ ADD THIS
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } =
@@ -37,12 +38,12 @@ const AuthenticatedApp = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/Home" element={<Home />} />
+      <Route path="/home" element={<Home />} />
       <Route path="/gallery" element={<Gallery />} />
-      <Route path="*" element={<PageNotFound />} />
       <Route path="/terms" element={<Terms />} />
       <Route path="/privacy" element={<Privacy />} />
       <Route path="/exotic-car-rental-miami" element={<ExoticMiami />} />
+      <Route path="*" element={<PageNotFound />} /> {/* ✅ ALWAYS LAST */}
     </Routes>
   );
 };
@@ -63,9 +64,16 @@ function App() {
     <AuthProvider>
       <QueryClientProvider client={queryClientInstance}>
         <Router>
+
           <WidgetVisibility />
+
           <AuthenticatedApp />
+
+          {/* 🔥 GLOBAL FOOTER */}
+          <Footer />
+
         </Router>
+
         <Toaster />
       </QueryClientProvider>
     </AuthProvider>
