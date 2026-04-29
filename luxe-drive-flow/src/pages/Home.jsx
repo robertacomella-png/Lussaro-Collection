@@ -24,8 +24,7 @@ export default function Home() {
       </div>
       <div id="cta">
         <CTASection />
-      </div>
-      <Footer />
+      
     </div>
   );
 }
