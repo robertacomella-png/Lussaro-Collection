@@ -102,8 +102,20 @@ export const fleet = [
       "https://ik.imagekit.io/8i3ae7fac/rolls.jpg",
     ],
   },
+  {
+    id: 7,
+    name: "SF90 Stradale",
+    make: "Ferrari",
+    year: 2023,
+    price: 2395,
+    power: 986,
+    miles: 100,
+    zeroToSixty: "2.5s",
+    description:
+      "The Ferrari SF90 Stradale is Miami performance perfected—hybrid power delivered with laser focus, sculpted form, and exotic prestige. This supercar blends blistering speed with an unforgettable soundtrack, making it the ultimate choice for South Beach, VIP arrival moments, and nights where every detail counts.",
 
-
-
-
-];
+    images: [
+      "https://ik.imagekit.io/8i3ae7fac/cars-18%202.jpg",
+      "https://ik.imagekit.io/8i3ae7fac/cars-20%202.jpg",
+    ],
+  },
