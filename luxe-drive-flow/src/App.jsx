@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import WidgetVisibility from "@/components/fleet/WidgetVisibility";
 import Terms from "@/pages/Terms";
 import Privacy from "@/pages/Privacy";
+import ExoticMiami from "@/pages/ExoticMiami";
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } =
@@ -41,6 +42,7 @@ const AuthenticatedApp = () => {
       <Route path="*" element={<PageNotFound />} />
       <Route path="/terms" element={<Terms />} />
       <Route path="/privacy" element={<Privacy />} />
+      <Route path="/exotic-car-rental-miami" element={<ExoticMiami />} />
     </Routes>
   );
 };
