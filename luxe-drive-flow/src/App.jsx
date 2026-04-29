@@ -12,7 +12,7 @@ import WidgetVisibility from "@/components/fleet/WidgetVisibility";
 import Terms from "@/pages/Terms";
 import Privacy from "@/pages/Privacy";
 import ExoticMiami from "@/pages/ExoticMiami";
-import Footer from "@/components/Footer"; // ✅ ADD THIS
+import Footer from "@/components/footer/Footer";
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } =
