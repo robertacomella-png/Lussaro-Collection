@@ -1,4 +1,4 @@
-import FleetCard from "@/components/FleetCard";
+import FleetCard from "@/components/fleet/FleetCard";
 import { fleet } from "@/data/fleet";
 
 export default function ExoticMiami() {
