@@ -102,4 +102,5 @@ export const fleet = [
       "https://ik.imagekit.io/8i3ae7fac/rolls.jpg",
     ],
   },
+];
 
