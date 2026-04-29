@@ -5,13 +5,30 @@ import { Link } from "react-router-dom";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const [locationOpen, setLocationOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
+    const onScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      // Show/hide based on scroll direction
+      if (currentScrollY < lastScrollY) {
+        // Scrolling up - show navbar
+        setHidden(false);
+      } else if (currentScrollY > 50) {
+        // Scrolling down and past threshold - hide navbar
+        setHidden(true);
+      }
+      
+      setLastScrollY(currentScrollY);
+      setScrolled(currentScrollY > 50);
+    };
+    
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [lastScrollY]);
 
   useEffect(() => {
     const onKeyDown = (e) => {
@@ -28,9 +45,9 @@ export default function Navbar() {
     <>
       <motion.nav
         initial={{ y: -80 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.6, delay: 0.5 }}
-        className={`fixed top-0 left-0 right-0 z-[999] transition-all duration-500 bg-black/90 backdrop-blur-md border-b border-white/[0.06]`}
+        animate={{ y: hidden ? -80 : 0 }}
+        transition={{ duration: 0.3 }}
+        className={`fixed top-0 left-0 right-0 z-[999] backdrop-blur-md bg-black/60 border-b border-white/[0.06]`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           <Link
