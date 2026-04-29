@@ -34,6 +34,8 @@ export const fleet = [
 
     images: [
       "https://ik.imagekit.io/8i3ae7fac/maybach.jpg",
+      "https://ik.imagekit.io/8i3ae7fac/cars-18%202.jpg",
+      "https://ik.imagekit.io/8i3ae7fac/cars-20%202.jpg",
     ],
   },
   {
