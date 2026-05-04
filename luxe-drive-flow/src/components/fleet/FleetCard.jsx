@@ -1,9 +1,12 @@
 import { MessageCircle } from "lucide-react";
+import { getImageKitSrc } from "@/lib/imageKit";
 
 export default function FleetCard({ car, onOpen }) {
   const message = encodeURIComponent(
     `Hi, I'm interested in booking the ${car.name}.`
   );
+
+  const imageSrc = getImageKitSrc(car.images?.[0] || car.image, 700);
 
   return (
     <button
@@ -13,8 +16,10 @@ export default function FleetCard({ car, onOpen }) {
     >
       <div className="relative m-2.5 md:m-4 overflow-hidden rounded-[16px] md:rounded-[22px]">
         <img
-          src={car.images?.[0] || car.image}
+          src={imageSrc}
           alt={car.name}
+          width="700"
+          height="520"
           loading="lazy"
           decoding="async"
           className="w-full aspect-[1.2/1] md:aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-[1.03]"

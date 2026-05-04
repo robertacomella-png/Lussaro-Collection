@@ -19,10 +19,10 @@ export default function HeroSection() {
           <picture>
             <source
               media="(min-width: 768px)"
-              srcSet="https://ik.imagekit.io/8i3ae7fac/cars-14.jpg?tr=w-1400,q-80,f-webp"
+              srcSet="https://ik.imagekit.io/8i3ae7fac/cars-14.jpg?tr=w-1200,q-70,f-webp"
             />
             <img
-              src="https://ik.imagekit.io/8i3ae7fac/cars-11.jpg?tr=w-800,q-75,f-webp"
+              src="https://ik.imagekit.io/8i3ae7fac/cars-11.jpg?tr=w-700,q-65,f-webp"
               alt="Luxury Fleet"
               loading="eager"
               fetchPriority="high"

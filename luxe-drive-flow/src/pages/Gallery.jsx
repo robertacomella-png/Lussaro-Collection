@@ -157,7 +157,10 @@ export default function Gallery() {
                   <img
                     src={src}
                     alt={`Gallery image ${index + 1}`}
+                    width="700"
+                    height="875"
                     loading="lazy"
+                    decoding="async"
                     className="block w-full aspect-[4/5] object-cover rounded-[24px] transition-transform duration-700 ease-out group-hover:scale-[1.02] group-hover:brightness-[1.03]"
                   />
                 </div>
@@ -215,6 +218,8 @@ export default function Gallery() {
                 <img
                   src={selectedImage}
                   alt="Expanded gallery image"
+                  width="1200"
+                  height="900"
                   loading="lazy"
                   decoding="async"
                   draggable={false}
@@ -269,6 +274,10 @@ export default function Gallery() {
                         <img
                           src={src}
                           alt={`Thumbnail ${index + 1}`}
+                          width="80"
+                          height="80"
+                          loading="lazy"
+                          decoding="async"
                           draggable={false}
                           className="block w-16 h-16 md:w-20 md:h-20 object-cover"
                         />

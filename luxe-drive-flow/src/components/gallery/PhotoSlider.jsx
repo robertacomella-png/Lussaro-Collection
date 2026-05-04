@@ -115,6 +115,10 @@ export default function PhotoSlider() {
             <img
               src={src}
               alt={`Car ${(i % images.length) + 1}`}
+              width="224"
+              height="224"
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover"
               draggable={false}
             />

@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
+import { getImageKitSrc } from "@/lib/imageKit";
 
 export default function FleetModal({ car, setCar, activeImage, setActiveImage }) {
   useEffect(() => {
@@ -58,8 +59,10 @@ export default function FleetModal({ car, setCar, activeImage, setActiveImage })
                 <div className="overflow-hidden rounded-[24px] bg-black">
                   <motion.img
                     key={images[activeImage]}
-                    src={images[activeImage]}
+                    src={getImageKitSrc(images[activeImage], 1200)}
                     alt={car.name}
+                    width="1200"
+                    height="800"
                     loading="lazy"
                     decoding="async"
                     initial={{ opacity: 0.65, scale: 1.015 }}
@@ -82,8 +85,10 @@ export default function FleetModal({ car, setCar, activeImage, setActiveImage })
                       }`}
                     >
                       <img
-                        src={img}
+                        src={getImageKitSrc(img, 700)}
                         alt={`${car.name} thumbnail ${index + 1}`}
+                        width="240"
+                        height="180"
                         loading="lazy"
                         decoding="async"
                         className="w-full aspect-[4/3] object-cover"

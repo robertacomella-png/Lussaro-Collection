@@ -8,6 +8,10 @@ export default function CTASection() {
         <img
           src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=1920&q=80"
           alt="Luxury car on road"
+          width="1920"
+          height="1080"
+          loading="lazy"
+          decoding="async"
           className="w-full h-full object-cover opacity-30"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/40" />
