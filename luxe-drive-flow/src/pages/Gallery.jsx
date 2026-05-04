@@ -215,6 +215,8 @@ export default function Gallery() {
                 <img
                   src={selectedImage}
                   alt="Expanded gallery image"
+                  loading="lazy"
+                  decoding="async"
                   draggable={false}
                   className="block max-w-full max-h-[82vh] md:max-h-[84vh] object-contain rounded-[26px] shadow-[0_20px_80px_rgba(0,0,0,0.55)] select-none"
                 />

@@ -15,6 +15,8 @@ export default function FleetCard({ car, onOpen }) {
         <img
           src={car.images?.[0] || car.image}
           alt={car.name}
+          loading="lazy"
+          decoding="async"
           className="w-full aspect-[1.2/1] md:aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-[1.03]"
         />
 

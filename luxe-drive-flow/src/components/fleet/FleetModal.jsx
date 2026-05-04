@@ -60,6 +60,8 @@ export default function FleetModal({ car, setCar, activeImage, setActiveImage })
                     key={images[activeImage]}
                     src={images[activeImage]}
                     alt={car.name}
+                    loading="lazy"
+                    decoding="async"
                     initial={{ opacity: 0.65, scale: 1.015 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.28 }}
@@ -82,6 +84,8 @@ export default function FleetModal({ car, setCar, activeImage, setActiveImage })
                       <img
                         src={img}
                         alt={`${car.name} thumbnail ${index + 1}`}
+                        loading="lazy"
+                        decoding="async"
                         className="w-full aspect-[4/3] object-cover"
                       />
                     </button>
