@@ -7,13 +7,16 @@ import { AuthProvider, useAuth } from "@/lib/AuthContext";
 import UserNotRegisteredError from "@/components/UserNotRegisteredError";
 import Home from "./pages/Home";
 import Gallery from "./pages/Gallery";
-import { useEffect } from "react";
 import WidgetVisibility from "@/components/fleet/WidgetVisibility";
 import Terms from "@/pages/Terms";
 import Privacy from "@/pages/Privacy";
 import ExoticMiami from "@/pages/ExoticMiami";
 import LamborghiniMiami from "@/pages/LamborghiniMiami";
 import GWagonMiami from "@/pages/GWagonMiami";
+import LuxurySuvMiami from "@/pages/LuxurySuvMiami";
+import RollsRoyceMiami from "@/pages/RollsRoyceMiami";
+import ExoticBrickell from "@/pages/ExoticBrickell";
+import ExoticSouthBeach from "@/pages/ExoticSouthBeach";
 import Footer from "@/components/footer/Footer";
 
 const AuthenticatedApp = () => {
@@ -47,23 +50,16 @@ const AuthenticatedApp = () => {
       <Route path="/exotic-car-rental-miami" element={<ExoticMiami />} />
       <Route path="/g-wagon-rental-miami" element={<GWagonMiami />} />
       <Route path="/lamborghini-rental-miami" element={<LamborghiniMiami />} />
+      <Route path="/luxury-suv-rental-miami" element={<LuxurySuvMiami />} />
+      <Route path="/rolls-royce-rental-miami" element={<RollsRoyceMiami />} />
+      <Route path="/exotic-car-rental-brickell" element={<ExoticBrickell />} />
+      <Route path="/exotic-car-rental-south-beach" element={<ExoticSouthBeach />} />
       <Route path="*" element={<PageNotFound />} /> {/* ✅ ALWAYS LAST */}
     </Routes>
   );
 };
 
 function App() {
-  useEffect(() => {
-    const setTitle = () => {
-      document.title = "Rent With Lussaro";
-    };
-
-    setTitle();
-    const interval = setInterval(setTitle, 500);
-
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <AuthProvider>
       <QueryClientProvider client={queryClientInstance}>

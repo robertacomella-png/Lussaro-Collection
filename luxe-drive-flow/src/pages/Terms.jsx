@@ -1,6 +1,14 @@
 import Navbar from "@/components/navbar/Navbar";
+import { useSeo } from "@/lib/useSeo";
 
 export default function Terms() {
+  useSeo({
+    title: "Terms of Service",
+    description:
+      "Review the Terms of Service for renting luxury cars with Lussaro Collection in Miami. Eligibility, booking, deposits, liability, and policies.",
+    url: "https://www.lussarocollection.com/terms",
+  });
+
   return (
     <div className="bg-black text-white min-h-screen">
       <Navbar />

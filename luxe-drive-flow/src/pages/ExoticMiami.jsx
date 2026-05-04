@@ -1,8 +1,16 @@
 import Navbar from "@/components/navbar/Navbar";
+import { useSeo } from "@/lib/useSeo";
 import FleetCard from "@/components/fleet/FleetCard";
 import { fleet } from "@/data/fleet";
 
 export default function ExoticMiami() {
+  useSeo({
+    title: "Exotic Car Rental Miami",
+    description:
+      "Rent Miami exotic cars with Lussaro Collection. Elite supercars, luxury service, and VIP delivery across South Beach and Brickell.",
+    url: "https://www.lussarocollection.com/exotic-car-rental-miami",
+  });
+
   return (
     <div className="bg-[#f7f5f0] text-black">
       <Navbar />

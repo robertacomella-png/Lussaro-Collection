@@ -35,6 +35,30 @@ export default function Footer() {
   </li>
 
   <li>
+    <a href="/luxury-suv-rental-miami" className="hover:text-white">
+      Luxury SUV Rental Miami
+    </a>
+  </li>
+
+  <li>
+    <a href="/rolls-royce-rental-miami" className="hover:text-white">
+      Rolls-Royce Rental Miami
+    </a>
+  </li>
+
+  <li>
+    <a href="/exotic-car-rental-brickell" className="hover:text-white">
+      Exotic Car Rental Brickell
+    </a>
+  </li>
+
+  <li>
+    <a href="/exotic-car-rental-south-beach" className="hover:text-white">
+      Exotic Car Rental South Beach
+    </a>
+  </li>
+
+  <li>
     <a href="/lamborghini-rental-miami" className="hover:text-white">
       Lamborghini Rental Miami
     </a>

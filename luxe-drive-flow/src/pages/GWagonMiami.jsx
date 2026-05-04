@@ -1,8 +1,16 @@
 import Navbar from "@/components/navbar/Navbar";
+import { useSeo } from "@/lib/useSeo";
 import FleetCard from "@/components/fleet/FleetCard";
 import { fleet } from "@/data/fleet";
 
 export default function GWagonMiami() {
+  useSeo({
+    title: "G-Wagon Rental Miami",
+    description:
+      "Rent a Mercedes-AMG G63 in Miami from Lussaro Collection. Bold luxury SUV rental for South Beach, Brickell events, nightlife, and elite style.",
+    url: "https://www.lussarocollection.com/g-wagon-rental-miami",
+  });
+
   const gwagons = fleet.filter((car) => {
     const nameLower = car.name.toLowerCase();
     const makeLower = car.make.toLowerCase();

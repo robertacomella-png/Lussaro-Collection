@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import Navbar from "@/components/navbar/Navbar";
+import { useSeo } from "@/lib/useSeo";
 
 const galleryImages = [
   "/gallery/gallery-1.jpg",
@@ -24,6 +25,13 @@ export default function Gallery() {
 
   const selectedImage =
     selectedIndex !== null ? galleryImages[selectedIndex] : null;
+
+  useSeo({
+    title: "Luxury Car Gallery",
+    description:
+      "Explore the Lussaro Collection gallery of Miami exotic cars and luxury vehicles in premium detail.",
+    url: "https://www.lussarocollection.com/gallery",
+  });
 
   const openViewer = useCallback((index) => {
     setSelectedIndex(index);

@@ -1,6 +1,14 @@
 import Navbar from "@/components/navbar/Navbar";
+import { useSeo } from "@/lib/useSeo";
 
 export default function Privacy() {
+  useSeo({
+    title: "Privacy Policy",
+    description:
+      "Read the Privacy Policy for Lussaro Collection. Learn how we collect, use, and protect your information for Miami luxury car rentals.",
+    url: "https://www.lussarocollection.com/privacy",
+  });
+
   return (
     <div className="bg-black text-white min-h-screen">
       <Navbar />
