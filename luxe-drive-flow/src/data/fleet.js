@@ -73,7 +73,7 @@ export const fleet = [
   {
     id: 5,
     name: "G63",
-    make: "Mecedes-Benz",
+    make: "Mercedes-Benz",
     year: 2023,
     price: 795,
     power: 577,
@@ -86,10 +86,10 @@ export const fleet = [
       "https://ik.imagekit.io/8i3ae7fac/gwag.jpg",
     ],
   },
-{
+  {
     id: 6,
     name: "Cullinan",
-    make: "Rolls Royce",
+    make: "Rolls-Royce",
     year: 2022,
     price: 1495,
     power: 563,

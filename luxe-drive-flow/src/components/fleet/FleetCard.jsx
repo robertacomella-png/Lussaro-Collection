@@ -29,12 +29,12 @@ export default function FleetCard({ car, onOpen }) {
 
       <div className="px-3.5 md:px-5 pb-3.5 md:pb-5 text-white">
         <div className="mb-3">
-       <p className="text-[#c9a96e] text-[20px] md:text-3xl leading-none font-semibold tracking-tight">
-  ${car.price}
-  <span className="text-white/45 text-xs md:text-sm font-normal ml-1">
-    /day
-  </span>
-</p>
+          <p className="text-[#c9a96e] text-[20px] md:text-3xl leading-none font-semibold tracking-tight">
+            ${car.price.toLocaleString()}
+            <span className="text-white/45 text-xs md:text-sm font-normal ml-1">
+              /day
+            </span>
+          </p>
         </div>
 
         <div className="grid grid-cols-3 gap-1.5 mb-3.5">

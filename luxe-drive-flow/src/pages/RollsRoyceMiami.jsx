@@ -1,9 +1,17 @@
+import { useState } from "react";
 import Navbar from "@/components/navbar/Navbar";
 import { useSeo } from "@/lib/useSeo";
 import FleetCard from "@/components/fleet/FleetCard";
+import FleetModal from "@/components/fleet/FleetModal";
 import { fleet } from "@/data/fleet";
 
 export default function RollsRoyceMiami() {
+  const [activeCar, setActiveCar] = useState(null);
+  const [activeImage, setActiveImage] = useState(0);
+  const whatsappMessage = encodeURIComponent(
+    "Hi, I'm interested in booking a luxury car with Lussaro Collection."
+  );
+
   useSeo({
     title: "Rolls-Royce Rental Miami",
     description:
@@ -29,15 +37,32 @@ export default function RollsRoyceMiami() {
           Rolls-Royce Rental Miami
         </h1>
 
-        <p className="text-black/60 max-w-2xl text-base md:text-lg leading-relaxed">
+        <p className="text-black/70 max-w-3xl text-base md:text-lg leading-relaxed">
           Arrive in Miami with uncompromising luxury. Our Rolls-Royce rentals offer a serene ride, lavish cabin, and unmatched presence for weddings, special occasions, and VIP travel.
         </p>
+
+        <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
+          <a
+            href={`https://wa.me/16452487305?text=${whatsappMessage}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center bg-[#c9a96e] text-black px-8 py-4 rounded-full font-semibold hover:bg-white transition"
+          >
+            Reserve on WhatsApp
+          </a>
+          <a
+            href="/exotic-car-rental-miami"
+            className="inline-flex items-center justify-center border border-white/15 text-white px-8 py-4 rounded-full font-semibold hover:border-[#c9a96e] hover:text-white transition"
+          >
+            Browse Exotic Options
+          </a>
+        </div>
       </section>
 
       <section className="max-w-7xl mx-auto px-6 pb-20">
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {rollsRoyce.map((car) => (
-            <FleetCard key={car.id} car={car} onOpen={() => {}} />
+            <FleetCard key={car.id} car={car} onOpen={setActiveCar} />
           ))}
         </div>
       </section>
@@ -63,16 +88,14 @@ export default function RollsRoyceMiami() {
       </section>
 
       <section className="bg-black text-white py-20 text-center px-6">
-        <h2 className="text-3xl md:text-5xl font-semibold mb-6">
-          Book Your Rolls-Royce
-        </h2>
+        <h2 className="text-3xl md:text-5xl font-semibold mb-6">Book Your Rolls-Royce</h2>
 
         <p className="text-white/60 max-w-xl mx-auto mb-8">
           Secure your Rolls-Royce rental through WhatsApp and enjoy premium Miami service.
         </p>
 
         <a
-          href="https://wa.me/16452487305"
+          href={`https://wa.me/16452487305?text=${whatsappMessage}`}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-block bg-[#c9a96e] text-black px-10 py-4 rounded-full font-semibold hover:bg-white transition"
@@ -80,6 +103,13 @@ export default function RollsRoyceMiami() {
           Reserve Now
         </a>
       </section>
+
+      <FleetModal
+        car={activeCar}
+        setCar={setActiveCar}
+        activeImage={activeImage}
+        setActiveImage={setActiveImage}
+      />
     </div>
   );
 }

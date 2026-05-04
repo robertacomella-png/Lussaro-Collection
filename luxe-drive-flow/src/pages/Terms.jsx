@@ -5,196 +5,114 @@ export default function Terms() {
   useSeo({
     title: "Terms of Service",
     description:
-      "Review the Terms of Service for renting luxury cars with Lussaro Collection in Miami. Eligibility, booking, deposits, liability, and policies.",
+      "Review the Terms of Service for renting luxury cars with Lussaro Collection in Miami. Eligibility, booking, deposits, liability, and legal terms.",
     url: "https://www.lussarocollection.com/terms",
   });
 
   return (
     <div className="bg-black text-white min-h-screen">
       <Navbar />
-      <div className="max-w-5xl mx-auto px-6 py-20">
+      <div className="max-w-6xl mx-auto px-6 py-20">
         <h1 className="text-4xl md:text-5xl font-semibold mb-6">Terms of Service</h1>
 
-        <div className="space-y-10 text-white/75 text-sm leading-relaxed">
+        <div className="space-y-10 text-white/80 text-sm leading-relaxed">
           <p>
-            These Terms of Service (“Terms”) govern all use of services provided by Lussaro Collection (“Company,” “we,” “us,” or “our”). By accessing our website, requesting a reservation, or renting a vehicle, you (“Client,” “Renter,” or “you”) agree to be bound by these Terms.
+            These Terms of Service govern your use of Lussaro Collection’s luxury car rental services in Miami. By requesting a reservation, renting a vehicle, or using our website, you agree to these terms.
           </p>
 
-          <div className="space-y-4">
-            <h2 className="text-2xl font-semibold">1. Eligibility Requirements</h2>
-            <p>To rent or operate any vehicle, you must:</p>
+          <section className="space-y-4">
+            <h2 className="text-2xl font-semibold">1. Eligibility & Requirements</h2>
+            <p>To reserve and operate any vehicle, you must meet the following conditions:</p>
             <ul className="list-disc list-inside space-y-2 text-white/70">
-              <li>Be at least 21 years of age</li>
-              <li>Possess a valid driver’s license</li>
-              <li>Maintain full coverage insurance that applies to rental vehicles</li>
-              <li>Provide accurate and complete identification and documentation</li>
+              <li>Be at least 21 years of age.</li>
+              <li>Hold a valid, full driver’s license.</li>
+              <li>Maintain full coverage insurance that applies to rental vehicles.</li>
+              <li>Provide accurate personal information and documentation.</li>
             </ul>
-            <p>We reserve the right to deny service at our sole discretion.</p>
-          </div>
+            <p>Failure to meet these requirements may result in rental denial or reservation cancellation.</p>
+          </section>
 
-          <div className="space-y-4">
-            <h2 className="text-2xl font-semibold">2. Reservations & Payments</h2>
+          <section className="space-y-4">
+            <h2 className="text-2xl font-semibold">2. Reservations, Payments & Confirmation</h2>
+            <p>All reservations are subject to availability and approval. A booking is confirmed only after payment and document verification are completed.</p>
             <ul className="list-disc list-inside space-y-2 text-white/70">
-              <li>All reservations are subject to availability and approval</li>
-              <li>Pricing is subject to change without notice</li>
-              <li>A reservation is not confirmed until payment and verification are completed</li>
-              <li>We reserve the right to cancel or refuse any booking at any time</li>
+              <li>Prices may change without prior notice.</li>
+              <li>We may cancel or refuse any reservation at our discretion.</li>
+              <li>Additional fees may apply for special requests, delivery, or changes to the rental.</li>
             </ul>
-          </div>
+          </section>
 
-          <div className="space-y-4">
+          <section className="space-y-4">
             <h2 className="text-2xl font-semibold">3. Security Deposit</h2>
+            <p>A security deposit is required for all rentals. Deposit amounts vary by vehicle and are disclosed before booking.</p>
             <ul className="list-disc list-inside space-y-2 text-white/70">
-              <li>A security deposit is required for all rentals</li>
-              <li>Deposit amounts vary by vehicle and are disclosed prior to booking</li>
-              <li>Deposits may be used to cover:</li>
+              <li>Deposits may cover damage, excess mileage, late returns, cleaning, or fees.</li>
+              <li>Deposits are returned following vehicle inspection, less applicable deductions.</li>
             </ul>
-            <ul className="list-disc list-inside ml-6 space-y-2 text-white/70">
-              <li>Damages</li>
-              <li>Excess mileage</li>
-              <li>Late returns</li>
-              <li>Cleaning fees</li>
-              <li>Traffic violations or fines</li>
-            </ul>
-            <p>Deposits are typically returned within a reasonable timeframe after inspection, minus any applicable charges.</p>
-          </div>
+          </section>
 
-          <div className="space-y-4">
+          <section className="space-y-4">
             <h2 className="text-2xl font-semibold">4. Use of Vehicle</h2>
-            <p>You agree to:</p>
+            <p>You must operate the rental vehicle responsibly, obey all laws, and follow these conditions:</p>
             <ul className="list-disc list-inside space-y-2 text-white/70">
-              <li>Operate the vehicle responsibly and in accordance with all laws</li>
-              <li>Use the vehicle for personal use only</li>
-              <li>Not allow any unauthorized drivers</li>
-              <li>Not operate under the influence of drugs or alcohol</li>
-              <li>Not use the vehicle for:</li>
+              <li>Use the vehicle for personal, non-commercial purposes only.</li>
+              <li>Only authorized drivers may operate the vehicle.</li>
+              <li>Do not drive while impaired by alcohol or drugs.</li>
+              <li>Do not use the vehicle for racing, off-road driving, ride-sharing, commercial hauling, or illegal activity.</li>
             </ul>
-            <ul className="list-disc list-inside ml-6 space-y-2 text-white/70">
-              <li>Racing or reckless driving</li>
-              <li>Illegal activities</li>
-              <li>Ride-sharing or commercial purposes</li>
-              <li>Off-road driving</li>
-            </ul>
-            <p>Any violation of these conditions may result in immediate termination of the rental without refund.</p>
-          </div>
+          </section>
 
-          <div className="space-y-4">
-            <h2 className="text-2xl font-semibold">5. Liability & Responsibility</h2>
-            <p>You assume full responsibility for the vehicle during the rental period.</p>
-            <p>You are liable for:</p>
+          <section className="space-y-4">
+            <h2 className="text-2xl font-semibold">5. Damage, Liability & Insurance</h2>
+            <p>You are responsible for the vehicle during the rental period. This includes:</p>
             <ul className="list-disc list-inside space-y-2 text-white/70">
-              <li>Any and all damage to the vehicle</li>
-              <li>Loss of use</li>
-              <li>Diminished value</li>
-              <li>Towing and recovery costs</li>
-              <li>Administrative and processing fees</li>
+              <li>Any damage to the vehicle.</li>
+              <li>Loss of use or diminished value.</li>
+              <li>Towing, recovery, and administrative fees.</li>
             </ul>
-            <p>Insurance coverage must be valid and sufficient. If your insurance does not cover damages, you are personally responsible for all costs.</p>
-          </div>
+            <p>If your insurance does not cover damage, you are personally liable for all costs.</p>
+          </section>
 
-          <div className="space-y-4">
-            <h2 className="text-2xl font-semibold">6. Accidents & Incidents</h2>
-            <ul className="list-disc list-inside space-y-2 text-white/70">
-              <li>You must notify us immediately</li>
-              <li>You must cooperate fully with law enforcement and insurance providers</li>
-              <li>Failure to report incidents promptly may result in additional liability</li>
-            </ul>
-          </div>
+          <section className="space-y-4">
+            <h2 className="text-2xl font-semibold">6. Tickets, Tolls & Fines</h2>
+            <p>Renters are responsible for all tickets, tolls, fines, and penalties incurred during their rental period.</p>
+            <p>Lussaro Collection may charge administrative fees for processing violations or notices.</p>
+          </section>
 
-          <div className="space-y-4">
-            <h2 className="text-2xl font-semibold">7. Mileage & Fees</h2>
-            <ul className="list-disc list-inside space-y-2 text-white/70">
-              <li>Mileage limits are defined per rental</li>
-              <li>Excess mileage is charged at the agreed rate</li>
-              <li>Additional fees may include:</li>
-            </ul>
-            <ul className="list-disc list-inside ml-6 space-y-2 text-white/70">
-              <li>Late return fees</li>
-              <li>Cleaning/detailing fees</li>
-              <li>Fuel charges</li>
-              <li>Administrative fees</li>
-            </ul>
-          </div>
+          <section className="space-y-4">
+            <h2 className="text-2xl font-semibold">7. Late Fees & Return Policy</h2>
+            <p>Vehicles must be returned on time and in the agreed condition. Late returns may incur additional charges.</p>
+            <p>We reserve the right to end the rental early for safety, misuse, or policy violations.</p>
+          </section>
 
-          <div className="space-y-4">
-            <h2 className="text-2xl font-semibold">8. Cancellations & Refunds</h2>
-            <ul className="list-disc list-inside space-y-2 text-white/70">
-              <li>All bookings may be subject to a non-refundable policy</li>
-              <li>Cancellation terms are disclosed at the time of booking</li>
-              <li>We reserve the right to retain payments for cancellations, no-shows, or violations</li>
-            </ul>
-          </div>
+          <section className="space-y-4">
+            <h2 className="text-2xl font-semibold">8. GPS & Monitoring</h2>
+            <p>Vehicles may include GPS tracking and monitoring systems for safety, misuse prevention, and recovery. Renting a vehicle constitutes consent to these systems.</p>
+          </section>
 
-          <div className="space-y-4">
-            <h2 className="text-2xl font-semibold">9. Vehicle Condition</h2>
-            <p>Vehicles are provided in premium condition.</p>
-            <ul className="list-disc list-inside space-y-2 text-white/70">
-              <li>Return the vehicle in the same condition received</li>
-              <li>Be responsible for any interior or exterior damage</li>
-              <li>Avoid smoking, excessive wear, or misuse</li>
-            </ul>
-          </div>
+          <section className="space-y-4">
+            <h2 className="text-2xl font-semibold">9. Damage Reporting & Accidents</h2>
+            <p>You must notify Lussaro Collection immediately after any accident, damage, or incident. Prompt reporting is required for insurance and claims processing.</p>
+          </section>
 
-          <div className="space-y-4">
-            <h2 className="text-2xl font-semibold">10. GPS & Monitoring</h2>
-            <p>Vehicles may be equipped with GPS tracking and monitoring systems.</p>
-            <ul className="list-disc list-inside space-y-2 text-white/70">
-              <li>Location tracking</li>
-              <li>Monitoring for safety, misuse, and recovery purposes</li>
-            </ul>
-            <p>By renting, you consent to these systems.</p>
-          </div>
+          <section className="space-y-4">
+            <h2 className="text-2xl font-semibold">10. Florida Governing Law</h2>
+            <p>These Terms are governed by the laws of the State of Florida. Any disputes will be resolved in courts located in Miami, Florida.</p>
+          </section>
 
-          <div className="space-y-4">
-            <h2 className="text-2xl font-semibold">11. Limitation of Liability</h2>
-            <p>To the maximum extent permitted by law, Lussaro Collection is not liable for:</p>
-            <ul className="list-disc list-inside space-y-2 text-white/70">
-              <li>Indirect or consequential damages</li>
-              <li>Loss of personal property</li>
-              <li>Personal injury resulting from misuse or negligence</li>
-              <li>Third-party claims arising from your use of the vehicle</li>
-            </ul>
-          </div>
+          <section className="space-y-4">
+            <h2 className="text-2xl font-semibold">11. Modifications</h2>
+            <p>Lussaro Collection may update these Terms at any time. Continued use of services after changes constitutes acceptance of the updated Terms.</p>
+          </section>
 
-          <div className="space-y-4">
-            <h2 className="text-2xl font-semibold">12. Indemnification</h2>
-            <p>You agree to indemnify and hold harmless Lussaro Collection from any claims, damages, liabilities, or expenses arising from:</p>
-            <ul className="list-disc list-inside space-y-2 text-white/70">
-              <li>Your use of the vehicle</li>
-              <li>Violations of these Terms</li>
-              <li>Negligence or misconduct</li>
-            </ul>
-          </div>
-
-          <div className="space-y-4">
-            <h2 className="text-2xl font-semibold">13. Force Majeure</h2>
-            <p>We are not responsible for failure to perform due to events beyond our control, including but not limited to:</p>
-            <ul className="list-disc list-inside space-y-2 text-white/70">
-              <li>Weather</li>
-              <li>Natural disasters</li>
-              <li>Mechanical failures</li>
-              <li>Government actions</li>
-            </ul>
-          </div>
-
-          <div className="space-y-4">
-            <h2 className="text-2xl font-semibold">14. Modifications</h2>
-            <p>We reserve the right to modify these Terms at any time. Continued use of our services constitutes acceptance of updated Terms.</p>
-          </div>
-
-          <div className="space-y-4">
-            <h2 className="text-2xl font-semibold">15. Governing Law</h2>
-            <p>These Terms shall be governed by the laws of the State of Florida. Any disputes shall be resolved in the appropriate courts located in Miami, Florida.</p>
-          </div>
-
-          <div className="space-y-4 pb-10">
-            <h2 className="text-2xl font-semibold">16. Contact Information</h2>
+          <section className="space-y-4 pb-10">
+            <h2 className="text-2xl font-semibold">12. Contact Information</h2>
             <p>
               Lussaro Collection<br />
               Miami, Florida<br />
               WhatsApp: +1 (645) 248-7305
             </p>
-          </div>
+          </section>
         </div>
       </div>
     </div>

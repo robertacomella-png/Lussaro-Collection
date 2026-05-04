@@ -1,9 +1,17 @@
+import { useState } from "react";
 import Navbar from "@/components/navbar/Navbar";
 import { useSeo } from "@/lib/useSeo";
 import FleetCard from "@/components/fleet/FleetCard";
+import FleetModal from "@/components/fleet/FleetModal";
 import { fleet } from "@/data/fleet";
 
 export default function GWagonMiami() {
+  const [activeCar, setActiveCar] = useState(null);
+  const [activeImage, setActiveImage] = useState(0);
+  const whatsappMessage = encodeURIComponent(
+    "Hi, I'm interested in booking a luxury car with Lussaro Collection."
+  );
+
   useSeo({
     title: "G-Wagon Rental Miami",
     description:
@@ -26,7 +34,6 @@ export default function GWagonMiami() {
     <div className="bg-[#f7f5f0] text-black">
       <Navbar />
 
-      {/* HERO */}
       <section className="max-w-7xl mx-auto px-6 pt-24 pb-16">
         <p className="text-[#c9a96e] tracking-[0.3em] uppercase text-xs mb-4">
           Lussaro Collection
@@ -36,96 +43,92 @@ export default function GWagonMiami() {
           G-Wagon Rental Miami
         </h1>
 
-        <p className="text-black/60 max-w-2xl text-base md:text-lg leading-relaxed">
-          Experience the ultimate in luxury SUV performance with a Mercedes-AMG G63. Bold, powerful, and unmistakably iconic, the G-Wagon commands attention wherever you go in Miami. From South Beach to Brickell, feel the roar of a twin-turbo V8 and the presence that only a true legend can deliver.
+        <p className="text-black/70 max-w-3xl text-base md:text-lg leading-relaxed">
+          Drive Miami in a Mercedes-AMG G63 and own every arrival. The G-Wagon blends commanding luxury with off-road heritage, making it an iconic choice for South Beach, Brickell, and every VIP occasion in the city.
         </p>
+
+        <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
+          <a
+            href={`https://wa.me/16452487305?text=${whatsappMessage}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center bg-[#c9a96e] text-black px-8 py-4 rounded-full font-semibold hover:bg-white transition"
+          >
+            Reserve on WhatsApp
+          </a>
+          <a
+            href="/exotic-car-rental-miami"
+            className="inline-flex items-center justify-center border border-white/15 text-white px-8 py-4 rounded-full font-semibold hover:border-[#c9a96e] hover:text-white transition"
+          >
+            Browse Exotic Fleet
+          </a>
+        </div>
       </section>
 
-      {/* GWAGON CARS */}
       <section className="max-w-7xl mx-auto px-6 pb-20">
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {gwagons.length > 0 ? (
             gwagons.map((car) => (
-              <FleetCard key={car.id} car={car} onOpen={() => {}} />
+              <FleetCard key={car.id} car={car} onOpen={setActiveCar} />
             ))
           ) : (
-            <p className="text-black/60 text-lg col-span-full">
-              No G-Wagon vehicles currently available. Check back soon!
-            </p>
+            <div className="col-span-full rounded-3xl bg-white/5 p-8 text-black/80 text-center">
+              <p className="text-lg font-medium">
+                No G-Wagon vehicles currently available. Check back soon.
+              </p>
+              <p className="mt-3 text-sm text-black/60">
+                In the meantime, explore our full exotic fleet for other premium Miami options.
+              </p>
+            </div>
           )}
         </div>
       </section>
 
-      {/* CONTENT */}
-      <section className="max-w-4xl mx-auto px-6 pb-24 space-y-6">
-        <h2 className="text-2xl md:text-3xl font-semibold">
-          Rent a Mercedes-AMG G63 in Miami
-        </h2>
+      <section className="max-w-5xl mx-auto px-6 pb-24 space-y-8">
+        <div>
+          <h2 className="text-2xl md:text-3xl font-semibold">
+            Miami’s Premier G-Wagon Rental Experience
+          </h2>
+          <p className="text-black/70 leading-relaxed">
+            The Mercedes-AMG G63 delivers unmatched presence on Miami’s most exclusive streets. From a commanding South Beach arrival to head-turning moments in Brickell, the G-Wagon is a statement of style, performance, and luxury.
+          </p>
+        </div>
 
-        <p className="text-black/70 leading-relaxed">
-          The Mercedes-AMG G63 is more than a vehicle—it's a statement. Built for those who refuse to blend in, this iconic SUV combines timeless design with raw, twin-turbo performance. In Miami, where luxury and boldness define the city, the G-Wagon stands alone.
-        </p>
+        <div>
+          <h3 className="text-xl font-semibold">Built for VIP Miami Travel</h3>
+          <p className="text-black/70 leading-relaxed">
+            When you rent with Lussaro Collection, your G-Wagon comes with full support and delivery anywhere in Miami. We handle logistics, insurance checks, and vehicle readiness so you can focus on the experience.
+          </p>
+          <p className="text-black/70 leading-relaxed">
+            If you prefer a high-performance exotic sports car, check our <a href="/lamborghini-rental-miami" className="text-[#c9a96e] underline underline-offset-4">Lamborghini rentals</a> for a different kind of Miami adrenaline.
+          </p>
+        </div>
 
-        <p className="text-black/70 leading-relaxed">
-          Whether you're making a power move in Brickell, turning heads on South Beach, or commanding respect at any nightlife destination, the G63 delivers the presence and performance you demand. Lussaro Collection offers meticulously maintained G-Wagons, ready for the ultimate Miami experience.
-        </p>
+        <div>
+          <h3 className="text-xl font-semibold">Why Choose the G-Wagon in Miami</h3>
+          <ul className="text-black/70 space-y-3">
+            <li>• Unrivaled curb appeal for high-profile events and photo shoots.</li>
+            <li>• Powerful twin-turbo V8 performance with iconic AMG engineering.</li>
+            <li>• Spacious luxury interior for comfort across every Miami neighborhood.</li>
+            <li>• Premium service and fast WhatsApp booking for last-minute plans.</li>
+          </ul>
+        </div>
 
-        <p className="text-black/70 leading-relaxed">
-          With seamless booking and flexible delivery to any location in Miami, your exotic SUV rental is just a message away. Get behind the wheel of an icon.
-        </p>
-
-        <h3 className="text-xl font-semibold mt-10">
-          Why Rent a G-Wagon in Miami?
-        </h3>
-
-        <ul className="text-black/70 space-y-3">
-          <li className="flex items-start">
-            <span className="text-[#c9a96e] mr-3 font-bold">•</span>
-            <span><strong>Unmistakable Presence:</strong> The G-Wagon's iconic silhouette turns heads everywhere you go—from Ocean Drive to Brickell.</span>
-          </li>
-          <li className="flex items-start">
-            <span className="text-[#c9a96e] mr-3 font-bold">•</span>
-            <span><strong>Legendary Performance:</strong> Twin-turbo V8 power paired with commanding ride height—feel the difference.</span>
-          </li>
-          <li className="flex items-start">
-            <span className="text-[#c9a96e] mr-3 font-bold">•</span>
-            <span><strong>Perfect for Every Occasion:</strong> VIP events, nightlife, photo shoots, celebration weekends—the G63 elevates everything.</span>
-          </li>
-          <li className="flex items-start">
-            <span className="text-[#c9a96e] mr-3 font-bold">•</span>
-            <span><strong>Luxury Comfort:</strong> Premium materials, cutting-edge technology, and a ride engineered for pure comfort.</span>
-          </li>
-        </ul>
-
-        <h3 className="text-xl font-semibold mt-10">
-          Perfect for South Beach & Miami's Best Spots
-        </h3>
-
-        <p className="text-black/70 leading-relaxed">
-          Pull up in a G-Wagon and make an entrance that matters. The G63 is designed for Miami's most exclusive venues, from South Beach clubs to Brickell corporate events. Whether it's a weekend getaway or a special celebration, this exotic SUV rental is your ticket to maximum impact.
-        </p>
-
-        <h3 className="text-xl font-semibold mt-10">
-          The Mercedes-AMG G63 Experience
-        </h3>
-
-        <p className="text-black/70 leading-relaxed">
-          Every detail of the G-Wagon speaks luxury. The aggressive exterior design, refined interior, advanced infotainment system, and cutting-edge safety features create a driving experience that's both thrilling and sophisticated. This is what premium exotic car rental in Miami looks like.
-        </p>
+        <div>
+          <h3 className="text-xl font-semibold">Rental Confidence for South Beach and Brickell</h3>
+          <p className="text-black/70 leading-relaxed">
+            Lussaro Collection is focused on reliability, transparency, and a high-end customer experience. Your G-Wagon rental includes clear terms, professional delivery, and the support needed for a confident Miami adventure.
+          </p>
+        </div>
       </section>
 
-      {/* CTA */}
       <section className="bg-black text-white py-20 text-center px-6">
-        <h2 className="text-3xl md:text-5xl font-semibold mb-6">
-          Reserve Your G-Wagon Today
-        </h2>
-
+        <h2 className="text-3xl md:text-5xl font-semibold mb-6">Reserve Your G-Wagon Today</h2>
         <p className="text-white/60 max-w-xl mx-auto mb-8">
-          Experience the iconic power of a Mercedes-AMG G63. Book instantly and own Miami's most legendary SUV.
+          Book a Mercedes-AMG G63 with Lussaro Collection and enjoy Miami’s most luxurious SUV experience.
         </p>
-
         <a
-          href="https://wa.me/16452487305"
+          href={`https://wa.me/16452487305?text=${whatsappMessage}`}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-block bg-[#c9a96e] text-black px-10 py-4 rounded-full font-semibold hover:bg-white transition"
@@ -133,6 +136,13 @@ export default function GWagonMiami() {
           Reserve Now
         </a>
       </section>
+
+      <FleetModal
+        car={activeCar}
+        setCar={setActiveCar}
+        activeImage={activeImage}
+        setActiveImage={setActiveImage}
+      />
     </div>
   );
 }

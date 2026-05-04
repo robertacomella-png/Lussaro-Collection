@@ -9,9 +9,9 @@ import CTASection from "../components/cta/CTASection";
 
 export default function Home() {
   useSeo({
-    title: "Miami Luxury Car Rentals",
+    title: "Luxury & Exotic Car Rental Miami | Lussaro Collection",
     description:
-      "Lussaro Collection offers Miami luxury car rentals with exotic vehicles, premium delivery, and fast WhatsApp booking across South Beach and Brickell.",
+      "Lussaro Collection offers Miami luxury and exotic car rentals with Lamborghini, Rolls-Royce, G-Wagon, premium delivery, and instant WhatsApp booking across South Beach and Brickell.",
     url: "https://www.lussarocollection.com/",
   });
 
