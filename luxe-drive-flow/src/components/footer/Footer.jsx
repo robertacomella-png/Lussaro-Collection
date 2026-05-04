@@ -41,6 +41,26 @@ export default function Footer() {
                 G-Wagon Rental Miami
               </a>
             </li>
+            <li>
+              <a href="/luxury-suv-rental-miami" className="hover:text-white transition-colors">
+                Luxury SUV Rental Miami
+              </a>
+            </li>
+            <li>
+              <a href="/rolls-royce-rental-miami" className="hover:text-white transition-colors">
+                Rolls-Royce Rental Miami
+              </a>
+            </li>
+            <li>
+              <a href="/exotic-car-rental-brickell" className="hover:text-white transition-colors">
+                Exotic Car Rental Brickell
+              </a>
+            </li>
+            <li>
+              <a href="/exotic-car-rental-south-beach" className="hover:text-white transition-colors">
+                Exotic Car Rental South Beach
+              </a>
+            </li>
           </ul>
         </div>
 
