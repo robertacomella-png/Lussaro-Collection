@@ -5,8 +5,6 @@ import { queryClientInstance } from "@/lib/query-client";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/lib/AuthContext";
 import UserNotRegisteredError from "@/components/UserNotRegisteredError";
-import WidgetVisibility from "@/components/fleet/WidgetVisibility";
-import Footer from "@/components/footer/Footer";
 
 const Home = lazy(() => import("./pages/Home"));
 const Gallery = lazy(() => import("./pages/Gallery"));
@@ -20,6 +18,7 @@ const RollsRoyceMiami = lazy(() => import("./pages/RollsRoyceMiami"));
 const ExoticBrickell = lazy(() => import("./pages/ExoticBrickell"));
 const ExoticSouthBeach = lazy(() => import("./pages/ExoticSouthBeach"));
 const PageNotFound = lazy(() => import("./lib/PageNotFound"));
+const Footer = lazy(() => import("@/components/footer/Footer"));
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } =
@@ -74,14 +73,16 @@ function App() {
     <AuthProvider>
       <QueryClientProvider client={queryClientInstance}>
         <Router>
+          <div className="min-h-screen flex flex-col">
+            <WidgetVisibility />
 
-          <WidgetVisibility />
+            <main className="flex-1">
+              <AuthenticatedApp />
+            </main>
 
-          <AuthenticatedApp />
-
-          {/* 🔥 GLOBAL FOOTER */}
-          <Footer />
-
+            {/* 🔥 GLOBAL FOOTER */}
+            <Footer />
+          </div>
         </Router>
 
         <Toaster />

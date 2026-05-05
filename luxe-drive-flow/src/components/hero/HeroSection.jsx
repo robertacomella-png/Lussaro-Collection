@@ -13,6 +13,7 @@ export default function HeroSection() {
     <>
       <section
         id="top"
+        style={{ minHeight: "90vh" }}
         className="relative h-[90vh] md:h-[95vh] w-full overflow-hidden bg-black"
       >
         <div className="absolute inset-0 pointer-events-none">
@@ -24,6 +25,8 @@ export default function HeroSection() {
             <img
               src="https://ik.imagekit.io/8i3ae7fac/cars-11.jpg?tr=w-700,q-65,f-webp"
               alt="Luxury Fleet"
+              width="1920"
+              height="1080"
               loading="eager"
               fetchPriority="high"
               decoding="async"

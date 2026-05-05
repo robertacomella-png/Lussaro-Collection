@@ -1,11 +1,21 @@
+import { lazy, Suspense } from "react";
 import Navbar from "../components/navbar/Navbar";
 import { useSeo } from "@/lib/useSeo";
 import HeroSection from "../components/hero/HeroSection";
-import FleetSection from "../components/fleet/FleetSection";
-import ExperienceSection from "../components/experience/ExperienceSection";
-import ProcessSection from "../components/process/ProcessSection";
-import TestimonialsSection from "../components/testimonials/TestimonialsSection";
-import CTASection from "../components/cta/CTASection";
+
+const FleetSection = lazy(() => import("../components/fleet/FleetSection"));
+const ExperienceSection = lazy(() => import("../components/experience/ExperienceSection"));
+const ProcessSection = lazy(() => import("../components/process/ProcessSection"));
+const TestimonialsSection = lazy(() => import("../components/testimonials/TestimonialsSection"));
+const CTASection = lazy(() => import("../components/cta/CTASection"));
+
+function SectionFallback() {
+  return (
+    <div className="max-w-7xl mx-auto px-4 md:px-6 py-16">
+      <div className="h-[420px] rounded-[28px] bg-white/5 animate-pulse" />
+    </div>
+  );
+}
 
 export default function Home() {
   useSeo({
@@ -20,23 +30,25 @@ export default function Home() {
       <Navbar />
       <HeroSection />
 
-      <div id="experience">
-        <FleetSection />
-      </div>
+      <Suspense fallback={<SectionFallback />}>
+        <div id="experience">
+          <FleetSection />
+        </div>
 
-      <ExperienceSection />
+        <ExperienceSection />
 
-      <div id="process">
-        <ProcessSection />
-      </div>
+        <div id="process">
+          <ProcessSection />
+        </div>
 
-      <div id="testimonials">
-        <TestimonialsSection />
-      </div>
+        <div id="testimonials">
+          <TestimonialsSection />
+        </div>
 
-      <div id="cta">
-        <CTASection />
-      </div>
+        <div id="cta">
+          <CTASection />
+        </div>
+      </Suspense>
     </div>
   );
 }

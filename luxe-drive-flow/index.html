@@ -3,11 +3,43 @@
   <head>
     <!-- Google Tag Manager -->
     <script>
-      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-      })(window,document,'script','dataLayer','GTM-5J937M8K');
+      window.dataLayer = window.dataLayer || [];
+      function loadGTM() {
+        if (window.gtmLoaded) return;
+        window.gtmLoaded = true;
+
+        window.dataLayer.push({
+          'gtm.start': new Date().getTime(),
+          event: 'gtm.js',
+        });
+
+        var f = document.getElementsByTagName('script')[0];
+        var j = document.createElement('script');
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-5J937M8K';
+        f.parentNode.insertBefore(j, f);
+      }
+
+      function onUserInteraction() {
+        loadGTM();
+        removeInteractionListeners();
+      }
+
+      function removeInteractionListeners() {
+        ['click', 'keydown', 'mousemove', 'touchstart', 'scroll'].forEach(function(event) {
+          window.removeEventListener(event, onUserInteraction, { passive: true });
+        });
+      }
+
+      ['click', 'keydown', 'mousemove', 'touchstart', 'scroll'].forEach(function(event) {
+        window.addEventListener(event, onUserInteraction, { passive: true, once: true });
+      });
+
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(loadGTM, { timeout: 3000 });
+      } else {
+        setTimeout(loadGTM, 3000);
+      }
     </script>
     <!-- End Google Tag Manager -->
 
