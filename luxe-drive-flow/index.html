@@ -4,20 +4,30 @@
     <!-- Google Tag Manager -->
     <script>
       window.dataLayer = window.dataLayer || [];
+
       function loadGTM() {
         if (window.gtmLoaded) return;
         window.gtmLoaded = true;
 
         window.dataLayer.push({
-          'gtm.start': new Date().getTime(),
-          event: 'gtm.js',
+          "gtm.start": new Date().getTime(),
+          event: "gtm.js",
         });
 
-        var f = document.getElementsByTagName('script')[0];
-        var j = document.createElement('script');
-        j.async = true;
-        j.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-5J937M8K';
-        f.parentNode.insertBefore(j, f);
+        var firstScript = document.getElementsByTagName("script")[0];
+        var gtmScript = document.createElement("script");
+        gtmScript.async = true;
+        gtmScript.src =
+          "https://www.googletagmanager.com/gtm.js?id=GTM-5J937M8K";
+        firstScript.parentNode.insertBefore(gtmScript, firstScript);
+      }
+
+      function removeInteractionListeners() {
+        ["click", "keydown", "mousemove", "touchstart", "scroll"].forEach(
+          function (eventName) {
+            window.removeEventListener(eventName, loadGTM);
+          }
+        );
       }
 
       function onUserInteraction() {
@@ -25,17 +35,16 @@
         removeInteractionListeners();
       }
 
-      function removeInteractionListeners() {
-        ['click', 'keydown', 'mousemove', 'touchstart', 'scroll'].forEach(function(event) {
-          window.removeEventListener(event, onUserInteraction, { passive: true });
-        });
-      }
+      ["click", "keydown", "mousemove", "touchstart", "scroll"].forEach(
+        function (eventName) {
+          window.addEventListener(eventName, onUserInteraction, {
+            passive: true,
+            once: true,
+          });
+        }
+      );
 
-      ['click', 'keydown', 'mousemove', 'touchstart', 'scroll'].forEach(function(event) {
-        window.addEventListener(event, onUserInteraction, { passive: true, once: true });
-      });
-
-      if ('requestIdleCallback' in window) {
+      if ("requestIdleCallback" in window) {
         requestIdleCallback(loadGTM, { timeout: 3000 });
       } else {
         setTimeout(loadGTM, 3000);
@@ -43,27 +52,60 @@
     </script>
     <!-- End Google Tag Manager -->
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <meta property="og:title" content="Lussaro Collection | Miami Luxury Car Rentals" />
-    <meta property="og:description" content="Lussaro Collection offers Miami luxury car rentals with exotic vehicles, premium delivery, and fast WhatsApp booking across South Beach and Brickell." />
-    <meta property="og:image" content="https://www.lussarocollection.com/preview.png" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Lussaro Collection | Miami Luxury Car Rentals</title>
+    <meta
+      name="description"
+      content="Lussaro Collection offers Miami luxury car rentals with exotic vehicles, premium delivery, and fast WhatsApp booking across South Beach and Brickell."
+    />
+    <meta
+      name="keywords"
+      content="Miami luxury car rental, exotic car rental Miami, Lamborghini rental Miami, G-Wagon rental Miami, Mercedes-AMG G63, luxury SUV rental"
+    />
+
+    <link rel="canonical" href="https://www.lussarocollection.com" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="https://ik.imagekit.io/8i3ae7fac/cars-11.jpg?tr=w-700,q-65,f-webp"
+      imagesrcset="https://ik.imagekit.io/8i3ae7fac/cars-14.jpg?tr=w-1200,q-70,f-webp 1200w, https://ik.imagekit.io/8i3ae7fac/cars-11.jpg?tr=w-700,q-65,f-webp 700w"
+      imagesizes="(min-width: 768px) 1200px, 700px"
+      fetchpriority="high"
+    />
+
+    <meta
+      property="og:title"
+      content="Lussaro Collection | Miami Luxury Car Rentals"
+    />
+    <meta
+      property="og:description"
+      content="Lussaro Collection offers Miami luxury car rentals with exotic vehicles, premium delivery, and fast WhatsApp booking across South Beach and Brickell."
+    />
+    <meta
+      property="og:image"
+      content="https://www.lussarocollection.com/preview.png"
+    />
     <meta property="og:url" content="https://www.lussarocollection.com" />
     <meta property="og:type" content="website" />
-    <meta name="description" content="Lussaro Collection offers Miami luxury car rentals with exotic vehicles, premium delivery, and fast WhatsApp booking across South Beach and Brickell." />
-    <meta name="keywords" content="Miami luxury car rental, exotic car rental Miami, Lamborghini rental Miami, G-Wagon rental Miami, Mercedes-AMG G63, luxury SUV rental" />
+
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Lussaro Collection | Miami Luxury Car Rentals" />
-    <meta name="twitter:description" content="Lussaro Collection offers Miami luxury car rentals with exotic vehicles, premium delivery, and fast WhatsApp booking across South Beach and Brickell." />
-    <meta name="twitter:image" content="https://www.lussarocollection.com/preview.png" />
-    <link rel="canonical" href="https://www.lussarocollection.com" />
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preload" as="image" href="https://ik.imagekit.io/8i3ae7fac/cars-11.jpg?tr=w-700,q-65,f-webp" imagesrcset="https://ik.imagekit.io/8i3ae7fac/cars-14.jpg?tr=w-1200,q-70,f-webp 1200w, https://ik.imagekit.io/8i3ae7fac/cars-11.jpg?tr=w-700,q-65,f-webp 700w" imagesizes="(min-width: 768px) 1200px, 700px" fetchpriority="high" />
-    <link rel="manifest" href="/manifest.json" />
-    <title>Lussaro Collection | Miami Luxury Car Rentals</title>
+    <meta
+      name="twitter:title"
+      content="Lussaro Collection | Miami Luxury Car Rentals"
+    />
+    <meta
+      name="twitter:description"
+      content="Lussaro Collection offers Miami luxury car rentals with exotic vehicles, premium delivery, and fast WhatsApp booking across South Beach and Brickell."
+    />
+    <meta
+      name="twitter:image"
+      content="https://www.lussarocollection.com/preview.png"
+    />
   </head>
 
   <body>
@@ -79,7 +121,6 @@
     <!-- End Google Tag Manager (noscript) -->
 
     <div id="root"></div>
-
 
     <script type="module" src="/src/main.jsx"></script>
   </body>
