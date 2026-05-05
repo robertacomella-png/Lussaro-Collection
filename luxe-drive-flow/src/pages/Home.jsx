@@ -47,25 +47,4 @@ export default function Home() {
       </Suspense>
     </main>
   );
-}          </div>
-        </Suspense>
-      </LazyOnView>
-
-      <LazyOnView fallback={<SectionSkeleton />}>
-        <Suspense fallback={<SectionSkeleton />}>
-          <div id="testimonials">
-            <TestimonialsSection />
-          </div>
-        </Suspense>
-      </LazyOnView>
-
-      <LazyOnView fallback={<SectionSkeleton className="bg-black" />}>
-        <Suspense fallback={<SectionSkeleton className="bg-black" />}>
-          <div id="cta">
-            <CTASection />
-          </div>
-        </Suspense>
-      </LazyOnView>
-    </main>
-  );
 }
