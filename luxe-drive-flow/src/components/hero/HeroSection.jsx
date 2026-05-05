@@ -13,43 +13,46 @@ export default function HeroSection() {
     <>
       <section
         id="top"
-        style={{ minHeight: "90vh" }}
-        className="relative h-[90vh] md:h-[95vh] w-full overflow-hidden bg-black"
+        className="relative min-h-[90vh] md:min-h-[95vh] h-[90vh] md:h-[95vh] w-full overflow-hidden bg-black"
       >
         <div className="absolute inset-0 pointer-events-none">
           <picture>
             <source
               media="(min-width: 768px)"
               srcSet="https://ik.imagekit.io/8i3ae7fac/cars-14.jpg?tr=w-1200,q-70,f-webp"
+              width="1200"
+              height="800"
             />
+
             <img
               src="https://ik.imagekit.io/8i3ae7fac/cars-11.jpg?tr=w-700,q-65,f-webp"
-              alt="Luxury Fleet"
-              width="1920"
-              height="1080"
+              alt="Miami luxury exotic car rental fleet"
+              width="700"
+              height="1050"
               loading="eager"
               fetchPriority="high"
               decoding="async"
-              className="w-full h-full object-cover opacity-60"
+              className="block w-full h-full object-cover opacity-60"
             />
           </picture>
+
           <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-black/40 via-black/20 to-black" />
         </div>
 
-        <div className="relative z-10 flex flex-col items-center justify-center h-full px-6 text-center">
+        <div className="relative z-10 flex min-h-[90vh] md:min-h-[95vh] flex-col items-center justify-center px-6 text-center">
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.55, delay: 0.1 }}
             className="text-[#c9a96e] tracking-[0.3em] uppercase text-xs md:text-sm font-medium mb-4"
           >
             Miami Exotic Car Rentals
           </motion.p>
 
           <motion.h1
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            transition={{ duration: 0.55, delay: 0.18 }}
             className="text-white text-5xl md:text-7xl lg:text-8xl font-semibold tracking-tight leading-none mb-6"
           >
             Drive
@@ -57,35 +60,35 @@ export default function HeroSection() {
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
+            transition={{ duration: 0.55, delay: 0.26 }}
             className="text-white/60 text-base md:text-lg max-w-md mb-6 md:mb-10 font-light"
           >
             Curated luxury vehicles for those who demand nothing less than perfection.
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-            className="w-full max-w-[360px] md:max-w-[420px] mt-32 md:mt-0"
+            transition={{ duration: 0.55, delay: 0.34 }}
+            className="w-full max-w-[360px] md:max-w-[300px] mt-32 md:mt-0"
           >
             <div className="flex flex-col gap-1 md:gap-4 items-center w-full">
               <button
+                type="button"
                 onClick={scrollToFleet}
-                className="w-full bg-white text-black px-8 py-3.5 rounded-full text-sm font-medium hover:bg-[#c9a96e] hover:text-white transition-all duration-500"
+                className="w-full bg-white text-black px-8 py-3.5 rounded-full text-sm font-medium hover:bg-[#c9a96e] hover:text-white transition-colors duration-300"
               >
                 Explore the Fleet
               </button>
 
-              {/* Mobile buttons */}
               <div className="grid grid-cols-2 gap-4 w-full md:hidden">
                 <a
                   href="https://wa.me/16452487305"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 border border-[#25D366]/50 text-white px-3 py-3.5 rounded-full text-sm font-medium hover:bg-[#25D366]/10 transition-all duration-300 backdrop-blur-sm"
+                  className="flex items-center justify-center gap-2 border border-[#25D366]/50 text-white px-3 py-3.5 rounded-full text-sm font-medium hover:bg-[#25D366]/10 transition-colors duration-300 backdrop-blur-sm"
                 >
                   WhatsApp
                   <MessageCircle className="w-4 h-4 text-[#25D366]" />
@@ -94,19 +97,18 @@ export default function HeroSection() {
                 <button
                   type="button"
                   onClick={() => setLocationOpen(true)}
-                  className="flex items-center justify-center gap-2 border border-[#c9a96e]/50 text-white px-3 py-3.5 rounded-full text-sm font-medium hover:bg-[#c9a96e]/10 transition-all duration-300 backdrop-blur-sm"
+                  className="flex items-center justify-center gap-2 border border-[#c9a96e]/50 text-white px-3 py-3.5 rounded-full text-sm font-medium hover:bg-[#c9a96e]/10 transition-colors duration-300 backdrop-blur-sm"
                 >
                   Find Us
                   <MapPin className="w-4 h-4 text-[#c9a96e]" />
                 </button>
               </div>
 
-              {/* Desktop WhatsApp button */}
               <a
                 href="https://wa.me/16452487305"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hidden md:flex w-full items-center justify-center gap-2 border border-[#25D366]/40 text-white px-8 py-3.5 rounded-full text-sm font-medium hover:bg-[#25D366]/10 hover:border-[#25D366] transition-all duration-300"
+                className="hidden md:flex w-full items-center justify-center gap-2 border border-[#25D366]/40 text-white px-8 py-3.5 rounded-full text-sm font-medium hover:bg-[#25D366]/10 hover:border-[#25D366] transition-colors duration-300"
               >
                 Book via WhatsApp
                 <MessageCircle className="w-4 h-4 text-[#25D366]" />
@@ -118,7 +120,7 @@ export default function HeroSection() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 1 }}
+          transition={{ delay: 0.8, duration: 0.7 }}
           className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
         >
           <motion.div
@@ -138,6 +140,7 @@ export default function HeroSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
             className="fixed inset-0 z-[2000] bg-black/75 backdrop-blur-md flex items-center justify-center px-4"
             onClick={() => setLocationOpen(false)}
           >
@@ -150,7 +153,7 @@ export default function HeroSection() {
               onClick={(e) => e.stopPropagation()}
             >
               <div className="relative">
-                <div className="h-[220px] md:h-[280px] w-full overflow-hidden">
+                <div className="h-[220px] md:h-[280px] w-full overflow-hidden bg-black">
                   <iframe
                     title="Lussaro Collection Location"
                     src="https://www.google.com/maps?q=Lussaro%20Collection&z=16&output=embed"
@@ -199,7 +202,7 @@ export default function HeroSection() {
                     href="https://maps.app.goo.gl/RidmvBDNjdWNofCU6"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 bg-white text-black px-6 py-3 rounded-full text-sm font-medium hover:bg-[#c9a96e] hover:text-black transition-all duration-300"
+                    className="inline-flex items-center justify-center gap-2 bg-white text-black px-6 py-3 rounded-full text-sm font-medium hover:bg-[#c9a96e] hover:text-black transition-colors duration-300"
                   >
                     Open in Google Maps
                     <MapPin className="w-4 h-4 text-black" />
@@ -208,7 +211,7 @@ export default function HeroSection() {
                   <button
                     type="button"
                     onClick={() => setLocationOpen(false)}
-                    className="inline-flex items-center justify-center px-6 py-3 rounded-full text-sm font-medium text-white border border-white/15 hover:bg-white/5 transition-all duration-300"
+                    className="inline-flex items-center justify-center px-6 py-3 rounded-full text-sm font-medium text-white border border-white/15 hover:bg-white/5 transition-colors duration-300"
                   >
                     Close
                   </button>
