@@ -74,14 +74,20 @@ function App() {
       <QueryClientProvider client={queryClientInstance}>
         <Router>
           <div className="min-h-screen flex flex-col">
-            <WidgetVisibility />
-
-            <main className="flex-1">
+            <Suspense fallback={
+              <div className="flex-1 flex items-center justify-center bg-black text-white">
+                <div className="text-center">
+                  <div className="w-8 h-8 border-4 border-white/20 border-t-white rounded-full animate-spin mx-auto mb-4"></div>
+                  <p>Loading...</p>
+                </div>
+              </div>
+            }>
               <AuthenticatedApp />
-            </main>
+            </Suspense>
 
-            {/* 🔥 GLOBAL FOOTER */}
-            <Footer />
+            <Suspense fallback={null}>
+              <Footer />
+            </Suspense>
           </div>
         </Router>
 
