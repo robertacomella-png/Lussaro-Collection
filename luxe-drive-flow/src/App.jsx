@@ -5,6 +5,7 @@ import { queryClientInstance } from "@/lib/query-client";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/lib/AuthContext";
 import UserNotRegisteredError from "@/components/UserNotRegisteredError";
+import Footer from "@/components/footer/Footer";
 
 const Home = lazy(() => import("./pages/Home"));
 const Gallery = lazy(() => import("./pages/Gallery"));
@@ -18,37 +19,34 @@ const RollsRoyceMiami = lazy(() => import("./pages/RollsRoyceMiami"));
 const ExoticBrickell = lazy(() => import("./pages/ExoticBrickell"));
 const ExoticSouthBeach = lazy(() => import("./pages/ExoticSouthBeach"));
 const PageNotFound = lazy(() => import("./lib/PageNotFound"));
-const Footer = lazy(() => import("@/components/footer/Footer"));
+
+const PageFallback = () => (
+  <div className="min-h-screen flex items-center justify-center bg-black text-white">
+    <div className="w-10 h-10 border-4 border-white/20 border-t-white rounded-full animate-spin" />
+  </div>
+);
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } =
     useAuth();
 
   if (isLoadingPublicSettings || isLoadingAuth) {
-    return (
-      <div className="fixed inset-0 flex items-center justify-center">
-        <div className="w-8 h-8 border-4 border-slate-200 border-t-slate-800 rounded-full animate-spin"></div>
-      </div>
-    );
+    return <PageFallback />;
   }
 
   if (authError) {
     if (authError.type === "user_not_registered") {
       return <UserNotRegisteredError />;
-    } else if (authError.type === "auth_required") {
+    }
+
+    if (authError.type === "auth_required") {
       navigateToLogin();
       return null;
     }
   }
 
   return (
-    <Suspense
-      fallback={
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black text-white">
-          <div className="w-10 h-10 border-4 border-white/20 border-t-white rounded-full animate-spin" />
-        </div>
-      }
-    >
+    <Suspense fallback={<PageFallback />}>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
@@ -62,7 +60,7 @@ const AuthenticatedApp = () => {
         <Route path="/rolls-royce-rental-miami" element={<RollsRoyceMiami />} />
         <Route path="/exotic-car-rental-brickell" element={<ExoticBrickell />} />
         <Route path="/exotic-car-rental-south-beach" element={<ExoticSouthBeach />} />
-        <Route path="*" element={<PageNotFound />} /> {/* ✅ ALWAYS LAST */}
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </Suspense>
   );
@@ -73,21 +71,12 @@ function App() {
     <AuthProvider>
       <QueryClientProvider client={queryClientInstance}>
         <Router>
-          <div className="min-h-screen flex flex-col">
-            <Suspense fallback={
-              <div className="flex-1 flex items-center justify-center bg-black text-white">
-                <div className="text-center">
-                  <div className="w-8 h-8 border-4 border-white/20 border-t-white rounded-full animate-spin mx-auto mb-4"></div>
-                  <p>Loading...</p>
-                </div>
-              </div>
-            }>
+          <div className="min-h-screen flex flex-col bg-black">
+            <div className="flex-1">
               <AuthenticatedApp />
-            </Suspense>
+            </div>
 
-            <Suspense fallback={null}>
-              <Footer />
-            </Suspense>
+            <Footer />
           </div>
         </Router>
 
