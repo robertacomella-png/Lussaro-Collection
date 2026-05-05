@@ -11,9 +11,7 @@ const CTASection = lazy(() => import("../components/cta/CTASection"));
 
 function SectionFallback() {
   return (
-    <div className="max-w-7xl mx-auto px-4 md:px-6 py-16">
-      <div className="h-[420px] rounded-[28px] bg-white/5 animate-pulse" />
-    </div>
+    <div className="bg-[#f7f5f0] min-h-[900px] md:min-h-[760px]" />
   );
 }
 
@@ -26,12 +24,12 @@ export default function Home() {
   });
 
   return (
-    <div className="bg-black">
+    <main className="bg-black min-h-screen">
       <Navbar />
       <HeroSection />
 
       <Suspense fallback={<SectionFallback />}>
-        <div id="experience">
+        <div id="fleet">
           <FleetSection />
         </div>
 
@@ -49,6 +47,6 @@ export default function Home() {
           <CTASection />
         </div>
       </Suspense>
-    </div>
+    </main>
   );
 }
