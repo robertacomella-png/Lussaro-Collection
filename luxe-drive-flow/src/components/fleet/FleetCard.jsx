@@ -1,5 +1,5 @@
 import { MessageCircle } from "lucide-react";
-import { getImageKitSrc } from "@/lib/imageKit";
+import { getImageKitSrc, getImageKitSrcSet, getImageKitSizes } from "@/lib/imageKit";
 
 export default function FleetCard({ car, onOpen }) {
   const message = encodeURIComponent(
@@ -17,6 +17,8 @@ export default function FleetCard({ car, onOpen }) {
       <div className="relative m-2.5 md:m-4 overflow-hidden rounded-[16px] md:rounded-[22px]">
         <img
           src={imageSrc}
+          srcSet={getImageKitSrcSet(car.images?.[0] || car.image)}
+          sizes={getImageKitSizes()}
           alt={car.name}
           width="700"
           height="520"

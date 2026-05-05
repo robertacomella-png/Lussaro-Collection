@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { getRemoteWebpSrc, getRemoteWebpSrcSet } from "@/lib/imageKit";
 
 const images = [
   "https://media.base44.com/images/public/69b59b78bb7c4287b9d0e82d/ecc59a757_IMG_26432.jpg",
@@ -113,7 +114,9 @@ export default function PhotoSlider() {
             className="flex-shrink-0 w-44 h-44 md:w-56 md:h-56 rounded-xl overflow-hidden"
           >
             <img
-              src={src}
+              src={getRemoteWebpSrc(src, 700)}
+              srcSet={getRemoteWebpSrcSet(src)}
+              sizes="280px"
               alt={`Car ${(i % images.length) + 1}`}
               width="224"
               height="224"

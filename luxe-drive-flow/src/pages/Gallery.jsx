@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import Navbar from "@/components/navbar/Navbar";
 import { useSeo } from "@/lib/useSeo";
+import { getRemoteWebpSrc, getRemoteWebpSrcSet } from "@/lib/imageKit";
 
 const galleryImages = [
   "/gallery/gallery-1.jpg",
@@ -154,15 +155,22 @@ export default function Gallery() {
                 className="group block w-full text-left"
               >
                 <div className="overflow-hidden rounded-[24px] bg-white/[0.03] shadow-[0_0_0_1px_rgba(255,255,255,0.05)] transition-all duration-500 group-hover:shadow-[0_10px_30px_rgba(0,0,0,0.18)]">
-                  <img
-                    src={src}
-                    alt={`Gallery image ${index + 1}`}
-                    width="700"
-                    height="875"
-                    loading="lazy"
-                    decoding="async"
-                    className="block w-full aspect-[4/5] object-cover rounded-[24px] transition-transform duration-700 ease-out group-hover:scale-[1.02] group-hover:brightness-[1.03]"
-                  />
+                  <picture>
+                    <source
+                      type="image/webp"
+                      srcSet={getRemoteWebpSrcSet(src)}
+                      sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
+                    />
+                    <img
+                      src={src}
+                      alt={`Gallery image ${index + 1}`}
+                      width="700"
+                      height="875"
+                      loading="lazy"
+                      decoding="async"
+                      className="block w-full aspect-[4/5] object-cover rounded-[24px] transition-transform duration-700 ease-out group-hover:scale-[1.02] group-hover:brightness-[1.03]"
+                    />
+                  </picture>
                 </div>
               </button>
             ))}
@@ -215,16 +223,23 @@ export default function Gallery() {
                 transition={{ duration: 0.3, ease: "easeOut" }}
                 className="max-w-full max-h-[82vh] md:max-h-[84vh] touch-pan-y"
               >
-                <img
-                  src={selectedImage}
-                  alt="Expanded gallery image"
-                  width="1200"
-                  height="900"
-                  loading="lazy"
-                  decoding="async"
-                  draggable={false}
-                  className="block max-w-full max-h-[82vh] md:max-h-[84vh] object-contain rounded-[26px] shadow-[0_20px_80px_rgba(0,0,0,0.55)] select-none"
-                />
+                <picture>
+                  <source
+                    type="image/webp"
+                    srcSet={getRemoteWebpSrcSet(selectedImage)}
+                    sizes="(min-width: 768px) 1200px, 100vw"
+                  />
+                  <img
+                    src={selectedImage}
+                    alt="Expanded gallery image"
+                    width="1200"
+                    height="900"
+                    loading="lazy"
+                    decoding="async"
+                    draggable={false}
+                    className="block max-w-full max-h-[82vh] md:max-h-[84vh] object-contain rounded-[26px] shadow-[0_20px_80px_rgba(0,0,0,0.55)] select-none"
+                  />
+                </picture>
               </motion.div>
             </div>
 
@@ -272,7 +287,9 @@ export default function Gallery() {
                         }`}
                       >
                         <img
-                          src={src}
+                          src={getRemoteWebpSrc(src, 200)}
+                          srcSet={getRemoteWebpSrcSet(src)}
+                          sizes="80px"
                           alt={`Thumbnail ${index + 1}`}
                           width="80"
                           height="80"

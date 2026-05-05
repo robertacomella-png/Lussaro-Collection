@@ -1,19 +1,29 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { getRemoteWebpSrcSet, getRemoteWebpSizes } from "@/lib/imageKit";
+
+const CTA_IMAGE = "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=1920&q=80";
 
 export default function CTASection() {
   return (
     <section className="relative bg-black py-32 md:py-40 overflow-hidden">
       <div className="absolute inset-0">
-        <img
-          src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=1920&q=80"
-          alt="Luxury car on road"
-          width="1920"
-          height="1080"
-          loading="lazy"
-          decoding="async"
-          className="w-full h-full object-cover opacity-30"
-        />
+        <picture>
+          <source
+            type="image/webp"
+            srcSet={getRemoteWebpSrcSet(CTA_IMAGE)}
+            sizes={getRemoteWebpSizes()}
+          />
+          <img
+            src={CTA_IMAGE}
+            alt="Luxury car on road"
+            width="1920"
+            height="1080"
+            loading="lazy"
+            decoding="async"
+            className="w-full h-full object-cover opacity-30"
+          />
+        </picture>
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/40" />
       </div>
 
