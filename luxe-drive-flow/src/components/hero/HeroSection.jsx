@@ -55,7 +55,7 @@ export default function HeroSection() {
             transition={{ duration: 0.55, delay: 0.18 }}
             className="text-white text-5xl md:text-7xl lg:text-8xl font-semibold tracking-tight leading-none mb-6"
           >
-            Rent the Lamborghini Urus
+            Rent Exotic Cars
             <span className="block text-[#c9a96e]">In Miami</span>
           </motion.h1>
 
