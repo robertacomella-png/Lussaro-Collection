@@ -23,7 +23,7 @@ export default function HeroSection() {
           <picture>
             <source
               media="(min-width: 768px)"
-              srcSet="https://ik.imagekit.io/8i3ae7fac/cars-14.jpg?tr=w-1200,q-70,f-webp"
+              srcSet="https://ik.imagekit.io/8i3ae7fac/cars-14.jpg?tr=w-1200,q-85,f-webp"
             />
             <img
               src="https://ik.imagekit.io/8i3ae7fac/cars-11.jpg?tr=w-700,q-65,f-webp"
