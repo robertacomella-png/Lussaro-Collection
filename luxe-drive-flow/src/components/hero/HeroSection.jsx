@@ -85,18 +85,18 @@ export default function HeroSection() {
           >
             <div className="flex flex-col gap-3 items-center w-full">
 
-              {/* 🔥 PRIMARY: WhatsApp */}
+              {/* PRIMARY: WhatsApp */}
               <a
                 href={whatsappLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full bg-white text-black px-8 py-3.5 rounded-full text-sm font-medium hover:bg-[#c9a96e] hover:text-white transition-colors duration-300 flex items-center justify-center gap-2"
+                className="w-full bg-white text-black px-8 py-3.5 rounded-full text-sm font-medium flex items-center justify-center gap-2 transition-colors duration-300 hover:bg-[#c9a96e] hover:text-white"
               >
                 Check Availability
-                <MessageCircle className="w-4 h-4" />
+                <MessageCircle className="w-4 h-4 text-[#25D366]" />
               </a>
 
-              {/* ⚡ SECONDARY: Fleet */}
+              {/* SECONDARY: Fleet */}
               <button
                 type="button"
                 onClick={scrollToFleet}
@@ -105,18 +105,8 @@ export default function HeroSection() {
                 View Fleet
               </button>
 
-              {/* Mobile Buttons */}
+              {/* Mobile Row */}
               <div className="grid grid-cols-2 gap-4 w-full md:hidden">
-                <a
-                  href={whatsappLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 border border-[#25D366]/50 text-white px-3 py-3.5 rounded-full text-sm font-medium hover:bg-[#25D366]/10 transition-colors duration-300 backdrop-blur-sm"
-                >
-                  Message Now
-                  <MessageCircle className="w-4 h-4 text-[#25D366]" />
-                </a>
-
                 <button
                   type="button"
                   onClick={() => setLocationOpen(true)}
@@ -125,20 +115,19 @@ export default function HeroSection() {
                   Find Us
                   <MapPin className="w-4 h-4 text-[#c9a96e]" />
                 </button>
+
+                <a
+                  href={whatsappLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 border border-[#25D366]/50 text-white px-3 py-3.5 rounded-full text-sm font-medium hover:bg-[#25D366]/10 transition-colors duration-300 backdrop-blur-sm"
+                >
+                  WhatsApp
+                  <MessageCircle className="w-4 h-4 text-[#25D366]" />
+                </a>
               </div>
 
-              {/* Desktop Secondary WhatsApp */}
-              <a
-                href={whatsappLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hidden md:flex w-full items-center justify-center gap-2 border border-[#25D366]/40 text-white px-8 py-3.5 rounded-full text-sm font-medium hover:bg-[#25D366]/10 hover:border-[#25D366] transition-colors duration-300"
-              >
-                Message to Reserve
-                <MessageCircle className="w-4 h-4 text-[#25D366]" />
-              </a>
-
-              {/* Trust Hint */}
+              {/* Trust Line */}
               <p className="text-white/40 text-xs mt-1">
                 Instant response on WhatsApp
               </p>
@@ -165,18 +154,47 @@ export default function HeroSection() {
         </motion.div>
       </section>
 
-      {/* Location Modal (unchanged) */}
+      {/* Location Modal */}
       <AnimatePresence>
         {locationOpen && (
           <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             className="fixed inset-0 z-[2000] bg-black/75 backdrop-blur-md flex items-center justify-center px-4"
             onClick={() => setLocationOpen(false)}
           >
             <motion.div
+              initial={{ opacity: 0, y: 18, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 18, scale: 0.98 }}
               className="w-full max-w-2xl rounded-[28px] overflow-hidden bg-[#111] border border-white/10 shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* modal content stays same */}
+              <div className="relative">
+                <div className="h-[220px] md:h-[280px] w-full overflow-hidden bg-black">
+                  <iframe
+                    title="Lussaro Collection Location"
+                    src="https://www.google.com/maps?q=Lussaro%20Collection&z=16&output=embed"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    loading="lazy"
+                    className="w-full h-full"
+                  />
+                </div>
+
+                <button
+                  onClick={() => setLocationOpen(false)}
+                  className="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/45 flex items-center justify-center"
+                >
+                  <X className="w-5 h-5 text-white" />
+                </button>
+              </div>
+
+              <div className="px-6 pb-6 pt-4 text-white">
+                900 Biscayne Blvd, Miami, FL
+              </div>
             </motion.div>
           </motion.div>
         )}
