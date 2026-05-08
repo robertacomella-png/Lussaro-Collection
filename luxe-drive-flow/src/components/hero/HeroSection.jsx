@@ -24,28 +24,19 @@ export default function HeroSection() {
             <source
               media="(min-width: 768px)"
               srcSet="https://ik.imagekit.io/8i3ae7fac/cars-14.jpg?tr=w-1200,q-70,f-webp"
-              width="1200"
-              height="800"
             />
             <img
               src="https://ik.imagekit.io/8i3ae7fac/cars-11.jpg?tr=w-700,q-65,f-webp"
               alt="Miami luxury exotic car rental fleet"
-              width="700"
-              height="1050"
-              loading="eager"
-              fetchPriority="high"
-              decoding="async"
               className="block w-full h-full object-cover opacity-60"
             />
           </picture>
-
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black" />
         </div>
 
         {/* Content */}
         <div className="relative z-10 flex min-h-[90vh] md:min-h-[95vh] flex-col items-center justify-center px-6 text-center">
           
-          {/* Small Text */}
           <motion.p
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
@@ -55,7 +46,6 @@ export default function HeroSection() {
             MIAMI EXOTIC RENTALS • FROM $795/DAY
           </motion.p>
 
-          {/* Headline */}
           <motion.h1
             initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
@@ -66,7 +56,6 @@ export default function HeroSection() {
             <span className="block text-[#c9a96e]">In Miami</span>
           </motion.h1>
 
-          {/* Subheadline */}
           <motion.p
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
@@ -85,18 +74,18 @@ export default function HeroSection() {
           >
             <div className="flex flex-col gap-3 items-center w-full">
 
-              {/* PRIMARY: WhatsApp */}
+              {/* PRIMARY */}
               <a
                 href={whatsappLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full bg-white text-black px-8 py-3.5 rounded-full text-sm font-medium flex items-center justify-center gap-2 transition-colors duration-300 hover:bg-[#c9a96e] hover:text-white"
+                className="w-full bg-white text-black px-8 py-3.5 rounded-full text-sm font-medium flex items-center justify-center gap-2 hover:bg-[#c9a96e] hover:text-white transition-colors duration-300"
               >
                 Check Availability
                 <MessageCircle className="w-4 h-4 text-[#25D366]" />
               </a>
 
-              {/* SECONDARY: Fleet */}
+              {/* SECONDARY */}
               <button
                 type="button"
                 onClick={scrollToFleet}
@@ -105,7 +94,7 @@ export default function HeroSection() {
                 View Fleet
               </button>
 
-              {/* Mobile Row */}
+              {/* MOBILE ROW (FIXED) */}
               <div className="grid grid-cols-2 gap-4 w-full md:hidden">
                 <button
                   type="button"
@@ -116,18 +105,15 @@ export default function HeroSection() {
                   <MapPin className="w-4 h-4 text-[#c9a96e]" />
                 </button>
 
-                <a
-                  href={whatsappLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 border border-[#25D366]/50 text-white px-3 py-3.5 rounded-full text-sm font-medium hover:bg-[#25D366]/10 transition-colors duration-300 backdrop-blur-sm"
+                <button
+                  type="button"
+                  onClick={scrollToFleet}
+                  className="flex items-center justify-center gap-2 border border-white/20 text-white px-3 py-3.5 rounded-full text-sm font-medium hover:bg-white/5 transition-colors duration-300 backdrop-blur-sm"
                 >
-                  WhatsApp
-                  <MessageCircle className="w-4 h-4 text-[#25D366]" />
-                </a>
+                  View Fleet
+                </button>
               </div>
 
-              {/* Trust Line */}
               <p className="text-white/40 text-xs mt-1">
                 Instant response on WhatsApp
               </p>
@@ -136,11 +122,8 @@ export default function HeroSection() {
           </motion.div>
         </div>
 
-        {/* Scroll Down */}
+        {/* Scroll */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8, duration: 0.7 }}
           className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
         >
           <motion.div
@@ -158,42 +141,25 @@ export default function HeroSection() {
       <AnimatePresence>
         {locationOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
             className="fixed inset-0 z-[2000] bg-black/75 backdrop-blur-md flex items-center justify-center px-4"
             onClick={() => setLocationOpen(false)}
           >
             <motion.div
-              initial={{ opacity: 0, y: 18, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 18, scale: 0.98 }}
               className="w-full max-w-2xl rounded-[28px] overflow-hidden bg-[#111] border border-white/10 shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="relative">
-                <div className="h-[220px] md:h-[280px] w-full overflow-hidden bg-black">
-                  <iframe
-                    title="Lussaro Collection Location"
-                    src="https://www.google.com/maps?q=Lussaro%20Collection&z=16&output=embed"
-                    width="100%"
-                    height="100%"
-                    style={{ border: 0 }}
-                    loading="lazy"
-                    className="w-full h-full"
-                  />
-                </div>
-
+                <iframe
+                  title="Location"
+                  src="https://www.google.com/maps?q=Lussaro%20Collection&z=16&output=embed"
+                  className="w-full h-[250px]"
+                />
                 <button
                   onClick={() => setLocationOpen(false)}
-                  className="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/45 flex items-center justify-center"
+                  className="absolute top-4 right-4"
                 >
-                  <X className="w-5 h-5 text-white" />
+                  <X className="text-white" />
                 </button>
-              </div>
-
-              <div className="px-6 pb-6 pt-4 text-white">
-                900 Biscayne Blvd, Miami, FL
               </div>
             </motion.div>
           </motion.div>
