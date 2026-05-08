@@ -55,8 +55,8 @@ export default function HeroSection() {
             transition={{ duration: 0.55, delay: 0.18 }}
             className="text-white text-5xl md:text-7xl lg:text-8xl font-semibold tracking-tight leading-none mb-6"
           >
-            Drive
-            <span className="block text-[#c9a96e]">Extraordinary.</span>
+            Rent
+            <span className="block text-[#c9a96e]">Today</span>
           </motion.h1>
 
           <motion.p
