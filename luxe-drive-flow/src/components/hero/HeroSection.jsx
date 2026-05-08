@@ -46,7 +46,7 @@ export default function HeroSection() {
             transition={{ duration: 0.55, delay: 0.1 }}
             className="text-[#c9a96e] tracking-[0.3em] uppercase text-xs md:text-sm font-medium mb-4"
           >
-            Miami Exotic Car Rentals
+            MIAMI EXOTIC CAR RENTALS • FROM $795/DAY
           </motion.p>
 
           <motion.h1
@@ -55,8 +55,8 @@ export default function HeroSection() {
             transition={{ duration: 0.55, delay: 0.18 }}
             className="text-white text-5xl md:text-7xl lg:text-8xl font-semibold tracking-tight leading-none mb-6"
           >
-            Rent
-            <span className="block text-[#c9a96e]">Today</span>
+            Rent the Lamborghini Urus
+            <span className="block text-[#c9a96e]">In Miami Today</span>
           </motion.h1>
 
           <motion.p
