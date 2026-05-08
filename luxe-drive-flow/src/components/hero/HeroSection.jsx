@@ -16,7 +16,7 @@ export default function HeroSection() {
     <>
       <section
         id="top"
-        className="relative min-h-[90vh] md:min-h-[95vh] h-[90vh] md:h-[95vh] w-full overflow-hidden bg-black"
+        className="relative min-h-[90vh] md:min-h-[95vh] w-full overflow-hidden bg-black"
       >
         {/* Background */}
         <div className="absolute inset-0 pointer-events-none">
@@ -31,6 +31,7 @@ export default function HeroSection() {
               className="block w-full h-full object-cover opacity-60"
             />
           </picture>
+
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black" />
         </div>
 
@@ -40,7 +41,7 @@ export default function HeroSection() {
           <motion.p
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.1 }}
+            transition={{ duration: 0.55 }}
             className="text-[#c9a96e] tracking-[0.3em] uppercase text-xs md:text-sm font-medium mb-4"
           >
             MIAMI EXOTIC RENTALS • FROM $795/DAY
@@ -49,29 +50,23 @@ export default function HeroSection() {
           <motion.h1
             initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.18 }}
-            className="text-white text-5xl md:text-7xl lg:text-8xl font-semibold tracking-tight leading-none mb-6"
+            transition={{ duration: 0.55 }}
+            className="text-white text-5xl md:text-7xl lg:text-8xl font-semibold leading-none mb-6"
           >
             Rent Exotic Cars
             <span className="block text-[#c9a96e]">In Miami</span>
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.26 }}
-            className="text-white/60 text-base md:text-lg max-w-md mb-6 md:mb-10 font-light"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-white/60 text-base md:text-lg max-w-md mb-8 font-light"
           >
             Same-day bookings. Seamless experience.
           </motion.p>
 
           {/* Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.34 }}
-            className="w-full max-w-[360px] md:max-w-[300px] mt-32 md:mt-0"
-          >
+          <div className="w-full max-w-[360px] md:max-w-[300px] mt-24 md:mt-0">
             <div className="flex flex-col gap-3 items-center w-full">
 
               {/* PRIMARY */}
@@ -79,36 +74,36 @@ export default function HeroSection() {
                 href={whatsappLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full bg-white text-black px-8 py-3.5 rounded-full text-sm font-medium flex items-center justify-center gap-2 hover:bg-[#c9a96e] hover:text-white transition-colors duration-300"
+                className="w-full bg-white text-black px-8 py-3.5 rounded-full text-sm font-medium flex items-center justify-center gap-2 hover:bg-[#c9a96e] hover:text-white transition"
               >
                 Check Availability
                 <MessageCircle className="w-4 h-4 text-[#25D366]" />
               </a>
 
-              {/* SECONDARY */}
+              {/* DESKTOP ONLY SECONDARY */}
               <button
-                type="button"
                 onClick={scrollToFleet}
-                className="w-full border border-white/20 text-white px-8 py-3.5 rounded-full text-sm font-medium hover:bg-white/5 transition-colors duration-300"
+                className="hidden md:block w-full border border-white/20 text-white px-8 py-3.5 rounded-full text-sm font-medium hover:bg-white/5 transition"
               >
                 View Fleet
               </button>
 
-              {/* MOBILE ROW (FIXED) */}
+              {/* MOBILE ROW */}
               <div className="grid grid-cols-2 gap-4 w-full md:hidden">
+                
+                {/* Find Us (neutral now) */}
                 <button
-                  type="button"
                   onClick={() => setLocationOpen(true)}
-                  className="flex items-center justify-center gap-2 border border-[#c9a96e]/50 text-white px-3 py-3.5 rounded-full text-sm font-medium hover:bg-[#c9a96e]/10 transition-colors duration-300 backdrop-blur-sm"
+                  className="flex items-center justify-center gap-2 border border-white/20 text-white px-3 py-3.5 rounded-full text-sm font-medium hover:bg-white/5 transition backdrop-blur-sm"
                 >
                   Find Us
-                  <MapPin className="w-4 h-4 text-[#c9a96e]" />
+                  <MapPin className="w-4 h-4 text-white/70" />
                 </button>
 
+                {/* View Fleet */}
                 <button
-                  type="button"
                   onClick={scrollToFleet}
-                  className="flex items-center justify-center gap-2 border border-white/20 text-white px-3 py-3.5 rounded-full text-sm font-medium hover:bg-white/5 transition-colors duration-300 backdrop-blur-sm"
+                  className="flex items-center justify-center gap-2 border border-white/20 text-white px-3 py-3.5 rounded-full text-sm font-medium hover:bg-white/5 transition backdrop-blur-sm"
                 >
                   View Fleet
                 </button>
@@ -119,48 +114,36 @@ export default function HeroSection() {
               </p>
 
             </div>
-          </motion.div>
+          </div>
         </div>
 
         {/* Scroll */}
-        <motion.div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
-        >
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ repeat: Infinity, duration: 2 }}
-            onClick={scrollToFleet}
-            className="cursor-pointer"
-          >
-            <ChevronDown className="w-6 h-6 text-white/40" />
-          </motion.div>
-        </motion.div>
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
+          <ChevronDown className="w-6 h-6 text-white/40 cursor-pointer" onClick={scrollToFleet} />
+        </div>
       </section>
 
-      {/* Location Modal */}
+      {/* Modal */}
       <AnimatePresence>
         {locationOpen && (
           <motion.div
-            className="fixed inset-0 z-[2000] bg-black/75 backdrop-blur-md flex items-center justify-center px-4"
+            className="fixed inset-0 bg-black/75 flex items-center justify-center z-[2000]"
             onClick={() => setLocationOpen(false)}
           >
             <motion.div
-              className="w-full max-w-2xl rounded-[28px] overflow-hidden bg-[#111] border border-white/10 shadow-2xl"
+              className="bg-[#111] rounded-2xl overflow-hidden w-full max-w-xl"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="relative">
-                <iframe
-                  title="Location"
-                  src="https://www.google.com/maps?q=Lussaro%20Collection&z=16&output=embed"
-                  className="w-full h-[250px]"
-                />
-                <button
-                  onClick={() => setLocationOpen(false)}
-                  className="absolute top-4 right-4"
-                >
-                  <X className="text-white" />
-                </button>
-              </div>
+              <iframe
+                src="https://www.google.com/maps?q=Lussaro%20Collection&z=16&output=embed"
+                className="w-full h-64"
+              />
+              <button
+                onClick={() => setLocationOpen(false)}
+                className="absolute top-4 right-4"
+              >
+                <X className="text-white" />
+              </button>
             </motion.div>
           </motion.div>
         )}
