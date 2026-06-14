@@ -7,17 +7,12 @@ import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment
 import gsap from "gsap";
 
 // ---- tweakables (mirror the approved concept) ----
-const MODEL_URL = "/models/urus.glb";
-const PERF_URL = "/models/urus_performante.glb";
-const DONOR_WHEELS_NAME = "Combined_Wheels_3D_";
-const OLD_WHEELS_NAME = "Wheels";
+const MODEL_URL = "/models/urus.glb"; // baked: paint/wheels/calipers already applied
 const TARGET_LEN = 3.6;
 const FRONT_SIGN = 1; // which local-X end is the front
 const STEER_ANGLE = -0.38; // front-wheel steer at rest (right)
 const ROLL_DIR = 1;
 const START_X = 5, START_Z = -13; // entry ~1 o'clock, far
-const VIOLA = "#6A2CA5";
-const SILVER = "#c9ccd2";
 const POSTER = "https://ik.imagekit.io/8i3ae7fac/cars-14.jpg?tr=w-1600,q-70,f-webp";
 
 export default function UrusHero() {
@@ -133,36 +128,6 @@ export default function UrusHero() {
     }
     animate();
 
-    function recolorPaint(model) {
-      const col = new THREE.Color(VIOLA), seen = new Set(), mats = [];
-      model.traverse((o) => {
-        if (!o.isMesh || !o.material) return;
-        (Array.isArray(o.material) ? o.material : [o.material]).forEach((m) => {
-          if (!seen.has(m.uuid)) { seen.add(m.uuid); mats.push(m); }
-        });
-      });
-      mats.filter((m) => /paint/i.test(m.name || "")).forEach((m) => {
-        if (m.color) m.color.copy(col);
-        if ("metalness" in m) m.metalness = 0.6;
-        if ("roughness" in m) m.roughness = 0.35;
-      });
-    }
-
-    function recolorZone(model, re, hex) {
-      const col = new THREE.Color(hex), seen = new Set();
-      model.traverse((o) => {
-        if (!o.isMesh || !o.material) return;
-        (Array.isArray(o.material) ? o.material : [o.material]).forEach((m) => {
-          if (seen.has(m.uuid) || !re.test(m.name || "")) return;
-          seen.add(m.uuid);
-          if (m.color) m.color.copy(col);
-          if (m.map) m.map = null;
-          if ("metalness" in m) m.metalness = 0.9;
-          if ("roughness" in m) m.roughness = 0.28;
-        });
-      });
-    }
-
     function buildWheelRig(model, wheelTag) {
       const wheelRe = new RegExp(wheelTag, "i");
       const wheelMeshes = [], caliperMeshes = [];
@@ -219,20 +184,6 @@ export default function UrusHero() {
         const isFront = FRONT_SIGN > 0 ? ctr.x > midX : ctr.x < midX;
         if (isFront) frontSteerPivots.push(steer);
       });
-    }
-
-    function swapWheels(model, donorRoot) {
-      donorRoot.updateMatrixWorld(true);
-      const donorWheels = donorRoot.getObjectByName(DONOR_WHEELS_NAME);
-      if (!donorWheels) return null;
-      const old = model.getObjectByName(OLD_WHEELS_NAME);
-      if (old && old.parent) old.parent.remove(old);
-      donorWheels.updateWorldMatrix(true, false);
-      const rel = new THREE.Matrix4().copy(donorRoot.matrixWorld).invert().multiply(donorWheels.matrixWorld);
-      model.add(donorWheels);
-      rel.decompose(donorWheels.position, donorWheels.quaternion, donorWheels.scale);
-      donorWheels.traverse((o) => { if (o.isMesh) o.castShadow = true; });
-      return donorWheels;
     }
 
     function revealCanvas() {

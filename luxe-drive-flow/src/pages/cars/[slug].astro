@@ -77,10 +77,10 @@ const gallery = (car.images || []).slice(1, 4);
   <!-- description + gallery -->
   <section class="bg-black pb-16">
     <div class="max-w-5xl mx-auto px-5 md:px-8">
-      <p class="text-white/70 text-lg leading-relaxed max-w-3xl">{car.description}</p>
+      <p class="reveal text-white/70 text-lg leading-relaxed max-w-3xl">{car.description}</p>
 
       {gallery.length > 0 && (
-        <div class="mt-8 grid grid-cols-2 md:grid-cols-3 gap-3">
+        <div class="reveal mt-8 grid grid-cols-2 md:grid-cols-3 gap-3">
           {gallery.map((img, i) => (
             <img src={getImageKitSrc(img, 700)} srcset={getImageKitSrcSet(img)} sizes="(min-width:768px) 320px, 50vw" alt={`${car.name} ${i + 2}`} loading="lazy" class="w-full aspect-[4/3] object-cover rounded-2xl" />
           ))}
