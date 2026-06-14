@@ -162,15 +162,17 @@ export default function UrusHero() {
       });
     }
 
-    function buildWheelRig(model, wheelsRoot) {
-      if (!wheelsRoot) return;
+    function buildWheelRig(model, wheelTag) {
+      const wheelRe = new RegExp(wheelTag, "i");
       const wheelMeshes = [], caliperMeshes = [];
-      wheelsRoot.traverse((o) => { if (o.isMesh) wheelMeshes.push(o); });
       model.traverse((o) => {
         if (!o.isMesh) return;
+        const mats = Array.isArray(o.material) ? o.material : [o.material];
+        const isWheel = wheelRe.test(o.name) || mats.some((m) => m && wheelRe.test(m.name || ""));
         let p = o, isC = false;
         while (p) { if (/calip/i.test(p.name)) isC = true; p = p.parent; }
-        if (isC) caliperMeshes.push(o);
+        if (isWheel) wheelMeshes.push(o);
+        else if (isC) caliperMeshes.push(o);
       });
       if (!wheelMeshes.length) return;
 
@@ -263,8 +265,7 @@ export default function UrusHero() {
       if (disposed) return;
       const model = gltf.scene;
       model.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.frustumCulled = false; } });
-      recolorPaint(model);
-      recolorZone(model, /carbon/i, SILVER);
+      // paint (Viola), white calipers, silver diffuser, and Performante wheels are all baked in now
 
       let box = new THREE.Box3().setFromObject(model);
       let size = box.getSize(new THREE.Vector3());
@@ -282,19 +283,10 @@ export default function UrusHero() {
       car.add(model);
       car.updateMatrixWorld(true);
 
-      new GLTFLoader().load(PERF_URL, (g2) => {
-        if (disposed) return;
-        const donorWheels = swapWheels(model, g2.scene);
-        car.updateMatrixWorld(true);
-        buildWheelRig(model, donorWheels || model.getObjectByName(OLD_WHEELS_NAME));
-        revealCanvas();
-        playEntrance();
-      }, undefined, () => {
-        if (disposed) return;
-        buildWheelRig(model, model.getObjectByName(OLD_WHEELS_NAME));
-        revealCanvas();
-        playEntrance();
-      });
+      // rig the (baked) wheels for the drive-in spin + steer (identified by material tag)
+      buildWheelRig(model, "3DWheel");
+      revealCanvas();
+      playEntrance();
     });
 
     return () => {
