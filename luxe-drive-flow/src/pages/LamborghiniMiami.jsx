@@ -51,7 +51,7 @@ export default function LamborghiniMiami() {
           </a>
           <a
             href="/exotic-car-rental-miami"
-            className="inline-flex items-center justify-center border border-white/15 text-white px-8 py-4 rounded-full font-semibold hover:border-[#c9a96e] hover:text-white transition"
+            className="inline-flex items-center justify-center border border-black/20 text-black px-8 py-4 rounded-full font-semibold hover:border-[#c9a96e] hover:text-[#c9a96e] transition"
           >
             See All Exotic Cars
           </a>

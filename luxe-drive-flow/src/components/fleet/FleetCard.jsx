@@ -1,4 +1,3 @@
-import { MessageCircle } from "lucide-react";
 import { getImageKitSrc, getImageKitSrcSet, getImageKitSizes } from "@/lib/imageKit";
 
 export default function FleetCard({ car, onOpen }) {

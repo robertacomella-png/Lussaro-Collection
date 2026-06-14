@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://lussarocollection.com/sitemap.xml
+Sitemap: https://www.lussarocollection.com/sitemap.xml

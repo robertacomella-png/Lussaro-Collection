@@ -1,39 +1,43 @@
-**Welcome to your Base44 project** 
+# Lussaro Collection
 
-**About**
+Marketing and lead-generation website for Lussaro Collection — Miami luxury and exotic car rentals. Bookings are handled via WhatsApp.
 
-View and Edit  your app on [Base44.com](http://Base44.com) 
+## Tech stack
 
-This project contains everything you need to run your app locally.
+- **Vite** + **React 18** (JavaScript/JSX)
+- **Tailwind CSS** + **shadcn/ui** (Radix primitives)
+- **Framer Motion** for animations
+- **React Router** for client-side routing
+- Deployed on **Vercel**
 
-**Edit the code in your local development environment**
+## Local development
 
-Any change pushed to the repo will also be reflected in the Base44 Builder.
+**Prerequisites:** Node.js 18+ and npm.
 
-**Prerequisites:** 
-
-1. Clone the repository using the project's Git URL 
-2. Navigate to the project directory
-3. Install dependencies: `npm install`
-4. Create an `.env.local` file and set the right environment variables
-
-```
-VITE_BASE44_APP_ID=your_app_id
-VITE_BASE44_APP_BASE_URL=your_backend_url
-
-e.g.
-VITE_BASE44_APP_ID=cbef744a8545c389ef439ea6
-VITE_BASE44_APP_BASE_URL=https://my-to-do-list-81bfaad7.base44.app
+```bash
+npm install
+npm run dev
 ```
 
-Run the app: `npm run dev`
+The dev server runs at http://localhost:5173. (Vite's log level is set to `error`, so it won't print the URL banner.)
 
-**Publish your changes**
+## Available scripts
 
-Open [Base44.com](http://Base44.com) and click on Publish.
+- `npm run dev` — start the dev server
+- `npm run build` — production build to `dist/`
+- `npm run preview` — preview the production build locally
+- `npm run lint` — run ESLint
+- `npm run lint:fix` — fix lint issues
+- `npm run typecheck` — type-check with the jsconfig
 
-**Docs & Support**
+## Project structure
 
-Documentation: [https://docs.base44.com/Integrations/Using-GitHub](https://docs.base44.com/Integrations/Using-GitHub)
+- `src/pages/` — route pages (Home, Gallery, Terms, Privacy, and SEO landing pages)
+- `src/components/` — section components + the shadcn `ui/` library
+- `src/data/fleet.js` — the vehicle fleet data
+- `src/lib/` — helpers (SEO meta, image URLs, utils)
+- `public/` — static assets (images, sitemap, robots, manifest)
 
-Support: [https://app.base44.com/support](https://app.base44.com/support)
+## Deployment
+
+Pushes to the default branch deploy automatically via Vercel. `vercel.json` rewrites all routes to `index.html` for the SPA.

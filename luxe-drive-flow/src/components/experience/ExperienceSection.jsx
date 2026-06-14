@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { Shield, Clock, MapPin, Headphones, Star, Key } from "lucide-react";
 
 const features = [

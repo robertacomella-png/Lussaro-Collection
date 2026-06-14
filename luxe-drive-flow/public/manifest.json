@@ -1,0 +1,18 @@
+{
+  "name": "Lussaro Collection | Miami Luxury Car Rentals",
+  "short_name": "Lussaro",
+  "description": "Miami luxury and exotic car rentals with premium delivery and fast WhatsApp booking across South Beach and Brickell.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#0a0a0a",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

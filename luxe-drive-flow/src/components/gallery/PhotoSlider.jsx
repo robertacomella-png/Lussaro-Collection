@@ -1,19 +1,18 @@
 import { useEffect, useRef } from "react";
-import { getRemoteWebpSrc, getRemoteWebpSrcSet } from "@/lib/imageKit";
 
 const images = [
-  "https://media.base44.com/images/public/69b59b78bb7c4287b9d0e82d/ecc59a757_IMG_26432.jpg",
-  "https://media.base44.com/images/public/69b59b78bb7c4287b9d0e82d/7ebdf9d30_IMG_26612.jpg",
-  "https://media.base44.com/images/public/69b59b78bb7c4287b9d0e82d/7bb87bf6b_IMG_26712.jpg",
-  "https://media.base44.com/images/public/69b59b78bb7c4287b9d0e82d/d8ca733e4_IMG_26722.jpg",
-  "https://media.base44.com/images/public/69b59b78bb7c4287b9d0e82d/a4c17e667_cars-02.jpg",
-  "https://media.base44.com/images/public/69b59b78bb7c4287b9d0e82d/6df0e2468_cars-04.jpg",
-  "https://media.base44.com/images/public/69b59b78bb7c4287b9d0e82d/158556eca_cars-06.jpg",
-  "https://media.base44.com/images/public/69b59b78bb7c4287b9d0e82d/9cd4fcd1c_IMG_17492.jpg",
-  "https://media.base44.com/images/public/69b59b78bb7c4287b9d0e82d/1484ceb49_IMG_17622.jpg",
-  "https://media.base44.com/images/public/69b59b78bb7c4287b9d0e82d/36741a178_IMG_18042.jpg",
-  "https://media.base44.com/images/public/69b59b78bb7c4287b9d0e82d/9c270b1a5_cars-07.jpg",
-  "https://media.base44.com/images/public/69b59b78bb7c4287b9d0e82d/ba2a3644a_cars-08.jpg",
+  "/gallery-slider/slider-1.jpg",
+  "/gallery-slider/slider-2.jpg",
+  "/gallery-slider/slider-3.jpg",
+  "/gallery-slider/slider-4.jpg",
+  "/gallery-slider/slider-5.jpg",
+  "/gallery-slider/slider-6.jpg",
+  "/gallery-slider/slider-7.jpg",
+  "/gallery-slider/slider-8.jpg",
+  "/gallery-slider/slider-9.jpg",
+  "/gallery-slider/slider-10.jpg",
+  "/gallery-slider/slider-11.jpg",
+  "/gallery-slider/slider-12.jpg",
 ];
 
 const allImages = [...images, ...images];
@@ -114,9 +113,7 @@ export default function PhotoSlider() {
             className="flex-shrink-0 w-44 h-44 md:w-56 md:h-56 rounded-xl overflow-hidden"
           >
             <img
-              src={getRemoteWebpSrc(src, 700)}
-              srcSet={getRemoteWebpSrcSet(src)}
-              sizes="280px"
+              src={src}
               alt={`Car ${(i % images.length) + 1}`}
               width="224"
               height="224"

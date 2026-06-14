@@ -1,10 +1,6 @@
 import { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
-import { QueryClientProvider } from "@tanstack/react-query";
-import { queryClientInstance } from "@/lib/query-client";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { AuthProvider, useAuth } from "@/lib/AuthContext";
-import UserNotRegisteredError from "@/components/UserNotRegisteredError";
 import Footer from "@/components/footer/Footer";
 
 const Home = lazy(() => import("./pages/Home"));
@@ -26,63 +22,35 @@ const PageFallback = () => (
   </div>
 );
 
-const AuthenticatedApp = () => {
-  const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } =
-    useAuth();
-
-  if (isLoadingPublicSettings || isLoadingAuth) {
-    return <PageFallback />;
-  }
-
-  if (authError) {
-    if (authError.type === "user_not_registered") {
-      return <UserNotRegisteredError />;
-    }
-
-    if (authError.type === "auth_required") {
-      navigateToLogin();
-      return null;
-    }
-  }
-
-  return (
-    <Suspense fallback={<PageFallback />}>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/gallery" element={<Gallery />} />
-        <Route path="/terms" element={<Terms />} />
-        <Route path="/privacy" element={<Privacy />} />
-        <Route path="/exotic-car-rental-miami" element={<ExoticMiami />} />
-        <Route path="/g-wagon-rental-miami" element={<GWagonMiami />} />
-        <Route path="/lamborghini-rental-miami" element={<LamborghiniMiami />} />
-        <Route path="/luxury-suv-rental-miami" element={<LuxurySuvMiami />} />
-        <Route path="/rolls-royce-rental-miami" element={<RollsRoyceMiami />} />
-        <Route path="/exotic-car-rental-brickell" element={<ExoticBrickell />} />
-        <Route path="/exotic-car-rental-south-beach" element={<ExoticSouthBeach />} />
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
-    </Suspense>
-  );
-};
-
 function App() {
   return (
-    <AuthProvider>
-      <QueryClientProvider client={queryClientInstance}>
-        <Router>
-          <div className="min-h-screen flex flex-col bg-black">
-            <div className="flex-1">
-              <AuthenticatedApp />
-            </div>
+    <Router>
+      <div className="min-h-screen flex flex-col bg-black">
+        <div className="flex-1">
+          <Suspense fallback={<PageFallback />}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/gallery" element={<Gallery />} />
+              <Route path="/terms" element={<Terms />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/exotic-car-rental-miami" element={<ExoticMiami />} />
+              <Route path="/g-wagon-rental-miami" element={<GWagonMiami />} />
+              <Route path="/lamborghini-rental-miami" element={<LamborghiniMiami />} />
+              <Route path="/luxury-suv-rental-miami" element={<LuxurySuvMiami />} />
+              <Route path="/rolls-royce-rental-miami" element={<RollsRoyceMiami />} />
+              <Route path="/exotic-car-rental-brickell" element={<ExoticBrickell />} />
+              <Route path="/exotic-car-rental-south-beach" element={<ExoticSouthBeach />} />
+              <Route path="*" element={<PageNotFound />} />
+            </Routes>
+          </Suspense>
+        </div>
 
-            <Footer />
-          </div>
-        </Router>
+        <Footer />
+      </div>
 
-        <Toaster />
-      </QueryClientProvider>
-    </AuthProvider>
+      <Toaster />
+    </Router>
   );
 }
 
