@@ -1,0 +1,108 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Nav from '@/components/site/Nav.astro';
+import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
+import CtaBand from '@/components/site/CtaBand.astro';
+import LeadForm from '@/components/site/LeadForm.jsx';
+import Car3DViewer from '@/components/hero/Car3DViewer.jsx';
+import { cars } from '@/data/cars';
+import { getImageKitSrc, getImageKitSrcSet } from '@/lib/imageKit';
+
+export function getStaticPaths() {
+  return cars.map((car) => ({ params: { slug: car.slug }, props: { car } }));
+}
+
+const { car } = Astro.props;
+const message = `Hi, I'm interested in booking the ${car.name} with Lussaro Collection.`;
+const wa = `https://wa.me/16452487305?text=${encodeURIComponent(message)}`;
+const gallery = (car.images || []).slice(1, 4);
+---
+<Layout
+  title={`${car.name} Rental Miami | Lussaro Collection`}
+  description={`Rent the ${car.name} in Miami with Lussaro Collection — premium delivery and fast WhatsApp booking. ${car.description.slice(0, 110)}`}
+>
+  <Nav />
+
+  <header class="bg-black pt-20 md:pt-24 pb-10">
+    <div class="max-w-5xl mx-auto px-5 md:px-8">
+      <a href="/#fleet" class="group inline-flex items-center gap-2 text-white/55 hover:text-white text-sm mb-5 transition">
+        <span class="inline-flex items-center justify-center w-7 h-7 rounded-full border border-white/15 group-hover:border-[#c9a96e] transition">‹</span>
+        Back to the Collection
+      </a>
+
+      <!-- hero image card (morph target — rounded corners maintained through the transition) -->
+      <div class="relative rounded-[28px] overflow-hidden shadow-[0_30px_80px_rgba(0,0,0,0.5)]">
+        <img
+          src={getImageKitSrc(car.images?.[0], 1200)}
+          srcset={getImageKitSrcSet(car.images?.[0])}
+          sizes="(min-width: 768px) 1000px, 100vw"
+          alt={car.name}
+          transition:name={`car-${car.slug}`}
+          class="w-full aspect-[16/11] object-cover"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent"></div>
+        <span class="absolute top-5 left-5 bg-black/55 backdrop-blur text-white text-[11px] tracking-wide px-3 py-1.5 rounded-full">{car.make}</span>
+        {car.model && (
+          <button data-open-3d type="button" class="absolute top-5 right-5 inline-flex items-center gap-1.5 bg-[#c9a96e] text-black text-[12px] font-semibold px-4 py-2 rounded-full hover:bg-white transition shadow-lg">
+            ◆ View in 3D
+          </button>
+        )}
+        <div class="absolute bottom-0 left-0 right-0 p-6 md:p-8 flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <h1 class="font-display text-3xl md:text-5xl font-bold text-white tracking-tight">{car.name}</h1>
+            <p class="text-white/60 text-sm mt-1">Exotic rental · Miami</p>
+          </div>
+          <p class="font-display text-2xl md:text-3xl text-[#c9a96e] font-semibold">
+            ${car.price.toLocaleString()}<span class="text-white/45 text-sm font-normal">/day</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- specs + CTAs -->
+      <div class="mt-6 grid grid-cols-3 gap-3 max-w-lg">
+        <div class="bg-white/[0.04] border border-white/[0.06] rounded-2xl py-3 text-center"><p class="text-white font-semibold">{car.zeroToSixty}</p><p class="text-white/40 text-xs">0–60</p></div>
+        <div class="bg-white/[0.04] border border-white/[0.06] rounded-2xl py-3 text-center"><p class="text-white font-semibold">{car.power}</p><p class="text-white/40 text-xs">HP</p></div>
+        <div class="bg-white/[0.04] border border-white/[0.06] rounded-2xl py-3 text-center"><p class="text-white font-semibold">{car.miles}</p><p class="text-white/40 text-xs">mi/day</p></div>
+      </div>
+
+      <div class="mt-6 flex flex-col sm:flex-row gap-3 max-w-lg">
+        <a href="#contact" class="flex-1 inline-flex items-center justify-center bg-[#c9a96e] text-black px-7 py-4 rounded-full font-semibold hover:bg-white transition">Book Now</a>
+        <a href={wa} data-cta="booking_hero" target="_blank" rel="noopener noreferrer" class="flex-1 inline-flex items-center justify-center gap-2 border border-white/25 text-white px-7 py-4 rounded-full font-medium hover:border-[#c9a96e] hover:text-[#c9a96e] transition">
+          WhatsApp <span class="w-2 h-2 rounded-full bg-[#25D366]"></span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- description + gallery -->
+  <section class="bg-black pb-16">
+    <div class="max-w-5xl mx-auto px-5 md:px-8">
+      <p class="text-white/70 text-lg leading-relaxed max-w-3xl">{car.description}</p>
+
+      {gallery.length > 0 && (
+        <div class="mt-8 grid grid-cols-2 md:grid-cols-3 gap-3">
+          {gallery.map((img, i) => (
+            <img src={getImageKitSrc(img, 700)} srcset={getImageKitSrcSet(img)} sizes="(min-width:768px) 320px, 50vw" alt={`${car.name} ${i + 2}`} loading="lazy" class="w-full aspect-[4/3] object-cover rounded-2xl" />
+          ))}
+        </div>
+      )}
+
+      <p class="text-white/40 text-xs mt-8">Must be 21+ with a valid driver’s license and full coverage insurance. Security deposit required.</p>
+    </div>
+  </section>
+
+  <section id="contact" class="bg-[#0c0c0c] py-20">
+    <div class="max-w-7xl mx-auto px-5 md:px-8">
+      <div class="text-center mb-10">
+        <p class="text-[#c9a96e] tracking-[0.3em] uppercase text-xs mb-3">Reserve</p>
+        <h2 class="font-display text-3xl md:text-5xl font-bold text-white">Book the {car.name}</h2>
+        <p class="text-white/55 mt-3 max-w-md mx-auto">Tell us your dates — we'll confirm in minutes.</p>
+      </div>
+      <LeadForm client:visible defaultVehicle={car.name} />
+    </div>
+  </section>
+
+  <CtaBand message={message} />
+  <StickyMobileCta message={message} />
+  <Car3DViewer client:idle />
+</Layout>

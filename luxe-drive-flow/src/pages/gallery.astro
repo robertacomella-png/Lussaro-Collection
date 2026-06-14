@@ -1,0 +1,16 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Nav from '@/components/site/Nav.astro';
+import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
+import GalleryView from '@/components/gallery/GalleryView.jsx';
+---
+<Layout
+  title="Luxury Car Gallery | Lussaro Collection"
+  description="Explore the Lussaro Collection gallery of Miami exotic cars and luxury vehicles in premium detail."
+>
+  <div class="min-h-screen bg-black text-white">
+    <Nav />
+    <GalleryView client:load />
+  </div>
+  <StickyMobileCta />
+</Layout>

@@ -1,0 +1,179 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Nav from '@/components/site/Nav.astro';
+import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
+import CtaBand from '@/components/site/CtaBand.astro';
+import LeadForm from '@/components/site/LeadForm.jsx';
+import Car3DViewer from '@/components/hero/Car3DViewer.jsx';
+import { cars } from '@/data/cars';
+import { getImageKitSrc, getImageKitSrcSet } from '@/lib/imageKit';
+
+const wa = `https://wa.me/16452487305?text=${encodeURIComponent("Hi, I'm interested in renting an exotic car with Lussaro Collection. What's available?")}`;
+---
+<Layout
+  title="Luxury & Exotic Car Rental Miami | Lussaro Collection"
+  description="Lussaro Collection offers Miami luxury and exotic car rentals — Lamborghini, Rolls-Royce, G-Wagon — with premium delivery and instant WhatsApp booking across South Beach and Brickell."
+>
+  <Nav />
+
+  <!-- HERO — cinematic photo: text top, CTAs bottom (mobile) / centered (desktop) -->
+  <header class="relative min-h-[100svh] flex flex-col overflow-hidden bg-black">
+    <div class="absolute inset-0">
+      <picture>
+        <source media="(min-width: 768px)" srcset="https://ik.imagekit.io/8i3ae7fac/cars-14.jpg?tr=w-1920,q-80,f-webp" />
+        <img src="https://ik.imagekit.io/8i3ae7fac/cars-11.jpg?tr=w-800,q-75,f-webp" alt="Exotic car rental in Miami" class="w-full h-full object-cover opacity-70" fetchpriority="high" />
+      </picture>
+      <div class="absolute inset-0 bg-gradient-to-b from-black/55 via-black/20 to-black/90"></div>
+    </div>
+
+    <div class="relative z-10 w-full flex-1 flex flex-col max-w-7xl mx-auto px-5 md:px-8 pt-24 pb-32 md:pb-20 text-center">
+      <!-- TEXT — top -->
+      <div>
+        <p class="text-[#c9a96e] tracking-[0.35em] uppercase text-[11px] md:text-xs font-medium mb-4">Miami's Exotic Fleet · From $795/day</p>
+        <h1 class="font-display text-5xl md:text-7xl lg:text-8xl font-bold leading-[0.95] tracking-tight text-white">
+          Drive the <span class="text-[#c9a96e]">Extraordinary</span>
+        </h1>
+        <p class="text-white/70 text-base md:text-lg max-w-md mx-auto mt-5 font-light">
+          Lamborghini, Rolls-Royce &amp; G-Wagon — delivered to your door. Booked in 60 seconds.
+        </p>
+      </div>
+
+      <!-- CTAs + rating — bottom on mobile and desktop -->
+      <div class="mt-auto">
+        <div class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+          <a href="#fleet" class="flex-1 inline-flex items-center justify-center bg-[#c9a96e] text-black px-7 py-4 rounded-full font-semibold hover:bg-white transition">Explore the Fleet</a>
+          <a href={wa} data-cta="hero" target="_blank" rel="noopener noreferrer" class="flex-1 inline-flex items-center justify-center gap-2 border border-white/25 text-white px-7 py-4 rounded-full font-medium hover:border-[#c9a96e] hover:text-[#c9a96e] transition">
+            Check Availability <span class="w-2 h-2 rounded-full bg-[#25D366]"></span>
+          </a>
+        </div>
+        <div class="mt-5 flex items-center justify-center gap-3 text-sm text-white/55">
+          <span class="text-[#c9a96e]">★★★★★</span> 5.0 Google · Miami Delivery
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- TRUST STRIP -->
+  <section class="bg-black border-y border-white/5 py-6">
+    <div class="max-w-7xl mx-auto px-5 md:px-8 flex flex-wrap items-center justify-center md:justify-between gap-x-8 gap-y-3 text-center text-white/55 text-sm">
+      <span>⚡ Same-day booking</span>
+      <span class="hidden md:inline text-white/15">|</span>
+      <span>🛡️ Fully insured</span>
+      <span class="hidden md:inline text-white/15">|</span>
+      <span>🚗 Delivered to your door</span>
+      <span class="hidden md:inline text-white/15">|</span>
+      <span>💬 60-second WhatsApp booking</span>
+    </div>
+  </section>
+
+  <!-- FLEET (real photos → booking pages; Urus has a 3D badge) -->
+  <section id="fleet" class="bg-[#f7f5f0] text-[#0a0a0a] py-16 md:py-24">
+    <div class="max-w-7xl mx-auto px-5 md:px-8">
+      <div class="reveal text-center mb-12 md:mb-14">
+        <p class="text-[#c9a96e] tracking-[0.3em] uppercase text-xs font-medium mb-3">Curated Luxury Fleet</p>
+        <h2 class="font-display text-4xl md:text-6xl font-bold tracking-tight">The Collection</h2>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {cars.map((car) => (
+          <div class="reveal group relative rounded-[24px] bg-white overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.15)] transition-shadow">
+            <a href={`/cars/${car.slug}`} class="absolute inset-0 z-10" aria-label={`View the ${car.name}`}></a>
+            <div class="relative aspect-[16/11] overflow-hidden">
+              <img
+                src={getImageKitSrc(car.images?.[0], 800)}
+                srcset={getImageKitSrcSet(car.images?.[0])}
+                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                alt={car.name}
+                loading="lazy"
+                transition:name={`car-${car.slug}`}
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <span class="absolute top-4 left-4 bg-[#0a0a0a]/80 text-white text-[11px] tracking-wide px-3 py-1 rounded-full">{car.make}</span>
+              {car.model && (
+                <button data-open-3d type="button" class="absolute top-4 right-4 z-20 inline-flex items-center gap-1.5 bg-[#c9a96e] text-black text-[11px] font-semibold px-3 py-1.5 rounded-full hover:bg-white transition">
+                  ◆ Explore in 3D
+                </button>
+              )}
+            </div>
+            <div class="p-5 flex items-center justify-between">
+              <div>
+                <h3 class="font-display text-lg font-semibold">{car.name}</h3>
+                <p class="text-[#0a0a0a]/50 text-xs">{car.zeroToSixty} · {car.power} HP</p>
+              </div>
+              <p class="text-[#c9a96e] font-display font-semibold">${car.price.toLocaleString()}<span class="text-[#0a0a0a]/40 text-xs font-normal">/day</span></p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 3D MOMENT (the accent) -->
+  <section class="relative bg-black py-20 md:py-28 overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(70% 60% at 50% 50%, rgba(201,169,110,0.12), transparent 70%);"></div>
+    <div class="reveal relative z-10 max-w-3xl mx-auto px-5 md:px-8 text-center">
+      <p class="text-[#c9a96e] tracking-[0.3em] uppercase text-xs mb-4">Interactive</p>
+      <h2 class="font-display text-4xl md:text-5xl font-bold text-white mb-5">See it like you're there.</h2>
+      <p class="text-white/60 leading-relaxed mb-8">Spin our signature Lamborghini Urus in real 3D — every angle, every detail, right from your screen.</p>
+      <button data-open-3d type="button" class="inline-flex items-center gap-2 bg-[#c9a96e] text-black px-9 py-4 rounded-full font-semibold hover:bg-white transition">
+        Launch 3D Experience ◆
+      </button>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process" class="bg-[#0c0c0c] py-20 md:py-28">
+    <div class="max-w-7xl mx-auto px-5 md:px-8">
+      <div class="reveal text-center mb-14">
+        <p class="text-[#c9a96e] tracking-[0.3em] uppercase text-xs mb-3">How It Works</p>
+        <h2 class="font-display text-4xl md:text-5xl font-bold text-white">Booked in three steps.</h2>
+      </div>
+      <div class="reveal grid md:grid-cols-3 gap-8">
+        <div class="text-center">
+          <div class="w-14 h-14 rounded-full border border-[#c9a96e]/40 text-[#c9a96e] flex items-center justify-center mx-auto mb-5 font-display text-xl">1</div>
+          <h3 class="font-display text-xl font-semibold text-white mb-2">Message us</h3>
+          <p class="text-white/50 leading-relaxed">Tap WhatsApp or call. Tell us the car and dates — we reply in minutes.</p>
+        </div>
+        <div class="text-center">
+          <div class="w-14 h-14 rounded-full border border-[#c9a96e]/40 text-[#c9a96e] flex items-center justify-center mx-auto mb-5 font-display text-xl">2</div>
+          <h3 class="font-display text-xl font-semibold text-white mb-2">We deliver</h3>
+          <p class="text-white/50 leading-relaxed">White-glove delivery anywhere in Miami — hotel, home, or airport.</p>
+        </div>
+        <div class="text-center">
+          <div class="w-14 h-14 rounded-full border border-[#c9a96e]/40 text-[#c9a96e] flex items-center justify-center mx-auto mb-5 font-display text-xl">3</div>
+          <h3 class="font-display text-xl font-semibold text-white mb-2">You drive</h3>
+          <p class="text-white/50 leading-relaxed">Keys in hand, full orientation, 24/7 support. Just enjoy the road.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEW -->
+  <section id="reviews" class="bg-[#f7f5f0] text-[#0a0a0a] py-24">
+    <!-- TODO: add 2–3 real customer testimonials when available -->
+    <div class="reveal max-w-3xl mx-auto px-5 md:px-8 text-center">
+      <p class="text-[#c9a96e] tracking-[0.3em] uppercase text-xs mb-4">Trusted in Miami</p>
+      <p class="text-[#c9a96e] text-3xl mb-5">★★★★★</p>
+      <p class="font-display text-2xl md:text-3xl font-semibold leading-snug">Rated 5.0 on Google</p>
+      <p class="text-[#0a0a0a]/55 mt-4 max-w-md mx-auto">White-glove delivery, immaculate vehicles, and concierge service across South Beach and Brickell.</p>
+      <a href="https://maps.app.goo.gl/9nEuwbuyZzhGTQscA" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 mt-6 text-[#0a0a0a] border-b border-[#0a0a0a]/30 hover:border-[#c9a96e] pb-1 transition">Read our Google reviews →</a>
+    </div>
+  </section>
+
+  <!-- LEAD FORM -->
+  <section id="contact" class="bg-black py-20 md:py-28">
+    <div class="max-w-7xl mx-auto px-5 md:px-8">
+      <div class="reveal text-center mb-10">
+        <p class="text-[#c9a96e] tracking-[0.3em] uppercase text-xs mb-3">Reserve</p>
+        <h2 class="font-display text-3xl md:text-5xl font-bold text-white">Request availability</h2>
+        <p class="text-white/55 mt-3 max-w-md mx-auto">Tell us what and when — we'll confirm your exotic in minutes.</p>
+      </div>
+      <LeadForm client:visible />
+    </div>
+  </section>
+
+  <CtaBand title={'Your Miami arrival,<br><span class="text-[#c9a96e]">unforgettable.</span>'} />
+
+  <StickyMobileCta />
+  <Car3DViewer client:idle />
+</Layout>
