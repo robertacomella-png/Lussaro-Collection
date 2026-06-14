@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
 import gsap from "gsap";
 
@@ -261,7 +262,11 @@ export default function UrusHero() {
         .call(() => { controls.enabled = true; controls.autoRotate = true; });
     }
 
-    new GLTFLoader().load(MODEL_URL, (gltf) => {
+    const draco = new DRACOLoader();
+    draco.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.7/");
+    const loader = new GLTFLoader();
+    loader.setDRACOLoader(draco);
+    loader.load(MODEL_URL, (gltf) => {
       if (disposed) return;
       const model = gltf.scene;
       model.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.frustumCulled = false; } });
@@ -296,6 +301,7 @@ export default function UrusHero() {
       controls.dispose();
       renderer.dispose();
       pmrem.dispose();
+      draco.dispose();
     };
   }, []);
 
