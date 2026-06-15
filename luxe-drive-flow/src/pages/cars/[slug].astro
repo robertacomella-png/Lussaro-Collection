@@ -5,8 +5,9 @@ import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
 import CtaBand from '@/components/site/CtaBand.astro';
 import LeadForm from '@/components/site/LeadForm.jsx';
 import Car3DViewer from '@/components/hero/Car3DViewer.jsx';
+import CarGallery from '@/components/fleet/CarGallery.jsx';
+import BookingCalendar from '@/components/booking/BookingCalendar.jsx';
 import { cars } from '@/data/cars';
-import { getImageKitSrc, getImageKitSrcSet } from '@/lib/imageKit';
 
 export function getStaticPaths() {
   return cars.map((car) => ({ params: { slug: car.slug }, props: { car } }));
@@ -15,90 +16,147 @@ export function getStaticPaths() {
 const { car } = Astro.props;
 const message = `Hi, I'm interested in booking the ${car.name} with Lussaro Collection.`;
 const wa = `https://wa.me/16452487305?text=${encodeURIComponent(message)}`;
-const gallery = (car.images || []).slice(1, 4);
+const imgs = car.images || [];
+
+const chips = [
+  { label: '0–60', value: car.zeroToSixty },
+  { label: 'Power', value: `${car.power} hp` },
+  { label: 'Miles / day', value: car.miles },
+];
+const specs = [
+  { k: '0–60 mph', v: car.zeroToSixty },
+  { k: 'Horsepower', v: `${car.power} hp` },
+  { k: 'Model year', v: car.year },
+  { k: 'Miles / day', v: car.miles },
+];
 ---
 <Layout
   title={`${car.name} Rental Miami | Lussaro Collection`}
-  description={`Rent the ${car.name} in Miami with Lussaro Collection — premium delivery and fast WhatsApp booking. ${car.description.slice(0, 110)}`}
+  description={`Rent the ${car.name} in Miami with Lussaro Collection — check availability and book in minutes. ${car.description.slice(0, 110)}`}
 >
   <Nav />
 
-  <header class="bg-black pt-20 md:pt-24 pb-10">
-    <div class="max-w-5xl mx-auto px-5 md:px-8">
-      <a href="/#fleet" class="group inline-flex items-center gap-2 text-white/55 hover:text-white text-sm mb-5 transition">
+  <!-- back -->
+  <div class="bg-black pt-20 md:pt-24">
+    <div class="max-w-6xl mx-auto px-5 md:px-8">
+      <a href="/" data-collection-back class="group inline-flex items-center gap-2 text-white/60 hover:text-white text-sm transition">
         <span class="inline-flex items-center justify-center w-7 h-7 rounded-full border border-white/15 group-hover:border-[#c9a96e] transition">‹</span>
-        Back to the Collection
+        Collection
       </a>
-
-      <!-- hero image card (morph target — rounded corners maintained through the transition) -->
-      <div class="relative rounded-[28px] overflow-hidden shadow-[0_30px_80px_rgba(0,0,0,0.5)]">
-        <img
-          src={getImageKitSrc(car.images?.[0], 1200)}
-          srcset={getImageKitSrcSet(car.images?.[0])}
-          sizes="(min-width: 768px) 1000px, 100vw"
-          alt={car.name}
-          transition:name={`car-${car.slug}`}
-          class="w-full aspect-[16/11] object-cover"
-        />
-        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent"></div>
-        <span class="absolute top-5 left-5 bg-black/55 backdrop-blur text-white text-[11px] tracking-wide px-3 py-1.5 rounded-full">{car.make}</span>
-        {car.model && (
-          <button data-open-3d type="button" class="absolute top-5 right-5 inline-flex items-center gap-1.5 bg-[#c9a96e] text-black text-[12px] font-semibold px-4 py-2 rounded-full hover:bg-white transition shadow-lg">
-            ◆ View in 3D
-          </button>
-        )}
-        <div class="absolute bottom-0 left-0 right-0 p-6 md:p-8 flex flex-wrap items-end justify-between gap-4">
-          <div>
-            <h1 class="font-display text-3xl md:text-5xl font-bold text-white tracking-tight">{car.name}</h1>
-            <p class="text-white/60 text-sm mt-1">Exotic rental · Miami</p>
-          </div>
-          <p class="font-display text-2xl md:text-3xl text-[#c9a96e] font-semibold">
-            ${car.price.toLocaleString()}<span class="text-white/45 text-sm font-normal">/day</span>
-          </p>
-        </div>
-      </div>
-
-      <!-- specs + CTAs -->
-      <div class="mt-6 grid grid-cols-3 gap-3 max-w-lg">
-        <div class="bg-white/[0.04] border border-white/[0.06] rounded-2xl py-3 text-center"><p class="text-white font-semibold">{car.zeroToSixty}</p><p class="text-white/40 text-xs">0–60</p></div>
-        <div class="bg-white/[0.04] border border-white/[0.06] rounded-2xl py-3 text-center"><p class="text-white font-semibold">{car.power}</p><p class="text-white/40 text-xs">HP</p></div>
-        <div class="bg-white/[0.04] border border-white/[0.06] rounded-2xl py-3 text-center"><p class="text-white font-semibold">{car.miles}</p><p class="text-white/40 text-xs">mi/day</p></div>
-      </div>
-
-      <div class="mt-6 flex flex-col sm:flex-row gap-3 max-w-lg">
-        <a href="#contact" class="flex-1 inline-flex items-center justify-center bg-[#c9a96e] text-black px-7 py-4 rounded-full font-semibold hover:bg-white transition">Book Now</a>
-        <a href={wa} data-cta="booking_hero" target="_blank" rel="noopener noreferrer" class="flex-1 inline-flex items-center justify-center gap-2 border border-white/25 text-white px-7 py-4 rounded-full font-medium hover:border-[#c9a96e] hover:text-[#c9a96e] transition">
-          WhatsApp <span class="w-2 h-2 rounded-full bg-[#25D366]"></span>
-        </a>
-      </div>
     </div>
-  </header>
+  </div>
 
-  <!-- description + gallery -->
-  <section class="bg-black pb-16">
-    <div class="max-w-5xl mx-auto px-5 md:px-8">
-      <p class="reveal text-white/70 text-lg leading-relaxed max-w-3xl">{car.description}</p>
+  <!-- MAIN: gallery + details (left) · booking card (right) -->
+  <section class="bg-black pt-5 pb-14 md:pb-20">
+    <div class="max-w-6xl mx-auto px-5 md:px-8 grid lg:grid-cols-[1.45fr_1fr] gap-8 lg:gap-12 items-start">
 
-      {gallery.length > 0 && (
-        <div class="reveal mt-8 grid grid-cols-2 md:grid-cols-3 gap-3">
-          {gallery.map((img, i) => (
-            <img src={getImageKitSrc(img, 700)} srcset={getImageKitSrcSet(img)} sizes="(min-width:768px) 320px, 50vw" alt={`${car.name} ${i + 2}`} loading="lazy" class="w-full aspect-[4/3] object-cover rounded-2xl" />
-          ))}
+      <!-- LEFT -->
+      <div>
+        <CarGallery images={imgs} name={car.name} slug={`g-${car.slug}`} client:visible />
+
+        <div class="mt-7">
+          <p class="text-[#c9a96e] tracking-[0.25em] uppercase text-xs mb-2">{car.make} · {car.year}</p>
+          <h1 class="font-display text-3xl md:text-5xl font-bold text-white tracking-tight leading-[1.05]">{car.name}</h1>
+
+          <div class="flex flex-wrap gap-2 mt-5">
+            {chips.map((c) => (
+              <span class="inline-flex items-baseline gap-1.5 rounded-full border border-white/10 bg-white/[0.03] px-3.5 py-1.5 text-sm">
+                <span class="text-white font-semibold">{c.value}</span>
+                <span class="text-white/45 text-xs">{c.label}</span>
+              </span>
+            ))}
+          </div>
+
+          <p class="text-white/65 leading-relaxed mt-6 max-w-prose">{car.description}</p>
+
+          {car.model && (
+            <button data-open-3d type="button" class="mt-6 inline-flex items-center gap-2 text-[#c9a96e] hover:text-white text-sm font-medium transition">
+              ◆ View in 3D &amp; AR
+            </button>
+          )}
         </div>
-      )}
+      </div>
 
-      <p class="text-white/40 text-xs mt-8">Must be 21+ with a valid driver’s license and full coverage insurance. Security deposit required.</p>
+      <!-- RIGHT: booking card -->
+      <aside class="lg:sticky lg:top-24">
+        <div class="rounded-2xl border border-white/10 bg-[#0f0f0f] p-5 md:p-6 shadow-[0_20px_60px_rgba(0,0,0,0.4)]">
+          <div class="flex items-end justify-between mb-5">
+            <div>
+              <span class="font-display text-3xl font-bold text-white">${car.price.toLocaleString()}</span>
+              <span class="text-white/45 text-sm"> / day</span>
+            </div>
+            <span class="inline-flex items-center gap-1 text-sm text-white/70"><span class="text-[#c9a96e]">★</span> 5.0</span>
+          </div>
+
+          <BookingCalendar client:visible pricePerDay={car.price} carName={car.name} phone="16452487305" />
+
+          <a href="tel:+16452487305" data-cta="car_booking_card"
+            class="flex items-center justify-center gap-2 mt-2.5 border border-white/15 text-white py-3 rounded-full font-medium hover:border-[#c9a96e] hover:text-[#c9a96e] transition">
+            Call to book
+          </a>
+
+          <div class="flex items-center justify-center gap-x-4 gap-y-1 flex-wrap mt-5 text-[11px] text-white/40">
+            <span>✓ Fully insured</span>
+            <span>✓ Miami Delivery</span>
+            <span>✓ Replies in minutes</span>
+          </div>
+        </div>
+      </aside>
     </div>
   </section>
 
-  <section id="contact" class="bg-[#0c0c0c] py-20">
-    <div class="max-w-7xl mx-auto px-5 md:px-8">
-      <div class="text-center mb-10">
-        <p class="text-[#c9a96e] tracking-[0.3em] uppercase text-xs mb-3">Reserve</p>
-        <h2 class="font-display text-3xl md:text-5xl font-bold text-white">Book the {car.name}</h2>
-        <p class="text-white/55 mt-3 max-w-md mx-auto">Tell us your dates — we'll confirm in minutes.</p>
+  <!-- SPECS -->
+  <section class="bg-black border-t border-white/5 py-12 md:py-16">
+    <div class="max-w-6xl mx-auto px-5 md:px-8">
+      <h2 class="reveal font-display text-2xl md:text-3xl font-bold text-white mb-7">Specifications</h2>
+      <div class="reveal grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+        {specs.map((s) => (
+          <div class="rounded-xl border border-white/10 bg-[#0f0f0f] p-4 md:p-5">
+            <p class="text-white/45 text-[11px] uppercase tracking-wide mb-2">{s.k}</p>
+            <p class="font-display text-2xl md:text-3xl font-bold text-white leading-none">{s.v}</p>
+          </div>
+        ))}
       </div>
+    </div>
+  </section>
+
+  <!-- 3D / AR (Urus) — kept prominent -->
+  {car.model && (
+    <section class="relative bg-black border-t border-white/5 py-16 md:py-24 text-center overflow-hidden">
+      <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(55% 55% at 50% 45%, rgba(201,169,110,0.13), transparent 70%);"></div>
+      <div class="reveal relative z-10 max-w-2xl mx-auto px-5">
+        <p class="text-[#c9a96e] tracking-[0.3em] uppercase text-xs mb-4">Interactive</p>
+        <h2 class="font-display text-3xl md:text-5xl font-bold text-white mb-4">See it in 3D &amp; AR</h2>
+        <p class="text-white/60 mb-8 max-w-md mx-auto">Spin the {car.name} from every angle, or place it in your driveway with augmented reality.</p>
+        <button data-open-3d type="button" class="inline-flex items-center gap-2 bg-[#c9a96e] text-black px-9 py-4 rounded-full font-semibold hover:bg-white transition">
+          Launch 3D / AR ◆
+        </button>
+      </div>
+    </section>
+  )}
+
+  <!-- CONTACT / lead form -->
+  <section id="contact" class="bg-[#0c0c0c] border-t border-white/5 py-16 md:py-20">
+    <div class="max-w-3xl mx-auto px-5 md:px-8">
+      <div class="reveal text-center mb-8">
+        <p class="text-[#c9a96e] tracking-[0.3em] uppercase text-xs mb-3">Reserve</p>
+        <h2 class="font-display text-3xl md:text-5xl font-bold text-white tracking-tight text-balance">Book the {car.name}</h2>
+        <p class="text-white/55 mt-3">Fastest reply on WhatsApp — or send your details and we'll confirm availability.</p>
+      </div>
+
+      <div class="reveal flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-10">
+        <a href={wa} data-cta="car_contact" target="_blank" rel="noopener noreferrer"
+          class="flex-1 inline-flex items-center justify-center gap-2 bg-[#c9a96e] text-black px-7 py-4 rounded-full font-semibold hover:bg-white transition">
+          WhatsApp <span class="w-2 h-2 rounded-full bg-[#1f7a3f]"></span>
+        </a>
+        <a href="tel:+16452487305" data-cta="car_contact"
+          class="flex-1 inline-flex items-center justify-center border border-white/20 text-white px-7 py-4 rounded-full font-medium hover:border-[#c9a96e] hover:text-[#c9a96e] transition">
+          Call Now
+        </a>
+      </div>
+
       <LeadForm client:visible defaultVehicle={car.name} />
+      <p class="text-white/35 text-xs mt-8 text-center max-w-md mx-auto">Must be 21+ with a valid driver’s license and full coverage insurance. Security deposit required.</p>
     </div>
   </section>
 
