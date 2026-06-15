@@ -20,9 +20,6 @@ const {
   schema = null,
 } = Astro.props;
 
-const GSC_VERIFICATION =
-  import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION || '1y4U_thTUwaPRu-K2eXJkTbubU97_vlfF0tLFLGH7iU';
-
 // canonical from the current path against the configured site
 const canonical = new URL(Astro.url.pathname, SITE).href;
 
@@ -77,7 +74,6 @@ const jsonLd = {
 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    {GSC_VERIFICATION && <meta name="google-site-verification" content={GSC_VERIFICATION} />}
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta
