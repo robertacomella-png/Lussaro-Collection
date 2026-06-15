@@ -29,10 +29,46 @@ const specs = [
   { k: 'Model year', v: car.year },
   { k: 'Miles / day', v: car.miles },
 ];
+
+// Per-car structured data for richer Google results (price/day + breadcrumb)
+const SITE = 'https://www.lussarocollection.com';
+const carUrl = `${SITE}/cars/${car.slug}`;
+const carSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Car',
+  name: car.name,
+  brand: { '@type': 'Brand', name: car.make },
+  image: imgs,
+  description: car.description,
+  url: carUrl,
+  ...(car.year ? { modelDate: String(car.year) } : {}),
+  offers: {
+    '@type': 'Offer',
+    priceCurrency: 'USD',
+    price: car.price,
+    availability: 'https://schema.org/InStock',
+    url: carUrl,
+    priceSpecification: {
+      '@type': 'UnitPriceSpecification',
+      price: car.price,
+      priceCurrency: 'USD',
+      unitCode: 'DAY',
+    },
+  },
+};
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Fleet', item: `${SITE}/#fleet` },
+    { '@type': 'ListItem', position: 2, name: car.name, item: carUrl },
+  ],
+};
 ---
 <Layout
   title={`${car.name} Rental Miami | Lussaro Collection`}
   description={`Rent the ${car.name} in Miami with Lussaro Collection — check availability and book in minutes. ${car.description.slice(0, 110)}`}
+  schema={[carSchema, breadcrumbSchema]}
 >
   <Nav />
 

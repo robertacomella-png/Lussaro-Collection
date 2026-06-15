@@ -13,7 +13,7 @@ export default defineConfig({
   redirects: { '/home': '/' },
   integrations: [
     react(),
-    sitemap(),
+    sitemap({ changefreq: 'weekly', priority: 0.7, lastmod: new Date() }),
   ],
   adapter: vercel(),
   vite: {

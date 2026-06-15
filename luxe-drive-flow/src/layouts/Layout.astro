@@ -17,7 +17,10 @@ const {
   image = DEFAULTS.image,
   type = 'website',
   noFooter = false,
+  schema = null,
 } = Astro.props;
+
+const GSC_VERIFICATION = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
 
 // canonical from the current path against the configured site
 const canonical = new URL(Astro.url.pathname, SITE).href;
@@ -73,6 +76,7 @@ const jsonLd = {
 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    {GSC_VERIFICATION && <meta name="google-site-verification" content={GSC_VERIFICATION} />}
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta
@@ -102,6 +106,7 @@ const jsonLd = {
     <meta name="twitter:image" content={image} />
 
     <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
+    {schema && <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />}
 
     <ClientRouter />
 
