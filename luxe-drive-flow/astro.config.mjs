@@ -10,6 +10,9 @@ import path from 'node:path';
 export default defineConfig({
   site: 'https://www.lussarocollection.com',
   devToolbar: { enabled: false },
+  // Bind the dev server to all interfaces (0.0.0.0) so other devices on the
+  // same Wi-Fi (e.g. an iPad) can open the preview. Port stays 4321.
+  server: { host: true, port: 4321 },
   redirects: { '/home': '/' },
   integrations: [
     react(),

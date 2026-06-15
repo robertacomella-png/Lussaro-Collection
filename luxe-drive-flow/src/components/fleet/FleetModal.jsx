@@ -114,10 +114,14 @@ export default function FleetModal({ car, setCar, activeImage, setActiveImage })
                     <p className="text-white/40 text-xs uppercase tracking-[0.22em] mb-2">
                       Starting At
                     </p>
-                    <p className="text-[#c9a96e] text-3xl md:text-4xl font-semibold">
-                      ${car.price.toLocaleString()}
-                      <span className="text-white/45 text-sm ml-1">/day</span>
-                    </p>
+                    <div className="flex items-center gap-3 flex-wrap">
+                      <p className="text-[#c9a96e] text-3xl md:text-4xl font-semibold">
+                        ${car.price.toLocaleString()}
+                        <span className="text-white/45 text-sm ml-1">/day</span>
+                      </p>
+                      <span className="text-white/45 text-base line-through">${(car.price + 200).toLocaleString()}</span>
+                      <span className="bg-red-500 text-white text-[10px] font-bold tracking-wide px-2 py-0.5 rounded">$200 OFF</span>
+                    </div>
                   </div>
 
                   <a

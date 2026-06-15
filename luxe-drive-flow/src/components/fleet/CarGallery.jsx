@@ -42,6 +42,21 @@ export default function CarGallery({ images = [], name = "", slug = "" }) {
 
       {imgs.length > 1 && (
         <>
+          {/* desktop click-through arrows */}
+          <button
+            type="button"
+            aria-label="Previous photo"
+            onClick={() => go(Math.max(0, active - 1))}
+            disabled={active === 0}
+            className="hidden md:flex absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 items-center justify-center rounded-full bg-black/45 backdrop-blur text-white text-lg hover:bg-black/70 transition disabled:opacity-0"
+          >‹</button>
+          <button
+            type="button"
+            aria-label="Next photo"
+            onClick={() => go(Math.min(imgs.length - 1, active + 1))}
+            disabled={active === imgs.length - 1}
+            className="hidden md:flex absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 items-center justify-center rounded-full bg-black/45 backdrop-blur text-white text-lg hover:bg-black/70 transition disabled:opacity-0"
+          >›</button>
           <div className="absolute bottom-3 inset-x-0 flex items-center justify-center gap-2">
             {imgs.map((_, i) => (
               <button

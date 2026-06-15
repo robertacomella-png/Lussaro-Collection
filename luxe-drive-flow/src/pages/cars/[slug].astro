@@ -4,7 +4,8 @@ import Nav from '@/components/site/Nav.astro';
 import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
 import CtaBand from '@/components/site/CtaBand.astro';
 import LeadForm from '@/components/site/LeadForm.jsx';
-import Car3DViewer from '@/components/hero/Car3DViewer.jsx';
+import UrusHero from '@/components/hero/UrusHero.jsx';
+import ArButton from '@/components/hero/ArButton.jsx';
 import CarGallery from '@/components/fleet/CarGallery.jsx';
 import BookingCalendar from '@/components/booking/BookingCalendar.jsx';
 import { cars } from '@/data/cars';
@@ -23,11 +24,12 @@ const chips = [
   { label: 'Power', value: `${car.power} hp` },
   { label: 'Miles / day', value: car.miles },
 ];
+// `to` = number to roll up to, with decimals + suffix for the count-up animation
 const specs = [
-  { k: '0–60 mph', v: car.zeroToSixty },
-  { k: 'Horsepower', v: `${car.power} hp` },
-  { k: 'Model year', v: car.year },
-  { k: 'Miles / day', v: car.miles },
+  { k: '0–60 mph', to: parseFloat(car.zeroToSixty) || 0, decimals: 1, suffix: 's' },
+  { k: 'Horsepower', to: car.power, decimals: 0, suffix: ' hp' },
+  { k: 'Model year', to: car.year, decimals: 0, suffix: '' },
+  { k: 'Miles / day', to: car.miles, decimals: 0, suffix: '' },
 ];
 
 // Per-car structured data for richer Google results (price/day + breadcrumb)
@@ -88,7 +90,14 @@ const breadcrumbSchema = {
 
       <!-- LEFT -->
       <div>
-        <CarGallery images={imgs} name={car.name} slug={`g-${car.slug}`} client:visible />
+        <div class="relative">
+          <CarGallery images={imgs} name={car.name} slug={`g-${car.slug}`} client:visible />
+          {car.model && (
+            <a href="#see-in-3d" class="absolute top-3 left-3 z-10 inline-flex items-center gap-1.5 bg-[#c9a96e] text-black text-[11px] font-semibold px-3 py-1.5 rounded-full hover:bg-white transition shadow-lg">
+              ◆ View in 3D &amp; AR
+            </a>
+          )}
+        </div>
 
         <div class="mt-7">
           <p class="text-[#c9a96e] tracking-[0.25em] uppercase text-xs mb-2">{car.make} · {car.year}</p>
@@ -104,20 +113,25 @@ const breadcrumbSchema = {
           </div>
 
           <p class="text-white/65 leading-relaxed mt-6 max-w-prose">{car.description}</p>
-
-          {car.model && (
-            <button data-open-3d type="button" class="mt-6 inline-flex items-center gap-2 text-[#c9a96e] hover:text-white text-sm font-medium transition">
-              ◆ View in 3D &amp; AR
-            </button>
-          )}
         </div>
       </div>
 
       <!-- RIGHT: booking card -->
-      <aside class="lg:sticky lg:top-24">
+      <aside>
         <div class="rounded-2xl border border-white/10 bg-[#0f0f0f] p-5 md:p-6 shadow-[0_20px_60px_rgba(0,0,0,0.4)]">
+          <div class="flex items-center gap-2.5 mb-4">
+            <span class="relative flex h-2 w-2 shrink-0">
+              <span class="absolute inline-flex h-full w-full rounded-full bg-[#c9a96e] opacity-70 animate-ping"></span>
+              <span class="relative inline-flex h-2 w-2 rounded-full bg-[#c9a96e]"></span>
+            </span>
+            <span class="text-[13px] leading-snug text-white/85 font-medium tracking-wide" data-urgency>Only 1 in our Miami fleet — dates are booking out fast.</span>
+          </div>
           <div class="flex items-end justify-between mb-5">
             <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-white/45 text-base line-through">${(car.price + 200).toLocaleString()}</span>
+                <span class="bg-red-600 text-white text-[10px] font-bold tracking-wide px-1.5 py-0.5 rounded">$200 OFF</span>
+              </div>
               <span class="font-display text-3xl font-bold text-white">${car.price.toLocaleString()}</span>
               <span class="text-white/45 text-sm"> / day</span>
             </div>
@@ -132,7 +146,7 @@ const breadcrumbSchema = {
           </a>
 
           <div class="flex items-center justify-center gap-x-4 gap-y-1 flex-wrap mt-5 text-[11px] text-white/40">
-            <span>✓ Fully insured</span>
+            <span>✓ Insurance options</span>
             <span>✓ Miami Delivery</span>
             <span>✓ Replies in minutes</span>
           </div>
@@ -141,32 +155,43 @@ const breadcrumbSchema = {
     </div>
   </section>
 
-  <!-- SPECS -->
-  <section class="bg-black border-t border-white/5 py-12 md:py-16">
-    <div class="max-w-6xl mx-auto px-5 md:px-8">
-      <h2 class="reveal font-display text-2xl md:text-3xl font-bold text-white mb-7">Specifications</h2>
+  <!-- SPECS — full-width, one row across, centered -->
+  <section class="bg-black border-t border-white/5 py-12 md:py-14">
+    <div class="max-w-5xl mx-auto px-5 md:px-8">
+      <h2 class="reveal font-display text-2xl md:text-3xl font-bold text-white text-center mb-7">Specifications</h2>
       <div class="reveal grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
         {specs.map((s) => (
-          <div class="rounded-xl border border-white/10 bg-[#0f0f0f] p-4 md:p-5">
+          <div class="rounded-xl border border-white/10 bg-[#0f0f0f] p-4 md:p-5 text-center">
             <p class="text-white/45 text-[11px] uppercase tracking-wide mb-2">{s.k}</p>
-            <p class="font-display text-2xl md:text-3xl font-bold text-white leading-none">{s.v}</p>
+            <p
+              class="font-display text-2xl md:text-3xl font-bold text-white leading-none tabular-nums"
+              data-countup
+              data-to={s.to}
+              data-decimals={s.decimals}
+              data-suffix={s.suffix}
+            >{s.decimals > 0 ? Number(s.to).toFixed(s.decimals) : s.to}{s.suffix}</p>
           </div>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- 3D / AR (Urus) — kept prominent -->
+  <!-- 3D / AR (Urus) — live, spinning model embedded inline -->
   {car.model && (
-    <section class="relative bg-black border-t border-white/5 py-16 md:py-24 text-center overflow-hidden">
-      <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(55% 55% at 50% 45%, rgba(201,169,110,0.13), transparent 70%);"></div>
-      <div class="reveal relative z-10 max-w-2xl mx-auto px-5">
+    <section id="see-in-3d" class="relative bg-black border-t border-white/5 py-16 md:py-24 text-center overflow-hidden scroll-mt-24">
+      <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(60% 55% at 50% 40%, rgba(201,169,110,0.14), transparent 70%);"></div>
+      <div class="reveal relative z-10 max-w-5xl mx-auto px-5">
         <p class="text-[#c9a96e] tracking-[0.3em] uppercase text-xs mb-4">Interactive</p>
-        <h2 class="font-display text-3xl md:text-5xl font-bold text-white mb-4">See it in 3D &amp; AR</h2>
-        <p class="text-white/60 mb-8 max-w-md mx-auto">Spin the {car.name} from every angle, or place it in your driveway with augmented reality.</p>
-        <button data-open-3d type="button" class="inline-flex items-center gap-2 bg-[#c9a96e] text-black px-9 py-4 rounded-full font-semibold hover:bg-white transition">
-          Launch 3D / AR ◆
-        </button>
+        <h2 class="font-display text-3xl md:text-5xl font-bold text-white mb-3">See it in 3D &amp; AR</h2>
+        <p class="text-white/60 mb-8 max-w-md mx-auto">Drag to spin the {car.name} from every angle — or place it in your driveway with AR.</p>
+
+        <!-- live spinning model (lazy-loads when scrolled into view; mobile + desktop) -->
+        <div class="relative w-full h-[56svh] md:h-[54svh] rounded-[24px] overflow-hidden border border-white/10 bg-gradient-to-b from-[#161616] to-[#0a0a0a]">
+          <UrusHero client:visible />
+          <span class="absolute bottom-3 inset-x-0 text-center text-white/35 text-[11px] pointer-events-none">Drag to explore</span>
+        </div>
+
+        <ArButton client:idle title={car.name} />
       </div>
     </section>
   )}
@@ -198,5 +223,64 @@ const breadcrumbSchema = {
 
   <CtaBand message={message} />
   <StickyMobileCta message={message} />
-  <Car3DViewer client:idle />
+
+  <script>
+    // Roll the spec numbers up to their value when they scroll into view.
+    function lussaroCountup() {
+      const els = Array.from(document.querySelectorAll('[data-countup]'));
+      if (!els.length) return;
+      const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const setup = (el) => ({
+        to: parseFloat(el.getAttribute('data-to')) || 0,
+        dec: parseInt(el.getAttribute('data-decimals') || '0', 10),
+        suffix: el.getAttribute('data-suffix') || '',
+      });
+      const fmt = (val, dec, suffix) => (dec > 0 ? val.toFixed(dec) : String(Math.round(val))) + suffix;
+
+      if (reduce || !('IntersectionObserver' in window)) {
+        els.forEach((el) => { const c = setup(el); el.textContent = fmt(c.to, c.dec, c.suffix); });
+        return;
+      }
+      // reset to 0 while off-screen, then roll up on intersect
+      els.forEach((el) => { const c = setup(el); el.textContent = fmt(0, c.dec, c.suffix); });
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          const el = e.target;
+          io.unobserve(el);
+          const c = setup(el);
+          const dur = 1100;
+          const t0 = performance.now();
+          const ease = (t) => 1 - Math.pow(1 - t, 3);
+          const tick = (now) => {
+            const p = Math.min(1, (now - t0) / dur);
+            el.textContent = fmt(c.to * ease(p), c.dec, c.suffix);
+            if (p < 1) requestAnimationFrame(tick);
+            else el.textContent = fmt(c.to, c.dec, c.suffix);
+          };
+          requestAnimationFrame(tick);
+        });
+      }, { threshold: 0.5 });
+      els.forEach((el) => io.observe(el));
+    }
+
+    // Rotating urgency line — picks a fresh message each load (never the last one shown).
+    const URGENCY = [
+      "Only 1 in our Miami fleet — dates are booking out fast.",
+      "In high demand this week — reserve before someone else does.",
+      "Weekends go first. Lock in your dates while they're open.",
+    ];
+    function rotateUrgency() {
+      const el = document.querySelector('[data-urgency]');
+      if (!el) return;
+      let last = -1;
+      try { last = parseInt(sessionStorage.getItem('lussaroUrgency') || '-1', 10); } catch (e) {}
+      let idx = Math.floor(Math.random() * URGENCY.length);
+      if (URGENCY.length > 1 && idx === last) idx = (idx + 1) % URGENCY.length;
+      try { sessionStorage.setItem('lussaroUrgency', String(idx)); } catch (e) {}
+      el.textContent = URGENCY[idx];
+    }
+
+    document.addEventListener('astro:page-load', () => { lussaroCountup(); rotateUrgency(); });
+  </script>
 </Layout>

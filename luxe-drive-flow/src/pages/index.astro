@@ -26,7 +26,7 @@ const wa = `https://wa.me/16452487305?text=${encodeURIComponent("Hi, I'm interes
       <div class="absolute inset-0 bg-gradient-to-b from-black/55 via-black/20 to-black/90"></div>
     </div>
 
-    <div class="relative z-10 w-full flex-1 flex flex-col max-w-7xl mx-auto px-5 md:px-8 pt-24 pb-32 md:pb-20 text-center">
+    <div class="relative z-10 w-full flex-1 flex flex-col max-w-7xl mx-auto px-5 md:px-8 pt-24 md:pt-[24svh] pb-32 md:pb-20 text-center">
       <!-- TEXT — top -->
       <div>
         <p class="text-[#c9a96e] tracking-[0.35em] uppercase text-[11px] md:text-xs font-medium mb-4">Miami's Exotic Fleet · From $795/day</p>
@@ -58,7 +58,7 @@ const wa = `https://wa.me/16452487305?text=${encodeURIComponent("Hi, I'm interes
     <div class="max-w-7xl mx-auto px-5 md:px-8 flex flex-wrap items-center justify-center md:justify-between gap-x-8 gap-y-3 text-center text-white/55 text-sm">
       <span>⚡ Same-day booking</span>
       <span class="hidden md:inline text-white/15">|</span>
-      <span>🛡️ Fully insured</span>
+      <span>🛡️ Flexible insurance options</span>
       <span class="hidden md:inline text-white/15">|</span>
       <span>🚗 Delivered to your door</span>
       <span class="hidden md:inline text-white/15">|</span>
@@ -99,7 +99,13 @@ const wa = `https://wa.me/16452487305?text=${encodeURIComponent("Hi, I'm interes
                 <h3 class="font-display text-lg font-semibold">{car.name}</h3>
                 <p class="text-[#0a0a0a]/50 text-xs">{car.zeroToSixty} · {car.power} HP</p>
               </div>
-              <p class="text-[#c9a96e] font-display font-semibold">${car.price.toLocaleString()}<span class="text-[#0a0a0a]/40 text-xs font-normal">/day</span></p>
+              <div class="text-right leading-tight">
+                <div class="flex items-center justify-end gap-1.5 mb-0.5">
+                  <span class="text-[#0a0a0a]/45 text-sm line-through">${(car.price + 200).toLocaleString()}</span>
+                  <span class="bg-red-600 text-white text-[10px] font-bold tracking-wide px-1.5 py-0.5 rounded">$200 OFF</span>
+                </div>
+                <p class="text-[#c9a96e] font-display text-xl font-bold leading-none">${car.price.toLocaleString()}<span class="text-[#0a0a0a]/40 text-xs font-normal">/day</span></p>
+              </div>
             </div>
           </div>
         ))}

@@ -43,7 +43,9 @@ export default function UrusHero() {
 
     const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 100);
     const camDir = new THREE.Vector3(0.62, 0.15, 0.8).normalize();
-    // fit the car's projected box to the panel — fills far more than a sphere fit
+    // fit the car's projected box to the panel — fills far more than a sphere fit.
+    // Desktop frames tighter so the car takes up more of the (wide) panel; mobile
+    // keeps the looser, clip-free 360 envelope it already looked great with.
     const VFOV = THREE.MathUtils.degToRad(35);
     const HALF_W = 2.0;  // max projected half-width across the 360 (kept clip-free)
     const HALF_H = 0.95; // half-height
@@ -88,7 +90,7 @@ export default function UrusHero() {
     controls.minDistance = 6;
     controls.maxDistance = 16;
     controls.maxPolarAngle = Math.PI / 2 - 0.03;
-    controls.target.set(0, 0.45, 0);
+    controls.target.set(0, -0.05, 0); // aim at the car's mid-body so it sits centered, not low
     controls.enabled = false;
     controls.autoRotateSpeed = -1.3;
     controls.addEventListener("start", () => { controls.autoRotate = false; });

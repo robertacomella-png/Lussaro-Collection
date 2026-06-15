@@ -36,8 +36,12 @@ export default function FleetCard({ car, onOpen }) {
       </div>
 
       <div className="px-3.5 md:px-5 pb-3.5 md:pb-5 text-white">
-        <div className="mb-3">
-          <p className="text-[#c9a96e] text-[20px] md:text-3xl leading-none font-semibold tracking-tight">
+        <div className="mb-3 leading-tight">
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-white/45 text-sm line-through">${(car.price + 200).toLocaleString()}</span>
+            <span className="bg-red-500 text-white text-[10px] font-bold tracking-wide px-1.5 py-0.5 rounded">$200 OFF</span>
+          </div>
+          <p className="text-[#c9a96e] text-[22px] md:text-3xl leading-none font-semibold tracking-tight">
             ${car.price.toLocaleString()}
             <span className="text-white/45 text-xs md:text-sm font-normal ml-1">
               /day

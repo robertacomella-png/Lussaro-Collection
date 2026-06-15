@@ -1,46 +1,19 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
+import { detectAR, launchAR as launchARFor } from "@/lib/ar";
 
 // The heavy 3D scene loads only when the viewer is opened.
 const UrusHero = lazy(() => import("@/components/hero/UrusHero.jsx"));
-
-// AR assets — produced during the model bake step (paint/wheels baked in).
-const AR_USDZ = "/models/urus.usdz"; // iOS Quick Look
-const AR_GLB = "/models/urus.glb";   // Android Scene Viewer
 
 export default function Car3DViewer() {
   const [open, setOpen] = useState(false);
   const [arMode, setArMode] = useState("none"); // "none" | "ios" | "android"
 
-  // detect AR capability (client only)
-  useEffect(() => {
-    const ua = navigator.userAgent || "";
-    const a = document.createElement("a");
-    const iosAR = /iPhone|iPad|iPod/i.test(ua) && a.relList && a.relList.supports && a.relList.supports("ar");
-    if (iosAR) setArMode("ios");
-    else if (/android/i.test(ua)) setArMode("android");
-  }, []);
+  // detect AR capability (client only) — feature-based so iPad works too
+  useEffect(() => { setArMode(detectAR()); }, []);
 
-  function launchAR() {
-    if (arMode === "ios") {
-      const a = document.createElement("a");
-      a.rel = "ar";
-      a.href = AR_USDZ;
-      a.appendChild(document.createElement("img")); // Quick Look requires an <img> child
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-    } else if (arMode === "android") {
-      const glb = new URL(AR_GLB, location.href).href;
-      const intent =
-        `intent://arvr.google.com/scene-viewer/1.0?file=${encodeURIComponent(glb)}` +
-        `&mode=ar_preferred&title=${encodeURIComponent("Lamborghini Urus")}` +
-        `#Intent;scheme=https;package=com.google.ar.core;action=android.intent.action.VIEW;` +
-        `S.browser_fallback_url=${encodeURIComponent(location.href)};end;`;
-      window.location.href = intent;
-    }
-  }
+  const launchAR = () => launchARFor(arMode);
 
   useEffect(() => {
     const openIt = () => setOpen(true);
