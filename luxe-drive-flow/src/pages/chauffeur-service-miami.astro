@@ -1,0 +1,267 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Nav from '@/components/site/Nav.astro';
+import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
+import CtaBand from '@/components/site/CtaBand.astro';
+import LeadForm from '@/components/site/LeadForm.jsx';
+import { getImageKitSrc, getImageKitSrcSet } from '@/lib/imageKit';
+
+const SITE = 'https://www.lussarocollection.com';
+const PAGE_URL = `${SITE}/chauffeur-service-miami`;
+const waMsg = "Hi, I'd like to book a chauffeured Maybach with Lussaro Collection.";
+const wa = `https://wa.me/16452487305?text=${encodeURIComponent(waMsg)}`;
+
+const maybach = 'https://ik.imagekit.io/8i3ae7fac/maybach.jpg';
+const maybach2 = 'https://ik.imagekit.io/8i3ae7fac/cars-18%202.jpg';
+const cullinan = 'https://ik.imagekit.io/8i3ae7fac/rolls.jpg';
+
+const benefits = [
+  { t: 'Make an entrance', d: 'Step out of a Mercedes‑Maybach at every stop. Presence, the moment you arrive.' },
+  { t: 'Zero logistics', d: 'No parking, no rideshare roulette, no valet lines. Door to door, all night.' },
+  { t: 'Discreet & professional', d: 'A vetted, suited chauffeur who knows Miami — and knows when not to say a word.' },
+  { t: 'On your schedule', d: 'By the hour, for the evening, or for the week. The car waits on you.' },
+];
+
+const occasions = [
+  { t: 'Airport & private jet', d: 'MIA, FLL, and FBO transfers with flight tracking. We’re curbside when you land.' },
+  { t: 'Nights out', d: 'South Beach, Brickell, Wynwood — bounce between dinner, club, and after-hours in comfort.' },
+  { t: 'Corporate & executive', d: 'Roadshows, client pickups, and meetings, handled with quiet professionalism.' },
+  { t: 'Weddings & events', d: 'Make the grand arrival unforgettable. Photos, timing, and routes coordinated.' },
+  { t: 'Concerts & games', d: 'Skip the parking chaos at Hard Rock, Kaseya Center, and LoanDepot Park.' },
+  { t: 'Hourly “as directed”', d: 'Shopping on Worth Ave, a city tour, or a full day — keep the Maybach all day.' },
+];
+
+const steps = [
+  { n: '1', t: 'Share your itinerary', d: 'Tell us your pickup, stops, and timing over WhatsApp or a quick call.' },
+  { n: '2', t: 'We confirm your ride', d: 'Your Maybach and professional chauffeur are reserved and confirmed.' },
+  { n: '3', t: 'Sit back & be driven', d: 'Your chauffeur arrives on time. You arrive in style — every stop.' },
+];
+
+const faqs = [
+  { q: 'What’s included in the $250 per hour?', a: 'Your professional chauffeur, the Mercedes‑Maybach GLS 600, and fuel. Share your itinerary and we’ll confirm an all‑in rate before you book — no surprises.' },
+  { q: 'Is there a minimum booking?', a: 'Most chauffeur reservations run a few hours or longer. Tell us what you have in mind and we’ll tailor the booking to your night or your day.' },
+  { q: 'Which areas do you serve?', a: 'All of Miami — South Beach, Brickell, Wynwood, Miami Beach, Coral Gables — plus Fort Lauderdale, the airports, and private jet terminals. Longer trips are available on request.' },
+  { q: 'Can you handle airport and private‑jet pickups?', a: 'Yes. We cover MIA and FLL as well as FBOs, track your flight, and meet you curbside so there’s never a wait.' },
+  { q: 'How far in advance should I book?', a: 'The more notice the better, especially on weekends and event nights — but same‑day requests are often possible. Message us and we’ll let you know right away.' },
+  { q: 'Can I be chauffeured in a different vehicle?', a: 'The Maybach is our signature, but a Rolls‑Royce Cullinan and other vehicles from the Lussaro fleet are available on request for an elevated arrival.' },
+  { q: 'How do I book and pay?', a: 'Reserve by WhatsApp or phone. A deposit confirms your chauffeur and vehicle, with the balance settled around your service.' },
+];
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'Chauffeur service',
+  name: 'Miami Maybach Chauffeur Service',
+  description: 'Private chauffeur service in Miami with a Mercedes‑Maybach GLS 600 and professional drivers, from $250 per hour.',
+  url: PAGE_URL,
+  provider: { '@type': 'AutoRental', name: 'Lussaro Collection', url: SITE, telephone: '+1-645-248-7305' },
+  areaServed: [
+    { '@type': 'Place', name: 'Miami' },
+    { '@type': 'Place', name: 'South Beach' },
+    { '@type': 'Place', name: 'Brickell' },
+    { '@type': 'Place', name: 'Fort Lauderdale' },
+  ],
+  offers: {
+    '@type': 'Offer',
+    priceCurrency: 'USD',
+    price: 250,
+    availability: 'https://schema.org/InStock',
+    url: PAGE_URL,
+    priceSpecification: { '@type': 'UnitPriceSpecification', price: 250, priceCurrency: 'USD', unitCode: 'HUR' },
+  },
+};
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+---
+<Layout
+  title="Miami Chauffeur Service | Maybach from $250/hr | Lussaro Collection"
+  description="Private chauffeur service in Miami — be driven in a Mercedes‑Maybach GLS 600 with a professional driver, from $250/hour. Airport transfers, nights out, events, and executive travel across South Beach, Brickell & beyond."
+  image={getImageKitSrc(maybach, 1200)}
+  schema={[serviceSchema, faqSchema]}
+>
+  <Nav />
+
+  <!-- HERO — well-framed banner on mobile (text below), full-bleed cinematic on desktop -->
+  <header class="relative bg-black overflow-hidden md:flex md:items-end md:min-h-[86svh]">
+    <div class="relative md:absolute md:inset-0">
+      <img
+        src={getImageKitSrc(maybach, 1600)}
+        srcset={getImageKitSrcSet(maybach)}
+        sizes="100vw"
+        alt="Chauffeured Mercedes‑Maybach GLS 600 in Miami"
+        fetchpriority="high"
+        class="w-full aspect-[16/10] object-cover object-center md:absolute md:inset-0 md:h-full md:aspect-auto"
+      />
+      <!-- mobile: melt the photo into the black content below -->
+      <div class="md:hidden absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-black pointer-events-none"></div>
+      <!-- desktop: legibility gradient over the full-bleed image -->
+      <div class="hidden md:block absolute inset-0 bg-gradient-to-t from-black via-black/65 to-black/30"></div>
+    </div>
+
+    <div class="relative z-10 w-full max-w-6xl mx-auto px-5 md:px-8 -mt-8 md:mt-0 pb-14 md:pb-24 md:pt-32 text-center md:text-left">
+      <p class="text-[#c9a96e] tracking-[0.35em] uppercase text-xs mb-4 md:mb-5">Private Chauffeur · Miami</p>
+      <h1 class="font-display text-4xl md:text-7xl font-bold text-white tracking-tight leading-[1.04] md:leading-[1.02] max-w-3xl mx-auto md:mx-0 text-balance">
+        Be driven. Arrive in a Maybach.
+      </h1>
+      <p class="text-white/75 text-base md:text-xl mt-4 md:mt-5 max-w-2xl mx-auto md:mx-0 leading-relaxed">
+        Skip the parking, the rideshares, and the stress. A professional chauffeur and a
+        Mercedes‑Maybach GLS 600, on your schedule — <span class="text-white font-semibold">from $250/hour</span>.
+      </p>
+      <div class="mt-7 md:mt-8 flex flex-col sm:flex-row gap-3 max-w-md mx-auto md:mx-0">
+        <a href={wa} data-cta="chauffeur_hero" target="_blank" rel="noopener noreferrer" class="flex-1 inline-flex items-center justify-center gap-2 bg-[#c9a96e] text-black px-7 py-4 rounded-full font-semibold hover:bg-white transition">
+          Reserve your chauffeur <span class="w-2 h-2 rounded-full bg-[#1f7a3f]"></span>
+        </a>
+        <a href="tel:+16452487305" data-cta="chauffeur_hero" class="flex-1 inline-flex items-center justify-center border border-white/25 text-white px-7 py-4 rounded-full font-medium hover:border-[#c9a96e] hover:text-[#c9a96e] transition">
+          Call now
+        </a>
+      </div>
+      <p class="mt-5 flex items-center justify-center md:justify-start gap-2 text-sm text-white/60">
+        <span class="text-[#c9a96e]">★★★★★</span> 5.0 on Google · Professional chauffeurs · Fully insured
+      </p>
+    </div>
+  </header>
+
+  <!-- WHY BE CHAUFFEURED -->
+  <section class="bg-black py-20 md:py-28">
+    <div class="max-w-6xl mx-auto px-5 md:px-8">
+      <div class="reveal max-w-2xl mb-12">
+        <p class="text-[#c9a96e] tracking-[0.3em] uppercase text-xs mb-4">Why be driven</p>
+        <h2 class="font-display text-3xl md:text-5xl font-bold text-white tracking-tight">The night is yours. The driving is ours.</h2>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {benefits.map((b, i) => (
+          <div class={`reveal ${i === 1 ? 'reveal-d1' : i === 2 ? 'reveal-d2' : i === 3 ? 'reveal-d3' : ''} rounded-2xl border border-white/10 bg-[#0f0f0f] p-6`}>
+            <h3 class="font-display text-lg font-semibold text-white mb-2">{b.t}</h3>
+            <p class="text-white/55 text-sm leading-relaxed">{b.d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- THE VEHICLE -->
+  <section class="bg-[#0c0c0c] border-y border-white/5 py-20 md:py-28">
+    <div class="max-w-6xl mx-auto px-5 md:px-8 grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+      <div class="reveal order-2 lg:order-1">
+        <p class="text-[#c9a96e] tracking-[0.3em] uppercase text-xs mb-4">Your private cabin</p>
+        <h2 class="font-display text-3xl md:text-5xl font-bold text-white tracking-tight mb-5">The Mercedes‑Maybach GLS 600.</h2>
+        <p class="text-white/65 leading-relaxed mb-6 max-w-prose">
+          A first‑class lounge on wheels. Reclining executive rear seats, a whisper‑quiet ride, privacy
+          glass, and climate‑controlled comfort — so you arrive composed, no matter the Miami traffic.
+          Your chauffeur handles the rest.
+        </p>
+        <div class="flex items-end gap-3 mb-8">
+          <span class="font-display text-4xl font-bold text-white">$250</span>
+          <span class="text-white/50 mb-1">/ hour</span>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <a href={wa} data-cta="chauffeur_vehicle" target="_blank" rel="noopener noreferrer" class="bg-[#c9a96e] text-black px-7 py-3.5 rounded-full font-semibold hover:bg-white transition">Book the Maybach</a>
+          <a href="#contact" class="border border-white/20 text-white px-7 py-3.5 rounded-full font-medium hover:border-[#c9a96e] hover:text-[#c9a96e] transition">Get a quote</a>
+        </div>
+      </div>
+      <div class="reveal order-1 lg:order-2">
+        <img src={getImageKitSrc(maybach2, 1200)} srcset={getImageKitSrcSet(maybach2)} sizes="(min-width:1024px) 560px, 100vw" alt="Mercedes‑Maybach GLS 600 chauffeur car, Miami" loading="lazy" class="w-full aspect-[4/3] object-cover rounded-[24px] border border-white/10 shadow-[0_30px_80px_rgba(0,0,0,0.5)]" />
+        <p class="text-white/40 text-xs mt-3">Prefer to arrive in a Rolls‑Royce Cullinan? Ask about our signature upgrade.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- OCCASIONS -->
+  <section class="bg-black py-20 md:py-28">
+    <div class="max-w-6xl mx-auto px-5 md:px-8">
+      <div class="reveal max-w-2xl mb-12">
+        <p class="text-[#c9a96e] tracking-[0.3em] uppercase text-xs mb-4">Made for every occasion</p>
+        <h2 class="font-display text-3xl md:text-5xl font-bold text-white tracking-tight">Wherever Miami takes you.</h2>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {occasions.map((o) => (
+          <div class="reveal rounded-2xl border border-white/10 bg-[#0f0f0f] p-6 hover:border-[#c9a96e]/40 transition">
+            <h3 class="font-display text-lg font-semibold text-white mb-2">{o.t}</h3>
+            <p class="text-white/55 text-sm leading-relaxed">{o.d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="relative bg-[#0c0c0c] border-y border-white/5 py-20 md:py-28 overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(60% 50% at 50% 0%, rgba(201,169,110,0.10), transparent 70%);"></div>
+    <div class="relative max-w-5xl mx-auto px-5 md:px-8">
+      <div class="reveal text-center max-w-2xl mx-auto mb-14">
+        <p class="text-[#c9a96e] tracking-[0.3em] uppercase text-xs mb-4">How it works</p>
+        <h2 class="font-display text-3xl md:text-5xl font-bold text-white tracking-tight">Booked in minutes. Driven all night.</h2>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8">
+        {steps.map((s, i) => (
+          <div class={`reveal ${i === 1 ? 'reveal-d1' : i === 2 ? 'reveal-d2' : ''} text-center`}>
+            <div class="w-12 h-12 mx-auto rounded-full border border-[#c9a96e]/40 text-[#c9a96e] font-display font-bold flex items-center justify-center mb-5">{s.n}</div>
+            <h3 class="font-display text-xl font-semibold text-white mb-2">{s.t}</h3>
+            <p class="text-white/55 text-sm leading-relaxed max-w-xs mx-auto">{s.d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST STRIP -->
+  <section class="bg-black py-14">
+    <div class="reveal max-w-6xl mx-auto px-5 md:px-8 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+      <div><p class="font-display text-2xl font-bold text-white">5.0★</p><p class="text-white/45 text-sm mt-1">Rated on Google</p></div>
+      <div><p class="font-display text-2xl font-bold text-white">Pro</p><p class="text-white/45 text-sm mt-1">Vetted chauffeurs</p></div>
+      <div><p class="font-display text-2xl font-bold text-white">Insured</p><p class="text-white/45 text-sm mt-1">Licensed &amp; covered</p></div>
+      <div><p class="font-display text-2xl font-bold text-white">24/7</p><p class="text-white/45 text-sm mt-1">Day or night</p></div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="bg-[#0c0c0c] border-t border-white/5 py-20 md:py-28">
+    <div class="max-w-3xl mx-auto px-5 md:px-8">
+      <div class="reveal mb-10 text-center">
+        <p class="text-[#c9a96e] tracking-[0.3em] uppercase text-xs mb-4">Good to know</p>
+        <h2 class="font-display text-3xl md:text-5xl font-bold text-white tracking-tight">Chauffeur service questions</h2>
+      </div>
+      <div class="reveal divide-y divide-white/10 border-y border-white/10">
+        {faqs.map((f) => (
+          <details class="group py-5">
+            <summary class="flex items-center justify-between cursor-pointer list-none">
+              <span class="font-display text-lg text-white pr-6">{f.q}</span>
+              <span class="text-[#c9a96e] text-xl shrink-0 transition-transform group-open:rotate-45">+</span>
+            </summary>
+            <p class="text-white/60 leading-relaxed mt-3">{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- RESERVE / LEAD FORM -->
+  <section id="contact" class="bg-black py-20 md:py-24">
+    <div class="max-w-3xl mx-auto px-5 md:px-8">
+      <div class="reveal text-center mb-8">
+        <p class="text-[#c9a96e] tracking-[0.3em] uppercase text-xs mb-3">Reserve</p>
+        <h2 class="font-display text-3xl md:text-5xl font-bold text-white tracking-tight text-balance">Reserve your Miami chauffeur</h2>
+        <p class="text-white/55 mt-4">Fastest reply on WhatsApp. Or send your details and we’ll confirm your Maybach and chauffeur in minutes.</p>
+      </div>
+      <div class="reveal flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-10">
+        <a href={wa} data-cta="chauffeur_reserve" target="_blank" rel="noopener noreferrer" class="flex-1 inline-flex items-center justify-center gap-2 bg-[#c9a96e] text-black px-7 py-4 rounded-full font-semibold hover:bg-white transition">
+          WhatsApp <span class="w-2 h-2 rounded-full bg-[#1f7a3f]"></span>
+        </a>
+        <a href="tel:+16452487305" data-cta="chauffeur_reserve" class="flex-1 inline-flex items-center justify-center border border-white/20 text-white px-7 py-4 rounded-full font-medium hover:border-[#c9a96e] hover:text-[#c9a96e] transition">
+          Call now
+        </a>
+      </div>
+      <LeadForm client:visible defaultVehicle="GLS 600 Maybach" />
+    </div>
+  </section>
+
+  <CtaBand
+    title="Your chauffeur is one message away."
+    subtitle="Maybach chauffeur service across Miami — from $250/hour. Same-day availability for most evenings."
+    message={waMsg}
+  />
+  <StickyMobileCta message={waMsg} />
+</Layout>
