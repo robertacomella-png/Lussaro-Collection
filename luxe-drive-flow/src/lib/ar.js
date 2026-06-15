@@ -7,11 +7,18 @@
 // reliable signal.
 
 export function detectAR() {
-  if (typeof document === "undefined") return "none";
+  if (typeof navigator === "undefined" || typeof document === "undefined") return "none";
+  const ua = navigator.userAgent || "";
   const a = document.createElement("a");
   const supportsQuickLook = !!(a.relList && a.relList.supports && a.relList.supports("ar"));
-  if (supportsQuickLook) return "ios";
-  if (/android/i.test(navigator.userAgent || "")) return "android";
+  // Treat any Apple mobile device as AR-capable (Quick Look). iPhone/iPod/iPad
+  // match the UA directly; iPadOS 13+ masquerades as "Macintosh" but reports
+  // touch points, so catch that too. The feature check is an extra safety net.
+  const isApple =
+    /iPhone|iPad|iPod/i.test(ua) ||
+    (/Macintosh/i.test(ua) && typeof navigator.maxTouchPoints === "number" && navigator.maxTouchPoints > 1);
+  if (supportsQuickLook || isApple) return "ios";
+  if (/android/i.test(ua)) return "android";
   return "none";
 }
 

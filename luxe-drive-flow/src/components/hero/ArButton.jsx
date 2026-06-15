@@ -6,10 +6,18 @@ import { detectAR, launchAR } from "@/lib/ar";
 // so a fullscreen/AR button would be pointless. On iPhone/iPad it opens Quick Look,
 // on Android it opens Scene Viewer.
 export default function ArButton({ usdz = "/models/urus.usdz", glb = "/models/urus.glb", title = "Lamborghini Urus" }) {
-  const [mode, setMode] = useState("none");
-  useEffect(() => { setMode(detectAR()); }, []);
+  // Render by default (so the button is in the initial HTML on phones/tablets and
+  // never depends on hydration timing). Only HIDE it once we confirm there's no AR
+  // — i.e. desktop. iOS is the safe default mode; the effect corrects to android.
+  const [mode, setMode] = useState("ios");
+  const [hidden, setHidden] = useState(false);
+  useEffect(() => {
+    const m = detectAR();
+    if (m === "none") setHidden(true);
+    else setMode(m);
+  }, []);
 
-  if (mode === "none") return null;
+  if (hidden) return null;
 
   return (
     <button
