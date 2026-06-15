@@ -20,7 +20,8 @@ const {
   schema = null,
 } = Astro.props;
 
-const GSC_VERIFICATION = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
+const GSC_VERIFICATION =
+  import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION || '1y4U_thTUwaPRu-K2eXJkTbubU97_vlfF0tLFLGH7iU';
 
 // canonical from the current path against the configured site
 const canonical = new URL(Astro.url.pathname, SITE).href;
