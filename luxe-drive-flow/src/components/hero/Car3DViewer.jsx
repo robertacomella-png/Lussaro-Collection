@@ -1,12 +1,19 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
+import { detectAR, launchAR as launchARFor } from "@/lib/ar";
 
 // The heavy 3D scene loads only when the viewer is opened.
 const UrusHero = lazy(() => import("@/components/hero/UrusHero.jsx"));
 
 export default function Car3DViewer() {
   const [open, setOpen] = useState(false);
+  const [arMode, setArMode] = useState("none"); // "none" | "ios" | "android"
+
+  // detect AR capability (client only) — feature-based so iPad works too
+  useEffect(() => { setArMode(detectAR()); }, []);
+
+  const launchAR = () => launchARFor(arMode);
 
   useEffect(() => {
     const openIt = () => setOpen(true);
@@ -70,6 +77,15 @@ export default function Car3DViewer() {
 
             <div className="flex items-center justify-center gap-4 py-3 shrink-0 border-t border-white/[0.06]">
               <span className="text-white/35 text-[11px] tracking-[0.25em] uppercase">↻ Drag to spin</span>
+              {arMode !== "none" && (
+                <button
+                  type="button"
+                  onClick={launchAR}
+                  className="inline-flex items-center gap-1.5 bg-[#c9a96e] text-black text-xs font-semibold px-4 py-2 rounded-full hover:bg-white transition"
+                >
+                  ◆ View in AR
+                </button>
+              )}
             </div>
           </motion.div>
         </motion.div>
