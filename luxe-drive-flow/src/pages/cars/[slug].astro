@@ -38,7 +38,7 @@ const carSchema = {
   '@type': 'Car',
   name: car.name,
   brand: { '@type': 'Brand', name: car.make },
-  image: imgs,
+  image: imgs.map((u) => (u.startsWith('http') ? u : `${SITE}${u}`)),
   description: car.description,
   url: carUrl,
   ...(car.year ? { modelDate: String(car.year) } : {}),

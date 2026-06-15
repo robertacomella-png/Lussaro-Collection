@@ -12,6 +12,8 @@ export const fleet = [
       "The Lamborghini Urus is pure Miami energy—fast, bold, and built to dominate the streets. With supercar performance in an SUV, it delivers explosive power and head-turning style wherever you go. From South Beach to Brickell, this is how you stand out and own the road.",
 
     images: [
+      "/cars/urus-7.jpg",
+      "/cars/urus-6.jpg",
       "https://ik.imagekit.io/8i3ae7fac/IMG_3317.jpg",
       "https://ik.imagekit.io/8i3ae7fac/IMG_2643%203.jpg",
       "https://ik.imagekit.io/8i3ae7fac/IMG_2670%203.jpg",
