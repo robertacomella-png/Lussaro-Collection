@@ -5,7 +5,6 @@ import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
 import CtaBand from '@/components/site/CtaBand.astro';
 import LeadForm from '@/components/site/LeadForm.jsx';
 import UrusHero from '@/components/hero/UrusHero.jsx';
-import ArButton from '@/components/hero/ArButton.jsx';
 import CarGallery from '@/components/fleet/CarGallery.jsx';
 import BookingCalendar from '@/components/booking/BookingCalendar.jsx';
 import { cars } from '@/data/cars';
@@ -94,7 +93,7 @@ const breadcrumbSchema = {
           <CarGallery images={imgs} name={car.name} slug={`g-${car.slug}`} client:visible />
           {car.model && (
             <a href="#see-in-3d" class="absolute top-3 left-3 z-10 inline-flex items-center gap-1.5 bg-[#c9a96e] text-black text-[11px] font-semibold px-3 py-1.5 rounded-full hover:bg-white transition shadow-lg">
-              ◆ View in 3D &amp; AR
+              ◆ View in 3D
             </a>
           )}
         </div>
@@ -182,16 +181,14 @@ const breadcrumbSchema = {
       <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(60% 55% at 50% 40%, rgba(201,169,110,0.14), transparent 70%);"></div>
       <div class="reveal relative z-10 max-w-5xl mx-auto px-5">
         <p class="text-[#c9a96e] tracking-[0.3em] uppercase text-xs mb-4">Interactive</p>
-        <h2 class="font-display text-3xl md:text-5xl font-bold text-white mb-3">See it in 3D &amp; AR</h2>
-        <p class="text-white/60 mb-8 max-w-md mx-auto">Drag to spin the {car.name} from every angle — or place it in your driveway with AR.</p>
+        <h2 class="font-display text-3xl md:text-5xl font-bold text-white mb-3">See it in 3D</h2>
+        <p class="text-white/60 mb-8 max-w-md mx-auto">Drag to spin the {car.name} and explore every detail in real 3D.</p>
 
         <!-- live spinning model (lazy-loads when scrolled into view; mobile + desktop) -->
         <div class="relative w-full h-[56svh] md:h-[54svh] rounded-[24px] overflow-hidden border border-white/10 bg-gradient-to-b from-[#161616] to-[#0a0a0a]">
           <UrusHero client:visible />
           <span class="absolute bottom-3 inset-x-0 text-center text-white/35 text-[11px] pointer-events-none">Drag to explore</span>
         </div>
-
-        <ArButton client:load title={car.name} />
       </div>
     </section>
   )}
