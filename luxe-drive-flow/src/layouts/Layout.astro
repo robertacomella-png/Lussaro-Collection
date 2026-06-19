@@ -87,10 +87,26 @@ const jsonLd = {
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    {/* Fonts loaded non-render-blocking: preload fetches early, then the stylesheet swaps
+        media print→all on load so first paint isn't gated on the Google Fonts round trip.
+        display=swap shows fallback text immediately and swaps in; <noscript> covers JS-off. */}
     <link
+      rel="preload"
+      as="style"
       href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap"
-      rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap"
+      />
+    </noscript>
 
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
