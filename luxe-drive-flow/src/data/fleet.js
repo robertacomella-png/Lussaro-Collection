@@ -41,6 +41,7 @@ export const fleet = [
       "The Mercedes-Maybach GLS 600 is Miami luxury at its finest—effortless, bold, and impossible to ignore. Glide through the city in total comfort with a whisper-smooth ride and a handcrafted interior that feels like a private jet on wheels. Whether it’s a night in Brickell or a pull-up in South Beach, this is how you make an entrance.",
 
     images: [
+      "/cars/maybach-1.jpg",
       "https://ik.imagekit.io/8i3ae7fac/maybach.jpg",
       "https://ik.imagekit.io/8i3ae7fac/cars-18%202.jpg",
       "https://ik.imagekit.io/8i3ae7fac/cars-20%202.jpg",
