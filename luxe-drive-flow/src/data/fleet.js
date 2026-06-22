@@ -30,7 +30,7 @@ export const fleet = [
   {
     id: 2,
     name: "GLS 600 Maybach",
-    dashboardId: "",
+    dashboardId: "71d29a72-b904-4318-80e5-0c133d2cb665",
     make: "Mercedes-Benz",
     year: 2023,
     price: 895,

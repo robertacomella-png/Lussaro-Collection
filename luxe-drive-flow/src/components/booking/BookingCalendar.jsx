@@ -23,7 +23,12 @@ const fmt = (d) => d.toLocaleDateString("en-US", { month: "short", day: "numeric
 
 // Rental Dashboard backend (lead capture + booking requests). Open CORS.
 const DASHBOARD = "https://rental-dashboard-nu.vercel.app";
-const norm = (s) => String(s || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+// Word-order-proof key (matches the dashboard's keyOf).
+const keyOf = (s) => (String(s || "").toLowerCase().match(/[a-z0-9]+/g) || []).sort().join("-");
+
+// Seeded RNG → "pending" amber dates are stable per car through the day.
+function hashStr(s) { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+function mulberry32(a) { return function () { a |= 0; a = (a + 0x6d2b79f5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
 
 function uuidv4() {
   if (typeof crypto !== "undefined" && crypto.randomUUID) return crypto.randomUUID();
@@ -63,27 +68,52 @@ export default function BookingCalendar({ pricePerDay = 0, carName = "", vehicle
 
   // Real booked dates from the dashboard — matched by vehicle id when linked,
   // otherwise by car name. Booked days render red (unavailable).
-  const carKey = useMemo(() => norm(carName), [carName]);
-  const [apiBlocked, setApiBlocked] = useState(() => new Set());
+  const carKey = useMemo(() => keyOf(carName), [carName]);
+  const [apiBlocked, setApiBlocked] = useState(() => new Set()); // red (booked/rented)
+  const [apiPending, setApiPending] = useState(() => new Set()); // amber (quotes)
   const blocked = useMemo(() => new Set([...blockedDates, ...apiBlocked]), [blockedDates, apiBlocked]);
 
   useEffect(() => {
     let alive = true;
+    const toSet = (ranges) => {
+      const out = new Set();
+      (ranges || []).forEach((rg) => expandRange(rg.start, rg.end, out));
+      return out;
+    };
     fetch(`${DASHBOARD}/api/book`)
       .then((r) => r.json())
       .then((j) => {
         if (!alive || !j) return;
-        const ranges =
-          (vehicleId && j.availability && j.availability[vehicleId]) ||
-          (j.availabilityByName && j.availabilityByName[carKey]) ||
-          [];
-        const out = new Set();
-        ranges.forEach((rg) => expandRange(rg.start, rg.end, out));
-        setApiBlocked(out);
+        setApiBlocked(toSet((vehicleId && j.availability && j.availability[vehicleId]) || (j.availabilityByName && j.availabilityByName[carKey])));
+        setApiPending(toSet((vehicleId && j.pending && j.pending[vehicleId]) || (j.pendingByName && j.pendingByName[carKey])));
       })
       .catch(() => {});
     return () => { alive = false; };
   }, [vehicleId, carKey]);
+
+  // Seeded scarcity "pending" amber dates (the random ones), merged with real quote dates.
+  const [fakePending, setFakePending] = useState(() => new Set());
+  useEffect(() => {
+    const rng = mulberry32(hashStr(`${carName}|${iso(today)}`));
+    const base = new Set();
+    let guard = 0;
+    while (base.size < 3 && guard++ < 200) base.add(1 + Math.floor(rng() * 14));
+    const offsets = new Set();
+    base.forEach((o) => {
+      offsets.add(o);
+      const dow = new Date(today.getTime() + o * DAY_MS).getDay();
+      if (dow === 0 || dow === 5 || dow === 6) {
+        let partner = dow === 0 ? o - 1 : o + 1;
+        if (partner < 1 || partner > 14) partner = dow === 0 ? o + 1 : o - 1;
+        if (partner >= 1 && partner <= 14) offsets.add(partner);
+      }
+    });
+    const out = new Set();
+    offsets.forEach((off) => out.add(iso(new Date(today.getTime() + off * DAY_MS))));
+    setFakePending(out);
+  }, [carName, today]);
+
+  const pendingSet = useMemo(() => new Set([...fakePending, ...apiPending]), [fakePending, apiPending]);
 
   const [view, setView] = useState(() => new Date(today.getFullYear(), today.getMonth(), 1));
   const [start, setStart] = useState(null);
@@ -141,6 +171,7 @@ export default function BookingCalendar({ pricePerDay = 0, carName = "", vehicle
 
   const isPast = (d) => d < today;
   const isAvailable = (d) => !isPast(d) && !blocked.has(iso(d));
+  const isPending = (d) => isAvailable(d) && pendingSet.has(iso(d));
 
   function pick(d) {
     if (!isAvailable(d)) return;
@@ -246,6 +277,7 @@ export default function BookingCalendar({ pricePerDay = 0, carName = "", vehicle
         {cells.map((d, i) => {
           if (!d) return <div key={i} />;
           const avail = isAvailable(d);
+          const pend = isPending(d);
           const isStart = sameDay(d, start);
           const isEnd = sameDay(d, end);
           const inRange = start && end && d > start && d < end;
@@ -255,7 +287,7 @@ export default function BookingCalendar({ pricePerDay = 0, carName = "", vehicle
           else if (selected) cls += "bg-[#c9a96e] text-black font-semibold";
           else if (inRange) cls += "bg-[#c9a96e]/20 text-white";
           else cls += "text-white hover:bg-white/10";
-          const dotColor = !avail ? "bg-red-500/70" : "bg-emerald-400";
+          const dotColor = !avail ? "bg-red-500/70" : pend ? "bg-amber-400" : "bg-emerald-400";
           return (
             <button type="button" key={i} disabled={!avail} onClick={() => pick(d)} className={cls}>
               {d.getDate()}
@@ -270,6 +302,7 @@ export default function BookingCalendar({ pricePerDay = 0, carName = "", vehicle
       {/* legend */}
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-3 text-[11px] text-white/45">
         <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-emerald-400" /> Available</span>
+        <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-amber-400" /> Pending</span>
         <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-red-500/70" /> Unavailable</span>
       </div>
 
