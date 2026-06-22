@@ -15,7 +15,7 @@ const ROLL_DIR = 1;
 const START_X = 5, START_Z = -13; // entry ~1 o'clock, far
 const POSTER = "https://ik.imagekit.io/8i3ae7fac/cars-14.jpg?tr=w-1600,q-70,f-webp";
 
-export default function UrusHero() {
+export default function UrusHero({ src = MODEL_URL, poster = POSTER }) {
   const canvasRef = useRef(null);
   const wrapRef = useRef(null);
   const posterRef = useRef(null);
@@ -219,7 +219,7 @@ export default function UrusHero() {
     draco.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.7/");
     const loader = new GLTFLoader();
     loader.setDRACOLoader(draco);
-    loader.load(MODEL_URL, (gltf) => {
+    loader.load(src, (gltf) => {
       if (disposed) return;
       const model = gltf.scene;
       model.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.frustumCulled = false; } });
@@ -262,8 +262,8 @@ export default function UrusHero() {
     <div ref={wrapRef} className="absolute inset-0">
       <img
         ref={posterRef}
-        src={POSTER}
-        alt="Lamborghini Urus exotic car rental in Miami"
+        src={poster}
+        alt="Exotic car rental in Miami"
         className="absolute inset-0 w-full h-full object-cover opacity-60 transition-opacity duration-700"
         fetchPriority="high"
       />

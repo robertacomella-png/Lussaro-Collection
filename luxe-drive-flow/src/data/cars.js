@@ -10,13 +10,24 @@ const SLUGS = {
   "GLS 600 Maybach": "mercedes-maybach-gls-600",
 };
 
-// Enriched fleet: slug for routing + the 3D model for each car.
-// Only the Urus is a real 3D showpiece; every other car uses real photography
-// (more trustworthy for a rental). Add a GLB here later to make any car 3D.
-export const cars = fleet.map((c) => ({
-  ...c,
-  slug: SLUGS[c.name] || slugify(c.name),
-  model: /urus/i.test(c.name) ? "/models/urus.glb" : null,
-}));
+// 3D showpieces (by slug): GLB for the web viewer, USDZ for iOS AR, and a poster
+// shown while the model loads. Add a car here to give it the 3D/AR section.
+const MODELS = {
+  "lamborghini-urus": { model: "/models/urus.glb", usdz: "/models/urus.usdz" },
+  sf90: { model: "/models/sf90.glb", poster: "/cars/sf90-placeholder.svg" },
+};
+
+// Enriched fleet: slug for routing + optional 3D model/AR per car.
+export const cars = fleet.map((c) => {
+  const slug = SLUGS[c.name] || slugify(c.name);
+  const m = MODELS[slug] || {};
+  return {
+    ...c,
+    slug,
+    model: m.model || null,
+    usdz: m.usdz || null,
+    ...(m.poster ? { poster: m.poster } : {}),
+  };
+});
 
 export const getCar = (slug) => cars.find((c) => c.slug === slug);
