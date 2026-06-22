@@ -133,9 +133,10 @@ export default function BookingCalendar({ pricePerDay = 0, carName = "", vehicle
   const [formError, setFormError] = useState("");
   const fullName = `${firstName} ${lastName}`.trim();
 
-  // Capture the lead as they fill the form (debounced), even before submit.
+  // Capture the lead (debounced) once we can reach them — a name + an email or
+  // phone — even before they submit.
   useEffect(() => {
-    if (!fullName && !contactPhone.trim() && !email.trim()) return;
+    if (!fullName || (!email.trim() && !contactPhone.trim())) return;
     const t = setTimeout(() => {
       fetch(`${DASHBOARD}/api/lead`, {
         method: "POST",
