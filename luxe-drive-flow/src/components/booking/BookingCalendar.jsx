@@ -63,7 +63,7 @@ function expandRange(startISO, endISO, out) {
   for (let d = new Date(s); d <= e; d.setDate(d.getDate() + 1)) out.add(iso(d));
 }
 
-export default function BookingCalendar({ pricePerDay = 0, carName = "", vehicleId = null, phone = "16452487305", blockedDates = [] }) {
+export default function BookingCalendar({ pricePerDay = 0, carName = "", vehicleId = null, phone = "16452487305", blockedDates = [], tiers = TIERS }) {
   const today = useMemo(() => startOfDay(new Date()), []);
 
   // Real booked dates from the dashboard — matched by vehicle id when linked,
@@ -184,7 +184,7 @@ export default function BookingCalendar({ pricePerDay = 0, carName = "", vehicle
   const days = start && end ? Math.round((end - start) / DAY_MS) : start ? 1 : 0;
   const billDays = Math.max(1, days);
   const subtotal = pricePerDay * billDays;
-  const discountPct = billDays >= 7 ? 25 : billDays >= 5 ? 20 : billDays >= 3 ? 15 : 0;
+  const discountPct = tiers.reduce((acc, t) => (billDays >= t.days ? t.pct : acc), 0);
   const total = Math.round(subtotal * (1 - discountPct / 100));
   const saved = subtotal - total;
   const datesText = start ? `${fmt(start)}${end ? ` → ${fmt(end)}` : ""} · ${billDays} ${billDays === 1 ? "day" : "days"}` : "";
@@ -311,7 +311,7 @@ export default function BookingCalendar({ pricePerDay = 0, carName = "", vehicle
       <div className="mt-4">
         <p className="text-[10px] uppercase tracking-[0.2em] text-white/35 mb-2">Multi-day savings</p>
         <div className="grid grid-cols-3 gap-2">
-          {TIERS.map((t) => {
+          {tiers.map((t) => {
             const active = discountPct === t.pct;
             return (
               <div

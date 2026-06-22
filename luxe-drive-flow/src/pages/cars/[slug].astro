@@ -35,6 +35,12 @@ const specs = [
 // Per-car structured data for richer Google results (price/day + breadcrumb)
 const SITE = 'https://www.lussarocollection.com';
 const carUrl = `${SITE}/cars/${car.slug}`;
+// Social-share image = the car's first photo (absolute URL). Skip SVG
+// placeholders since most share previews don't render SVG → Layout default.
+const firstImg = imgs[0] || '';
+const ogImage = firstImg && !firstImg.endsWith('.svg')
+  ? (firstImg.startsWith('http') ? firstImg : `${SITE}${firstImg}`)
+  : undefined;
 const carSchema = {
   '@context': 'https://schema.org',
   '@type': 'Car',
@@ -70,6 +76,7 @@ const breadcrumbSchema = {
 <Layout
   title={`${car.name} Rental Miami | Lussaro Collection`}
   description={`Rent the ${car.name} in Miami with Lussaro Collection — check availability and book in minutes. ${car.description.slice(0, 110)}`}
+  image={ogImage}
   schema={[carSchema, breadcrumbSchema]}
 >
   <Nav />
@@ -143,7 +150,7 @@ const breadcrumbSchema = {
               "today", and React hydration won't repaint the stale disabled/red states until a
               month flip — so past dates wrongly showed as available on first load. */}
           <div class="min-h-[520px]">
-            <BookingCalendar client:only="react" pricePerDay={car.price} carName={car.name} vehicleId={car.dashboardId || null} phone="16452487305" />
+            <BookingCalendar client:only="react" pricePerDay={car.price} carName={car.name} vehicleId={car.dashboardId || null} phone="16452487305" tiers={car.discountTiers} />
           </div>
 
           <a href="tel:+16452487305" data-cta="car_booking_card"

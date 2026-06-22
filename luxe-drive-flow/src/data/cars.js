@@ -17,7 +17,17 @@ const MODELS = {
   sf90: { model: "/models/sf90.glb", usdz: "/models/sf90.usdz", poster: "/cars/sf90-0.jpg" },
 };
 
-// Enriched fleet: slug for routing + optional 3D model/AR per car.
+// Per-car multi-day discount tiers (by slug). Omit a car to use the default
+// tiers in BookingCalendar (3+ days 15%, 5+ days 20%, 7+ days 25%).
+const DISCOUNTS = {
+  sf90: [
+    { days: 3, pct: 10 },
+    { days: 5, pct: 15 },
+    { days: 7, pct: 20 },
+  ],
+};
+
+// Enriched fleet: slug for routing + optional 3D model/AR + discounts per car.
 export const cars = fleet.map((c) => {
   const slug = SLUGS[c.name] || slugify(c.name);
   const m = MODELS[slug] || {};
@@ -27,6 +37,7 @@ export const cars = fleet.map((c) => {
     model: m.model || null,
     usdz: m.usdz || null,
     ...(m.poster ? { poster: m.poster } : {}),
+    ...(DISCOUNTS[slug] ? { discountTiers: DISCOUNTS[slug] } : {}),
   };
 });
 
