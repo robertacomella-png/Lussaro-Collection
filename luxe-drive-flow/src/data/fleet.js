@@ -74,6 +74,7 @@ export const fleet = [
       "/cars/sf90-5.jpg",
       "/cars/sf90-6.jpg",
       "/cars/sf90-7.jpg",
+      "/cars/sf90-8.jpg",
     ],
   },
   {
