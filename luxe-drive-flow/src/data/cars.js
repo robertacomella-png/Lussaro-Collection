@@ -14,7 +14,7 @@ const SLUGS = {
 // shown while the model loads. Add a car here to give it the 3D/AR section.
 const MODELS = {
   "lamborghini-urus": { model: "/models/urus.glb", usdz: "/models/urus.usdz" },
-  sf90: { model: "/models/sf90.glb", usdz: "/models/sf90.usdz", poster: "/cars/sf90-placeholder.svg" },
+  sf90: { model: "/models/sf90.glb", usdz: "/models/sf90.usdz", poster: "/cars/sf90-1.jpg" },
 };
 
 // Enriched fleet: slug for routing + optional 3D model/AR per car.

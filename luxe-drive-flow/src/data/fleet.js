@@ -60,7 +60,13 @@ export const fleet = [
       "The Ferrari SF90 is Miami’s ultimate statement—nearly 1,000 hybrid horsepower, scissor-fast acceleration, and presence that stops the street. From Ocean Drive to Brickell, this is the supercar that turns every arrival into an event.",
 
     images: [
-      "/cars/sf90-placeholder.svg",
+      "/cars/sf90-1.jpg",
+      "/cars/sf90-2.jpg",
+      "/cars/sf90-3.jpg",
+      "/cars/sf90-4.jpg",
+      "/cars/sf90-5.jpg",
+      "/cars/sf90-6.jpg",
+      "/cars/sf90-7.jpg",
     ],
   },
   {
