@@ -92,24 +92,7 @@ export const fleet = [
       "The Lamborghini Huracán EVO is built for Miami—loud, fast, and impossible to miss. With its screaming V10 and razor-sharp handling, it delivers pure adrenaline every time you hit the gas. Whether you’re cruising Ocean Drive or making a statement in Brickell, this is how you turn every head in the city.",
 
     images: [
-      "https://ik.imagekit.io/8i3ae7fac/huracan%20evo.jpg",
-    ],
-  },
-{
-    id: 4,
-    name: "Huracan STO",
-    dashboardId: "",
-    make: "Lamborghini",
-    year: 2023,
-    price: 1695,
-    power: 630,
-    miles: 100,
-    zeroToSixty: "3.0s",
-    description:
-      "The Lamborghini Huracán STO is a race car built for the streets—raw, aggressive, and made to dominate Miami. With its screaming V10 and track-inspired design, every drive feels like an adrenaline rush. From Ocean Drive to Brickell, this is how you make an unforgettable entrance.",
-
-    images: [
-      "https://ik.imagekit.io/8i3ae7fac/sto.jpg",
+      "/cars/huracan-evo-placeholder.svg",
     ],
   },
   {
@@ -126,7 +109,7 @@ export const fleet = [
       "The Rolls-Royce Cullinan is the pinnacle of Miami luxury—effortless, commanding, and unmistakably elite. With its whisper-quiet ride and handcrafted interior, every drive feels like a private experience. Whether you’re arriving in South Beach or gliding through the city, this is how you move with true presence.",
 
     images: [
-      "https://ik.imagekit.io/8i3ae7fac/rolls.jpg",
+      "/cars/cullinan-placeholder.svg",
     ],
   },
 ];
