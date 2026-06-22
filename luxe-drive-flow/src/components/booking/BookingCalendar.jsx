@@ -38,15 +38,71 @@ function mulberry32(a) {
 // Availability calendar. Past/blocked = red (unavailable); a few random near-term
 // dates show amber (pending) for scarcity; everything else is green (available).
 // Range selection → a WhatsApp message prefilled with the car + chosen dates.
-export default function BookingCalendar({ pricePerDay = 0, carName = "", phone = "16452487305", blockedDates = [], pendingDates = null }) {
+
+// Rental Dashboard backend (lead capture + booking requests). Open CORS.
+const DASHBOARD = "https://rental-dashboard-nu.vercel.app";
+
+function uuidv4() {
+  if (typeof crypto !== "undefined" && crypto.randomUUID) return crypto.randomUUID();
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+    const r = (Math.random() * 16) | 0;
+    return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
+  });
+}
+
+// One id per visit so live keystroke captures update a single lead row.
+function getVisitorLeadId() {
+  try {
+    const k = "lussaro-lead-id";
+    const existing = sessionStorage.getItem(k);
+    if (existing) return existing;
+    const v = uuidv4();
+    sessionStorage.setItem(k, v);
+    return v;
+  } catch {
+    return uuidv4();
+  }
+}
+
+const fieldCls =
+  "w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-white/35 focus:border-[#c9a96e] outline-none transition";
+
+// Expand an inclusive {start,end} ISO range into individual ISO day strings.
+function expandRange(startISO, endISO, out) {
+  const s = new Date(`${startISO}T00:00:00`);
+  const e = new Date(`${endISO}T00:00:00`);
+  if (isNaN(s.getTime()) || isNaN(e.getTime())) return;
+  for (let d = new Date(s); d <= e; d.setDate(d.getDate() + 1)) out.add(iso(d));
+}
+
+export default function BookingCalendar({ pricePerDay = 0, carName = "", vehicleId = null, phone = "16452487305", blockedDates = [], pendingDates = null }) {
   const today = useMemo(() => startOfDay(new Date()), []);
-  const blocked = useMemo(() => new Set(blockedDates), [blockedDates]);
+  // Real booked dates fetched from the dashboard for linked cars.
+  const [apiBlocked, setApiBlocked] = useState(() => new Set());
+  const blocked = useMemo(() => new Set([...blockedDates, ...apiBlocked]), [blockedDates, apiBlocked]);
+
+  useEffect(() => {
+    if (!vehicleId) { setApiBlocked(new Set()); return; }
+    let alive = true;
+    fetch(`${DASHBOARD}/api/book`)
+      .then((r) => r.json())
+      .then((j) => {
+        if (!alive) return;
+        const ranges = (j && j.availability && j.availability[vehicleId]) || [];
+        const out = new Set();
+        ranges.forEach((rg) => expandRange(rg.start, rg.end, out));
+        setApiBlocked(out);
+      })
+      .catch(() => {});
+    return () => { alive = false; };
+  }, [vehicleId]);
 
   // 3 random "pending" dates within the next 2 weeks — per car, reshuffled daily.
   // Set after mount (client only) to avoid an SSR/hydration mismatch.
   const [pending, setPending] = useState(() => new Set());
   useEffect(() => {
     if (pendingDates) { setPending(new Set(pendingDates)); return; }
+    if (vehicleId) { setPending(new Set()); return; } // linked car → real availability only
     const rng = mulberry32(hashStr(`${carName}|${iso(today)}`));
     const base = new Set();
     let guard = 0;
@@ -66,11 +122,42 @@ export default function BookingCalendar({ pricePerDay = 0, carName = "", phone =
     const out = new Set();
     offsets.forEach((off) => out.add(iso(new Date(today.getTime() + off * DAY_MS))));
     setPending(out);
-  }, [carName, pendingDates, today]);
+  }, [carName, pendingDates, today, vehicleId]);
 
   const [view, setView] = useState(() => new Date(today.getFullYear(), today.getMonth(), 1));
   const [start, setStart] = useState(null);
   const [end, setEnd] = useState(null);
+
+  // Booking form + lead capture
+  const leadId = useMemo(() => getVisitorLeadId(), []);
+  const [name, setName] = useState("");
+  const [contactPhone, setContactPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [formError, setFormError] = useState("");
+
+  // Capture the lead as they fill the form (debounced), even before submit.
+  useEffect(() => {
+    if (!name.trim() && !contactPhone.trim() && !email.trim()) return;
+    const t = setTimeout(() => {
+      fetch(`${DASHBOARD}/api/lead`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: leadId,
+          name,
+          email,
+          phone: contactPhone,
+          vehicle_id: vehicleId || null,
+          start_date: start ? iso(start) : null,
+          end_date: end ? iso(end) : start ? iso(start) : null,
+          note: carName ? `Car: ${carName}` : "",
+        }),
+      }).catch(() => {});
+    }, 700);
+    return () => clearTimeout(t);
+  }, [name, contactPhone, email, start, end, leadId, carName]);
 
   const y = view.getFullYear();
   const m = view.getMonth();
@@ -107,6 +194,54 @@ export default function BookingCalendar({ pricePerDay = 0, carName = "", phone =
   const cells = [];
   for (let i = 0; i < firstWeekday; i++) cells.push(null);
   for (let d = 1; d <= daysInMonth; d++) cells.push(new Date(y, m, d));
+
+  async function submitBooking() {
+    setFormError("");
+    if (!start) return setFormError("Please choose your dates.");
+    if (!name.trim() || !contactPhone.trim()) return setFormError("Name and phone are required.");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) return setFormError("Please enter a valid email.");
+    setSubmitting(true);
+    const startISO = iso(start);
+    const endISO = end ? iso(end) : startISO;
+    const datesText = `${fmt(start)}${end ? ` → ${fmt(end)}` : ""} (${billDays} ${billDays === 1 ? "day" : "days"})`;
+    try {
+      const r = await fetch(`${DASHBOARD}/api/book`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          vehicle_id: vehicleId || undefined,
+          vehicle_name: carName,
+          start_date: startISO,
+          end_date: endISO,
+          name: name.trim(),
+          email: email.trim(),
+          phone: contactPhone.trim(),
+          note: `Requested from website — ${datesText}.`,
+          lead_id: leadId,
+        }),
+      });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok || !j.ok) throw new Error(j.message || "Could not send your request.");
+      // Best-effort: also email the team via the site's existing endpoint.
+      fetch("/api/lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: name.trim(),
+          phone: contactPhone.trim(),
+          email: email.trim(),
+          vehicle: carName,
+          dates: datesText,
+          message: "Website booking request",
+        }),
+      }).catch(() => {});
+      setSubmitted(true);
+    } catch (e) {
+      setFormError(e.message || "Something went wrong — please try WhatsApp.");
+    } finally {
+      setSubmitting(false);
+    }
+  }
 
   const navBtn = "w-9 h-9 inline-flex items-center justify-center rounded-full border border-white/15 text-white/80 hover:border-[#c9a96e] hover:text-white transition disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:border-white/15";
 
@@ -204,22 +339,37 @@ export default function BookingCalendar({ pricePerDay = 0, carName = "", phone =
           <p className="text-white/45 text-sm mb-3">Pick your pick-up{end ? "" : " and return"} dates to see your rate.</p>
         )}
 
-        {start ? (
-          <a href={wa} target="_blank" rel="noopener noreferrer" data-cta="calendar_book"
-            className="flex items-center justify-center gap-2 bg-[#c9a96e] text-black py-3.5 rounded-full font-semibold hover:bg-white transition">
-            Reserve on WhatsApp <span className="w-2 h-2 rounded-full bg-[#1f7a3f]" />
-          </a>
+        {submitted ? (
+          <div className="rounded-2xl border border-emerald-400/30 bg-emerald-400/10 p-4 text-center">
+            <p className="font-semibold text-emerald-300">Request sent ✓</p>
+            <p className="mt-1 text-sm text-white/60">We’ll confirm availability and pricing with you shortly.</p>
+          </div>
+        ) : start ? (
+          <div className="space-y-2.5">
+            <input className={fieldCls} placeholder="Full name" value={name}
+              onChange={(e) => setName(e.target.value)} autoComplete="name" />
+            <input className={fieldCls} type="tel" inputMode="tel" placeholder="Phone" value={contactPhone}
+              onChange={(e) => setContactPhone(e.target.value)} autoComplete="tel" />
+            <input className={fieldCls} type="email" inputMode="email" placeholder="Email" value={email}
+              onChange={(e) => setEmail(e.target.value)} autoComplete="email" />
+            {formError && <p className="text-xs text-red-400">{formError}</p>}
+            <button type="button" onClick={submitBooking} disabled={submitting}
+              className="w-full bg-[#c9a96e] text-black py-3.5 rounded-full font-semibold hover:bg-white transition disabled:opacity-60">
+              {submitting ? "Sending…" : "Request Booking"}
+            </button>
+            <a href={wa} target="_blank" rel="noopener noreferrer" data-cta="calendar_book"
+              className="flex items-center justify-center gap-2 border border-white/15 text-white py-3 rounded-full text-sm font-medium hover:bg-white/10 transition">
+              or Reserve on WhatsApp <span className="w-2 h-2 rounded-full bg-[#1f7a3f]" />
+            </a>
+            <button type="button" onClick={() => { setStart(null); setEnd(null); }}
+              className="w-full text-white/40 text-xs hover:text-white/70 transition">
+              Clear dates
+            </button>
+          </div>
         ) : (
           <button type="button" disabled
             className="w-full bg-white/10 text-white/40 py-3.5 rounded-full font-semibold cursor-not-allowed">
             Reserve on WhatsApp
-          </button>
-        )}
-
-        {start && (
-          <button type="button" onClick={() => { setStart(null); setEnd(null); }}
-            className="w-full mt-2 text-white/40 text-xs hover:text-white/70 transition">
-            Clear dates
           </button>
         )}
       </div>

@@ -1,7 +1,12 @@
+// dashboardId = the "Website ID" shown on each vehicle card in the Rental
+// Dashboard (Fleet). Paste it here to link a car → enables real availability
+// + proper booking records. Leave "" to keep a car unlinked for now (it still
+// works: bookings come through by car name, just without availability blocking).
 export const fleet = [
   {
     id: 1,
     name: "Lamborghini Urus",
+    dashboardId: "",
     make: "Lamborghini",
     year: 2023,
     price: 995,
@@ -18,13 +23,14 @@ export const fleet = [
       "https://ik.imagekit.io/8i3ae7fac/IMG_2643%203.jpg",
       "https://ik.imagekit.io/8i3ae7fac/IMG_2670%203.jpg",
       "https://ik.imagekit.io/8i3ae7fac/cars-15.jpg?updatedAt=1776280557753",
-     
+
     ],
   },
 
   {
     id: 2,
     name: "GLS 600 Maybach",
+    dashboardId: "",
     make: "Mercedes-Benz",
     year: 2023,
     price: 895,
@@ -43,6 +49,7 @@ export const fleet = [
   {
     id: 3,
     name: "Huracan EVO",
+    dashboardId: "",
     make: "Lamborghini",
     year: 2023,
     price: 1295,
@@ -59,6 +66,7 @@ export const fleet = [
 {
     id: 4,
     name: "Huracan STO",
+    dashboardId: "",
     make: "Lamborghini",
     year: 2023,
     price: 1695,
@@ -75,6 +83,7 @@ export const fleet = [
   {
     id: 5,
     name: "G63",
+    dashboardId: "",
     make: "Mercedes-Benz",
     year: 2023,
     price: 795,
@@ -91,6 +100,7 @@ export const fleet = [
   {
     id: 6,
     name: "Cullinan",
+    dashboardId: "",
     make: "Rolls-Royce",
     year: 2022,
     price: 1495,
@@ -105,4 +115,3 @@ export const fleet = [
     ],
   },
 ];
-
