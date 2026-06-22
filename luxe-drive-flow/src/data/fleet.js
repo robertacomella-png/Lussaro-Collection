@@ -23,8 +23,6 @@ export const fleet = [
       "/cars/urus-7.jpg",
       "https://ik.imagekit.io/8i3ae7fac/IMG_2643%203.jpg",
       "https://ik.imagekit.io/8i3ae7fac/IMG_2670%203.jpg",
-      "https://ik.imagekit.io/8i3ae7fac/cars-15.jpg?updatedAt=1776280557753",
-
     ],
   },
 
