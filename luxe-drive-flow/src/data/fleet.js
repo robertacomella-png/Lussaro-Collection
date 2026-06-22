@@ -47,6 +47,23 @@ export const fleet = [
     ],
   },
   {
+    id: 7,
+    name: "SF90",
+    dashboardId: "",
+    make: "Ferrari",
+    year: 2023,
+    price: 1995,
+    power: 986,
+    miles: 100,
+    zeroToSixty: "2.5s",
+    description:
+      "The Ferrari SF90 is Miami’s ultimate statement—nearly 1,000 hybrid horsepower, scissor-fast acceleration, and presence that stops the street. From Ocean Drive to Brickell, this is the supercar that turns every arrival into an event.",
+
+    images: [
+      "/cars/sf90-placeholder.svg",
+    ],
+  },
+  {
     id: 3,
     name: "Huracan EVO",
     dashboardId: "",
@@ -78,23 +95,6 @@ export const fleet = [
 
     images: [
       "https://ik.imagekit.io/8i3ae7fac/sto.jpg",
-    ],
-  },
-  {
-    id: 5,
-    name: "G63",
-    dashboardId: "",
-    make: "Mercedes-Benz",
-    year: 2023,
-    price: 795,
-    power: 577,
-    miles: 100,
-    zeroToSixty: "4.2s",
-    description:
-      "The Mercedes-AMG G63 is pure Miami presence—bold, powerful, and impossible to ignore. With its iconic design and roaring twin-turbo V8, it delivers luxury and performance in one statement package. Whether you’re cruising South Beach or pulling up anywhere in the city, this is how you stand out without trying.",
-
-    images: [
-      "https://ik.imagekit.io/8i3ae7fac/gwag.jpg",
     ],
   },
   {
