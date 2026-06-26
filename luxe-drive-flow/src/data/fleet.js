@@ -97,6 +97,8 @@ export const fleet = [
     id: 6,
     name: "Cullinan",
     dashboardId: "",
+    // Hidden from the homepage "Collection" grid only; its detail/SEO pages stay live.
+    hideOnHome: true,
     make: "Rolls-Royce",
     year: 2022,
     price: 1495,
