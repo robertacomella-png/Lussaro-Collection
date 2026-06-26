@@ -75,7 +75,7 @@ const wa = `https://wa.me/16452487305?text=${encodeURIComponent("Hi, I'm interes
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {cars.filter((car) => !car.hideOnHome).map((car) => (
+        {cars.map((car) => (
           <div class="reveal group relative rounded-[24px] bg-white overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.15)] transition-shadow">
             <a href={`/cars/${car.slug}`} class="absolute inset-0 z-10" aria-label={`View the ${car.name}`}></a>
             <div class="relative aspect-[16/11] overflow-hidden">
