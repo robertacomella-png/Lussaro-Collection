@@ -93,6 +93,7 @@ export const fleet = [
       "/cars/huracan-evo-1.jpg",
       "/cars/huracan-evo-2.jpg",
       "/cars/huracan-evo-3.jpg",
+      "/cars/huracan-evo-7.jpg",
       "/cars/huracan-evo-4.jpg",
       // Interior shots last.
       "/cars/huracan-evo-5.jpg",
