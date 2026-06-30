@@ -28,7 +28,6 @@ const chips = [
 const specs = [
   { k: '0–60 mph', to: parseFloat(car.zeroToSixty) || 0, decimals: 1, suffix: 's' },
   { k: 'Horsepower', to: car.power, decimals: 0, suffix: ' hp' },
-  { k: 'Model year', to: car.year, decimals: 0, suffix: '' },
   { k: 'Miles / day', to: car.miles, decimals: 0, suffix: '' },
 ];
 
@@ -107,7 +106,7 @@ const breadcrumbSchema = {
         </div>
 
         <div class="mt-7">
-          <p class="text-[#c9a96e] tracking-[0.25em] uppercase text-xs mb-2">{car.make} · {car.year}</p>
+          <p class="text-[#c9a96e] tracking-[0.25em] uppercase text-xs mb-2">{car.make}</p>
           <h1 class="font-display text-3xl md:text-5xl font-bold text-white tracking-tight leading-[1.05]">{car.name}</h1>
 
           <div class="flex flex-wrap gap-2 mt-5">
