@@ -90,7 +90,7 @@ export const fleet = [
       "The Lamborghini Huracán EVO is built for Miami—loud, fast, and impossible to miss. With its screaming V10 and razor-sharp handling, it delivers pure adrenaline every time you hit the gas. Whether you’re cruising Ocean Drive or making a statement in Brickell, this is how you turn every head in the city.",
 
     images: [
-      "/cars/huracan-evo-placeholder.svg",
+      "/cars/huracan-evo-1.jpg",
     ],
   },
   {
