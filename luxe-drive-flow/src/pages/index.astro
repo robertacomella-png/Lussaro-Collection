@@ -88,6 +88,9 @@ const wa = `https://wa.me/16452487305?text=${encodeURIComponent("Hi, I'm interes
                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
               <span class="absolute top-4 left-4 bg-[#0a0a0a]/80 text-white text-[11px] tracking-wide px-3 py-1 rounded-full">{car.make}</span>
+              {car.comingSoon && (
+                <span class="absolute top-4 right-4 bg-[#c9a96e] text-black text-[11px] font-bold tracking-[0.12em] uppercase px-3 py-1 rounded-full">Coming Soon</span>
+              )}
               {car.model && (
                 <button data-open-3d type="button" class="absolute top-4 right-4 z-20 inline-flex items-center gap-1.5 bg-[#c9a96e] text-black text-[11px] font-semibold px-3 py-1.5 rounded-full hover:bg-white transition">
                   ◆ Explore in 3D
@@ -101,8 +104,8 @@ const wa = `https://wa.me/16452487305?text=${encodeURIComponent("Hi, I'm interes
               </div>
               <div class="text-right leading-tight">
                 <div class="flex items-center justify-end gap-1.5 mb-0.5">
-                  <span class="text-[#0a0a0a]/45 text-sm line-through">${(car.price + 200).toLocaleString()}</span>
-                  <span class="bg-red-600 text-white text-[10px] font-bold tracking-wide px-1.5 py-0.5 rounded">$200 OFF</span>
+                  <span class="text-[#0a0a0a]/45 text-sm line-through">${(car.wasPrice ?? car.price + 200).toLocaleString()}</span>
+                  <span class="bg-red-600 text-white text-[10px] font-bold tracking-wide px-1.5 py-0.5 rounded">${(car.wasPrice ?? car.price + 200) - car.price} OFF</span>
                 </div>
                 <p class="text-[#c9a96e] font-display text-xl font-bold leading-none">${car.price.toLocaleString()}<span class="text-[#0a0a0a]/40 text-xs font-normal">/day</span></p>
               </div>

@@ -25,8 +25,12 @@ export default function FleetModal({ car, setCar, activeImage, setActiveImage })
 
   const images = getImages(car);
   const whatsappText = encodeURIComponent(
-    `Hi, I'm interested in booking the ${car.name} with Lussaro Collection.`
+    car.comingSoon
+      ? `Hi, I'd like to reserve the ${car.name} early with Lussaro Collection — I hear it's arriving soon.`
+      : `Hi, I'm interested in booking the ${car.name} with Lussaro Collection.`
   );
+  const wasPrice = car.wasPrice ?? car.price + 200;
+  const offAmount = wasPrice - car.price;
 
   return (
     <AnimatePresence>
@@ -101,9 +105,16 @@ export default function FleetModal({ car, setCar, activeImage, setActiveImage })
               </div>
 
               <div className="text-white flex flex-col justify-center">
-                <p className="text-[#c9a96e] tracking-[0.25em] uppercase text-xs mb-3">
-                  {car.make}
-                </p>
+                <div className="flex items-center gap-3 mb-3">
+                  <p className="text-[#c9a96e] tracking-[0.25em] uppercase text-xs">
+                    {car.make}
+                  </p>
+                  {car.comingSoon && (
+                    <span className="bg-[#c9a96e] text-black text-[10px] font-bold tracking-[0.15em] uppercase px-2.5 py-1 rounded-full">
+                      Coming Soon
+                    </span>
+                  )}
+                </div>
 
                 <h3 className="text-3xl md:text-5xl font-semibold mb-5">
                   {car.name}
@@ -119,8 +130,8 @@ export default function FleetModal({ car, setCar, activeImage, setActiveImage })
                         ${car.price.toLocaleString()}
                         <span className="text-white/45 text-sm ml-1">/day</span>
                       </p>
-                      <span className="text-white/45 text-base line-through">${(car.price + 200).toLocaleString()}</span>
-                      <span className="bg-red-500 text-white text-[10px] font-bold tracking-wide px-2 py-0.5 rounded">$200 OFF</span>
+                      <span className="text-white/45 text-base line-through">${wasPrice.toLocaleString()}</span>
+                      <span className="bg-red-500 text-white text-[10px] font-bold tracking-wide px-2 py-0.5 rounded">${offAmount} OFF</span>
                     </div>
                   </div>
 
@@ -130,7 +141,7 @@ export default function FleetModal({ car, setCar, activeImage, setActiveImage })
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center bg-[#c9a96e] text-black px-7 py-3.5 rounded-full text-sm font-semibold hover:bg-white transition"
                   >
-                    Reserve Now
+                    {car.comingSoon ? "Reserve Early" : "Reserve Now"}
                   </a>
                 </div>
 

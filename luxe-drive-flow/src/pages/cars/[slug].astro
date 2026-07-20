@@ -15,7 +15,11 @@ export function getStaticPaths() {
 }
 
 const { car } = Astro.props;
-const message = `Hi, I'm interested in booking the ${car.name} with Lussaro Collection.`;
+const wasPrice = car.wasPrice ?? car.price + 200;
+const offAmount = wasPrice - car.price;
+const message = car.comingSoon
+  ? `Hi, I'd like to reserve the ${car.name} early with Lussaro Collection — I hear it's arriving soon.`
+  : `Hi, I'm interested in booking the ${car.name} with Lussaro Collection.`;
 const wa = `https://wa.me/16452487305?text=${encodeURIComponent(message)}`;
 const imgs = car.images || [];
 
@@ -53,7 +57,7 @@ const carSchema = {
     '@type': 'Offer',
     priceCurrency: 'USD',
     price: car.price,
-    availability: 'https://schema.org/InStock',
+    availability: car.comingSoon ? 'https://schema.org/PreOrder' : 'https://schema.org/InStock',
     url: carUrl,
     priceSpecification: {
       '@type': 'UnitPriceSpecification',
@@ -106,7 +110,12 @@ const breadcrumbSchema = {
         </div>
 
         <div class="mt-7">
-          <p class="text-[#c9a96e] tracking-[0.25em] uppercase text-xs mb-2">{car.make}</p>
+          <div class="flex items-center gap-3 mb-2">
+            <p class="text-[#c9a96e] tracking-[0.25em] uppercase text-xs">{car.make}</p>
+            {car.comingSoon && (
+              <span class="bg-[#c9a96e] text-black text-[10px] font-bold tracking-[0.15em] uppercase px-2.5 py-1 rounded-full">Coming Soon</span>
+            )}
+          </div>
           <h1 class="font-display text-3xl md:text-5xl font-bold text-white tracking-tight leading-[1.05]">{car.name}</h1>
 
           <div class="flex flex-wrap gap-2 mt-5">
@@ -130,13 +139,17 @@ const breadcrumbSchema = {
               <span class="absolute inline-flex h-full w-full rounded-full bg-[#c9a96e] opacity-70 animate-ping"></span>
               <span class="relative inline-flex h-2 w-2 rounded-full bg-[#c9a96e]"></span>
             </span>
-            <span class="text-[13px] leading-snug text-white/85 font-medium tracking-wide" data-urgency>Only 1 in our Miami fleet — dates are booking out fast.</span>
+            {car.comingSoon ? (
+              <span class="text-[13px] leading-snug text-white/85 font-medium tracking-wide">Arriving soon — reserve your dates early before it books out.</span>
+            ) : (
+              <span class="text-[13px] leading-snug text-white/85 font-medium tracking-wide" data-urgency>Only 1 in our Miami fleet — dates are booking out fast.</span>
+            )}
           </div>
           <div class="flex items-end justify-between mb-5">
             <div>
               <div class="flex items-center gap-2 mb-1">
-                <span class="text-white/45 text-base line-through">${(car.price + 200).toLocaleString()}</span>
-                <span class="bg-red-600 text-white text-[10px] font-bold tracking-wide px-1.5 py-0.5 rounded">$200 OFF</span>
+                <span class="text-white/45 text-base line-through">${wasPrice.toLocaleString()}</span>
+                <span class="bg-red-600 text-white text-[10px] font-bold tracking-wide px-1.5 py-0.5 rounded">${offAmount} OFF</span>
               </div>
               <span class="font-display text-3xl font-bold text-white">${car.price.toLocaleString()}</span>
               <span class="text-white/45 text-sm"> / day</span>

@@ -2,10 +2,14 @@ import { getImageKitSrc, getImageKitSrcSet, getImageKitSizes } from "@/lib/image
 
 export default function FleetCard({ car, onOpen }) {
   const message = encodeURIComponent(
-    `Hi, I'm interested in booking the ${car.name}.`
+    car.comingSoon
+      ? `Hi, I'd like to reserve the ${car.name} early — I hear it's arriving soon.`
+      : `Hi, I'm interested in booking the ${car.name}.`
   );
 
   const imageSrc = getImageKitSrc(car.images?.[0] || car.image, 700);
+  const wasPrice = car.wasPrice ?? car.price + 200;
+  const offAmount = wasPrice - car.price;
 
   return (
     <button
@@ -28,6 +32,12 @@ export default function FleetCard({ car, onOpen }) {
 
         <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/70 via-black/25 to-transparent" />
 
+        {car.comingSoon && (
+          <span className="absolute top-3 left-3 bg-[#c9a96e] text-black text-[10px] md:text-[11px] font-bold tracking-[0.15em] uppercase px-2.5 py-1 rounded-full">
+            Coming Soon
+          </span>
+        )}
+
         <div className="absolute bottom-3 left-3 right-3">
           <h3 className="text-white text-[17px] md:text-2xl leading-tight font-semibold tracking-tight">
             {car.name}
@@ -38,8 +48,8 @@ export default function FleetCard({ car, onOpen }) {
       <div className="px-3.5 md:px-5 pb-3.5 md:pb-5 text-white">
         <div className="mb-3 leading-tight">
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-white/45 text-sm line-through">${(car.price + 200).toLocaleString()}</span>
-            <span className="bg-red-500 text-white text-[10px] font-bold tracking-wide px-1.5 py-0.5 rounded">$200 OFF</span>
+            <span className="text-white/45 text-sm line-through">${wasPrice.toLocaleString()}</span>
+            <span className="bg-red-500 text-white text-[10px] font-bold tracking-wide px-1.5 py-0.5 rounded">${offAmount} OFF</span>
           </div>
           <p className="text-[#c9a96e] text-[22px] md:text-3xl leading-none font-semibold tracking-tight">
             ${car.price.toLocaleString()}
@@ -85,7 +95,7 @@ export default function FleetCard({ car, onOpen }) {
           onClick={(e) => e.stopPropagation()}
           className="flex items-center justify-center gap-2 w-full bg-[#c9a96e] text-black py-2.5 md:py-3 rounded-xl text-sm md:text-base font-semibold hover:bg-white transition"
         >
-          Reserve Now
+          {car.comingSoon ? "Reserve Early" : "Reserve Now"}
         </a>
       </div>
     </button>

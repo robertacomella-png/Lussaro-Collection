@@ -52,6 +52,25 @@ export const fleet = [
     ],
   },
   {
+    id: 8,
+    name: "S580",
+    dashboardId: "",
+    make: "Mercedes-Benz",
+    year: 2023,
+    price: 445,
+    wasPrice: 495,
+    comingSoon: true,
+    power: 496,
+    miles: 100,
+    zeroToSixty: "4.4s",
+    description:
+      "The Mercedes-Benz S580 is Miami sophistication at its peak—smooth, commanding, and first-class in every detail. With its whisper-quiet V8 and a cabin built like a five-star suite, every drive feels like arriving somewhere important. From Brickell business to South Beach nights, this is how you show up polished.",
+
+    images: [
+      "/cars/s580-placeholder.svg",
+    ],
+  },
+  {
     id: 7,
     name: "SF90",
     dashboardId: "",

@@ -8,6 +8,7 @@ const SLUGS = {
   "G63": "mercedes-amg-g63",
   "Cullinan": "rolls-royce-cullinan",
   "GLS 600 Maybach": "mercedes-maybach-gls-600",
+  "S580": "mercedes-s580",
 };
 
 // 3D showpieces (by slug): GLB for the web viewer, USDZ for iOS AR, and a poster
