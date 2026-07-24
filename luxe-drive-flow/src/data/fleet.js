@@ -59,7 +59,6 @@ export const fleet = [
     year: 2023,
     price: 445,
     wasPrice: 495,
-    comingSoon: true,
     power: 496,
     miles: 100,
     zeroToSixty: "4.4s",
