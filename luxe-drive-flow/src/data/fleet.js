@@ -67,7 +67,7 @@ export const fleet = [
       "The Mercedes-Benz S580 is Miami sophistication at its peak—smooth, commanding, and first-class in every detail. With its whisper-quiet V8 and a cabin built like a five-star suite, every drive feels like arriving somewhere important. From Brickell business to South Beach nights, this is how you show up polished.",
 
     images: [
-      "/cars/s580-01.jpg",
+      "/cars/s580-hero.jpg",
       "/cars/s580-02.jpg",
       "/cars/s580-03.jpg",
       "/cars/s580-04.jpg",
