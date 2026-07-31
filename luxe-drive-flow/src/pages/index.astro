@@ -6,8 +6,7 @@ import CtaBand from '@/components/site/CtaBand.astro';
 import LeadForm from '@/components/site/LeadForm.jsx';
 import Car3DViewer from '@/components/hero/Car3DViewer.jsx';
 import FleetCollection from '@/components/fleet/FleetCollection.astro';
-
-const wa = `https://wa.me/16452487305?text=${encodeURIComponent("Hi, I'm interested in renting an exotic car with Lussaro Collection. What's available?")}`;
+import { Phone } from 'lucide-react';
 ---
 <Layout
   title="Luxury & Exotic Car Rental Miami | Lussaro Collection"
@@ -41,8 +40,8 @@ const wa = `https://wa.me/16452487305?text=${encodeURIComponent("Hi, I'm interes
       <div class="mt-auto">
         <div class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
           <a href="#fleet" class="cta-shine flex-1 inline-flex items-center justify-center bg-[#c9a96e] text-black px-7 py-4 rounded-full font-semibold hover:bg-white transition-colors">Explore the Fleet</a>
-          <a href={wa} data-cta="hero" target="_blank" rel="noopener noreferrer" class="flex-1 hidden md:inline-flex items-center justify-center gap-2 border border-white/25 text-white px-7 py-4 rounded-full font-medium hover:border-[#c9a96e] hover:text-[#c9a96e] transition">
-            Check Availability <span class="w-2 h-2 rounded-full bg-[#25D366]"></span>
+          <a href="tel:+16452487305" data-cta="hero" data-call-inline class="call-pop flex-1 hidden md:inline-flex items-center justify-center gap-2 bg-[#16a34a] text-white px-7 py-4 rounded-full font-semibold whitespace-nowrap shadow-[0_8px_24px_rgba(22,163,74,0.5)] ring-1 ring-white/15 hover:bg-[#22c55e] transition-colors">
+            <Phone className="w-4 h-4 shrink-0" /> Call (645) 248-7305
           </a>
         </div>
         <div class="mt-5 flex items-center justify-center gap-3 text-sm text-white/55">
