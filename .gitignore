@@ -1,3 +1,5 @@
 # The booking platform is a SEPARATE product with its own git repo + Vercel project.
 # Keep it out of the marketing-site repo.
 lussaro-bookings/
+.vercel
+.env*

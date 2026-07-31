@@ -2,6 +2,7 @@
 import '@/index.css';
 import { ClientRouter } from 'astro:transitions';
 import Footer from '@/components/footer/Footer.astro';
+import StickyCall from '@/components/site/StickyCall.astro';
 
 const SITE = 'https://www.lussarocollection.com';
 const DEFAULTS = {
@@ -165,6 +166,9 @@ const jsonLd = {
       {!noFooter && <Footer />}
     </div>
 
+    <!-- Floating desktop Call button (mobile has its own sticky Call bar) -->
+    <StickyCall />
+
     <!-- Reveal-on-scroll motion layer (re-runs on each view-transition navigation) -->
     <script>
       // On SPA navigation, settle anything already on-screen instantly so the
@@ -188,6 +192,35 @@ const jsonLd = {
         els.forEach((e) => io.observe(e));
       }
       document.addEventListener('astro:page-load', initReveal);
+    </script>
+
+    <!-- Hide the floating Call buttons (mobile pill + desktop pill) while ANY
+         inline Call CTA (marked with data-call-inline — the /fleet hero button,
+         a car page's "Call to book", …) is on screen, so two call buttons never
+         stack. Re-syncs on every view-transition navigation; a single observer
+         is kept and swapped so listeners never accumulate. -->
+    <script>
+      let callCtaObserver;
+      function syncCallButtons() {
+        const stickies = document.querySelectorAll(
+          '[data-cta="sticky_mobile"], [data-cta="sticky_call_desktop"]'
+        );
+        const inlines = document.querySelectorAll('[data-call-inline]');
+        if (callCtaObserver) { callCtaObserver.disconnect(); callCtaObserver = undefined; }
+        if (!stickies.length) return;
+        stickies.forEach((s) => s.classList.remove('sticky-hidden')); // default: visible
+        if (!inlines.length || !('IntersectionObserver' in window)) return;
+        const visible = new Set();
+        callCtaObserver = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) e.isIntersecting ? visible.add(e.target) : visible.delete(e.target);
+            stickies.forEach((s) => s.classList.toggle('sticky-hidden', visible.size > 0));
+          },
+          { threshold: 0.1 }
+        );
+        inlines.forEach((el) => callCtaObserver.observe(el));
+      }
+      document.addEventListener('astro:page-load', syncCallButtons);
     </script>
 
     <!-- Smooth-scroll for genuine in-page anchor clicks only (root scroller is
