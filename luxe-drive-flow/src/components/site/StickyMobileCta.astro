@@ -2,8 +2,8 @@
 // Sticky mobile "Call" button — a green pill in the bottom-right corner (mobile
 // only; desktop has its own StickyCall pill). Phone icon beside a readable
 // "Call" label, with the shared pulsing green halo (call-pop) so it draws the
-// eye. Always visible (no scroll-hide). The tel: click is auto-tracked as
-// `call_click` in Layout.astro via data-cta.
+// eye. Hidden while any inline data-call-inline CTA is on screen (observer in
+// Layout.astro). The tel: click is auto-tracked as `call_click` via data-cta.
 import { Phone } from 'lucide-react';
 ---
 <a
