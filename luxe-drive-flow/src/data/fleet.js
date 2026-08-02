@@ -87,7 +87,7 @@ export const fleet = [
     dashboardId: "",
     make: "Ferrari",
     year: 2023,
-    price: 1995,
+    price: 2195,
     power: 986,
     miles: 100,
     zeroToSixty: "2.5s",
