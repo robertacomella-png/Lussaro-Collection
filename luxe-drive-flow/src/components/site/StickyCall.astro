@@ -6,13 +6,14 @@
 // full-width bar. The tel: click is auto-tracked as `call_click` in
 // Layout.astro via the data-cta attribute.
 import { Phone } from 'lucide-react';
+import { business, telHref, whatsappWith } from '@/data/business';
 ---
 <a
-  href="tel:+16452487305"
+  href={telHref}
   data-cta="sticky_call_desktop"
-  aria-label="Call Lussaro Collection at (645) 248-7305"
+  aria-label={`Call ${business.brandName} at ${business.phoneDisplayShort}`}
   class="call-pop hidden md:inline-flex fixed bottom-6 right-6 z-50 items-center gap-2.5 bg-[#16a34a] text-white pl-5 pr-6 py-3.5 rounded-full font-semibold shadow-[0_10px_40px_rgba(22,163,74,0.55)] ring-1 ring-white/15 hover:bg-[#22c55e] hover:scale-[1.05] transition-[opacity,transform] duration-300 ease-out"
 >
   <Phone className="w-[18px] h-[18px]" />
-  <span>Call (645) 248-7305</span>
+  <span>Call {business.phoneDisplayShort}</span>
 </a>

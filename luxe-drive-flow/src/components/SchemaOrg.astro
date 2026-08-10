@@ -10,6 +10,7 @@
 // two competing business entities on the same page would have been worse than
 // none, so the old one was removed rather than left in place.
 import { fleet } from '@/data/fleet';
+import { business } from '@/data/business';
 
 // Base URL comes from `site` in astro.config.mjs so the domain can never drift
 // out of sync with canonical/sitemap URLs. Astro.site includes a trailing slash.
@@ -22,21 +23,21 @@ const priceRange = `$${Math.min(...prices).toLocaleString('en-US')}–$${Math.ma
   ...prices
 ).toLocaleString('en-US')} per day`;
 
-// Mon–Sun 09:00–22:00
-const HOURS = {
+// Opening hours come from business.js. Days sharing the same open/close are
+// grouped into one OpeningHoursSpecification, which is how schema.org expects
+// them; if the hours ever differ per day this still emits correctly.
+const byWindow = new Map();
+for (const h of business.hours) {
+  const k = `${h.opens}-${h.closes}`;
+  if (!byWindow.has(k)) byWindow.set(k, { opens: h.opens, closes: h.closes, days: [] });
+  byWindow.get(k).days.push(h.day);
+}
+const HOURS = [...byWindow.values()].map((w) => ({
   '@type': 'OpeningHoursSpecification',
-  dayOfWeek: [
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-    'Sunday',
-  ],
-  opens: '09:00',
-  closes: '22:00',
-};
+  dayOfWeek: w.days,
+  opens: w.opens,
+  closes: w.closes,
+}));
 
 // No logo asset exists in the repo, so favicon.png stands in for logo/image.
 const LOGO = `${BASE}favicon.png`;
@@ -47,32 +48,32 @@ const graph = {
     {
       '@type': 'Organization',
       '@id': `${BASE}#org`,
-      name: 'Lussaro Collection',
+      name: business.brandName,
+      legalName: business.legalName,
       url: BASE,
       logo: LOGO,
-      telephone: '+1-645-248-7305',
-      sameAs: [
-        'https://instagram.com/lussarocollection',
-        'https://maps.app.goo.gl/9nEuwbuyZzhGTQscA',
-      ],
+      telephone: business.phone,
+      ...(business.email ? { email: business.email } : {}),
+      sameAs: [business.instagram, business.googleMaps],
     },
     {
       '@type': ['AutoRental', 'LocalBusiness'],
       '@id': `${BASE}#business`,
-      name: 'Lussaro Collection – Exotic Car Rental Miami',
+      name: `${business.brandName} – Exotic Car Rental Miami`,
       parentOrganization: { '@id': `${BASE}#org` },
       url: BASE,
       image: LOGO,
-      telephone: '+1-645-248-7305',
+      telephone: business.phone,
+      ...(business.email ? { email: business.email } : {}),
       priceRange,
       currenciesAccepted: 'USD',
       address: {
         '@type': 'PostalAddress',
-        streetAddress: '900 Biscayne Blvd',
-        addressLocality: 'Miami',
-        addressRegion: 'FL',
-        postalCode: '33132',
-        addressCountry: 'US',
+        streetAddress: business.street,
+        addressLocality: business.city,
+        addressRegion: business.region,
+        postalCode: business.postalCode,
+        addressCountry: business.country,
       },
       areaServed: [
         { '@type': 'City', name: 'Miami' },
@@ -80,7 +81,7 @@ const graph = {
         { '@type': 'Place', name: 'South Beach' },
         { '@type': 'Place', name: 'Brickell' },
       ],
-      openingHoursSpecification: [HOURS],
+      openingHoursSpecification: HOURS,
     },
   ],
 };

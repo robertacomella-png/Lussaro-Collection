@@ -1,4 +1,7 @@
 ---
+import { business } from '@/data/business';
+import { rentalTerms, deliverySummary } from '@/data/rental-terms';
+import { fleet } from '@/data/fleet';
 import Layout from '@/layouts/Layout.astro';
 import Nav from '@/components/site/Nav.astro';
 ---
@@ -11,8 +14,11 @@ import Nav from '@/components/site/Nav.astro';
     <div class="max-w-6xl mx-auto px-6 py-20">
       <h1 class="text-4xl md:text-5xl font-semibold mb-6">Terms of Service</h1>
 
+      <p class="text-white/45 text-sm mb-8">Last updated: {rentalTerms.lastUpdated}</p>
+
       <div class="space-y-10 text-white/80 text-sm leading-relaxed">
-        <p>These Terms of Service govern your use of Lussaro Collection’s luxury car rental services in Miami. By requesting a reservation, renting a vehicle, or using our website, you agree to these terms.</p>
+        <p>These Terms of Service govern your use of {business.brandName}’s luxury car rental services in Miami. By requesting a reservation, renting a vehicle, or using our website, you agree to these terms.</p>
+        <p>These services are operated by {business.legalName}, {business.street}, {business.city}, {business.region} {business.postalCode}.</p>
 
         <section class="space-y-4">
           <h2 class="text-2xl font-semibold">1. Eligibility & Requirements</h2>
@@ -20,7 +26,7 @@ import Nav from '@/components/site/Nav.astro';
           <ul class="list-disc list-inside space-y-2 text-white/70">
             <li>Be at least 21 years of age.</li>
             <li>Hold a valid, full driver’s license.</li>
-            <li>Maintain full coverage insurance that applies to rental vehicles.</li>
+            <li>{rentalTerms.insurance.summary}</li>
             <li>Provide accurate personal information and documentation.</li>
           </ul>
           <p>Failure to meet these requirements may result in rental denial or reservation cancellation.</p>
@@ -38,15 +44,64 @@ import Nav from '@/components/site/Nav.astro';
 
         <section class="space-y-4">
           <h2 class="text-2xl font-semibold">3. Security Deposit</h2>
-          <p>A security deposit is required for all rentals. Deposit amounts vary by vehicle and are disclosed before booking.</p>
+          <p>A refundable security deposit of {rentalTerms.deposit.display} applies to every vehicle in our fleet. It is taken at the time of booking and is the same amount for all vehicles.</p>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border border-white/10 rounded-lg">
+              <thead class="bg-white/5 text-white/70">
+                <tr><th class="px-4 py-3 font-medium">Vehicle</th><th class="px-4 py-3 font-medium">Daily rate</th><th class="px-4 py-3 font-medium">Security deposit</th></tr>
+              </thead>
+              <tbody class="text-white/70">
+                {fleet.map((c) => (
+                  <tr class="border-t border-white/10">
+                    <td class="px-4 py-3">{c.name.startsWith(c.make) ? c.name : `${c.make} ${c.name}`}</td>
+                    <td class="px-4 py-3">${c.price.toLocaleString()}/day</td>
+                    <td class="px-4 py-3">{rentalTerms.deposit.display}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
           <ul class="list-disc list-inside space-y-2 text-white/70">
             <li>Deposits may cover damage, excess mileage, late returns, cleaning, or fees.</li>
-            <li>Deposits are returned following vehicle inspection, less applicable deductions.</li>
+            <li>{rentalTerms.deposit.note}</li>
           </ul>
         </section>
 
         <section class="space-y-4">
-          <h2 class="text-2xl font-semibold">4. Use of Vehicle</h2>
+          <h2 class="text-2xl font-semibold">4. Mileage</h2>
+          <p>Every rental includes {rentalTerms.mileage.includedPerDay} miles per day. Unused mileage does not carry over between days.</p>
+          <ul class="list-disc list-inside space-y-2 text-white/70">
+            {rentalTerms.mileage.overagePerMile
+              ? <li>Miles driven beyond the included allowance are billed at ${rentalTerms.mileage.overagePerMile} per mile.</li>
+              : <li>Miles driven beyond the included allowance are billed at the per-mile rate set out in your rental agreement, which is disclosed to you before your booking is confirmed.</li>}
+            <li>Excess mileage charges may be deducted from your security deposit.</li>
+          </ul>
+        </section>
+
+        <section class="space-y-4">
+          <h2 class="text-2xl font-semibold">5. Cancellations & Refunds</h2>
+          <p>{rentalTerms.cancellation.summary}</p>
+          <ul class="list-disc list-inside space-y-2 text-white/70">
+            <li>Cancellations made more than {rentalTerms.cancellation.noRefundWithinDays} days before the rental start date are eligible for a refund of amounts paid.</li>
+            <li>Cancellations made within {rentalTerms.cancellation.noRefundWithinDays} days of the rental start date are non-refundable.</li>
+            <li>Changes to dates are treated as a cancellation and rebooking where the original dates fall inside the non-refundable window.</li>
+          </ul>
+        </section>
+
+        <section class="space-y-4">
+          <h2 class="text-2xl font-semibold">6. Delivery & Collection</h2>
+          <p>We deliver to hotels, residences, offices and airports. Delivery is charged per rental, not per journey:</p>
+          <ul class="list-disc list-inside space-y-2 text-white/70">
+            {rentalTerms.delivery.map((d) => (
+              <li>{d.area}: {d.display}</li>
+            ))}
+            <li>Delivery outside these areas is quoted on request before booking.</li>
+            <li>Someone meeting the eligibility requirements in section 1 must be present to receive the vehicle.</li>
+          </ul>
+        </section>
+
+        <section class="space-y-4">
+          <h2 class="text-2xl font-semibold">7. Use of Vehicle</h2>
           <p>You must operate the rental vehicle responsibly, obey all laws, and follow these conditions:</p>
           <ul class="list-disc list-inside space-y-2 text-white/70">
             <li>Use the vehicle for personal, non-commercial purposes only.</li>
@@ -57,7 +112,7 @@ import Nav from '@/components/site/Nav.astro';
         </section>
 
         <section class="space-y-4">
-          <h2 class="text-2xl font-semibold">5. Damage, Liability & Insurance</h2>
+          <h2 class="text-2xl font-semibold">8. Damage, Liability & Insurance</h2>
           <p>You are responsible for the vehicle during the rental period. This includes:</p>
           <ul class="list-disc list-inside space-y-2 text-white/70">
             <li>Any damage to the vehicle.</li>
@@ -68,40 +123,40 @@ import Nav from '@/components/site/Nav.astro';
         </section>
 
         <section class="space-y-4">
-          <h2 class="text-2xl font-semibold">6. Tickets, Tolls & Fines</h2>
+          <h2 class="text-2xl font-semibold">9. Tickets, Tolls & Fines</h2>
           <p>Renters are responsible for all tickets, tolls, fines, and penalties incurred during their rental period.</p>
           <p>Lussaro Collection may charge administrative fees for processing violations or notices.</p>
         </section>
 
         <section class="space-y-4">
-          <h2 class="text-2xl font-semibold">7. Late Fees & Return Policy</h2>
+          <h2 class="text-2xl font-semibold">10. Late Fees & Return Policy</h2>
           <p>Vehicles must be returned on time and in the agreed condition. Late returns may incur additional charges.</p>
           <p>We reserve the right to end the rental early for safety, misuse, or policy violations.</p>
         </section>
 
         <section class="space-y-4">
-          <h2 class="text-2xl font-semibold">8. GPS & Monitoring</h2>
+          <h2 class="text-2xl font-semibold">11. GPS & Monitoring</h2>
           <p>Vehicles may include GPS tracking and monitoring systems for safety, misuse prevention, and recovery. Renting a vehicle constitutes consent to these systems.</p>
         </section>
 
         <section class="space-y-4">
-          <h2 class="text-2xl font-semibold">9. Damage Reporting & Accidents</h2>
+          <h2 class="text-2xl font-semibold">12. Damage Reporting & Accidents</h2>
           <p>You must notify Lussaro Collection immediately after any accident, damage, or incident. Prompt reporting is required for insurance and claims processing.</p>
         </section>
 
         <section class="space-y-4">
-          <h2 class="text-2xl font-semibold">10. Florida Governing Law</h2>
+          <h2 class="text-2xl font-semibold">13. Florida Governing Law</h2>
           <p>These Terms are governed by the laws of the State of Florida. Any disputes will be resolved in courts located in Miami, Florida.</p>
         </section>
 
         <section class="space-y-4">
-          <h2 class="text-2xl font-semibold">11. Modifications</h2>
+          <h2 class="text-2xl font-semibold">14. Modifications</h2>
           <p>Lussaro Collection may update these Terms at any time. Continued use of services after changes constitutes acceptance of the updated Terms.</p>
         </section>
 
         <section class="space-y-4 pb-10">
-          <h2 class="text-2xl font-semibold">12. Contact Information</h2>
-          <p>Lussaro Collection<br />Miami, Florida<br />WhatsApp: +1 (645) 248-7305</p>
+          <h2 class="text-2xl font-semibold">15. Contact Information</h2>
+          <p>{business.legalName}<br />{business.street}<br />{business.city}, {business.region} {business.postalCode}<br />WhatsApp: {business.phoneDisplay}</p>
         </section>
       </div>
     </div>

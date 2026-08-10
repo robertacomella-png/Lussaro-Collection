@@ -1,6 +1,7 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import Nav from '@/components/site/Nav.astro';
+import { business, telHref, whatsappWith } from '@/data/business';
 ---
 <Layout title="Page Not Found | Lussaro Collection" description="The page you were looking for could not be found.">
   <div class="min-h-screen bg-black text-white">
@@ -14,7 +15,7 @@ import Nav from '@/components/site/Nav.astro';
         <p class="text-white/60 leading-relaxed mb-10">The page you were looking for could not be found. It may have moved or never existed.</p>
         <div class="flex flex-col sm:flex-row gap-3 justify-center max-w-md mx-auto">
           <a href="/" class="flex-1 bg-[#c9a96e] text-black px-8 py-3.5 rounded-full text-sm font-semibold hover:bg-white transition">Back to Home</a>
-          <a href="https://wa.me/16452487305" data-cta="404" target="_blank" rel="noopener noreferrer" class="flex-1 border border-white/20 text-white px-8 py-3.5 rounded-full text-sm font-medium hover:border-[#c9a96e] hover:text-[#c9a96e] transition">Contact Us</a>
+          <a href={business.whatsapp} data-cta="404" target="_blank" rel="noopener noreferrer" class="flex-1 border border-white/20 text-white px-8 py-3.5 rounded-full text-sm font-medium hover:border-[#c9a96e] hover:text-[#c9a96e] transition">Contact Us</a>
         </div>
       </div>
     </section>

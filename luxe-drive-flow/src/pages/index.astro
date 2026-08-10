@@ -7,6 +7,7 @@ import LeadForm from '@/components/site/LeadForm.jsx';
 import Car3DViewer from '@/components/hero/Car3DViewer.jsx';
 import FleetCollection from '@/components/fleet/FleetCollection.astro';
 import { Phone } from 'lucide-react';
+import { business, telHref, whatsappWith } from '@/data/business';
 ---
 <Layout
   title="Luxury & Exotic Car Rental Miami | Lussaro Collection"
@@ -40,8 +41,8 @@ import { Phone } from 'lucide-react';
       <div class="mt-auto">
         <div class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
           <a href="#fleet" class="cta-shine flex-1 inline-flex items-center justify-center bg-[#c9a96e] text-black px-7 py-4 rounded-full font-semibold whitespace-nowrap hover:bg-white transition-colors">See Cars &amp; Prices ↓</a>
-          <a href="tel:+16452487305" data-cta="hero" data-call-inline class="call-pop flex-1 order-first sm:order-none inline-flex items-center justify-center gap-2 bg-[#16a34a] text-white px-7 py-4 rounded-full font-semibold whitespace-nowrap shadow-[0_8px_24px_rgba(22,163,74,0.5)] ring-1 ring-white/15 hover:bg-[#22c55e] transition-colors">
-            <Phone className="w-4 h-4 shrink-0" /> Call (645) 248-7305
+          <a href={telHref} data-cta="hero" data-call-inline class="call-pop flex-1 order-first sm:order-none inline-flex items-center justify-center gap-2 bg-[#16a34a] text-white px-7 py-4 rounded-full font-semibold whitespace-nowrap shadow-[0_8px_24px_rgba(22,163,74,0.5)] ring-1 ring-white/15 hover:bg-[#22c55e] transition-colors">
+            <Phone className="w-4 h-4 shrink-0" /> Call {business.phoneDisplayShort}
           </a>
         </div>
         <div class="mt-5 flex items-center justify-center gap-3 text-sm text-white/55">
@@ -115,7 +116,7 @@ import { Phone } from 'lucide-react';
       <p class="text-[#c9a96e] text-3xl mb-5">★★★★★</p>
       <p class="font-display text-2xl md:text-3xl font-semibold leading-snug">Rated 5.0 on Google</p>
       <p class="text-[#0a0a0a]/55 mt-4 max-w-md mx-auto">White-glove delivery, immaculate vehicles, and concierge service across South Beach and Brickell.</p>
-      <a href="https://maps.app.goo.gl/9nEuwbuyZzhGTQscA" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 mt-6 text-[#0a0a0a] border-b border-[#0a0a0a]/30 hover:border-[#c9a96e] pb-1 transition">Read our Google reviews →</a>
+      <a href={business.googleMaps} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 mt-6 text-[#0a0a0a] border-b border-[#0a0a0a]/30 hover:border-[#c9a96e] pb-1 transition">Read our Google reviews →</a>
     </div>
   </section>
 

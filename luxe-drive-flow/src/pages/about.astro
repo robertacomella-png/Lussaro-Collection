@@ -1,0 +1,151 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Nav from '@/components/site/Nav.astro';
+import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
+import CtaBand from '@/components/site/CtaBand.astro';
+import { business, whatsappWith } from '@/data/business';
+import { altFor } from '@/data/image-alt';
+import { fleet } from '@/data/fleet';
+
+const SITE = 'https://www.lussarocollection.com';
+const PAGE_URL = `${SITE}/about`;
+
+const waMsg = "Hi, I'd like to check availability with Lussaro Collection.";
+const wa = whatsappWith(waMsg);
+
+// Price bounds come from the fleet so the copy cannot go stale on a repricing.
+const prices = fleet.map((c) => c.price);
+const low = Math.min(...prices).toLocaleString('en-US');
+const high = Math.max(...prices).toLocaleString('en-US');
+const cheapest = fleet.find((c) => c.price === Math.min(...prices));
+const dearest = fleet.find((c) => c.price === Math.max(...prices));
+
+// Fleet named from data, so a car added or dropped can't leave the prose stale.
+const fullName = (c) => (c.name.startsWith(c.make) ? c.name : `${c.make} ${c.name}`);
+const lineup = fleet.map(fullName);
+const lineupText = `${lineup.slice(0, -1).join(', ')} and the ${lineup.at(-1)}`;
+
+const photos = [
+  '/cars/huracan-evo-1.jpg',
+  '/cars/sf90-0.jpg',
+  '/cars/maybach-1.jpg',
+];
+
+const aboutSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  name: `About ${business.brandName}`,
+  url: PAGE_URL,
+  mainEntity: { '@id': `${SITE}/#business` },
+};
+---
+<Layout
+  title="About Lussaro Collection — Miami Exotic Car Rental"
+  description="The story behind Lussaro Collection: a curated one-of-one exotic fleet, white-glove delivery, and concierge service across Miami."
+  schema={[aboutSchema]}
+>
+  <Nav />
+
+  <header class="bg-black pt-28 md:pt-36 pb-10 md:pb-14">
+    <div class="max-w-3xl mx-auto px-5 md:px-8">
+      <p class="text-[#c9a96e] tracking-[0.3em] uppercase text-xs mb-4">Who we are</p>
+      <h1 class="font-display text-4xl md:text-6xl font-bold text-white tracking-tight text-balance">
+        About {business.brandName}
+      </h1>
+    </div>
+  </header>
+
+  <section class="bg-black pb-6">
+    <div class="max-w-3xl mx-auto px-5 md:px-8 space-y-12">
+
+      <!-- THE STORY -->
+      <div class="space-y-4">
+        <h2 class="font-display text-2xl md:text-3xl font-bold text-white tracking-tight">The story</h2>
+        <p class="text-white/70 leading-relaxed">
+          {business.brandName} was founded in late 2025 by Robert Comella. It came out of
+          something simple: a genuine passion for cars, and the feeling that renting one in
+          Miami ought to be handled with the same care the cars themselves deserve.
+        </p>
+        <p class="text-white/70 leading-relaxed">
+          So the aim was never to run the largest fleet in the city. It was to run a small one
+          we can stand behind personally — six cars, each chosen because we would want to drive
+          it ourselves, each handed over clean, prepared, and exactly as photographed.
+        </p>
+      </div>
+
+      <figure class="rounded-[24px] overflow-hidden border border-white/10">
+        <img src={photos[0]} alt={altFor(photos[0])} width="1600" height="1000" loading="lazy" decoding="async" class="w-full aspect-[16/10] object-cover" />
+      </figure>
+
+      <!-- HOW THE FLEET WORKS -->
+      <div class="space-y-4">
+        <h2 class="font-display text-2xl md:text-3xl font-bold text-white tracking-tight">How the fleet works</h2>
+        <p class="text-white/70 leading-relaxed">
+          Every listing on this site is the exact car we deliver — most are one-of-one in our
+          Miami fleet. The photos on each car's page are that car, not a stock image of the
+          model. If you booked the purple Huracán EVO, the purple Huracán EVO is what arrives.
+        </p>
+        <p class="text-white/70 leading-relaxed">
+          The range runs from the {cheapest.make} {cheapest.name} at ${low} a day up to the
+          {' '}{dearest.make} {dearest.name} at ${high}, with 100 miles included daily on every
+          car. Longer stays cost less per day: 15% off at three days, 20% at five, 25% at seven.
+        </p>
+        <p class="text-white/70 leading-relaxed">
+          The six, as they stand today: the {lineupText}. If you are not sure which one suits
+          the occasion, tell us what you have planned over WhatsApp and we will match you to the
+          right car in a message — usually faster than scrolling through listings, and it means
+          you hear straight away whether your dates are open.
+        </p>
+        <p class="text-white/70 leading-relaxed">
+          We bring the car to you — hotel, home, or airport, anywhere in Miami, from South Beach
+          to Brickell and beyond. Most bookings confirm within the hour, and same-day is often
+          possible. Message us and you will usually have an answer in minutes.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {photos.slice(1).map((src) => (
+          <figure class="rounded-[24px] overflow-hidden border border-white/10">
+            <img src={src} alt={altFor(src)} width="900" height="675" loading="lazy" decoding="async" class="w-full aspect-[4/3] object-cover" />
+          </figure>
+        ))}
+      </div>
+
+      <!-- THE STANDARDS -->
+      <div class="space-y-4">
+        <h2 class="font-display text-2xl md:text-3xl font-bold text-white tracking-tight">The standards</h2>
+        <p class="text-white/70 leading-relaxed">
+          To drive with us you need to be 21 or over, hold a valid driver's licence, and carry
+          full-coverage insurance. A refundable security deposit confirms the booking; the amount
+          is disclosed before you commit, and it is returned once the car has been inspected on
+          its way back.
+        </p>
+        <p class="text-white/70 leading-relaxed">
+          The rest is the part we care about most, and the part that is hardest to put in a
+          specification: cars that turn up fresh and properly clean, a handover done properly,
+          and someone professional on the other end of the phone. That is what we mean by a
+          premium service — not a word in a headline, but how the day actually goes.
+        </p>
+        <p class="text-white/50 text-sm leading-relaxed pt-2">
+          {business.brandName} is operated by {business.legalName}, {business.city}, {business.region}.
+          Open {business.hours[0].opens}–{business.hours[0].closes}, seven days a week.
+        </p>
+      </div>
+
+      <!-- CTA -->
+      <div class="flex flex-col sm:flex-row gap-3 pt-2">
+        <a href="/fleet" data-cta="about_fleet"
+          class="flex-1 inline-flex items-center justify-center bg-[#c9a96e] text-black px-7 py-4 rounded-full font-semibold hover:bg-white transition">
+          See the fleet
+        </a>
+        <a href={wa} data-cta="about_whatsapp" target="_blank" rel="noopener noreferrer"
+          class="flex-1 inline-flex items-center justify-center gap-2 border border-white/20 text-white px-7 py-4 rounded-full font-medium hover:border-[#c9a96e] hover:text-[#c9a96e] transition">
+          Message us on WhatsApp <span class="w-2 h-2 rounded-full bg-[#1f7a3f]"></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand message={waMsg} />
+  <StickyMobileCta message={waMsg} />
+</Layout>

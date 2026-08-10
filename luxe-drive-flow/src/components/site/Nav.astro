@@ -1,6 +1,7 @@
 ---
 import { Menu, X, Phone, MessageCircle } from 'lucide-react';
-const wa = 'https://wa.me/16452487305';
+import { business, telHref, whatsappWith } from '@/data/business';
+const wa = business.whatsapp;
 ---
 <nav id="site-nav" class="fixed top-0 inset-x-0 z-50 backdrop-blur-xl bg-black/40 border-b border-white/[0.06] transition-transform duration-300">
   <div class="max-w-7xl mx-auto px-5 md:px-8 h-14 md:h-16 flex items-center justify-between">
@@ -14,11 +15,12 @@ const wa = 'https://wa.me/16452487305';
       <a href="/chauffeur-service-miami" class="hover:text-white transition">Chauffeur</a>
       <a href="/gallery" class="hover:text-white transition">Gallery</a>
       <a href="/#process" class="hover:text-white transition">How it works</a>
+      <a href="/about" class="hover:text-white transition">About</a>
     </div>
 
     <!-- desktop CTAs -->
     <div class="hidden md:flex items-center gap-2.5">
-      <a href="tel:+16452487305" data-cta="nav" class="inline-flex items-center border border-white/15 text-white text-sm px-4 py-2 rounded-full hover:border-[#c9a96e] hover:text-[#c9a96e] transition">Call</a>
+      <a href={telHref} data-cta="nav" class="inline-flex items-center border border-white/15 text-white text-sm px-4 py-2 rounded-full hover:border-[#c9a96e] hover:text-[#c9a96e] transition">Call</a>
       <a href={wa} data-cta="nav" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-white text-black text-sm px-5 py-2 rounded-full font-medium hover:bg-[#c9a96e] transition">
         Book <span class="w-1.5 h-1.5 rounded-full bg-[#25D366]"></span>
       </a>
@@ -47,11 +49,13 @@ const wa = 'https://wa.me/16452487305';
       <a href="/chauffeur-service-miami" class="font-display text-3xl font-semibold text-white">Chauffeur</a>
       <a href="/gallery" class="font-display text-3xl font-semibold text-white">Gallery</a>
       <a href="/#process" class="font-display text-3xl font-semibold text-white">How it works</a>
+      <a href="/about" class="font-display text-3xl font-semibold text-white">About</a>
+      <a href="/contact" class="font-display text-3xl font-semibold text-white">Contact</a>
       <a href="/#contact" class="font-display text-3xl font-semibold text-white">Reserve</a>
     </nav>
 
     <div class="mt-auto grid grid-cols-2 gap-3">
-      <a href="tel:+16452487305" data-cta="menu" class="inline-flex items-center justify-center gap-2 border border-white/15 text-white py-3.5 rounded-full font-medium">
+      <a href={telHref} data-cta="menu" class="inline-flex items-center justify-center gap-2 border border-white/15 text-white py-3.5 rounded-full font-medium">
         <Phone className="w-4 h-4" /> Call
       </a>
       <a href={wa} data-cta="menu" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 bg-[#c9a96e] text-black py-3.5 rounded-full font-semibold">

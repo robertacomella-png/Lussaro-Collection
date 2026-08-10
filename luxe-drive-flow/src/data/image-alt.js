@@ -4,12 +4,23 @@
 // vehicle and describes the real setting, with a Miami location term only where
 // the photo actually shows one.
 //
-// Scope note: this currently covers /gallery only. The car-page photos were
-// replaced wholesale (new /cars/*.jpg sets for the Urus, Maybach, S580, SF90 and
-// Huracan EVO) and have not been reviewed yet, so they keep their existing alt
-// rather than getting guessed-at descriptions here.
+// Scope note: covers /gallery plus the three car photos used on /about. The
+// remaining car-page photos have not been reviewed yet and keep their existing
+// alt rather than getting guessed-at descriptions here.
 
 const ALT = {
+  // --- Hero photo used on /fleet and the landing pages ----------------------
+  'https://ik.imagekit.io/8i3ae7fac/cars-14.jpg':
+    'Mercedes-Maybach GLS 600 and Lamborghini Urus rentals parked under the Metromover track in downtown Miami',
+
+  // --- Car photos used on /about (viewed before writing) --------------------
+  '/cars/sf90-0.jpg':
+    'White Ferrari SF90 rental parked on an open deck with the downtown Miami skyline and construction cranes behind',
+  '/cars/maybach-1.jpg':
+    'Black Mercedes-Maybach GLS 600 rental on a palm-lined paver driveway beside the water in Miami',
+  '/cars/huracan-evo-1.jpg':
+    'Purple Lamborghini Huracan EVO rental on a rooftop deck with the downtown Miami skyline behind',
+
   '/gallery/gallery-1.jpg':
     'Mercedes-Maybach GLS 600 and Lamborghini Urus rentals parked side by side in downtown Miami, Metromover track overhead',
   '/gallery/gallery-2.jpg':

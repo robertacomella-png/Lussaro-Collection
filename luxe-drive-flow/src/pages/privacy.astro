@@ -1,4 +1,6 @@
 ---
+import { business } from '@/data/business';
+import { rentalTerms } from '@/data/rental-terms';
 import Layout from '@/layouts/Layout.astro';
 import Nav from '@/components/site/Nav.astro';
 ---
@@ -10,6 +12,8 @@ import Nav from '@/components/site/Nav.astro';
     <Nav />
     <div class="max-w-6xl mx-auto px-6 py-20">
       <h1 class="text-4xl md:text-5xl font-semibold mb-6">Privacy Policy</h1>
+
+      <p class="text-white/45 text-sm mb-8">Last updated: {rentalTerms.lastUpdated}</p>
 
       <div class="space-y-10 text-white/80 text-sm leading-relaxed">
         <p>Lussaro Collection cares about your privacy and the confidentiality of your personal information. This Privacy Policy describes how we collect, use, and protect information when you visit our website or book luxury car rentals in Miami.</p>
@@ -54,8 +58,9 @@ import Nav from '@/components/site/Nav.astro';
         </section>
 
         <section class="space-y-4">
-          <h2 class="text-2xl font-semibold">5. Google Analytics & Meta Pixel</h2>
-          <p>We may use Google Analytics to collect anonymous usage data and Meta Pixel to improve our advertising and measure campaign performance. These services help us understand how visitors use the site and identify areas for improvement.</p>
+          <h2 class="text-2xl font-semibold">5. Analytics & Advertising Tools</h2>
+          <p>This site loads Google Tag Manager, which we use to manage measurement tags including Google Analytics. These tools collect usage data such as pages visited, approximate location, device and browser type, and how you arrived at the site. We use this to understand how the site is used and to measure our advertising.</p>
+          <p>You can opt out of Google Analytics across all sites using Google’s <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer" class="text-[#c9a96e] hover:underline">browser opt-out add-on</a>, and manage Google ad personalisation in your <a href="https://myadcenter.google.com/" target="_blank" rel="noopener noreferrer" class="text-[#c9a96e] hover:underline">Google Ad Center</a>.</p>
         </section>
 
         <section class="space-y-4">
@@ -70,12 +75,21 @@ import Nav from '@/components/site/Nav.astro';
         </section>
 
         <section class="space-y-4">
-          <h2 class="text-2xl font-semibold">8. Your Rights</h2>
+          <h2 class="text-2xl font-semibold">8. Your Privacy Rights</h2>
+          <p>Depending on where you live, you may have specific rights over your personal information. We extend the following rights to all visitors, regardless of residency:</p>
           <ul class="list-disc list-inside space-y-2 text-white/70">
-            <li>Request access to your personal data.</li>
-            <li>Request correction of inaccurate information.</li>
-            <li>Request deletion of your data, subject to legal requirements.</li>
-            <li>Withdraw consent where applicable.</li>
+            <li><span class="text-white/90">Right to know</span> — request confirmation of whether we hold personal information about you, and a copy of it.</li>
+            <li><span class="text-white/90">Right to delete</span> — request deletion of your personal information, subject to records we must retain for legal, tax, or rental-agreement purposes.</li>
+            <li><span class="text-white/90">Right to correct</span> — request correction of inaccurate personal information.</li>
+            <li><span class="text-white/90">Right to opt out of sale or sharing</span> — we do not sell your personal information. We do share limited site-usage data with the analytics and advertising providers described above, which some laws treat as “sharing” for targeted advertising, and you may opt out.</li>
+            <li><span class="text-white/90">Right to non-discrimination</span> — we will not deny service or change your price because you exercised any of these rights.</li>
+          </ul>
+          <p><span class="text-white/90">California residents (CCPA/CPRA)</span> and <span class="text-white/90">Florida residents (Florida Digital Bill of Rights)</span> may exercise these rights directly, or through an authorised agent. We will verify your identity before responding, and will respond within the timeframe required by applicable law.</p>
+          <p>To make a request, contact us by {business.email ? 'email, ' : ''}WhatsApp or phone:</p>
+          <ul class="list-disc list-inside space-y-2 text-white/70">
+            {business.email && <li>Email: <a href={`mailto:${business.email}`} class="text-[#c9a96e] hover:underline">{business.email}</a></li>}
+            <li>WhatsApp: <a href={business.whatsapp} target="_blank" rel="noopener noreferrer" class="text-[#c9a96e] hover:underline">{business.phoneDisplay}</a></li>
+            <li>Phone: <a href={`tel:${business.phone}`} class="text-[#c9a96e] hover:underline">{business.phoneDisplay}</a></li>
           </ul>
           <p>Contact us to exercise any of these rights.</p>
         </section>
@@ -92,7 +106,7 @@ import Nav from '@/components/site/Nav.astro';
 
         <section class="space-y-4 pb-10">
           <h2 class="text-2xl font-semibold">11. Contact</h2>
-          <p>Lussaro Collection<br />Miami, Florida<br />WhatsApp: +1 (645) 248-7305</p>
+          <p>{business.legalName}<br />{business.street}<br />{business.city}, {business.region} {business.postalCode}<br />WhatsApp: {business.phoneDisplay}</p>
         </section>
       </div>
     </div>

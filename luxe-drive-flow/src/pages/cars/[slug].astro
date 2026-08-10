@@ -10,6 +10,8 @@ import CarGallery from '@/components/fleet/CarGallery.jsx';
 import BookingCalendar from '@/components/booking/BookingCalendar.jsx';
 import { Phone } from 'lucide-react';
 import { cars } from '@/data/cars';
+import { rentalTerms, termsSummary } from '@/data/rental-terms';
+import { business, telHref, whatsappWith } from '@/data/business';
 
 export function getStaticPaths() {
   return cars.map((car) => ({ params: { slug: car.slug }, props: { car } }));
@@ -21,7 +23,7 @@ const offAmount = wasPrice - car.price;
 const message = car.comingSoon
   ? `Hi, I'd like to reserve the ${car.name} early with Lussaro Collection — I hear it's arriving soon.`
   : `Hi, I'm interested in booking the ${car.name} with Lussaro Collection.`;
-const wa = `https://wa.me/16452487305?text=${encodeURIComponent(message)}`;
+const wa = whatsappWith(message);
 const imgs = car.images || [];
 
 const chips = [
@@ -187,10 +189,10 @@ const productSchema = {
               "today", and React hydration won't repaint the stale disabled/red states until a
               month flip — so past dates wrongly showed as available on first load. */}
           <div class="min-h-[520px]">
-            <BookingCalendar client:only="react" pricePerDay={car.price} carName={car.name} vehicleId={car.dashboardId || null} phone="16452487305" tiers={car.discountTiers} />
+            <BookingCalendar client:only="react" pricePerDay={car.price} carName={car.name} vehicleId={car.dashboardId || null} tiers={car.discountTiers} />
           </div>
 
-          <a href="tel:+16452487305" data-cta="car_booking_card" data-call-inline
+          <a href={telHref} data-cta="car_booking_card" data-call-inline
             class="call-pop flex items-center justify-center gap-2 mt-2.5 bg-[#16a34a] text-white py-3.5 rounded-full font-semibold shadow-[0_8px_24px_rgba(22,163,74,0.5)] ring-1 ring-white/15 hover:bg-[#22c55e] transition-colors">
             <Phone className="w-4 h-4" /> Call to book
           </a>
@@ -260,14 +262,14 @@ const productSchema = {
           class="flex-1 inline-flex items-center justify-center gap-2 bg-[#c9a96e] text-black px-7 py-4 rounded-full font-semibold hover:bg-white transition">
           WhatsApp <span class="w-2 h-2 rounded-full bg-[#1f7a3f]"></span>
         </a>
-        <a href="tel:+16452487305" data-cta="car_contact"
+        <a href={telHref} data-cta="car_contact"
           class="flex-1 inline-flex items-center justify-center border border-white/20 text-white px-7 py-4 rounded-full font-medium hover:border-[#c9a96e] hover:text-[#c9a96e] transition">
           Call Now
         </a>
       </div>
 
       <LeadForm client:visible defaultVehicle={car.name} />
-      <p class="text-white/35 text-xs mt-8 text-center max-w-md mx-auto">Must be 21+ with a valid driver’s license and full coverage insurance. Security deposit required.</p>
+      <p class="text-white/35 text-xs mt-8 text-center max-w-md mx-auto">{termsSummary} {rentalTerms.cancellation.summary} <a href="/terms" class="underline hover:text-white/60">Full terms</a>.</p>
     </div>
   </section>
 

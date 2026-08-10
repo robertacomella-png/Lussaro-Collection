@@ -1,10 +1,13 @@
 ---
+import { altFor } from '@/data/image-alt';
 // /fleet — standalone fleet landing page (the Nav "Fleet" link and the
 // destination for paid ads). Mirrors the homepage's "The Collection" section
 // exactly (shared FleetCollection component), then adds the deeper info an ad
 // visitor needs to convert: what's included, how booking works, FAQs (with
 // FAQPage + ItemList schema), reviews, and a lead form.
 import Layout from '@/layouts/Layout.astro';
+import { bookingSteps } from '@/data/booking-steps';
+import { rentalTerms, deliverySummary } from '@/data/rental-terms';
 import Nav from '@/components/site/Nav.astro';
 import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
 import CtaBand from '@/components/site/CtaBand.astro';
@@ -13,10 +16,11 @@ import Car3DViewer from '@/components/hero/Car3DViewer.jsx';
 import FleetCollection from '@/components/fleet/FleetCollection.astro';
 import { Phone } from 'lucide-react';
 import { cars } from '@/data/cars';
+import { business, telHref, whatsappWith } from '@/data/business';
 
 const SITE = 'https://www.lussarocollection.com';
 const waMsg = "Hi, I'm interested in renting an exotic car with Lussaro Collection. What's available?";
-const wa = `https://wa.me/16452487305?text=${encodeURIComponent(waMsg)}`;
+const wa = whatsappWith(waMsg);
 
 const included = [
   { t: 'Door-to-door delivery', d: 'Hotel, home, or airport — South Beach, Brickell & beyond.' },
@@ -25,18 +29,14 @@ const included = [
   { t: '24/7 support', d: 'A direct line to us the whole time the car is yours.' },
 ];
 
-const steps = [
-  { n: '1', t: 'Message us', d: 'Tap WhatsApp or call. Tell us the car and dates — we reply in minutes.' },
-  { n: '2', t: 'We deliver', d: 'White-glove delivery anywhere in Miami — hotel, home, or airport.' },
-  { n: '3', t: 'You drive', d: 'Keys in hand, full orientation, 24/7 support. Just enjoy the road.' },
-];
+const steps = bookingSteps;
 
 const faqs = [
-  { q: 'What do I need to rent?', a: '21+ with a valid driver’s license and full-coverage insurance. A refundable security deposit confirms your booking.' },
+  { q: 'What do I need to rent?', a: `${rentalTerms.minimumAge}+ with a valid driver’s license. ${rentalTerms.insurance.summary} A refundable ${rentalTerms.deposit.display} security deposit confirms your booking.` },
   { q: 'How fast can I book?', a: 'Often same-day. Message or call — we reply in minutes, and most bookings confirm within the hour.' },
-  { q: 'Do you deliver the car to me?', a: 'Yes — hotel, home, or airport, anywhere in Miami: South Beach, Brickell, and beyond.' },
+  { q: 'Do you deliver the car to me?', a: `Yes — hotel, home, or airport. Delivery is ${deliverySummary}. Outside those areas we quote before you book.` },
   { q: 'Are there discounts for longer rentals?', a: 'Yes: most cars are 15% off at 3+ days, 20% at 5+, 25% at 7+. Exact pricing shows on each car’s calendar.' },
-  { q: 'How does the security deposit work?', a: 'It varies by car, is disclosed before you book, and is refunded after inspection.' },
+  { q: 'How does the security deposit work?', a: `${rentalTerms.deposit.display} on every car in the fleet, taken at booking. ${rentalTerms.deposit.note}` },
   { q: 'Is the car in the photos the car I get?', a: 'Yes. Every listing is the exact car we deliver — most are one-of-one in Miami.' },
   { q: 'Which car should I choose?', a: 'Tell us the occasion on WhatsApp — we’ll match you to the right car in one message.' },
 ];
@@ -71,7 +71,7 @@ const fleetSchema = {
        fold — on an ad click, the inventory is the pitch. -->
   <header class="relative bg-black pt-24 md:pt-32 pb-8 md:pb-12 overflow-hidden">
     <div class="absolute inset-0 opacity-35">
-      <img src="https://ik.imagekit.io/8i3ae7fac/cars-14.jpg?tr=w-1600,q-70,f-webp" alt="" class="w-full h-full object-cover" />
+      <img src="https://ik.imagekit.io/8i3ae7fac/cars-14.jpg?tr=w-1600,q-70,f-webp" alt={altFor("https://ik.imagekit.io/8i3ae7fac/cars-14.jpg")} class="w-full h-full object-cover" />
       <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black"></div>
     </div>
     <div class="relative z-10 max-w-7xl mx-auto px-5 md:px-8 text-center">
@@ -89,10 +89,10 @@ const fleetSchema = {
 
       <div class="mt-7 flex flex-row gap-2.5 max-w-md mx-auto">
         <a href="#fleet" class="cta-shine flex-1 inline-flex items-center justify-center bg-[#c9a96e] text-black px-3 py-3 md:px-5 md:py-3.5 rounded-full font-bold text-sm md:text-base whitespace-nowrap hover:bg-white transition-colors">See Cars &amp; Prices ↓</a>
-        <a href="tel:+16452487305" data-cta="fleet_hero" data-call-inline class="call-pop flex-1 inline-flex items-center justify-center gap-1.5 bg-[#16a34a] text-white px-3 py-3 md:px-5 md:py-3.5 rounded-full font-semibold text-sm md:text-base whitespace-nowrap shadow-[0_8px_24px_rgba(22,163,74,0.5)] ring-1 ring-white/15 hover:bg-[#22c55e] transition-colors">
+        <a href={telHref} data-cta="fleet_hero" data-call-inline class="call-pop flex-1 inline-flex items-center justify-center gap-1.5 bg-[#16a34a] text-white px-3 py-3 md:px-5 md:py-3.5 rounded-full font-semibold text-sm md:text-base whitespace-nowrap shadow-[0_8px_24px_rgba(22,163,74,0.5)] ring-1 ring-white/15 hover:bg-[#22c55e] transition-colors">
           <Phone className="w-4 h-4 shrink-0" />
           <span class="lg:hidden">Call Now</span>
-          <span class="hidden lg:inline">Call (645) 248-7305</span>
+          <span class="hidden lg:inline">Call {business.phoneDisplayShort}</span>
         </a>
       </div>
     </div>
@@ -167,13 +167,13 @@ const fleetSchema = {
         <p class="text-[#c9a96e] tracking-[0.3em] uppercase text-xs mb-3">Reserve</p>
         <h2 class="font-display text-3xl md:text-5xl font-bold text-white tracking-tight text-balance">Lock in your dates</h2>
         <p class="text-white/55 mt-4">Fastest on WhatsApp — or send your details and we'll confirm in minutes.</p>
-        <a href="https://maps.app.goo.gl/9nEuwbuyZzhGTQscA" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 mt-4 text-sm text-white/55 hover:text-white transition"><span class="text-[#c9a96e]">★★★★★</span> 5.0 on Google — read reviews →</a>
+        <a href={business.googleMaps} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 mt-4 text-sm text-white/55 hover:text-white transition"><span class="text-[#c9a96e]">★★★★★</span> 5.0 on Google — read reviews →</a>
       </div>
       <div class="reveal flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-10">
         <a href={wa} data-cta="fleet_reserve" target="_blank" rel="noopener noreferrer" class="flex-1 inline-flex items-center justify-center gap-2 bg-[#c9a96e] text-black px-7 py-4 rounded-full font-semibold hover:bg-white transition">
           WhatsApp <span class="w-2 h-2 rounded-full bg-[#1f7a3f]"></span>
         </a>
-        <a href="tel:+16452487305" data-cta="fleet_reserve" class="flex-1 inline-flex items-center justify-center border border-white/20 text-white px-7 py-4 rounded-full font-medium hover:border-[#c9a96e] hover:text-[#c9a96e] transition">
+        <a href={telHref} data-cta="fleet_reserve" class="flex-1 inline-flex items-center justify-center border border-white/20 text-white px-7 py-4 rounded-full font-medium hover:border-[#c9a96e] hover:text-[#c9a96e] transition">
           Call now
         </a>
       </div>

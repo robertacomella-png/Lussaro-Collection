@@ -11,6 +11,8 @@ const SITE = 'https://www.lussarocollection.com';
 // of these right but mangle the ones carrying hyphenated brand names or an
 // acronym ("G Wagon", "Rolls Royce", "Suv"), so they are stated explicitly.
 const LABELS = {
+  '/about': 'About',
+  '/contact': 'Contact',
   '/gallery': 'Gallery',
   '/chauffeur-service-miami': 'Chauffeur Service Miami',
   '/exotic-car-rental-miami': 'Exotic Car Rental Miami',

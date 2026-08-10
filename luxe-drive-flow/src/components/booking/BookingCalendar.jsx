@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
+import { business } from "@/data/business";
 
 const DAY_MS = 86400000;
 const WEEKDAYS = ["S", "M", "T", "W", "T", "F", "S"];
@@ -63,7 +64,7 @@ function expandRange(startISO, endISO, out) {
   for (let d = new Date(s); d <= e; d.setDate(d.getDate() + 1)) out.add(iso(d));
 }
 
-export default function BookingCalendar({ pricePerDay = 0, carName = "", vehicleId = null, phone = "16452487305", blockedDates = [], tiers = TIERS }) {
+export default function BookingCalendar({ pricePerDay = 0, carName = "", vehicleId = null, phone = business.phone.replace("+", ""), blockedDates = [], tiers = TIERS }) {
   const today = useMemo(() => startOfDay(new Date()), []);
 
   // Real booked dates from the dashboard — matched by vehicle id when linked,

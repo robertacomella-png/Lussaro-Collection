@@ -1,4 +1,5 @@
 import { getImageKitSrc, getImageKitSrcSet, getImageKitSizes } from "@/lib/imageKit";
+import { business, whatsappWith } from "@/data/business";
 
 export default function FleetCard({ car, onOpen }) {
   const message = encodeURIComponent(
@@ -89,7 +90,7 @@ export default function FleetCard({ car, onOpen }) {
         </div>
 
         <a
-          href={`https://wa.me/16452487305?text=${message}`}
+          href={whatsappWith(message)}
           target="_blank"
           rel="noopener noreferrer"
           onClick={(e) => e.stopPropagation()}

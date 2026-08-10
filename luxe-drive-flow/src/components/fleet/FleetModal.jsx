@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { getImageKitSrc, getImageKitSrcSet } from "@/lib/imageKit";
+import { business, whatsappWith } from "@/data/business";
+import { termsSummary } from "@/data/rental-terms";
 
 export default function FleetModal({ car, setCar, activeImage, setActiveImage }) {
   useEffect(() => {
@@ -136,7 +138,7 @@ export default function FleetModal({ car, setCar, activeImage, setActiveImage })
                   </div>
 
                   <a
-                    href={`https://wa.me/16452487305?text=${whatsappText}`}
+                    href={whatsappWith(car.comingSoon ? `Hi, I'd like to reserve the ${car.name} early with Lussaro Collection — I hear it's arriving soon.` : `Hi, I'm interested in booking the ${car.name} with Lussaro Collection.`)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center bg-[#c9a96e] text-black px-7 py-3.5 rounded-full text-sm font-semibold hover:bg-white transition"
@@ -168,7 +170,7 @@ export default function FleetModal({ car, setCar, activeImage, setActiveImage })
                   </p>
 
                   <p className="text-white/40 text-xs border-t border-white/10 pt-3">
-                    Must be 21+ with a valid driver’s license and full coverage insurance. Security deposit required.
+                    {termsSummary}
                   </p>
                 </div>
               </div>
