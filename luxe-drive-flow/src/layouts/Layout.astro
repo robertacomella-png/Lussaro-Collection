@@ -3,6 +3,8 @@ import '@/index.css';
 import { ClientRouter } from 'astro:transitions';
 import Footer from '@/components/footer/Footer.astro';
 import StickyCall from '@/components/site/StickyCall.astro';
+import SchemaOrg from '@/components/SchemaOrg.astro';
+import { breadcrumbFor } from '@/lib/breadcrumbs';
 
 const SITE = 'https://www.lussarocollection.com';
 const DEFAULTS = {
@@ -19,35 +21,15 @@ const {
   type = 'website',
   noFooter = false,
   schema = null,
+  breadcrumbName,        // leaf crumb label for routes the path can't name (car pages)
 } = Astro.props;
 
 // canonical from the current path against the configured site
 const canonical = new URL(Astro.url.pathname, SITE).href;
 
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'AutoRental',
-  name: 'Lussaro Collection',
-  description: DEFAULTS.description,
-  url: SITE,
-  image: `${SITE}/preview.png`,
-  telephone: '+1-645-248-7305',
-  priceRange: '$$$',
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: '900 Biscayne Blvd',
-    addressLocality: 'Miami',
-    addressRegion: 'FL',
-    postalCode: '33132',
-    addressCountry: 'US',
-  },
-  areaServed: [
-    { '@type': 'Place', name: 'Miami' },
-    { '@type': 'Place', name: 'South Beach' },
-    { '@type': 'Place', name: 'Brickell' },
-  ],
-  sameAs: ['https://instagram.com/lussarocollection'],
-};
+// One breadcrumb implementation for the whole site — see lib/breadcrumbs.js.
+const breadcrumb = breadcrumbFor(Astro.url.pathname, breadcrumbName);
+
 ---
 
 <!doctype html>
@@ -119,7 +101,8 @@ const jsonLd = {
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={image} />
 
-    <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
+    <SchemaOrg />
+    {breadcrumb && <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumb)} />}
     {schema && <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />}
 
     <ClientRouter />

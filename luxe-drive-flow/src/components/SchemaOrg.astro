@@ -1,0 +1,88 @@
+---
+// Site-wide structured data: one JSON-LD block containing an @graph with the
+// Organization and the LocalBusiness/AutoRental that belongs to it.
+//
+// Rendered once from Layout.astro, so it appears on every page. Per-page schema
+// (Car + BreadcrumbList on car pages, Service + FAQPage on the chauffeur page)
+// is still passed separately via Layout's `schema` prop and emitted alongside.
+//
+// This replaced an inline AutoRental object that used to live in Layout.astro —
+// two competing business entities on the same page would have been worse than
+// none, so the old one was removed rather than left in place.
+import { fleet } from '@/data/fleet';
+
+// Base URL comes from `site` in astro.config.mjs so the domain can never drift
+// out of sync with canonical/sitemap URLs. Astro.site includes a trailing slash.
+const BASE = Astro.site?.href ?? 'https://www.lussarocollection.com/';
+
+// priceRange is derived from the fleet at build time, so adding, removing or
+// repricing a car updates it automatically.
+const prices = fleet.map((c) => c.price).filter((p) => Number.isFinite(p));
+const priceRange = `$${Math.min(...prices).toLocaleString('en-US')}–$${Math.max(
+  ...prices
+).toLocaleString('en-US')} per day`;
+
+// Mon–Sun 09:00–22:00
+const HOURS = {
+  '@type': 'OpeningHoursSpecification',
+  dayOfWeek: [
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+    'Sunday',
+  ],
+  opens: '09:00',
+  closes: '22:00',
+};
+
+// No logo asset exists in the repo, so favicon.png stands in for logo/image.
+const LOGO = `${BASE}favicon.png`;
+
+const graph = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${BASE}#org`,
+      name: 'Lussaro Collection',
+      url: BASE,
+      logo: LOGO,
+      telephone: '+1-645-248-7305',
+      sameAs: [
+        'https://instagram.com/lussarocollection',
+        'https://maps.app.goo.gl/9nEuwbuyZzhGTQscA',
+      ],
+    },
+    {
+      '@type': ['AutoRental', 'LocalBusiness'],
+      '@id': `${BASE}#business`,
+      name: 'Lussaro Collection – Exotic Car Rental Miami',
+      parentOrganization: { '@id': `${BASE}#org` },
+      url: BASE,
+      image: LOGO,
+      telephone: '+1-645-248-7305',
+      priceRange,
+      currenciesAccepted: 'USD',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: '900 Biscayne Blvd',
+        addressLocality: 'Miami',
+        addressRegion: 'FL',
+        postalCode: '33132',
+        addressCountry: 'US',
+      },
+      areaServed: [
+        { '@type': 'City', name: 'Miami' },
+        { '@type': 'Place', name: 'Miami Beach' },
+        { '@type': 'Place', name: 'South Beach' },
+        { '@type': 'Place', name: 'Brickell' },
+      ],
+      openingHoursSpecification: [HOURS],
+    },
+  ],
+};
+---
+<script type="application/ld+json" is:inline set:html={JSON.stringify(graph)} />
