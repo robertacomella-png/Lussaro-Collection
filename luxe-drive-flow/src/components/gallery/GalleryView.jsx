@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { getRemoteWebpSrc, getRemoteWebpSrcSet } from "@/lib/imageKit";
+import { altFor } from "@/data/image-alt";
 
 const galleryImages = [
   "/gallery/gallery-1.jpg",
@@ -123,7 +124,7 @@ export default function GalleryView() {
                   <source type="image/webp" srcSet={getRemoteWebpSrcSet(src)} sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw" />
                   <img
                     src={src}
-                    alt={`Gallery image ${index + 1}`}
+                    alt={altFor(src)}
                     width="700"
                     height="875"
                     loading="lazy"
@@ -176,7 +177,7 @@ export default function GalleryView() {
                   <source type="image/webp" srcSet={getRemoteWebpSrcSet(selectedImage)} sizes="(min-width: 768px) 1200px, 100vw" />
                   <img
                     src={selectedImage}
-                    alt="Expanded gallery image"
+                    alt={altFor(selectedImage)}
                     width="1200"
                     height="900"
                     loading="lazy"
@@ -220,7 +221,7 @@ export default function GalleryView() {
                           src={getRemoteWebpSrc(src, 200)}
                           srcSet={getRemoteWebpSrcSet(src)}
                           sizes="80px"
-                          alt={`Thumbnail ${index + 1}`}
+                          alt={altFor(src)}
                           width="80"
                           height="80"
                           loading="lazy"
