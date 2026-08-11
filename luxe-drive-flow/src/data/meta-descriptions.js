@@ -21,7 +21,7 @@ export const META_DESCRIPTIONS = {
   '/cars/sf90':
     'Rent the Ferrari SF90 in Miami: 986 hp hybrid, 0-60 in 2.5s, $2,195/day. The fastest car in our fleet, delivered to your door.',
   '/cars/huracan-evo':
-    'Rent the Lamborghini Huracan EVO in Miami: screaming V10, 650 hp, $1,295/day with 100 miles included. Same-day delivery available.',
+    'Rent the Lamborghini Huracan EVO in Miami: screaming V10, 602 hp, $1,295/day with 100 miles included. Same-day delivery available.',
   '/cars/rolls-royce-cullinan':
     'Rent the Rolls-Royce Cullinan in Miami: 563 hp, effortless presence, $1,495/day with 100 miles included. Delivered anywhere in Miami.',
 };

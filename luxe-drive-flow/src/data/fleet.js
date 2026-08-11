@@ -12,6 +12,10 @@ export const fleet = [
     price: 995,
     power: 641,
     miles: 100,
+    // Owner-confirmed per car. `seatsNote` is the layout qualifier where the
+    // count alone would overstate it (a 4+1 bench is not four equal seats);
+    // the spec card renders it small under the number, and omits it when absent.
+    seats: 5,
     doors: 4,
     drivetrain: 'All-wheel drive · 4.0L twin-turbo V8',
     zeroToSixty: "3.3s",
@@ -37,6 +41,7 @@ export const fleet = [
     price: 895,
     power: 550,
     miles: 100,
+    seats: 4,
     doors: 4,
     drivetrain: 'All-wheel drive · 4.0L twin-turbo V8',
     zeroToSixty: "4.6s",
@@ -65,6 +70,8 @@ export const fleet = [
     wasPrice: 495,
     power: 496,
     miles: 100,
+    seats: 5,
+    seatsNote: '4+1',
     doors: 4,
     drivetrain: 'All-wheel drive · 4.0L twin-turbo V8 with 48-volt mild-hybrid assist',
     zeroToSixty: "4.4s",
@@ -122,12 +129,15 @@ export const fleet = [
     make: "Lamborghini",
     year: 2023,
     price: 1295,
-    power: 650,
+    // Owner-confirmed as the rear-wheel-drive EVO, not the AWD car: 602 hp and
+    // 3.3s to 60. The 650 hp / 3.2s previously listed here matched no Huracán
+    // EVO variant Lamborghini ever sold.
+    power: 602,
     miles: 100,
     seats: 2,
     doors: 2,
-    drivetrain: '5.2L naturally aspirated V10',
-    zeroToSixty: "3.2s",
+    drivetrain: 'Rear-wheel drive · 5.2L naturally aspirated V10',
+    zeroToSixty: "3.3s",
     description:
       "The Lamborghini Huracán EVO is built for Miami—loud, fast, and impossible to miss. With its screaming V10 and razor-sharp handling, it delivers pure adrenaline every time you hit the gas. Whether you’re cruising Ocean Drive or making a statement in Brickell, this is how you turn every head in the city.",
 
@@ -150,6 +160,8 @@ export const fleet = [
     price: 1495,
     power: 563,
     miles: 100,
+    seats: 5,
+    seatsNote: '4+1',
     doors: 4,
     drivetrain: 'All-wheel drive · 6.75L twin-turbo V12',
     zeroToSixty: "4.9s",
