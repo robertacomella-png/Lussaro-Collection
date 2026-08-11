@@ -35,6 +35,12 @@ const breadcrumb = breadcrumbFor(Astro.url.pathname, breadcrumbName);
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- Marks the document as scripting-capable at parse time. Anything that
+         must degrade when JS never runs (see the booking-calendar fallback on
+         car pages) keys off `html.js` rather than duplicating itself into a
+         <noscript> block. -->
+    <script is:inline>document.documentElement.classList.add('js');</script>
+
     <!-- Google Tag Manager (deferred) -->
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
@@ -130,6 +136,12 @@ const breadcrumb = breadcrumbFor(Astro.url.pathname, breadcrumbName);
       }
       /* on SPA nav, already-visible reveals snap in (no 0.8s slide fighting the fade) */
       .reveal.reveal-instant { opacity: 1 !important; transform: none !important; transition: none !important; }
+
+      /* Degradation fallbacks (booking calendar): hidden whenever scripting is
+         available, and put back by JS only if the island fails to mount. With
+         scripting off html.js never appears, so they are visible from the start. */
+      html.js [data-calendar-fallback] { display: none; }
+      html.js [data-calendar-fallback][data-show] { display: block; }
     </style>
   </head>
 
@@ -175,8 +187,25 @@ const breadcrumb = breadcrumbFor(Astro.url.pathname, breadcrumbName);
         );
         els.forEach((e) => io.observe(e));
       }
+      // astro:page-load is fired by ClientRouter, which is a module bundle. If
+      // that bundle is blocked (content blocker, proxy, flaky network) or throws,
+      // the event never fires and every .reveal stays at opacity 0 — the page
+      // renders as a hero followed by a screenful of black. This inline script
+      // is not a module and always runs, so kick the observer off here too.
+      // initReveal only selects `.reveal:not(.in)`, so running twice is a no-op.
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initReveal);
+      } else {
+        initReveal();
+      }
       document.addEventListener('astro:page-load', initReveal);
     </script>
+
+    <noscript>
+      {/* With scripting off nothing can add .in, so opt out of the animation
+          entirely rather than leaving the whole page invisible. */}
+      <style>.reveal { opacity: 1 !important; transform: none !important; }</style>
+    </noscript>
 
     <!-- Hide the floating Call buttons (mobile pill + desktop pill) while ANY
          inline Call CTA (marked with data-call-inline — the /fleet hero button,

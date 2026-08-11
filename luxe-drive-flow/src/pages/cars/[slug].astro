@@ -230,8 +230,35 @@ const productSchema = {
               against the real current date. With static SSR, server HTML bakes in the build-date
               "today", and React hydration won't repaint the stale disabled/red states until a
               month flip — so past dates wrongly showed as available on first load. */}
+          {/* client:only renders NOTHING on the server, so if the React bundle
+              never executes this box is 520px of empty black with no way to
+              book. The fallback below covers both failure modes: with scripting
+              off `html.js` is absent so it shows immediately, and with scripting
+              on it is hidden at parse time and only restored if the island is
+              still empty after the bundle has had time to mount. */}
           <div class="min-h-[520px]">
             <BookingCalendar client:only="react" pricePerDay={car.price} carName={car.name} vehicleId={car.dashboardId || null} tiers={car.discountTiers} />
+
+            <div data-calendar-fallback class="rounded-2xl border border-white/10 bg-[#0f0f0f] p-6 text-center">
+              <p class="text-white font-medium">Check availability with us directly</p>
+              <p class="mt-2 text-white/55 text-sm leading-relaxed">
+                The live calendar could not load in your browser. Tell us your dates and we
+                will confirm whether the {car.name} is free — usually within the hour.
+              </p>
+              <div class="mt-5 flex flex-col gap-2.5">
+                <a href={wa} data-cta="car_calendar_fallback_whatsapp" target="_blank" rel="noopener noreferrer"
+                  class="inline-flex items-center justify-center bg-[#c9a96e] text-black py-3.5 rounded-full font-semibold hover:bg-white transition">
+                  Message us on WhatsApp
+                </a>
+                <a href={telHref} data-cta="car_calendar_fallback_call"
+                  class="inline-flex items-center justify-center border border-white/20 text-white py-3.5 rounded-full font-medium hover:border-[#c9a96e] hover:text-[#c9a96e] transition">
+                  Call {business.phoneDisplayShort}
+                </a>
+              </div>
+              <p class="mt-4 text-white/40 text-xs">
+                ${car.price.toLocaleString('en-US')} / day · {milesPerDay} miles included
+              </p>
+            </div>
           </div>
 
           <a href={telHref} data-cta="car_booking_card" data-call-inline
@@ -403,6 +430,33 @@ const productSchema = {
   <StickyMobileCta message={message} />
 
   <script>
+    // Show the booking fallback only if the calendar island never mounts.
+    // client:only means the island is empty until React executes, so an empty
+    // island after a grace period is the signal that the bundle did not run.
+    function lussaroCalendarFallback() {
+      const fb = document.querySelector('[data-calendar-fallback]');
+      if (!fb) return;
+      fb.removeAttribute('data-show');
+      const island = document.querySelector('astro-island[component-url*="BookingCalendar"]');
+      const mounted = () => island && island.children.length > 0;
+      const settle = () => { if (!mounted()) fb.setAttribute('data-show', ''); };
+      if (mounted()) return;
+      // Re-check as soon as the island changes, and give up after 6s.
+      if (island && 'MutationObserver' in window) {
+        const mo = new MutationObserver(() => { if (mounted()) { mo.disconnect(); fb.removeAttribute('data-show'); } });
+        mo.observe(island, { childList: true });
+        setTimeout(() => { mo.disconnect(); settle(); }, 6000);
+      } else {
+        setTimeout(settle, 6000);
+      }
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', lussaroCalendarFallback);
+    } else {
+      lussaroCalendarFallback();
+    }
+    document.addEventListener('astro:page-load', lussaroCalendarFallback);
+
     // Roll the spec numbers up to their value when they scroll into view.
     function lussaroCountup() {
       const els = Array.from(document.querySelectorAll('[data-countup]'));
