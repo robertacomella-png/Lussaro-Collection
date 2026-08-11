@@ -8,10 +8,12 @@ export const fleet = [
     name: "Lamborghini Urus",
     dashboardId: "",
     make: "Lamborghini",
-    year: 2023,
+    year: 2019,
     price: 995,
     power: 641,
     miles: 100,
+    doors: 4,
+    drivetrain: 'All-wheel drive · 4.0L twin-turbo V8',
     zeroToSixty: "3.3s",
     description:
       "The Lamborghini Urus is pure Miami energy—fast, bold, and built to dominate the streets. With supercar performance in an SUV, it delivers explosive power and head-turning style wherever you go. From South Beach to Brickell, this is how you stand out and own the road.",
@@ -35,6 +37,8 @@ export const fleet = [
     price: 895,
     power: 550,
     miles: 100,
+    doors: 4,
+    drivetrain: 'All-wheel drive · 4.0L twin-turbo V8',
     zeroToSixty: "4.6s",
     description:
       "The Mercedes-Maybach GLS 600 is Miami luxury at its finest—effortless, bold, and impossible to ignore. Glide through the city in total comfort with a whisper-smooth ride and a handcrafted interior that feels like a private jet on wheels. Whether it’s a night in Brickell or a pull-up in South Beach, this is how you make an entrance.",
@@ -61,6 +65,8 @@ export const fleet = [
     wasPrice: 495,
     power: 496,
     miles: 100,
+    doors: 4,
+    drivetrain: 'All-wheel drive · 4.0L twin-turbo V8 with 48-volt mild-hybrid assist',
     zeroToSixty: "4.4s",
     description:
       "The Mercedes-Benz S580 is Miami sophistication at its peak—smooth, commanding, and first-class in every detail. With its whisper-quiet V8 and a cabin built like a five-star suite, every drive feels like arriving somewhere important. From Brickell business to South Beach nights, this is how you show up polished.",
@@ -90,6 +96,9 @@ export const fleet = [
     price: 2195,
     power: 986,
     miles: 100,
+    seats: 2,
+    doors: 2,
+    drivetrain: 'All-wheel-drive plug-in hybrid · 4.0L twin-turbo V8 with three electric motors',
     zeroToSixty: "2.5s",
     description:
       "The Ferrari SF90 is Miami’s ultimate statement—nearly 1,000 hybrid horsepower, scissor-fast acceleration, and presence that stops the street. From Ocean Drive to Brickell, this is the supercar that turns every arrival into an event.",
@@ -115,6 +124,9 @@ export const fleet = [
     price: 1295,
     power: 650,
     miles: 100,
+    seats: 2,
+    doors: 2,
+    drivetrain: '5.2L naturally aspirated V10',
     zeroToSixty: "3.2s",
     description:
       "The Lamborghini Huracán EVO is built for Miami—loud, fast, and impossible to miss. With its screaming V10 and razor-sharp handling, it delivers pure adrenaline every time you hit the gas. Whether you’re cruising Ocean Drive or making a statement in Brickell, this is how you turn every head in the city.",
@@ -138,6 +150,8 @@ export const fleet = [
     price: 1495,
     power: 563,
     miles: 100,
+    doors: 4,
+    drivetrain: 'All-wheel drive · 6.75L twin-turbo V12',
     zeroToSixty: "4.9s",
     description:
       "The Rolls-Royce Cullinan is the pinnacle of Miami luxury—effortless, commanding, and unmistakably elite. With its whisper-quiet ride and handcrafted interior, every drive feels like a private experience. Whether you’re arriving in South Beach or gliding through the city, this is how you move with true presence.",

@@ -22,8 +22,24 @@ export const rentalTerms = {
     note: 'Returned after the vehicle is inspected on return, less any applicable deductions.',
   },
 
+  // Multi-day discount tiers. Previously a component-local TIERS constant in
+  // BookingCalendar.jsx; moved here so the booking calculator, /pricing and the
+  // /fleet FAQ all quote the same ladder. A car may still override via
+  // `discountTiers` on its fleet.js entry.
+  discountTiers: [
+    { days: 3, pct: 15 },
+    { days: 5, pct: 20 },
+    { days: 7, pct: 25 },
+  ],
+
   mileage: {
     includedPerDay: 100,
+    // The allowance is POOLED across the rental, not capped per day: a 3-day
+    // rental is 300 miles total, spendable however the renter likes. Only the
+    // total recorded at return is assessed.
+    pooled: true,
+    allowanceNote:
+      'Mileage is pooled across the rental rather than capped daily — a three-day rental is 300 miles in total, and you can use them however you like. Only the total at return is counted.',
     // NOT SET: the per-mile overage rate has never been supplied. While this is
     // null, /terms states the included allowance and says the overage rate is
     // disclosed in the rental agreement, rather than publishing a figure nobody
@@ -59,5 +75,16 @@ export const termsSummary = [
   `${rentalTerms.deposit.display} refundable security deposit.`,
   `${rentalTerms.mileage.includedPerDay} miles per day included.`,
 ].join(' ');
+
+/** "15% off at 3+ days, 20% at 5+, 25% at 7+" */
+export const discountSummary = rentalTerms.discountTiers
+  .map((t, i) => (i === 0 ? `${t.pct}% off at ${t.days}+ days` : `${t.pct}% at ${t.days}+`))
+  .join(', ');
+
+/** Nightly rate for a given car at a given length of stay. */
+export const rateForDays = (price, days, tiers = rentalTerms.discountTiers) => {
+  const pct = tiers.reduce((acc, t) => (days >= t.days ? t.pct : acc), 0);
+  return { pct, perDay: Math.round(price * (1 - pct / 100)) };
+};
 
 export default rentalTerms;

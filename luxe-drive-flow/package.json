@@ -9,7 +9,8 @@
     "preview": "astro preview",
     "check": "astro check",
     "lint": "eslint . --quiet",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "optimize:images": "node scripts/optimize-images.mjs"
   },
   "dependencies": {
     "@astrojs/react": "^4.4.2",

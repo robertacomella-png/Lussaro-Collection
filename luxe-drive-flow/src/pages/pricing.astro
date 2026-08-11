@@ -1,0 +1,231 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Nav from '@/components/site/Nav.astro';
+import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
+import CtaBand from '@/components/site/CtaBand.astro';
+import { fleet } from '@/data/fleet';
+import { business, whatsappWith } from '@/data/business';
+import {
+  rentalTerms,
+  deliverySummary,
+  discountSummary,
+  rateForDays,
+} from '@/data/rental-terms';
+
+const SITE = 'https://www.lussarocollection.com';
+const PAGE_URL = `${SITE}/pricing`;
+const waMsg = "Hi, I'd like a quote from Lussaro Collection.";
+const wa = whatsappWith(waMsg);
+
+const { deposit, mileage, cancellation, discountTiers, insurance, minimumAge } = rentalTerms;
+const usd = (n) => `$${n.toLocaleString('en-US')}`;
+const named = (c) => (c.name.startsWith(c.make) ? c.name : `${c.make} ${c.name}`);
+
+const cheapest = fleet.reduce((a, c) => (c.price < a.price ? c : a));
+const longestTier = discountTiers[discountTiers.length - 1];
+
+// Worked mileage example, computed rather than written: the cheapest car over
+// the longest discount tier. The overage line only renders once a rate exists.
+const exDays = longestTier.days;
+const exCar = cheapest;
+const exIncluded = mileage.includedPerDay * exDays;
+const exDriven = exIncluded + 80;
+const exOver = exDriven - exIncluded;
+
+const faqs = [
+  {
+    q: 'What does it cost to rent from Lussaro Collection?',
+    a: `Daily rates run from ${usd(cheapest.price)} for the ${named(cheapest)} up to ${usd(Math.max(...fleet.map((c) => c.price)))} for the ${named(fleet.reduce((a, c) => (c.price > a.price ? c : a)))}. Every rate includes ${mileage.includedPerDay} miles per day, and a refundable ${deposit.display} security deposit applies to all ${fleet.length} cars.`,
+  },
+  {
+    q: 'Do longer rentals cost less per day?',
+    a: `Yes. Discounts apply automatically: ${discountSummary}. On the ${named(cheapest)}, ${exDays} days brings the nightly rate from ${usd(cheapest.price)} to ${usd(rateForDays(cheapest.price, exDays).perDay)}. The discount shows on each car's booking calendar before you confirm.`,
+  },
+  {
+    q: 'How much is the security deposit?',
+    a: `${deposit.display} on every car in the fleet, taken at the time of booking. ${deposit.note} It may cover damage, excess mileage, late returns, cleaning or fines.`,
+  },
+  {
+    q: 'How many miles are included?',
+    a: `${mileage.includedPerDay} miles per day, on every car, pooled across the rental. A ${exDays}-day rental therefore includes ${exIncluded.toLocaleString()} miles in total, spendable however you like across those days. Only the total at return counts; anything over may be deducted from your deposit.`,
+  },
+  {
+    q: 'What does delivery cost?',
+    a: `Delivery is charged per rental, not per journey: ${deliverySummary}. We deliver to hotels, residences, offices and airports. Anywhere outside those two areas is quoted before you book, so nothing appears on your bill unannounced.`,
+  },
+  {
+    q: 'What happens if I cancel?',
+    a: `${cancellation.summary} Cancellations made more than ${cancellation.noRefundWithinDays} days before the start date are eligible for a refund of amounts paid. Changing your dates counts as a cancellation and rebooking if the original dates fall inside that window.`,
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+<Layout
+  title="Exotic Car Rental Prices Miami — Full Rate Card | Lussaro"
+  description="Every Lussaro rate, deposit and policy on one page: 6 cars from $445/day, multi-day discounts, mileage, delivery and cancellation — no surprises."
+  schema={[faqSchema]}
+>
+  <Nav />
+
+  <header class="bg-black pt-28 md:pt-36 pb-10 md:pb-14">
+    <div class="max-w-5xl mx-auto px-5 md:px-8">
+      <p class="text-[#c9a96e] tracking-[0.3em] uppercase text-xs mb-4">Rates &amp; policies</p>
+      <h1 class="font-display text-4xl md:text-6xl font-bold text-white tracking-tight text-balance">
+        Pricing &amp; Policies — No Surprises
+      </h1>
+      <p class="text-white/65 text-base md:text-lg leading-relaxed mt-5 max-w-2xl">
+        Every rate, deposit and fee we charge, on one page. If a number is not here,
+        we do not charge it.
+      </p>
+    </div>
+  </header>
+
+  <section class="bg-black pb-8">
+    <div class="max-w-5xl mx-auto px-5 md:px-8 space-y-14">
+
+      <!-- RATE CARD -->
+      <div class="space-y-4">
+        <h2 class="font-display text-2xl md:text-3xl font-bold text-white tracking-tight">Rate card</h2>
+        <p class="text-white/60 text-sm">
+          Nightly rates by length of stay. Discounts apply automatically at checkout —
+          {discountSummary}.
+        </p>
+        <div class="overflow-x-auto rounded-[16px] border border-white/10">
+          <table class="w-full text-left text-sm">
+            <thead class="bg-white/5 text-white/70">
+              <tr>
+                <th class="px-4 py-3 font-medium">Vehicle</th>
+                <th class="px-4 py-3 font-medium">1–{discountTiers[0].days - 1} days</th>
+                {discountTiers.map((t) => (
+                  <th class="px-4 py-3 font-medium">{t.days}+ days <span class="text-[#c9a96e]">−{t.pct}%</span></th>
+                ))}
+                <th class="px-4 py-3 font-medium">Miles/day</th>
+                <th class="px-4 py-3 font-medium">Deposit</th>
+              </tr>
+            </thead>
+            <tbody class="text-white/75">
+              {fleet.map((c) => (
+                <tr class="border-t border-white/10">
+                  <td class="px-4 py-3 whitespace-nowrap text-white">{named(c)}</td>
+                  <td class="px-4 py-3">{usd(c.price)}</td>
+                  {discountTiers.map((t) => (
+                    <td class="px-4 py-3">{usd(rateForDays(c.price, t.days, c.discountTiers).perDay)}</td>
+                  ))}
+                  <td class="px-4 py-3">{c.miles}</td>
+                  <td class="px-4 py-3">{deposit.display}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p class="text-white/40 text-xs">All rates in USD per day, before delivery. Rates exclude fuel, tolls and fines.</p>
+      </div>
+
+      <!-- DEPOSITS -->
+      <div class="space-y-4">
+        <h2 class="font-display text-2xl md:text-3xl font-bold text-white tracking-tight">Security deposits</h2>
+        <p class="text-white/70 leading-relaxed">
+          A refundable {deposit.display} deposit applies to every car in the fleet.
+        </p>
+        <ol class="list-decimal list-inside space-y-2 text-white/70">
+          <li>The deposit is taken when your booking is confirmed.</li>
+          <li>It is held for the duration of the rental and may cover damage, excess mileage, late returns, cleaning or fines.</li>
+          <li>{deposit.note}</li>
+        </ol>
+      </div>
+
+      <!-- MILEAGE -->
+      <div class="space-y-4">
+        <h2 class="font-display text-2xl md:text-3xl font-bold text-white tracking-tight">Mileage</h2>
+        <p class="text-white/70 leading-relaxed">
+          Every rental includes {mileage.includedPerDay} miles per day. {mileage.allowanceNote}
+        </p>
+        <div class="rounded-[16px] border border-white/10 bg-[#0f0f0f] p-5">
+          <p class="text-[#c9a96e] text-xs uppercase tracking-[0.22em] mb-3">Worked example</p>
+          <p class="text-white/70 leading-relaxed text-sm">
+            A {exDays}-day {named(exCar)} rental at {usd(rateForDays(exCar.price, exDays).perDay)}/day
+            includes {exIncluded.toLocaleString()} miles in total ({mileage.includedPerDay} × {exDays}), to use however you like across the week.
+            Drive {exDriven.toLocaleString()} by the time you return it and you are {exOver} miles over.
+            {mileage.overagePerMile
+              ? ` At ${usd(mileage.overagePerMile)} per mile that is ${usd(exOver * mileage.overagePerMile)}, deducted from your deposit.`
+              : ' The per-mile charge for those extra miles is set out in your rental agreement and confirmed before you book.'}
+          </p>
+        </div>
+      </div>
+
+      <!-- DELIVERY -->
+      <div class="space-y-4">
+        <h2 class="font-display text-2xl md:text-3xl font-bold text-white tracking-tight">Delivery</h2>
+        <p class="text-white/70 leading-relaxed">Charged once per rental, not per journey. We deliver to hotels, residences, offices and airports.</p>
+        <div class="overflow-x-auto rounded-[16px] border border-white/10">
+          <table class="w-full text-left text-sm">
+            <thead class="bg-white/5 text-white/70"><tr><th class="px-4 py-3 font-medium">Zone</th><th class="px-4 py-3 font-medium">Fee</th></tr></thead>
+            <tbody class="text-white/75">
+              {rentalTerms.delivery.map((d) => (
+                <tr class="border-t border-white/10"><td class="px-4 py-3">{d.area}</td><td class="px-4 py-3">{d.display}</td></tr>
+              ))}
+              <tr class="border-t border-white/10"><td class="px-4 py-3">Outside these areas</td><td class="px-4 py-3">Quoted before booking</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- CANCELLATION -->
+      <div class="space-y-4">
+        <h2 class="font-display text-2xl md:text-3xl font-bold text-white tracking-tight">Cancellation</h2>
+        <ul class="list-disc list-inside space-y-2 text-white/70">
+          <li>More than {cancellation.noRefundWithinDays} days before the start date — refund of amounts paid.</li>
+          <li>{cancellation.summary}</li>
+          <li>Changing dates counts as a cancellation and rebooking if the original dates fall inside that window.</li>
+        </ul>
+      </div>
+
+      <!-- INSURANCE -->
+      <div class="space-y-4">
+        <h2 class="font-display text-2xl md:text-3xl font-bold text-white tracking-tight">Insurance &amp; eligibility</h2>
+        <ul class="list-disc list-inside space-y-2 text-white/70">
+          <li>{minimumAge}+ with a valid driver's licence.</li>
+          <li>{insurance.summary}</li>
+        </ul>
+        <p class="text-white/40 text-xs">
+          Full detail in our <a href="/terms" class="text-[#c9a96e] hover:underline">Terms of Service</a>.
+        </p>
+      </div>
+
+      <!-- FAQ -->
+      <div class="space-y-4">
+        <h2 class="font-display text-2xl md:text-3xl font-bold text-white tracking-tight">Pricing questions</h2>
+        <div class="divide-y divide-white/10 border-y border-white/10">
+          {faqs.map((f) => (
+            <details class="group py-5">
+              <summary class="flex items-center justify-between cursor-pointer list-none">
+                <span class="font-display text-lg text-white pr-6">{f.q}</span>
+                <span class="text-[#c9a96e] text-xl shrink-0 transition-transform group-open:rotate-45">+</span>
+              </summary>
+              <p class="text-white/60 leading-relaxed mt-3">{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-3">
+        <a href="/fleet" data-cta="pricing_fleet" class="flex-1 inline-flex items-center justify-center bg-[#c9a96e] text-black px-7 py-4 rounded-full font-semibold hover:bg-white transition">See the fleet</a>
+        <a href={wa} data-cta="pricing_whatsapp" target="_blank" rel="noopener noreferrer" class="flex-1 inline-flex items-center justify-center gap-2 border border-white/20 text-white px-7 py-4 rounded-full font-medium hover:border-[#c9a96e] hover:text-[#c9a96e] transition">
+          Get a quote on WhatsApp <span class="w-2 h-2 rounded-full bg-[#1f7a3f]"></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand message={waMsg} />
+  <StickyMobileCta message={waMsg} />
+</Layout>

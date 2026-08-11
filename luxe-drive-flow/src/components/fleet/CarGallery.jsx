@@ -35,6 +35,10 @@ export default function CarGallery({ images = [], name = "", slug = "" }) {
             sizes="(min-width:768px) 1000px, 100vw"
             alt={`${name} — photo ${i + 1}`}
             loading={i === 0 ? "eager" : "lazy"}
+            fetchPriority={i === 0 ? "high" : "low"}
+            decoding={i === 0 ? "sync" : "async"}
+            width="1200"
+            height="825"
             className="shrink-0 w-full aspect-[16/11] object-cover snap-center"
           />
         ))}

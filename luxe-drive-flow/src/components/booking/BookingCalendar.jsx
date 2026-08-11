@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { business } from "@/data/business";
+import { rentalTerms } from "@/data/rental-terms";
 
 const DAY_MS = 86400000;
 const WEEKDAYS = ["S", "M", "T", "W", "T", "F", "S"];
@@ -9,11 +10,7 @@ const MONTHS = [
   "January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December",
 ];
-const TIERS = [
-  { days: 3, pct: 15 },
-  { days: 5, pct: 20 },
-  { days: 7, pct: 25 },
-];
+const TIERS = rentalTerms.discountTiers;
 
 const startOfDay = (d) => { const x = new Date(d); x.setHours(0, 0, 0, 0); return x; };
 const sameDay = (a, b) =>

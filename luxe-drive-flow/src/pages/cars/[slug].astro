@@ -10,7 +10,8 @@ import CarGallery from '@/components/fleet/CarGallery.jsx';
 import BookingCalendar from '@/components/booking/BookingCalendar.jsx';
 import { Phone } from 'lucide-react';
 import { cars } from '@/data/cars';
-import { rentalTerms, termsSummary } from '@/data/rental-terms';
+import { rentalTerms, termsSummary, deliverySummary } from '@/data/rental-terms';
+import { contentFor } from '@/data/car-content';
 import { business, telHref, whatsappWith } from '@/data/business';
 
 export function getStaticPaths() {
@@ -25,6 +26,43 @@ const message = car.comingSoon
   : `Hi, I'm interested in booking the ${car.name} with Lussaro Collection.`;
 const wa = whatsappWith(message);
 const imgs = car.images || [];
+
+// Per-car editorial content. Absent => none of these sections render at all.
+const content = contentFor(car.slug);
+const siblingCars = (content?.siblings ?? [])
+  .map((s) => cars.find((c) => c.slug === s))
+  .filter(Boolean);
+const named = (c) => (c.name.startsWith(c.make) ? c.name : `${c.make} ${c.name}`);
+
+const milesPerDay = car.miles ?? rentalTerms.mileage.includedPerDay;
+const exDays = 3;
+
+// Four questions, all answered from data that exists: deposit, mileage,
+// delivery, and the car's own first Good-to-know fact.
+const carFaqs = content ? [
+  {
+    q: `What is the security deposit on the ${car.name}?`,
+    a: `${rentalTerms.deposit.display}, the same on every car we run, taken when your booking is confirmed. ${rentalTerms.deposit.note} It can also cover excess mileage, a late return, cleaning, or fines picked up during the rental.`,
+  },
+  {
+    q: `How many miles come with the ${car.name}?`,
+    a: `${milesPerDay} a day, pooled across the whole booking rather than capped daily. Take it for ${exDays} days and you have ${milesPerDay * exDays} miles to spend however suits you — only the total showing at return is counted. Anything past that is charged at a per-mile rate confirmed before you book, and can come out of your deposit.`,
+  },
+  {
+    q: `Will you bring the ${car.name} to my hotel?`,
+    a: `Yes, along with residences, offices and both airports. Delivery is billed once per rental rather than per trip: ${deliverySummary}. Beyond those two areas we quote you first, so nothing lands on the invoice unannounced.`,
+  },
+  {
+    q: content.faqQuestion,
+    a: content.faqAnswer,
+  },
+] : [];
+
+const faqSchema = carFaqs.length ? {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: carFaqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+} : null;
 
 const chips = [
   { label: '0–60', value: car.zeroToSixty },
@@ -106,7 +144,7 @@ const productSchema = {
   title={`${car.name} Rental Miami | Lussaro Collection`}
   description={`Rent the ${car.name} in Miami with Lussaro Collection — check availability and book in minutes. ${car.description.slice(0, 110)}`}
   image={ogImage}
-  schema={[productSchema]}
+  schema={faqSchema ? [productSchema, faqSchema] : [productSchema]}
   breadcrumbName={car.name}
 >
   <Nav />
@@ -161,17 +199,6 @@ const productSchema = {
       <!-- RIGHT: booking card -->
       <aside>
         <div class="rounded-2xl border border-white/10 bg-[#0f0f0f] p-5 md:p-6 shadow-[0_20px_60px_rgba(0,0,0,0.4)]">
-          <div class="flex items-center gap-2.5 mb-4">
-            <span class="relative flex h-2 w-2 shrink-0">
-              <span class="absolute inline-flex h-full w-full rounded-full bg-[#c9a96e] opacity-70 animate-ping"></span>
-              <span class="relative inline-flex h-2 w-2 rounded-full bg-[#c9a96e]"></span>
-            </span>
-            {car.comingSoon ? (
-              <span class="text-[13px] leading-snug text-white/85 font-medium tracking-wide">Arriving soon — reserve your dates early before it books out.</span>
-            ) : (
-              <span class="text-[13px] leading-snug text-white/85 font-medium tracking-wide" data-urgency>Only 1 in our Miami fleet — dates are booking out fast.</span>
-            )}
-          </div>
           <div class="flex items-end justify-between mb-5">
             <div>
               <div class="flex items-center gap-2 mb-1">
@@ -211,6 +238,20 @@ const productSchema = {
   <section class="bg-black border-t border-white/5 py-12 md:py-14">
     <div class="max-w-5xl mx-auto px-5 md:px-8">
       <h2 class="reveal font-display text-2xl md:text-3xl font-bold text-white text-center mb-7">Specifications</h2>
+      <div class="reveal grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-3 md:mb-4">
+        {[
+          { k: 'Seats', v: car.seats },
+          { k: 'Doors', v: car.doors },
+          { k: 'Miles / day', v: car.miles },
+          { k: 'Model year', v: car.year },
+        ].filter((x) => x.v).map((x) => (
+          <div class="rounded-xl border border-white/10 bg-[#0f0f0f] p-4 md:p-5 text-center">
+            <p class="text-white/45 text-[11px] uppercase tracking-wide mb-2">{x.k}</p>
+            <p class="font-display text-2xl md:text-3xl font-bold text-white leading-none">{x.v}</p>
+          </div>
+        ))}
+      </div>
+      {car.drivetrain && <p class="reveal text-center text-white/55 text-sm mb-4">{car.drivetrain}</p>}
       <div class="reveal grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
         {specs.map((s) => (
           <div class="rounded-xl border border-white/10 bg-[#0f0f0f] p-4 md:p-5 text-center">
@@ -227,6 +268,75 @@ const productSchema = {
       </div>
     </div>
   </section>
+
+  {content && (
+    <section class="bg-black border-t border-white/5 py-12 md:py-16">
+      <div class="max-w-3xl mx-auto px-5 md:px-8 space-y-10">
+        <div class="space-y-4">
+          <h2 class="reveal font-display text-2xl md:text-3xl font-bold text-white tracking-tight">Is the {car.name} right for your trip?</h2>
+          <p class="reveal text-white/70 leading-relaxed">{content.useCases}</p>
+        </div>
+
+        <div class="space-y-4">
+          <h2 class="reveal font-display text-2xl md:text-3xl font-bold text-white tracking-tight">Good to know</h2>
+          <ul class="reveal list-disc list-outside pl-5 space-y-2.5 text-white/70">
+            {content.goodToKnow.map((g) => <li>{g}</li>)}
+          </ul>
+          {content.realMoment && <p class="reveal text-white/70 leading-relaxed border-l-2 border-[#c9a96e] pl-4 italic">{content.realMoment}</p>}
+          {content.operatorNotes && <p class="reveal text-white/70 leading-relaxed">{content.operatorNotes}</p>}
+          {content.deliveryNotes && <p class="reveal text-white/70 leading-relaxed">{content.deliveryNotes}</p>}
+        </div>
+
+        <div class="space-y-3">
+          <h2 class="reveal font-display text-2xl md:text-3xl font-bold text-white tracking-tight">Renting this car</h2>
+          <ul class="reveal list-disc list-outside pl-5 space-y-2 text-white/70">
+            <li>{rentalTerms.deposit.display} refundable deposit, taken at booking. {rentalTerms.deposit.note}</li>
+            <li>{milesPerDay} miles a day, pooled — {exDays} days is {milesPerDay * exDays} miles in total.{' '}
+              {rentalTerms.mileage.overagePerMile
+                ? `Extra miles run ${'$'}${rentalTerms.mileage.overagePerMile} each.`
+                : 'The rate beyond that is confirmed before you book.'}</li>
+            <li>Delivery {deliverySummary}; further afield is quoted first.</li>
+            <li>{rentalTerms.minimumAge}+ with a valid licence. {rentalTerms.insurance.summary}</li>
+          </ul>
+          <p class="reveal text-white/40 text-xs">
+            <a href="/pricing" class="text-[#c9a96e] hover:underline">Full rate card</a> · <a href="/terms" class="text-[#c9a96e] hover:underline">Terms of Service</a>
+          </p>
+        </div>
+
+        {carFaqs.length > 0 && (
+          <div class="space-y-3">
+            <h2 class="reveal font-display text-2xl md:text-3xl font-bold text-white tracking-tight">{car.name} questions</h2>
+            <div class="reveal divide-y divide-white/10 border-y border-white/10">
+              {carFaqs.map((f) => (
+                <details class="group py-5">
+                  <summary class="flex items-center justify-between cursor-pointer list-none">
+                    <span class="font-display text-lg text-white pr-6">{f.q}</span>
+                    <span class="text-[#c9a96e] text-xl shrink-0 transition-transform group-open:rotate-45">+</span>
+                  </summary>
+                  <p class="text-white/60 leading-relaxed mt-3">{f.a}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {(siblingCars.length > 0 || content.category) && (
+          <div class="space-y-4">
+            <h2 class="reveal font-display text-2xl md:text-3xl font-bold text-white tracking-tight">Also consider</h2>
+            <div class="reveal grid gap-3 sm:grid-cols-2">
+              {siblingCars.map((s) => (
+                <a href={`/cars/${s.slug}`} class="rounded-2xl border border-white/10 bg-[#0f0f0f] p-4 hover:border-[#c9a96e]/50 transition">
+                  <p class="text-white font-display text-lg">{named(s)}</p>
+                  <p class="text-white/45 text-sm mt-1">${s.price.toLocaleString()}/day{s.seats ? ` · ${s.seats} seats` : ''} · {s.zeroToSixty} to 60</p>
+                </a>
+              ))}
+            </div>
+            {content.category && <p class="reveal text-sm"><a href={content.category.href} class="text-[#c9a96e] hover:underline">{content.category.label} →</a></p>}
+          </div>
+        )}
+      </div>
+    </section>
+  )}
 
   <!-- 3D / AR (Urus) — live, spinning model embedded inline -->
   {car.model && (
@@ -269,7 +379,7 @@ const productSchema = {
       </div>
 
       <LeadForm client:visible defaultVehicle={car.name} />
-      <p class="text-white/35 text-xs mt-8 text-center max-w-md mx-auto">{termsSummary} {rentalTerms.cancellation.summary} <a href="/terms" class="underline hover:text-white/60">Full terms</a>.</p>
+      <p class="text-white/35 text-xs mt-8 text-center max-w-md mx-auto">{termsSummary} {rentalTerms.cancellation.summary} <a href="/pricing" class="underline hover:text-white/60">Pricing &amp; policies</a> · <a href="/terms" class="underline hover:text-white/60">Full terms</a>.</p>
     </div>
   </section>
 
@@ -316,23 +426,6 @@ const productSchema = {
       els.forEach((el) => io.observe(el));
     }
 
-    // Rotating urgency line — picks a fresh message each load (never the last one shown).
-    const URGENCY = [
-      "Only 1 in our Miami fleet — dates are booking out fast.",
-      "In high demand this week — reserve before someone else does.",
-      "Weekends go first. Lock in your dates while they're open.",
-    ];
-    function rotateUrgency() {
-      const el = document.querySelector('[data-urgency]');
-      if (!el) return;
-      let last = -1;
-      try { last = parseInt(sessionStorage.getItem('lussaroUrgency') || '-1', 10); } catch (e) {}
-      let idx = Math.floor(Math.random() * URGENCY.length);
-      if (URGENCY.length > 1 && idx === last) idx = (idx + 1) % URGENCY.length;
-      try { sessionStorage.setItem('lussaroUrgency', String(idx)); } catch (e) {}
-      el.textContent = URGENCY[idx];
-    }
-
-    document.addEventListener('astro:page-load', () => { lussaroCountup(); rotateUrgency(); });
+    document.addEventListener('astro:page-load', () => { lussaroCountup();  });
   </script>
 </Layout>

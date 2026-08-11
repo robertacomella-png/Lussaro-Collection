@@ -13,6 +13,7 @@ const SITE = 'https://www.lussarocollection.com';
 const LABELS = {
   '/about': 'About',
   '/contact': 'Contact',
+  '/pricing': 'Pricing & Policies',
   '/gallery': 'Gallery',
   '/chauffeur-service-miami': 'Chauffeur Service Miami',
   '/exotic-car-rental-miami': 'Exotic Car Rental Miami',
