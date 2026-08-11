@@ -128,7 +128,13 @@ const productSchema = {
   '@type': 'Product',
   name: `${fullName} Rental — Miami`,
   image: imgs.map(abs),
-  description: car.description,
+  // Same hand-written line the page's <meta name="description"> uses, so the
+  // structured data and the visible-to-Google copy cannot disagree. The old
+  // `car.description` boilerplate ("...this is how you stand out and own the
+  // road") is still fine as on-page prose but is not what we want in schema.
+  // Falls back to it only if a car is ever added without a meta-descriptions
+  // entry, so this can't emit an undefined description.
+  description: pageDescription ?? car.description,
   brand: { '@type': 'Brand', name: car.make },
   sku: `LC-${car.slug.toUpperCase()}`,
   offers: {
@@ -141,6 +147,7 @@ const productSchema = {
     availability: car.comingSoon
       ? 'https://schema.org/PreOrder'
       : 'https://schema.org/InStock',
+    validFrom: '2026-01-01',
     priceValidUntil: '2026-12-31',
     seller: { '@id': `${SITE}/#business` },
     eligibleDuration: { '@type': 'QuantitativeValue', value: 1, unitCode: 'DAY' },
