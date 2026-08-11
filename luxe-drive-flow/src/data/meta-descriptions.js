@@ -1,0 +1,31 @@
+// Hand-written meta descriptions, keyed by no-trailing-slash pathname.
+//
+// This replaces the generated description on car pages, which concatenated a
+// boilerplate stem with `car.description.slice(0, 110)` and clipped mid-word —
+// "...Glide t" was live on the Maybach page.
+//
+// Only live routes are listed. The six cars here are the current fleet; there
+// are deliberately no entries for huracan-sto or mercedes-amg-g63, which left
+// the fleet in June.
+//
+// cars/[slug].astro looks these up by slug. Static pages set their own
+// description prop on <Layout> and are not duplicated here.
+
+export const META_DESCRIPTIONS = {
+  '/cars/lamborghini-urus':
+    'Rent the Lamborghini Urus in Miami: 641 hp, 0-60 in 3.3s, $995/day with 100 miles included. Delivered anywhere in Miami, same-day available.',
+  '/cars/mercedes-maybach-gls-600':
+    'Rent the Maybach GLS 600 in Miami: chauffeur-grade luxury, 550 hp, $895/day with 100 miles included. Hotel, home or airport delivery.',
+  '/cars/mercedes-s580':
+    'Rent the Mercedes S580 in Miami from $445/day — our most accessible luxury sedan. 496 hp, 100 miles/day included, delivered across Miami.',
+  '/cars/sf90':
+    'Rent the Ferrari SF90 in Miami: 986 hp hybrid, 0-60 in 2.5s, $2,195/day. The fastest car in our fleet, delivered to your door.',
+  '/cars/huracan-evo':
+    'Rent the Lamborghini Huracan EVO in Miami: screaming V10, 650 hp, $1,295/day with 100 miles included. Same-day delivery available.',
+  '/cars/rolls-royce-cullinan':
+    'Rent the Rolls-Royce Cullinan in Miami: 563 hp, effortless presence, $1,495/day with 100 miles included. Delivered anywhere in Miami.',
+};
+
+export const descriptionFor = (path) => META_DESCRIPTIONS[path] ?? null;
+
+export default META_DESCRIPTIONS;

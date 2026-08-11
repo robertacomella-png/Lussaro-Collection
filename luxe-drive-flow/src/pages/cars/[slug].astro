@@ -11,6 +11,8 @@ import BookingCalendar from '@/components/booking/BookingCalendar.jsx';
 import { Phone } from 'lucide-react';
 import { cars } from '@/data/cars';
 import { rentalTerms, termsSummary, deliverySummary } from '@/data/rental-terms';
+import { descriptionFor } from '@/data/meta-descriptions';
+import { titleFor } from '@/data/meta-titles';
 import { contentFor } from '@/data/car-content';
 import { business, telHref, whatsappWith } from '@/data/business';
 
@@ -28,6 +30,12 @@ const wa = whatsappWith(message);
 const imgs = car.images || [];
 
 // Per-car editorial content. Absent => none of these sections render at all.
+const routePath = `/cars/${car.slug}`;
+// Hand-written meta. Previously the description concatenated boilerplate with
+// car.description.slice(0, 110), which clipped mid-word.
+const pageTitle = titleFor(routePath) ?? `${car.name} Rental Miami | Lussaro Collection`;
+const pageDescription = descriptionFor(routePath);
+
 const content = contentFor(car.slug);
 const siblingCars = (content?.siblings ?? [])
   .map((s) => cars.find((c) => c.slug === s))
@@ -141,8 +149,8 @@ const productSchema = {
 };
 ---
 <Layout
-  title={`${car.name} Rental Miami | Lussaro Collection`}
-  description={`Rent the ${car.name} in Miami with Lussaro Collection — check availability and book in minutes. ${car.description.slice(0, 110)}`}
+  title={pageTitle}
+  description={pageDescription}
   image={ogImage}
   schema={faqSchema ? [productSchema, faqSchema] : [productSchema]}
   breadcrumbName={car.name}
