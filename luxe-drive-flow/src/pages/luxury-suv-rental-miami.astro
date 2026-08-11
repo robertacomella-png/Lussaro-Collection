@@ -1,24 +1,63 @@
 ---
 import LandingLayout from '@/layouts/LandingLayout.astro';
+import { rentalTerms, deliverySummary } from '@/data/rental-terms';
+import { fleet } from '@/data/fleet';
+
+const urus = fleet.find((c) => c.name === 'Lamborghini Urus');
+const maybach = fleet.find((c) => c.name === 'GLS 600 Maybach');
+const cullinan = fleet.find((c) => c.name === 'Cullinan');
+const { deposit, mileage, cancellation } = rentalTerms;
+
+const faqs = [
+  {
+    q: 'Which of these SUVs holds the most luggage?',
+    a: 'The Urus, and not by a small margin — roughly 616 litres behind its rear seats. The Cullinan follows at about 21 cubic feet. The Maybach comes last at around 18, and its rear seats do not fold, so long or bulky items are out.',
+  },
+  {
+    q: 'Do any of them seat seven?',
+    a: 'None. The Maybach GLS 600 drops the third row that the standard GLS offers, so all three are two-row cars. Rear layouts vary between individual seats and a bench, and we will confirm the exact configuration of a given car before you commit.',
+  },
+  {
+    q: 'Can you bring one to a hotel or the airport?',
+    a: `Yes — hotels, residences, offices and both airports all sit inside our delivery area. It runs ${deliverySummary}, billed once against the rental instead of per trip. Give us the address and an arrival window and the car is waiting when you get there.`,
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
 ---
 <LandingLayout
   title="Luxury SUV Rental Miami | Lussaro Collection"
   description="Rent luxury SUVs in Miami with Lussaro Collection. Premium vehicles like the Mercedes-Maybach GLS 600, G63, and Lamborghini Urus for bold arrivals and executive travel."
   h1="Luxury SUV Rental Miami"
-  intro="Drive Miami in a premium luxury SUV that blends performance, comfort, and presence. Our curated SUV fleet is perfect for executives, groups, and anyone who wants to arrive with confidence."
-  match={["urus", "g63", "gls", "maybach"]}
+  intro="Three large SUVs that do three genuinely different jobs. The question is not which is best — it is whether you are driving, being driven, or making an entrance."
+  only={["lamborghini-urus", "mercedes-maybach-gls-600", "rolls-royce-cullinan"]}
   ctaTitle="Reserve your luxury SUV"
+  schema={[faqSchema]}
 >
-  <h2>Premium SUV Rentals in Miami</h2>
-  <p>Miami luxury SUV rentals offer instant style and unmatched versatility. Whether you need a commanding G63 for South Beach, the refined Maybach GLS 600 for Brickell, or the performance-focused Urus, we have the right vehicle for your stay.</p>
-  <p>Each SUV is maintained to the highest standard and delivered with white-glove service. Enjoy flexible pickup options, concierge support, and fast WhatsApp booking.</p>
+  <h2>Driving, being driven, or arriving</h2>
+  <p>All three carry you and your bags around Miami in comfort. Where they diverge is what each is optimised for — a difference worth more than any spec sheet.</p>
 
-  <h3>Why Rent an SUV with Lussaro Collection</h3>
-  <ul>
-    <li>Exceptional comfort and spacious interiors.</li>
-    <li>Powerful engines with iconic presence.</li>
-    <li>Ideal for business travel, family, or premium sightseeing.</li>
-    <li>VIP delivery across Miami neighborhoods.</li>
-  </ul>
-  <p>Prefer a focused exotic experience? Explore our <a href="/lamborghini-rental-miami">Lamborghini rentals</a> or the iconic <a href="/g-wagon-rental-miami">G-Wagon</a>.</p>
+  <h3><a href="/cars/lamborghini-urus">Lamborghini Urus</a> — ${urus.price.toLocaleString()}/day, for the driver</h3>
+  <p>Twin-turbo V8, all-wheel drive, and by some distance the most cargo space here. Adjustable air suspension means ramps and speed bumps are a non-issue. It is also the widest here at nearly 86 inches across the mirrors, which older garages notice. Take this one if you want to enjoy the drive rather than the back seat.</p>
+
+  <h3><a href="/cars/mercedes-maybach-gls-600">Mercedes-Maybach GLS 600</a> — ${maybach.price.toLocaleString()}/day, for the passenger</h3>
+  <p>The reason to book this is behind you: reclining executive seats with powered leg and foot rests, and running boards that slide out automatically as a door opens. There is no third row, so treat it as a four-seater with a superb rear compartment. Best for collecting clients, moving family, or any evening where somebody else drives.</p>
+
+  <h3><a href="/cars/rolls-royce-cullinan">Rolls-Royce Cullinan</a> — ${cullinan.price.toLocaleString()}/day, for the arrival</h3>
+  <p>Rear-hinged coach doors that let you step out facing forward, a 6.75-litre twin-turbo V12 that stays almost silent, and doors that shut themselves at the touch of a button. Four-wheel steering helps disguise the size, though at roughly 17.5 feet long it remains a substantial thing to park. It is the most theatrical arrival of the three.</p>
+
+  <h2>What a booking includes</h2>
+  <p>Every SUV here carries {mileage.includedPerDay} miles for each day booked, totalled across the rental rather than reset daily, plus the same refundable {deposit.display} deposit regardless of which you choose. {cancellation.summary} Full figures, including multi-day rates, are on the <a href="/pricing">rate card</a>. Every car we run is listed under <a href="/exotic-car-rental-miami">exotic car rental in Miami</a>.</p>
+
+  <h2>Questions</h2>
+  {faqs.map((f) => (
+    <>
+      <h3>{f.q}</h3>
+      <p>{f.a}</p>
+    </>
+  ))}
 </LandingLayout>

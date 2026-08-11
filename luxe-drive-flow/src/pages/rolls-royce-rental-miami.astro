@@ -1,24 +1,55 @@
 ---
 import LandingLayout from '@/layouts/LandingLayout.astro';
+import { rentalTerms } from '@/data/rental-terms';
+import { fleet } from '@/data/fleet';
+
+const cullinan = fleet.find((c) => c.name === 'Cullinan');
+const { deposit, mileage, minimumAge } = rentalTerms;
+
+const faqs = [
+  {
+    q: 'How do the coach doors work?',
+    a: 'The rear pair are hinged at the back, so they swing open away from you and you step out facing forward instead of twisting round. All four then close under power at the touch of a button, which means nobody has to lean out and haul a heavy door shut.',
+  },
+  {
+    q: 'Is the Cullinan difficult to park in Miami?',
+    a: 'It asks for attention. The car runs to roughly 17.5 feet long and about 85 inches wide across the mirrors, so older garages are tight. Four-wheel steering is fitted as standard and shrinks the turning circle noticeably, which helps more than you would expect.',
+  },
+  {
+    q: 'What is required to book it?',
+    a: `A driver of ${minimumAge} or over with a valid licence and insurance that covers the vehicle, or a daily policy bought through us. The car carries a refundable ${deposit.display} deposit and ${mileage.includedPerDay} miles for every day of the booking.`,
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
 ---
 <LandingLayout
   title="Rolls-Royce Rental Miami | Lussaro Collection"
   description="Rent a Rolls-Royce in Miami with Lussaro Collection. Experience ultimate luxury with the Cullinan and other elite vehicles delivered across South Beach and Brickell."
   h1="Rolls-Royce Rental Miami"
-  intro="Arrive in Miami with uncompromising luxury. Our Rolls-Royce rentals offer a serene ride, lavish cabin, and unmatched presence for weddings, special occasions, and VIP travel."
-  match={["rolls"]}
-  ctaTitle="Reserve your Rolls-Royce"
+  intro="One Rolls-Royce, the Cullinan, delivered anywhere in Miami. It is built for the arrivals where the car is part of the occasion."
+  only={["rolls-royce-cullinan"]}
+  fullFleetLink
+  ctaTitle="Reserve the Cullinan"
+  schema={[faqSchema]}
 >
-  <h2>Rolls-Royce Rentals in Miami</h2>
-  <p>Experience the signature Rolls-Royce feeling of quiet power and effortless luxury. The Cullinan delivers a smooth, refined ride while making a powerful statement on Miami’s most prestigious streets.</p>
-  <p>Every rental includes dedicated service, expert delivery, and attention to detail so your Miami arrival feels flawless from start to finish.</p>
+  <h2>The <a href="/cars/rolls-royce-cullinan">Cullinan</a>, specifically</h2>
+  <p>We run one Rolls-Royce and it is the SUV. At ${cullinan.price.toLocaleString()} a day it is the most expensive car in our fleet after the Ferrari, and while the engineering is remarkable, that is not really what it is for. The draw is what happens when it pulls up.</p>
+  <p>The rear doors hinge at the back rather than the front, so a passenger steps out facing the direction they are walking rather than shuffling sideways. Every door then closes on its own at the press of a button. Underneath sits a 6.75-litre twin-turbo V12 producing {cullinan.power} hp, quiet enough at a cruise that conversation carries without anyone raising their voice.</p>
+  <p>It is also more practical than its reputation suggests. The two-piece powered tailgate — Rolls-Royce calls it The Clasp — opens onto roughly 21 cubic feet behind the rear seats, which is real luggage capacity. There is an umbrella stowed in the door, dried by blowers built into the frame when you put it back. Expect around 12 mpg in the city on premium fuel — a 6.75-litre V12 is not an economy proposition.</p>
 
-  <h3>Why Choose Rolls-Royce with Lussaro Collection</h3>
-  <ul>
-    <li>Exclusive luxury SUV performance.</li>
-    <li>Whisper-quiet cabin with handcrafted materials.</li>
-    <li>Personalized delivery across Miami.</li>
-    <li>Ideal for weddings, VIP events, and executive travel.</li>
-  </ul>
-  <p>Looking for something sportier? See our <a href="/exotic-car-rental-miami">full exotic fleet</a>.</p>
+  <h2>Booking one</h2>
+  <p>Availability on a single car moves quickly, so dates matter more here than anywhere else in the fleet. Send us the day you need it and we will tell you straight away whether it is open. Every figure — deposit, mileage, delivery, multi-day rates — is published on the <a href="/pricing">rate card</a>, and the full detail sits in our <a href="/terms">terms</a>. To compare it against the rest, see <a href="/exotic-car-rental-miami">exotic car rental in Miami</a> or the <a href="/luxury-suv-rental-miami">luxury SUV comparison</a>.</p>
+
+  <h2>Questions</h2>
+  {faqs.map((f) => (
+    <>
+      <h3>{f.q}</h3>
+      <p>{f.a}</p>
+    </>
+  ))}
 </LandingLayout>

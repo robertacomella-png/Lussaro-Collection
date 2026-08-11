@@ -13,6 +13,10 @@ export const rentalTerms = {
 
   minimumAge: 21,
 
+  // Chauffeur service is priced by the hour, not by the day, and is the one
+  // rate that does not come from fleet.js.
+  chauffeurHourly: { amount: 250, display: '$250' },
+
   // Flat across the fleet, per the owner's stated policy. Note this replaces
   // earlier site copy that said deposits "vary by vehicle".
   deposit: {

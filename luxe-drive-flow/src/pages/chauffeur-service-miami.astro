@@ -6,6 +6,7 @@ import CtaBand from '@/components/site/CtaBand.astro';
 import LeadForm from '@/components/site/LeadForm.jsx';
 import { getImageKitSrc, getImageKitSrcSet } from '@/lib/imageKit';
 import { business, telHref, whatsappWith } from '@/data/business';
+import { rentalTerms } from '@/data/rental-terms';
 
 const SITE = 'https://www.lussarocollection.com';
 const PAGE_URL = `${SITE}/chauffeur-service-miami`;
@@ -39,7 +40,7 @@ const steps = [
 ];
 
 const faqs = [
-  { q: 'What’s included in the $250 per hour?', a: 'Your professional chauffeur, the Mercedes‑Maybach GLS 600, and fuel. Share your itinerary and we’ll confirm an all‑in rate before you book — no surprises.' },
+  { q: `What’s included in the ${rentalTerms.chauffeurHourly.display} per hour?`, a: 'Your professional chauffeur, the Mercedes‑Maybach GLS 600, and fuel. Share your itinerary and we’ll confirm an all‑in rate before you book — no surprises.' },
   { q: 'Is there a minimum booking?', a: 'Most chauffeur reservations run a few hours or longer. Tell us what you have in mind and we’ll tailor the booking to your night or your day.' },
   { q: 'Which areas do you serve?', a: 'All of Miami — South Beach, Brickell, Wynwood, Miami Beach, Coral Gables — plus Fort Lauderdale, the airports, and private jet terminals. Longer trips are available on request.' },
   { q: 'Can you handle airport and private‑jet pickups?', a: 'Yes. We cover MIA and FLL as well as FBOs, track your flight, and meet you curbside so there’s never a wait.' },
@@ -53,7 +54,7 @@ const serviceSchema = {
   '@type': 'Service',
   serviceType: 'Chauffeur service',
   name: 'Miami Maybach Chauffeur Service',
-  description: 'Private chauffeur service in Miami with a Mercedes‑Maybach GLS 600 and professional drivers, from $250 per hour.',
+  description: `Private chauffeur service in Miami with a Mercedes‑Maybach GLS 600 and professional drivers, from ${rentalTerms.chauffeurHourly.display} per hour.`,
   url: PAGE_URL,
   provider: { '@type': 'AutoRental', name: business.brandName, url: SITE, telephone: business.phone },
   areaServed: [
@@ -65,10 +66,10 @@ const serviceSchema = {
   offers: {
     '@type': 'Offer',
     priceCurrency: 'USD',
-    price: 250,
+    price: rentalTerms.chauffeurHourly.amount,
     availability: 'https://schema.org/InStock',
     url: PAGE_URL,
-    priceSpecification: { '@type': 'UnitPriceSpecification', price: 250, priceCurrency: 'USD', unitCode: 'HUR' },
+    priceSpecification: { '@type': 'UnitPriceSpecification', price: rentalTerms.chauffeurHourly.amount, priceCurrency: 'USD', unitCode: 'HUR' },
   },
 };
 const faqSchema = {
@@ -109,7 +110,7 @@ const faqSchema = {
       </h1>
       <p class="text-white/75 text-base md:text-xl mt-4 md:mt-5 max-w-2xl mx-auto md:mx-0 leading-relaxed">
         Skip the parking, the rideshares, and the stress. A professional chauffeur and a
-        Mercedes‑Maybach GLS 600, on your schedule — <span class="text-white font-semibold">from $250/hour</span>.
+        Mercedes‑Maybach GLS 600, on your schedule — <span class="text-white font-semibold">from {rentalTerms.chauffeurHourly.display}/hour</span>.
       </p>
       <div class="mt-7 md:mt-8 flex flex-col sm:flex-row gap-3 max-w-md mx-auto md:mx-0">
         <a href={wa} data-cta="chauffeur_hero" target="_blank" rel="noopener noreferrer" class="flex-1 inline-flex items-center justify-center gap-2 bg-[#c9a96e] text-black px-7 py-4 rounded-full font-semibold hover:bg-white transition">
@@ -155,7 +156,7 @@ const faqSchema = {
           Your chauffeur handles the rest.
         </p>
         <div class="flex items-end gap-3 mb-8">
-          <span class="font-display text-4xl font-bold text-white">$250</span>
+          <span class="font-display text-4xl font-bold text-white">{rentalTerms.chauffeurHourly.display}</span>
           <span class="text-white/50 mb-1">/ hour</span>
         </div>
         <div class="flex flex-wrap gap-3">
@@ -261,7 +262,7 @@ const faqSchema = {
 
   <CtaBand
     title="Your chauffeur is one message away."
-    subtitle="Maybach chauffeur service across Miami — from $250/hour. Same-day availability for most evenings."
+    subtitle={`Maybach chauffeur service across Miami — from ${rentalTerms.chauffeurHourly.display}/hour. Same-day availability for most evenings.`}
     message={waMsg}
   />
   <StickyMobileCta message={waMsg} />

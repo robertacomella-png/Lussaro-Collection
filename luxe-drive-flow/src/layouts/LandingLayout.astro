@@ -14,13 +14,18 @@ const {
   h1,
   intro,
   match,                 // array of keywords to filter the fleet (optional)
+  only,                  // array of slugs — explicit fleet whitelist (optional)
+  exclude,               // array of slugs/keywords to drop from the grid (optional)
+  fleetHeading,          // heading above the grid (optional; omitted = no heading, as before)
+  fullFleetLink = false, // show a "See the full fleet" link under a narrowed grid
+  schema = null,         // per-page JSON-LD, forwarded to Layout
   ctaTitle = 'Reserve your Miami exotic',
 } = Astro.props;
 
 const waMessage = `Hi, I'm interested in renting a luxury car with Lussaro Collection (${h1}).`;
 const wa = whatsappWith(waMessage);
 ---
-<Layout title={title} description={description}>
+<Layout title={title} description={description} schema={schema}>
   <Nav />
 
   <!-- HERO -->
@@ -52,7 +57,17 @@ const wa = whatsappWith(waMessage);
   <!-- FLEET -->
   <section class="bg-[#f7f5f0] text-[#0a0a0a] py-16 md:py-20">
     <div class="max-w-7xl mx-auto px-5 md:px-8">
-      <FleetGrid match={match} client:visible />
+      {fleetHeading && (
+        <h2 class="font-display text-2xl md:text-3xl font-bold tracking-tight mb-6 md:mb-8">{fleetHeading}</h2>
+      )}
+      <FleetGrid only={only} match={match} exclude={exclude} client:visible />
+      {fullFleetLink && (
+        <p class="mt-8 text-center">
+          <a href="/fleet" class="inline-flex items-center gap-2 text-[#0a0a0a] border border-[#0a0a0a]/20 hover:border-[#c9a96e] hover:text-[#c9a96e] px-6 py-3 rounded-full text-sm font-medium transition">
+            See the full fleet →
+          </a>
+        </p>
+      )}
     </div>
   </section>
 

@@ -1,23 +1,57 @@
 ---
 import LandingLayout from '@/layouts/LandingLayout.astro';
+import { rentalTerms, deliverySummary } from '@/data/rental-terms';
+import { neighborhoodFor } from '@/data/neighborhood-content';
+
+const { deposit, mileage, minimumAge } = rentalTerms;
+const local = neighborhoodFor('brickell');
+
+const faqs = [
+  {
+    q: 'Can the car be brought to a Brickell address?',
+    a: `Yes — residential towers, offices and hotels alike. Delivery across Miami is ${deliverySummary}, applied once to the booking rather than to each journey. Send the address when you enquire and we will confirm the drop-off point before anything is agreed.`,
+  },
+  {
+    q: 'Which cars are easiest to keep in a building garage?',
+    a: `The S580, Urus, Maybach GLS 600 and Cullinan all sit at ordinary ride heights, and the first three can raise themselves further. The two supercars sit far lower, so a street-level handoff is the sensible plan for those.`,
+  },
+  {
+    q: 'What is needed to book?',
+    a: `A driver aged ${minimumAge} or above holding a valid licence, with insurance covering the vehicle or a day policy purchased through us. A refundable ${deposit.display} deposit secures the car, and ${mileage.includedPerDay} miles accrue for each day of the booking.`,
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
 ---
 <LandingLayout
   title="Exotic Car Rental Brickell | Lussaro Collection"
-  description="Rent exotic cars in Brickell with Lussaro Collection. Elite vehicles, fast delivery, and premium service for Miami’s financial district and nightlife."
+  description="Rent exotic cars in Brickell with Lussaro Collection. Elite vehicles, fast delivery, and premium service in Miami's financial district."
   h1="Exotic Car Rental Brickell"
-  intro="Experience Brickell with a high-end exotic rental. Our Miami fleet includes Lamborghinis, Rolls-Royce, Mercedes-AMG, and other premium vehicles for the district’s most elevated arrivals."
+  intro="We deliver anywhere in Miami, Brickell included — to residential towers, offices and hotels across the financial district."
   ctaTitle="Reserve your Brickell exotic"
+  schema={[faqSchema]}
 >
-  <h2>Brickell Exotic Car Rentals</h2>
-  <p>Whether you’re arriving for business, nightlife, or a special celebration, our Brickell rentals provide the luxury and performance you need to stand out in Miami’s financial and entertainment district.</p>
-  <p>Each vehicle is delivered with professional service, making it easy to drive the best exotic cars in Miami without the hassle.</p>
+  <h2>Delivered into the financial district</h2>
+  <p>Brickell is Miami's banking and business core, and it is built vertically: towers, podium garages, and valet desks rather than driveways. Our service area covers it in full, from Brickell Avenue out to Brickell City Centre and Mary Brickell Village. Tell us the address and the day; the car comes to you.</p>
+  {local?.deliveryLogistics && <p>{local.deliveryLogistics}</p>}
 
-  <h3>What Makes Our Brickell Rentals Different</h3>
-  <ul>
-    <li>Fast, reliable delivery to Brickell.</li>
-    <li>Wide selection of high-end exotic vehicles.</li>
-    <li>Flexible rental periods and concierge support.</li>
-    <li>Seamless booking through WhatsApp.</li>
-  </ul>
-  <p>Headed to the beach instead? See our <a href="/exotic-car-rental-south-beach">South Beach exotic rentals</a>.</p>
+  <h2>Choosing a car for Brickell</h2>
+  <p>The constraint here is the architecture. Parking is stacked inside buildings — ramped entries, helical turns between levels, bays laid out when cars were narrower. That rewards ground clearance and punishes width.</p>
+  <p>The <a href="/cars/mercedes-s580">Mercedes-Benz S580</a> is the easiest fit — a sedan on adjustable air suspension, so entry ramps are a non-event. The <a href="/cars/lamborghini-urus">Lamborghini Urus</a>, <a href="/cars/mercedes-maybach-gls-600">Maybach GLS 600</a> and <a href="/cars/rolls-royce-cullinan">Rolls-Royce Cullinan</a> all clear ramps without difficulty too, though all three are wide — the Urus runs to nearly 86 inches across its mirrors, and the Maybach turns in about 41 feet — so an older garage will feel snug.</p>
+  <p>The two low cars are a different question. The <a href="/cars/huracan-evo">Huracan EVO</a> carries a front splitter close to the road, and the <a href="/cars/sf90">Ferrari SF90</a> is similarly low at the nose. Neither enjoys a steep ramp taken straight on. If you are booking one of those into a tower, plan on a street-level handoff and let the building's valet take it from there.</p>
+
+  <h2>Rates and requirements</h2>
+  <p>Every car carries the same refundable {deposit.display} deposit and {mileage.includedPerDay} miles per day of the booking. Drivers must be {minimumAge} or over. Full pricing sits on the <a href="/pricing">rate card</a>, and the wider service area is described on our <a href="/exotic-car-rental-miami">Miami hub page</a>. Heading to the beach instead? See <a href="/exotic-car-rental-south-beach">South Beach</a>.</p>
+
+  <h2>Questions</h2>
+  {faqs.map((f) => (
+    <>
+      <h3>{f.q}</h3>
+      <p>{f.a}</p>
+    </>
+  ))}
 </LandingLayout>

@@ -1,5 +1,6 @@
 ---
 import { cars } from '@/data/cars';
+import SmartLink from '@/components/site/SmartLink.astro';
 import { business, telHref, mailHref, addressLine, hoursSummary } from '@/data/business';
 const year = new Date().getFullYear();
 ---
@@ -8,26 +9,20 @@ const year = new Date().getFullYear();
     <div class="space-y-4">
       <h3 class="text-[#c9a96e] text-xl font-semibold tracking-tight">{business.brandName}</h3>
       <p class="text-white/60 text-sm leading-relaxed max-w-xs">
-        Miami luxury and exotic car rentals with premium delivery, insider service, and first-class attention. <a href="/about" class="text-[#c9a96e] hover:text-white transition-colors">Our story →</a>
+        Miami luxury and exotic car rentals with premium delivery, insider service, and first-class attention. <SmartLink href="/about" class="text-[#c9a96e] hover:text-white transition-colors">Our story →</SmartLink>
       </p>
     </div>
 
     <div>
       <h4 class="text-white text-sm uppercase tracking-[0.25em] mb-4">Explore</h4>
       <ul class="space-y-3 text-white/60 text-sm">
-        <li><a href="/fleet" class="hover:text-white transition-colors">Fleet</a></li>
-        <li><a href="/chauffeur-service-miami" class="hover:text-white transition-colors">Chauffeur Service</a></li>
-        <li><a href="/gallery" class="hover:text-white transition-colors">Gallery</a></li>
-        <li><a href="/pricing" class="hover:text-white transition-colors">Pricing &amp; Policies</a></li>
-        <li><a href="/about" class="hover:text-white transition-colors">About Us</a></li>
-        <li><a href="/contact" class="hover:text-white transition-colors">Contact</a></li>
-        <li><a href="/exotic-car-rental-miami" class="hover:text-white transition-colors">Exotic Car Rental Miami</a></li>
-        <li><a href="/lamborghini-rental-miami" class="hover:text-white transition-colors">Lamborghini Rental Miami</a></li>
-        <li><a href="/g-wagon-rental-miami" class="hover:text-white transition-colors">G-Wagon Rental Miami</a></li>
-        <li><a href="/luxury-suv-rental-miami" class="hover:text-white transition-colors">Luxury SUV Rental Miami</a></li>
-        <li><a href="/rolls-royce-rental-miami" class="hover:text-white transition-colors">Rolls-Royce Rental Miami</a></li>
-        <li><a href="/exotic-car-rental-brickell" class="hover:text-white transition-colors">Exotic Car Rental Brickell</a></li>
-        <li><a href="/exotic-car-rental-south-beach" class="hover:text-white transition-colors">Exotic Car Rental South Beach</a></li>
+        <li><SmartLink href="/fleet" class="hover:text-white transition-colors">The fleet</SmartLink></li>
+        <li><SmartLink href="/pricing" class="hover:text-white transition-colors">Pricing &amp; policies</SmartLink></li>
+        <li><SmartLink href="/chauffeur-service-miami" class="hover:text-white transition-colors">Chauffeur service</SmartLink></li>
+        <li><SmartLink href="/gallery" class="hover:text-white transition-colors">Photo gallery</SmartLink></li>
+        <li><SmartLink href="/about" class="hover:text-white transition-colors">Our story</SmartLink></li>
+        <li><SmartLink href="/contact" class="hover:text-white transition-colors">Get in touch</SmartLink></li>
+        <li><SmartLink href="/exotic-car-rental-miami" class="hover:text-white transition-colors">Exotic car rental in Miami</SmartLink></li>
       </ul>
     </div>
 
@@ -35,7 +30,7 @@ const year = new Date().getFullYear();
       <h4 class="text-white text-sm uppercase tracking-[0.25em] mb-4">Our Fleet</h4>
       <ul class="space-y-3 text-white/60 text-sm">
         {cars.map((car) => (
-          <li><a href={`/cars/${car.slug}`} class="hover:text-white transition-colors">{car.name}</a></li>
+          <li><SmartLink href={`/cars/${car.slug}`} class="hover:text-white transition-colors">{car.name}</SmartLink></li>
         ))}
       </ul>
     </div>
@@ -71,8 +66,8 @@ const year = new Date().getFullYear();
   <div class="max-w-7xl mx-auto px-6 mt-12 pt-6 border-t border-white/10 flex flex-col gap-4 text-white/40 text-xs md:flex-row md:justify-between md:items-center">
     <p>© {year} {business.legalName}. All rights reserved.</p>
     <div class="flex flex-wrap gap-6">
-      <a href="/terms" class="hover:text-white transition-colors">Terms of Service</a>
-      <a href="/privacy" class="hover:text-white transition-colors">Privacy Policy</a>
+      <SmartLink href="/terms" class="hover:text-white transition-colors">Terms of Service</SmartLink>
+      <SmartLink href="/privacy" class="hover:text-white transition-colors">Privacy Policy</SmartLink>
     </div>
   </div>
 </footer>

@@ -1,0 +1,28 @@
+---
+// An internal link that refuses to point at the page it is already on.
+//
+// Nav and footer links are rendered on every page, so without this each page
+// links to itself — noise for a crawler and a dead click for a reader. When the
+// href resolves to the current route the same text renders as a <span> with
+// aria-current="page", so the item stays visible and keeps its place in the
+// list; it simply stops being a link.
+//
+// Same-page anchors (/#fleet from the homepage) are deliberately left alone:
+// those are jump links, not self-references, and suppressing them would break
+// the navigation they exist for.
+const { href, class: className, ...rest } = Astro.props;
+
+const norm = (p) => (p.replace(/(.)\/$/, '$1') || '/');
+const here = norm(Astro.url.pathname);
+const [path, hash] = String(href).split('#');
+const isSelf = !hash && norm(path) === here;
+---
+{isSelf ? (
+  <span class={className} aria-current="page">
+    <slot />
+  </span>
+) : (
+  <a href={href} class={className} {...rest}>
+    <slot />
+  </a>
+)}

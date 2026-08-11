@@ -1,29 +1,87 @@
 ---
 import LandingLayout from '@/layouts/LandingLayout.astro';
+import { rentalTerms, deliverySummary, discountSummary } from '@/data/rental-terms';
+import { fleet } from '@/data/fleet';
+
+const low = Math.min(...fleet.map((c) => c.price)).toLocaleString('en-US');
+const high = Math.max(...fleet.map((c) => c.price)).toLocaleString('en-US');
+const { deposit, mileage, minimumAge, insurance } = rentalTerms;
+
+// Answers assembled only from rental-terms.js and the existing /fleet FAQ copy.
+const faqs = [
+  {
+    q: 'What does an exotic car rental in Miami cost?',
+    a: `Daily rates start at $${low} and run to $${high}, depending on the car. Every rate carries ${mileage.includedPerDay} miles a day and the same refundable ${deposit.display} deposit. Longer bookings cost less per day: ${discountSummary}.`,
+  },
+  {
+    q: 'How quickly can I get a car?',
+    a: 'Often same-day. Message or call and we reply in minutes; most bookings confirm within the hour. The sooner we know your dates, the better the odds on a specific car, but short notice is normal for us.',
+  },
+  {
+    q: 'Where will you deliver?',
+    a: `Hotels, homes, offices and airports. Delivery is ${deliverySummary}, charged once per rental rather than per journey. Anywhere beyond those two areas we quote before you book, so the figure is agreed in advance.`,
+  },
+  {
+    q: 'What do I need to rent?',
+    a: `You must be ${minimumAge} or over and hold a valid driver's licence. ${insurance.summary} A refundable ${deposit.display} deposit confirms the booking and is returned after the car is inspected on return.`,
+  },
+  {
+    q: 'Is the car in the photos the car I get?',
+    a: 'Yes. Every listing shows the actual vehicle we deliver, not a stock image of the model, and most of them are one-of-one in our Miami fleet. What you see on the page is what turns up.',
+  },
+  {
+    q: 'How does the mileage allowance work?',
+    a: `You get ${mileage.includedPerDay} miles a day, pooled over the whole booking instead of capped daily. Three days is ${mileage.includedPerDay * 3} miles to spend however you like, and only the total at return is measured against it.`,
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
 ---
 <LandingLayout
   title="Exotic Car Rental Miami | Lussaro Collection"
   description="Rent Miami exotic cars with Lussaro Collection. Elite supercars, luxury service, and VIP delivery across South Beach and Brickell."
   h1="Exotic Car Rental Miami"
-  intro="Discover Miami from behind the wheel of a premium exotic car. Lussaro Collection makes every South Beach drive and Brickell arrival unforgettable with supercar rentals that combine performance, prestige, and concierge-level service."
-  ctaTitle="Reserve your Miami exotic rental"
+  intro="Six cars, delivered. Tell us the dates and where you are, and the car arrives at your hotel, home or the airport."
+  ctaTitle="Reserve your Miami exotic"
+  schema={[faqSchema]}
 >
-  <h2>Miami Exotic Car Rentals for South Beach and Brickell</h2>
-  <p>Miami deserves extraordinary transportation. Our exotic fleet is built for the city’s most iconic destinations, from Ocean Drive’s beachfront energy to Brickell’s refined nightlife and business district. Every rental includes concierge delivery, vehicle orientation, and direct WhatsApp support.</p>
+  <h2>Renting an exotic car in Miami</h2>
+  <p>We keep a deliberately small fleet — six cars — and bring them to you rather than asking you to come to a counter. Rates begin at ${low} a day for the Mercedes-Benz S580 and reach ${high} for the Ferrari SF90, with {mileage.includedPerDay} miles a day included on every one. Same-day is often possible; message us and you will usually have an answer in minutes.</p>
+  <p>Delivery covers hotels, homes, offices and both airports — {deliverySummary}, charged once per rental rather than per trip. Deposits, cancellation and the rest sit on the <a href="/pricing">rate card</a>.</p>
 
-  <h3>A Curated Fleet of High-Performance Vehicles</h3>
-  <p>Choose from Lamborghini, Rolls-Royce, Mercedes-AMG, and other premium supercars that deliver bold Miami style and instant presence. Each vehicle is prepared to exacting standards so you can enjoy a smooth, confident drive.</p>
-  <p>If you want an even more focused experience, see our dedicated <a href="/lamborghini-rental-miami">Lamborghini rental page</a> and explore the commanding <a href="/g-wagon-rental-miami">G-Wagon rental page</a> for Miami’s luxury SUV enthusiasts.</p>
-
-  <h3>Designed for Seamless Miami Travel</h3>
-  <p>Our process is built for speed and reliability. Book with WhatsApp, receive white-glove delivery anywhere in Miami, and enjoy a premium rental without the usual complexity. We handle the logistics so you can focus on the drive.</p>
-  <p>From short beach trips along Collins Avenue to executive travel in Brickell, Lussaro Collection delivers a polished experience with a personal touch.</p>
-
-  <h3>Why Exotic Car Rental is the Best Way to Experience Miami</h3>
+  <h2>The fleet at a glance</h2>
   <ul>
-    <li>Instant luxury visibility in South Beach and Miami Beach.</li>
-    <li>VIP-ready vehicles for nightlife, special events, and photo shoots.</li>
-    <li>Premium service, clear pricing, and fast booking without the wait.</li>
-    <li>Full support from booking through return, including insurance verification and delivery details.</li>
+    <li><a href="/cars/lamborghini-urus">Lamborghini Urus</a> — the Lamborghini you can still put luggage and passengers in, with the ride height to clear a hotel ramp.</li>
+    <li><a href="/cars/mercedes-maybach-gls-600">Mercedes-Maybach GLS 600</a> — built around its back seat, with reclining executive chairs, for the trips where you would rather be driven.</li>
+    <li><a href="/cars/mercedes-s580">Mercedes-Benz S580</a> — our most accessible car and the quietest, for occasions that reward arriving well rather than arriving loudly.</li>
+    <li><a href="/cars/sf90">Ferrari SF90</a> — 986 hp of plug-in hybrid and the fastest thing we run, with two seats and no pretence of practicality.</li>
+    <li><a href="/cars/huracan-evo">Lamborghini Huracan EVO</a> — a naturally aspirated V10 with no hybrid and no quiet mode, which is the entire point of it.</li>
+    <li><a href="/cars/rolls-royce-cullinan">Rolls-Royce Cullinan</a> — rear-hinged coach doors and a V12 you cannot hear, for arrivals that are themselves the occasion.</li>
   </ul>
+
+  <h2>How booking works</h2>
+  <ol>
+    <li><strong>Message us.</strong> WhatsApp or call with the car and your dates.</li>
+    <li><strong>We deliver.</strong> To your hotel, home, office or the airport, at the agreed time.</li>
+    <li><strong>You drive.</strong> Keys, a full walkaround of the car, and support for the length of the rental.</li>
+  </ol>
+
+  <h2>Where we deliver</h2>
+  <p>Two neighbourhoods have their own pages: <a href="/exotic-car-rental-south-beach">South Beach</a> for the Ocean Drive and Collins Avenue hotels, <a href="/exotic-car-rental-brickell">Brickell</a> for the residences and offices. By category: <a href="/lamborghini-rental-miami">Lamborghini</a>, <a href="/luxury-suv-rental-miami">luxury SUV</a>, <a href="/rolls-royce-rental-miami">Rolls-Royce</a>, <a href="/g-wagon-rental-miami">G-Wagon</a>, or the whole <a href="/fleet">fleet</a>.</p>
+
+  <h2>Common questions</h2>
+  {faqs.map((f) => (
+    <>
+      <h3>{f.q}</h3>
+      <p>{f.a}</p>
+    </>
+  ))}
 </LandingLayout>

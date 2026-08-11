@@ -102,7 +102,7 @@ export const carContent = {
   },
 
   'huracan-evo': {
-    useCases: `The Huracan EVO is the pure one — a naturally aspirated V10 with no hybrid assistance and no quiet mode, which is exactly why people book it. Two seats, a small front boot, and a noise from cold start that carries down the block. That makes it right for an evening out, a photo or video shoot, or a weekend where the drive is the plan. It is the wrong car for luggage or a group. If you want the same theatre with room for people and cases, look at the Urus.`,
+    useCases: `The Huracan EVO is the pure one — a naturally aspirated V10 with no hybrid assistance and no quiet mode, which is exactly the point of it. Two seats, a small front boot, and a noise from cold start that carries down the block. That makes it right for an evening out, a photo or video shoot, or a weekend where the drive is the plan. It is the wrong car for luggage or a group. If you want the same theatre with room for people and cases, look at the Urus.`,
     goodToKnow: [
       'Strictly two seats — driver plus one passenger is the hard maximum, with no rear bench.',
       'Luggage goes in a small front trunk and nowhere else. Plan on about one carry-on plus a soft bag.',
@@ -121,7 +121,7 @@ export const carContent = {
   },
 
   'rolls-royce-cullinan': {
-    useCases: `The Cullinan is the one for arrivals that are the event — weddings, anniversaries, the dinner you want remembered. Rear-hinged coach doors open backwards so you step out facing forward rather than clambering, and all four doors close at the touch of a button. Underneath sits a 6.75-litre twin-turbo V12 that is quieter at speed than most cars are parked. It also happens to be practical, with about 21 cubic feet behind the rear seats, but nobody books it for the boot.`,
+    useCases: `The Cullinan is the one for arrivals that are the event — weddings, anniversaries, the dinner you want remembered. Rear-hinged coach doors open backwards so you step out facing forward rather than clambering, and all four doors close at the touch of a button. Underneath sits a 6.75-litre twin-turbo V12 that is quieter at speed than most cars are parked. It also happens to be practical, with about 21 cubic feet behind the rear seats, though the boot is not the reason to choose it.`,
     goodToKnow: [
       'The rear doors are rear-hinged coach doors, and all four close powered at the touch of a button.',
       'A two-piece powered tailgate — Rolls-Royce calls it The Clasp — with roughly 21 cubic feet behind the rear seats.',
@@ -131,7 +131,7 @@ export const carContent = {
     ],
     faqQuestion: 'How do the Rolls-Royce Cullinan coach doors work?',
     faqAnswer:
-      'The rear doors are hinged at the back, so they open away from you and you step out facing forward instead of twisting. All four doors then close under power at the touch of a button, so nobody has to reach out and pull. It is the detail people notice most on arrival.',
+      'The rear doors are hinged at the back, so they open away from you and you step out facing forward instead of twisting. All four doors then close under power at the touch of a button, so nobody has to reach out and pull. It is the detail that makes an arrival feel considered.',
     siblings: ['mercedes-maybach-gls-600', 'mercedes-s580'],
     category: { href: '/rolls-royce-rental-miami', label: 'Rolls-Royce rental in Miami' },
     realMoment: '',

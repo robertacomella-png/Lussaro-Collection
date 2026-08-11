@@ -1,29 +1,69 @@
 ---
 import LandingLayout from '@/layouts/LandingLayout.astro';
+import { rentalTerms } from '@/data/rental-terms';
+import { fleet } from '@/data/fleet';
+
+const urus = fleet.find((c) => c.name === 'Lamborghini Urus');
+const evo = fleet.find((c) => c.name === 'Huracan EVO');
+const { deposit, mileage, minimumAge } = rentalTerms;
+
+const faqs = [
+  {
+    q: 'Urus or Huracan EVO — which should I book?',
+    a: `Count your passengers first. The Urus has four doors, a boot and enough ground clearance for hotel ramps, so it copes with an airport pickup or a group. The Huracan seats two and swallows about one carry-on. Pick it when the drive itself is the plan.`,
+  },
+  {
+    q: 'Can I put suitcases in the Huracan EVO?',
+    a: 'Barely. Storage is a small front compartment with no rear cargo area at all, so budget for roughly one carry-on plus a soft bag between two people. Arriving from the airport with full-size luggage is a job for the Urus.',
+  },
+  {
+    q: 'What does a Lamborghini rental include?',
+    a: `Both cars come with ${mileage.includedPerDay} miles for each day of the booking, pooled rather than capped daily, and both take the same refundable ${deposit.display} deposit. You need to be ${minimumAge} or over with your own qualifying insurance.`,
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
 ---
 <LandingLayout
   title="Lamborghini Rental Miami | Lussaro Collection"
   description="Rent Lamborghinis in Miami with Lussaro Collection. Select from Huracán, STO, Urus and more for premium exotic car experiences."
   h1="Lamborghini Rental Miami"
-  intro="From South Beach to Brickell, Miami is the perfect stage for Lamborghini performance and design. Lussaro Collection brings top-level Lamborghini rentals to the city with a fleet curated for elegance, speed, and unforgettable presence."
-  match={["lamborghini"]}
+  intro="Two Lamborghinis, and they are not interchangeable. One is an SUV you could genuinely use all week; the other is a two-seat V10 that exists to be driven."
+  only={["lamborghini-urus", "huracan-evo"]}
+  fullFleetLink
   ctaTitle="Reserve your Lamborghini"
+  schema={[faqSchema]}
 >
-  <h2>High-Performance Lamborghini Rentals in Miami</h2>
-  <p>A Lamborghini rental in Miami means more than a powerful drive — it means amplifying every moment. Our collection includes models like the Huracán EVO, Huracán STO, and Urus so you can tailor your rental to the exact level of performance and luxury you want.</p>
+  <h2>Two very different Lamborghinis</h2>
+  <p>Most people picture the coupe. Worth knowing the two cars we run solve opposite problems, and the wrong choice is the one that ruins the day.</p>
 
-  <h3>Miami Luxury Made Effortless</h3>
-  <p>We simplify the Lamborghini rental process with responsive WhatsApp booking, hand-delivery to your Miami destination, and full support from reservation to return. Whether you’re heading to a South Beach dinner or a Brickell event, your Lamborghini arrives ready.</p>
-  <p>If you want a different kind of premium presence, our <a href="/g-wagon-rental-miami">G-Wagon rentals</a> offer commanding SUV style for Miami’s most elite settings.</p>
+  <h3><a href="/cars/lamborghini-urus">Lamborghini Urus</a> — ${urus.price.toLocaleString()}/day</h3>
+  <p>Four doors, a proper boot of around 616 litres, and the ride height to get over a speed bump or up a hotel ramp without drama. It is the only car we run that carries people and cases while still sounding like a Lamborghini, courtesy of a twin-turbo V8 driving all four wheels. Rated {urus.power} hp with a {urus.zeroToSixty} sprint to 60 mph.</p>
 
-  <h3>Why Lamborghini is the Right Miami Choice</h3>
+  <h3><a href="/cars/huracan-evo">Lamborghini Huracan EVO</a> — ${evo.price.toLocaleString()}/day</h3>
+  <p>Strictly two seats, a small front trunk, and a naturally aspirated V10 with no hybrid assistance and no quiet mode — it is loud from cold start, by design. The front splitter sits low, so steep driveways want a slow, angled approach. It is not a sensible car, and does not pretend to be.</p>
+
+  <h2>Choosing by occasion</h2>
   <ul>
-    <li>Exceptional acceleration and handling for Miami’s open roads.</li>
-    <li>Bold design that matches South Beach nightlife and Brickell sophistication.</li>
-    <li>Fully serviced vehicles with premium interiors and modern technology.</li>
-    <li>Concierge rental support and flexible delivery across the city.</li>
+    <li><strong>Airport arrival with luggage</strong> — Urus, comfortably.</li>
+    <li><strong>Dinner reservation for four</strong> — Urus again; the Huracan physically cannot.</li>
+    <li><strong>A photo or video shoot</strong> — the Huracan, for the shape and the noise.</li>
+    <li><strong>A weekend where the driving is the point</strong> — Huracan.</li>
+    <li><strong>One car for a whole week</strong> — Urus, without hesitating.</li>
   </ul>
 
-  <h3>Available Lamborghini Models</h3>
-  <p>Each Lamborghini is prepared for Miami’s lifestyle and performance needs. Drive the Huracán EVO for razor-sharp precision, the STO for race-inspired dynamics, or the Urus for thrilling luxury SUV capability.</p>
+  <h2>Terms, briefly</h2>
+  <p>Each booking carries {mileage.includedPerDay} miles per day, added up across the rental rather than reset every morning. A refundable {deposit.display} deposit is taken when the booking is confirmed and returned after the car is checked over on the way back. Drivers must be {minimumAge} or over, hold a valid licence, and carry insurance covering the vehicle — or buy a daily policy from us. Multi-day rates and every other figure are on the <a href="/pricing">rate card</a>. For the rest of what we run, start at <a href="/exotic-car-rental-miami">exotic car rental in Miami</a>.</p>
+
+  <h2>Questions</h2>
+  {faqs.map((f) => (
+    <>
+      <h3>{f.q}</h3>
+      <p>{f.a}</p>
+    </>
+  ))}
 </LandingLayout>
