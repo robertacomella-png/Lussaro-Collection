@@ -48,7 +48,12 @@ export const business = {
   whatsapp: 'https://wa.me/16452487305',
   instagram: 'https://instagram.com/lussarocollection',
   googleMaps: 'https://maps.app.goo.gl/9nEuwbuyZzhGTQscA',
-  googleReviewLink: 'https://share.google/uKrh3moHgWOoEmRA',
+
+  // Two different destinations, easy to mix up:
+  // googleProfileLink  → the profile, for READING all reviews.
+  // googleReviewLink   → the write-a-review form, for LEAVING one.
+  googleProfileLink: 'https://share.google/v2UH8foV5oPBRQmxg',
+  googleReviewLink: 'https://g.page/r/CZ5wPpz0J7B1EBM/review',
 };
 
 // --- derived helpers, so consumers don't re-implement formatting -------------

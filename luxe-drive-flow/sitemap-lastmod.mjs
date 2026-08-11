@@ -37,6 +37,8 @@ const sourcesFor = (pathname) => {
   if (p.startsWith('cars/')) {
     return ['src/pages/cars/[slug].astro', 'src/data/fleet.js', 'src/data/cars.js'];
   }
+  // /reviews changes when a review is added, not when its template is touched.
+  if (p === 'reviews') return ['src/pages/reviews.astro', 'src/data/reviews.js'];
   return [`src/pages/${p}.astro`];
 };
 

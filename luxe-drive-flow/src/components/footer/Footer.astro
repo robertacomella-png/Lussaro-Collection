@@ -20,6 +20,7 @@ const year = new Date().getFullYear();
         <li><SmartLink href="/pricing" class="hover:text-white transition-colors">Pricing &amp; policies</SmartLink></li>
         <li><SmartLink href="/chauffeur-service-miami" class="hover:text-white transition-colors">Chauffeur service</SmartLink></li>
         <li><SmartLink href="/gallery" class="hover:text-white transition-colors">Photo gallery</SmartLink></li>
+        <li><SmartLink href="/reviews" class="hover:text-white transition-colors">Reviews</SmartLink></li>
         <li><SmartLink href="/about" class="hover:text-white transition-colors">Our story</SmartLink></li>
         <li><SmartLink href="/contact" class="hover:text-white transition-colors">Get in touch</SmartLink></li>
         <li><SmartLink href="/exotic-car-rental-miami" class="hover:text-white transition-colors">Exotic car rental in Miami</SmartLink></li>
@@ -58,7 +59,9 @@ const year = new Date().getFullYear();
       <h4 class="text-white text-sm uppercase tracking-[0.25em] mb-4">Social</h4>
       <ul class="space-y-3 text-white/60 text-sm">
         <li><a href={business.instagram} target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">Instagram</a></li>
-        <li><a href={business.googleReviewLink} target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">Google Reviews</a></li>
+        {/* Profile link, not the write-a-review form — a link labelled
+            "Google Reviews" should go somewhere you read them. */}
+        <li><a href={business.googleProfileLink} target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">Google Reviews</a></li>
       </ul>
     </div>
   </div>
