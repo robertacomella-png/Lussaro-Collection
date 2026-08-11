@@ -10,7 +10,7 @@
 // two competing business entities on the same page would have been worse than
 // none, so the old one was removed rather than left in place.
 import { fleet } from '@/data/fleet';
-import { business } from '@/data/business';
+import { business, postalAddress } from '@/data/business';
 
 // Base URL comes from `site` in astro.config.mjs so the domain can never drift
 // out of sync with canonical/sitemap URLs. Astro.site includes a trailing slash.
@@ -39,11 +39,12 @@ const HOURS = [...byWindow.values()].map((w) => ({
   closes: w.closes,
 }));
 
-// The brand mark, used as the Organization logo. The LocalBusiness `image` is
+// The brand mark, used as the Organization `logo`. The `image` on both nodes is
 // deliberately a photograph instead: Google expects a real image there, and a
-// square logo is not one.
+// square logo is not one. The Organization keeps both — `logo` for the mark,
+// `image` for the photo — which is what Google's Organization guidance asks for.
 const LOGO = `${BASE}favicon.png`;
-const BUSINESS_IMAGE = `${BASE}preview.png`;
+const PHOTO = `${BASE}preview.png`;
 
 const graph = {
   '@context': 'https://schema.org',
@@ -55,8 +56,10 @@ const graph = {
       legalName: business.legalName,
       url: BASE,
       logo: LOGO,
+      image: PHOTO,
       telephone: business.phone,
       ...(business.email ? { email: business.email } : {}),
+      address: postalAddress,
       sameAs: [business.instagram, business.googleMaps],
     },
     {
@@ -65,19 +68,12 @@ const graph = {
       name: `${business.brandName} – Exotic Car Rental Miami`,
       parentOrganization: { '@id': `${BASE}#org` },
       url: BASE,
-      image: BUSINESS_IMAGE,
+      image: PHOTO,
       telephone: business.phone,
       ...(business.email ? { email: business.email } : {}),
       priceRange,
       currenciesAccepted: 'USD',
-      address: {
-        '@type': 'PostalAddress',
-        streetAddress: business.street,
-        addressLocality: business.city,
-        addressRegion: business.region,
-        postalCode: business.postalCode,
-        addressCountry: business.country,
-      },
+      address: postalAddress,
       areaServed: [
         { '@type': 'City', name: 'Miami' },
         { '@type': 'Place', name: 'Miami Beach' },

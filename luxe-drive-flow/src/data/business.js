@@ -59,6 +59,20 @@ export const mailHref = business.email ? `mailto:${business.email}` : null;
 /** "900 Biscayne Blvd, Miami, FL 33132" */
 export const addressLine = `${business.street}, ${business.city}, ${business.region} ${business.postalCode}`;
 
+/**
+ * The address as a schema.org PostalAddress. Both JSON-LD nodes that carry an
+ * address (#org and #business) import this rather than restating the fields, so
+ * the two can never disagree.
+ */
+export const postalAddress = {
+  '@type': 'PostalAddress',
+  streetAddress: business.street,
+  addressLocality: business.city,
+  addressRegion: business.region,
+  postalCode: business.postalCode,
+  addressCountry: business.country,
+};
+
 /** "Mon–Sun 09:00–22:00" when every day is identical, else a per-day list. */
 export const hoursSummary = (() => {
   const { opens, closes } = business.hours[0];
