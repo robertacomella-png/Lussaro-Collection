@@ -70,7 +70,14 @@ const breadcrumb = breadcrumbFor(Astro.url.pathname, breadcrumbName);
       content="Miami luxury car rental, exotic car rental Miami, Lamborghini rental Miami, G-Wagon rental Miami, Mercedes-AMG G63, luxury SUV rental"
     />
     <link rel="canonical" href={canonical} />
-    <link rel="icon" type="image/png" href="/favicon.png" />
+    {/* /favicon.ico first: browsers and Googlebot request that path by default,
+        and it 404'd until now. The 96px PNG is declared because Google asks for
+        a square favicon whose size is a multiple of 48 — the 512px master is
+        not one. Regenerate all of these with scripts/make-favicon.mjs. */}
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#0a0a0a" />

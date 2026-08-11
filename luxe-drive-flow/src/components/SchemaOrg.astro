@@ -60,7 +60,14 @@ const graph = {
       telephone: business.phone,
       ...(business.email ? { email: business.email } : {}),
       address: postalAddress,
-      sameAs: [business.instagram, business.googleMaps],
+      // Every profile of this business that lives somewhere else. Ordered
+      // most-authoritative first. Filtered so a profile that is not set yet
+      // drops out rather than emitting null into the array.
+      sameAs: [
+        business.instagram,
+        business.googleProfileLink,
+        business.googleMaps,
+      ].filter(Boolean),
     },
     {
       '@type': ['AutoRental', 'LocalBusiness'],

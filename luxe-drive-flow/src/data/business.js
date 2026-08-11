@@ -46,7 +46,9 @@ export const business = {
   ],
 
   whatsapp: 'https://wa.me/16452487305',
-  instagram: 'https://instagram.com/lussarocollection',
+  // Canonical www form — instagram.com/... 301s here, and sameAs should carry
+  // the URL the profile actually lives at rather than one that redirects.
+  instagram: 'https://www.instagram.com/lussarocollection',
   googleMaps: 'https://maps.app.goo.gl/9nEuwbuyZzhGTQscA',
 
   // Two different destinations, easy to mix up:
