@@ -1,31 +1,35 @@
 ---
 import LandingLayout from '@/layouts/LandingLayout.astro';
+import { business, whatsappWith } from '@/data/business';
+
+// We do not keep a G63 in the standing fleet. Every mention on this page is
+// framed as sourced-on-request; nothing here promises a car we hold.
+const wa = whatsappWith("Hi, I'd like to check G63 availability and rates for my dates.");
 ---
 <LandingLayout
   title="G-Wagon Rental Miami | Lussaro Collection"
-  description="Rent a Mercedes-AMG G63 in Miami from Lussaro Collection. Bold luxury SUV rental for South Beach, Brickell events, nightlife, and elite style."
+  description="Mercedes-AMG G63 in Miami, sourced on request for your dates. Message us on WhatsApp for availability and rates, or browse the cars we keep on hand."
   h1="G-Wagon Rental Miami"
-  intro="Drive Miami in a Mercedes-AMG G63 and own every arrival. The G-Wagon blends commanding luxury with off-road heritage, making it an iconic choice for South Beach, Brickell, and every VIP occasion in the city."
+  intro="The Mercedes-AMG G63 is sourced on request for your dates rather than kept on the lot. Message us on WhatsApp and we will confirm availability and rates."
   fleetHeading="Also in our Miami fleet"
-  ctaTitle="Reserve your G-Wagon"
+  ctaTitle="Ask about the G-Wagon"
 >
-  <h2>Miami’s Premier G-Wagon Rental Experience</h2>
-  <p>The Mercedes-AMG G63 delivers unmatched presence on Miami’s most exclusive streets. From a commanding South Beach arrival to head-turning moments in Brickell, the G-Wagon is a statement of style, performance, and luxury.</p>
+  <h2>How a G-Wagon booking works here</h2>
+  <p>We do not hold a Mercedes-AMG G63 in the standing fleet. When someone wants one we source it for their dates, which means availability and price depend on the window you need rather than on a published rate. <a href={wa}>Message us on WhatsApp</a> with your dates and we will come back with both.</p>
+  <p>If your dates are fixed and short-notice, say so up front — sourcing takes longer than handing over a car we already have, and it is better to know early whether it is realistic.</p>
 
-  <h3>Built for VIP Miami Travel</h3>
-  <p>When you rent with Lussaro Collection, your G-Wagon comes with full support and delivery anywhere in Miami. We handle logistics, insurance checks, and vehicle readiness so you can focus on the experience.</p>
-  <p>If you prefer a high-performance exotic sports car, check our <a href="/lamborghini-rental-miami">Lamborghini rentals</a> for a different kind of Miami adrenaline.</p>
-
-  <h3>Why Choose the G-Wagon in Miami</h3>
+  <h3>What the G63 offers</h3>
   <ul>
-    <li>Unrivaled curb appeal for high-profile events and photo shoots.</li>
-    <li>Powerful twin-turbo V8 performance with iconic AMG engineering.</li>
-    <li>Spacious luxury interior for comfort across every Miami neighborhood.</li>
-    <li>Premium service and fast WhatsApp booking for last-minute plans.</li>
+    <li>Unmistakable boxy silhouette, and the curb appeal that comes with it.</li>
+    <li>Twin-turbo V8 power with AMG engineering.</li>
+    <li>A tall, upright cabin that seats four in comfort.</li>
+    <li>Ride height that shrugs off ramps and speed bumps.</li>
   </ul>
 
-  <p>For the cars we do run, see <a href="/exotic-car-rental-miami">exotic car rental in Miami</a> or the full <a href="/fleet">fleet</a>.</p>
+  <h3>Available now instead</h3>
+  <p>If you would rather book something today, the cars above are ours and ready on live dates. The <a href="/cars/mercedes-maybach-gls-600">Maybach GLS 600</a> is the closest in spirit — a large Mercedes SUV built around its back seat — and the <a href="/cars/lamborghini-urus">Lamborghini Urus</a> covers the same want-presence-and-space brief with considerably more noise. Both appear on our <a href="/luxury-suv-rental-miami">luxury SUV comparison</a>.</p>
+  <p>For the full picture, see <a href="/exotic-car-rental-miami">exotic car rental in Miami</a> or the complete <a href="/fleet">fleet</a>.</p>
 
-  <h3>Rental Confidence for South Beach and Brickell</h3>
-  <p>Lussaro Collection is focused on reliability, transparency, and a high-end customer experience. Your G-Wagon rental includes clear terms, professional delivery, and the support needed for a confident Miami adventure.</p>
+  <h3>What you can rely on</h3>
+  <p>Whatever we source, the terms are the ones published on our <a href="/pricing">rate card</a>: the deposit, the mileage allowance and the delivery fees do not change because a car came in specially. You will have the rate in writing before anything is committed.</p>
 </LandingLayout>
