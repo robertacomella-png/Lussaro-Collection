@@ -39,8 +39,11 @@ const HOURS = [...byWindow.values()].map((w) => ({
   closes: w.closes,
 }));
 
-// No logo asset exists in the repo, so favicon.png stands in for logo/image.
+// The brand mark, used as the Organization logo. The LocalBusiness `image` is
+// deliberately a photograph instead: Google expects a real image there, and a
+// square logo is not one.
 const LOGO = `${BASE}favicon.png`;
+const BUSINESS_IMAGE = `${BASE}preview.png`;
 
 const graph = {
   '@context': 'https://schema.org',
@@ -62,7 +65,7 @@ const graph = {
       name: `${business.brandName} – Exotic Car Rental Miami`,
       parentOrganization: { '@id': `${BASE}#org` },
       url: BASE,
-      image: LOGO,
+      image: BUSINESS_IMAGE,
       telephone: business.phone,
       ...(business.email ? { email: business.email } : {}),
       priceRange,
