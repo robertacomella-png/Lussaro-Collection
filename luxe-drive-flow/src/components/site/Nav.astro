@@ -222,12 +222,21 @@ const wa = business.whatsapp;
   }
   document.addEventListener('astro:page-load', lussaroNavPill);
 
+  // Hide-on-scroll-down, except on the homepage where the nav stays put.
+  // The check is inside the handler rather than captured once, because
+  // view-transition navigation changes the path without reloading the script.
   (function () {
     let last = window.scrollY;
+    const onHome = () => (window.location.pathname.replace(/\/+$/, '') || '/') === '/';
     window.addEventListener('scroll', () => {
       const nav = document.getElementById('site-nav');
       if (!nav) return;
       const y = window.scrollY;
+      if (onHome()) {
+        nav.style.transform = 'translateY(0)';
+        last = y;
+        return;
+      }
       nav.style.transform = y > last && y > 80 ? 'translateY(-100%)' : 'translateY(0)';
       last = y;
     }, { passive: true });
