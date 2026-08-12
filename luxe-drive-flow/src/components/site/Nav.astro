@@ -4,43 +4,114 @@ import { Menu, X, Phone, MessageCircle } from 'lucide-react';
 import { business, telHref, whatsappWith } from '@/data/business';
 const wa = business.whatsapp;
 ---
-<nav id="site-nav" class="fixed top-0 inset-x-0 z-50 backdrop-blur-xl bg-black/40 border-b border-white/[0.06] transition-transform duration-300">
-  <div class="max-w-7xl mx-auto px-5 md:px-8 h-14 md:h-16 flex items-center justify-between">
-    {/* The mark, set as an iOS app icon: a squircle at ~22.5% of its own width,
-        which is the ratio Apple's icon grid uses. Decorative — alt="" and
-        aria-hidden, because the wordmark beside it already names the link. */}
-    <SmartLink href="/" class="inline-flex items-center gap-2.5 font-display text-base md:text-lg font-semibold tracking-tight text-white">
-      <img
-        src="/favicon-96.png"
-        alt=""
+{/* No bar at any width: the pills float free and each carries its own frosted
+    fill, so the glass follows the shape instead of a full-width slab. Desktop
+    gets three — wordmark, links, call. Mobile gets two — wordmark and menu —
+    since a six-item capsule cannot fit a phone.
+    Everything stays dark-translucent: a white bar was tried and abandoned, since
+    a translucent light fill inherits what is behind it and measured 0.08
+    luminance over the black sections, taking its links to 1.7:1. Black over
+    anything darkens, so white ink always works. backdrop-saturate keeps the
+    colour behind the glass rich rather than grey — Apple's frosted-bar trick. */}
+<nav
+  id="site-nav"
+  class="fixed top-0 inset-x-0 z-50 transition-transform duration-300"
+>
+  {/* Explicit desktop height. Once #nav-group is absolutely positioned and the
+      hamburger is md:hidden, nothing is left in flow — the container collapsed
+      to its padding, so top-1/2 landed at ~16px and the 56px pills were centred
+      on it at -11px, clipped off the top of the screen. 88px = the tallest pill
+      (56) plus 16px of air above and below. */}
+  <div class="relative max-w-7xl mx-auto px-4 md:px-8 h-[72px] md:h-[88px] flex items-center justify-between md:justify-center">
+    {/* THE ANCHOR. On desktop this wrapper is pinned to the page's centre line
+        and its width IS the links capsule, because the wordmark and the call
+        button are taken out of flow and hung off its edges (right-full /
+        left-full). So the capsule is what sits dead centre, and the other two
+        follow it — rather than the capsule drifting to balance their widths.
+        On mobile the wrapper is a plain flex box holding only the wordmark;
+        the capsule and call button are hidden and the hamburger sits opposite. */}
+    <div
+      id="nav-group"
+      class="flex items-center gap-2 min-[1150px]:gap-0 min-[1150px]:absolute min-[1150px]:left-1/2 min-[1150px]:top-1/2 min-[1150px]:-translate-x-1/2 min-[1150px]:-translate-y-1/2"
+    >
+      {/* Wordmark in its own pill. The mark is set as an iOS app icon: a squircle
+          at ~22.5% of its own width, the ratio Apple's icon grid uses. Decorative
+          — alt="" and aria-hidden, because the wordmark beside it names the link. */}
+      {/* A circle at rest, mirroring the call button. On hover the wordmark
+          unrolls: the text's max-width and opacity animate open, so the pill
+          grows LEFT — its right edge is pinned to the capsule by right-full, and
+          the capsule never moves. Only from 1150px up, where the pill is out of
+          flow; in the 768–1149 fallback the trio is in flow and an expanding
+          logo would shove the capsule sideways on every hover.
+          max-width rather than width because width:auto cannot be transitioned. */}
+      <SmartLink
+        href="/"
+        class="group inline-flex items-center shrink-0 whitespace-nowrap font-display text-base md:text-lg font-semibold tracking-tight text-white
+               min-[1150px]:absolute min-[1150px]:right-full min-[1150px]:top-1/2 min-[1150px]:-translate-y-1/2 min-[1150px]:mr-2 min-[1150px]:w-max
+               h-12 pr-4 md:h-14 md:p-0 min-[1150px]:hover:pr-6
+               rounded-full bg-white/[0.12] backdrop-blur-2xl backdrop-saturate-[180%] backdrop-brightness-[0.78] ring-1 ring-white/20 shadow-[inset_0_1px_0_rgba(255,255,255,0.35),inset_0_-1px_0_rgba(255,255,255,0.06),0_10px_40px_rgba(0,0,0,0.28)]
+               transition-[padding] duration-[420ms] ease-[cubic-bezier(.22,1,.36,1)]"
+      >
+        {/* The mark IS the collapsed pill: a 56px circle with no padding around
+            it, so at rest the pill is nothing but the logo. It keeps that exact
+            diameter when the pill expands — shrink-0 stops the growing text from
+            squeezing it, and its size is fixed rather than relative. */}
+        <img
+          src="/favicon-96.png"
+          alt=""
+          aria-hidden="true"
+          width="56"
+          height="56"
+          class="w-12 h-12 md:w-14 md:h-14 rounded-full shrink-0 object-cover ring-1 ring-white/10 shadow-[0_2px_8px_rgba(0,0,0,0.45)]"
+        />
+        <span
+          class="ml-3 overflow-hidden whitespace-nowrap
+                 md:ml-0 md:max-w-0 md:opacity-0
+                 min-[1150px]:group-hover:ml-3 min-[1150px]:group-hover:max-w-[420px] min-[1150px]:group-hover:opacity-100
+                 transition-[max-width,opacity,margin] duration-[420ms] ease-[cubic-bezier(.22,1,.36,1)]"
+        ><span class="text-[#ff1516]">LUSSARO</span>COLLECTION</span>
+      </SmartLink>
+
+      {/* Links capsule. #nav-pill is a single element that slides and resizes
+          behind whichever item is active or hovered — one moving piece rather than
+          six backgrounds fading, which is what makes the motion read as
+          continuous. Positioned by the script below. */}
+      <div
+        id="nav-capsule"
+        class="hidden md:flex relative items-center shrink-0 md:h-14 rounded-full p-1.5 text-[15px] text-white
+               bg-white/[0.12] backdrop-blur-2xl backdrop-saturate-[180%] backdrop-brightness-[0.78] ring-1 ring-white/20 shadow-[inset_0_1px_0_rgba(255,255,255,0.35),inset_0_-1px_0_rgba(255,255,255,0.06),0_10px_40px_rgba(0,0,0,0.28)]"
+      >
+      <span
+        id="nav-pill"
         aria-hidden="true"
-        width="32"
-        height="32"
-        class="w-7 h-7 md:w-8 md:h-8 rounded-[22.5%] shrink-0 ring-1 ring-white/10 shadow-[0_2px_8px_rgba(0,0,0,0.45)]"
-      />
-      <span><span class="text-[#ff1516]">LUSSARO</span>COLLECTION</span>
-    </SmartLink>
+        class="absolute left-0 top-1.5 bottom-1.5 rounded-full bg-white opacity-0 transition-[transform,width,opacity] duration-[350ms] ease-[cubic-bezier(.22,1,.36,1)] pointer-events-none"
+      ></span>
+      <SmartLink href="/fleet" data-nav-item class="relative z-10 px-5 py-2.5 rounded-full transition-colors duration-200">Fleet</SmartLink>
+      <SmartLink href="/chauffeur-service-miami" data-nav-item class="relative z-10 px-5 py-2.5 rounded-full transition-colors duration-200">Chauffeur</SmartLink>
+      <SmartLink href="/gallery" data-nav-item class="relative z-10 px-5 py-2.5 rounded-full transition-colors duration-200">Gallery</SmartLink>
+      <SmartLink href="/reviews" data-nav-item class="relative z-10 px-5 py-2.5 rounded-full transition-colors duration-200">Reviews</SmartLink>
+        <SmartLink href="/about" data-nav-item class="relative z-10 px-5 py-2.5 rounded-full transition-colors duration-200">About</SmartLink>
+      </div>
 
-    <!-- desktop links -->
-    <div class="hidden md:flex items-center gap-7 text-sm text-white/60">
-      <SmartLink href="/fleet" class="hover:text-white transition">Fleet</SmartLink>
-      <SmartLink href="/chauffeur-service-miami" class="hover:text-white transition">Chauffeur</SmartLink>
-      <SmartLink href="/gallery" class="hover:text-white transition">Gallery</SmartLink>
-      <SmartLink href="/reviews" class="hover:text-white transition">Reviews</SmartLink>
-      <a href="/#process" class="hover:text-white transition">How it works</a>
-      <SmartLink href="/about" class="hover:text-white transition">About</SmartLink>
-    </div>
-
-    <!-- desktop CTAs -->
-    <div class="hidden md:flex items-center gap-2.5">
-      <a href={telHref} data-cta="nav" class="inline-flex items-center border border-white/15 text-white text-sm px-4 py-2 rounded-full hover:border-[#ff1516] hover:text-[#ff1516] transition">Call</a>
-      <a href={wa} data-cta="nav" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-white text-black text-sm px-5 py-2 rounded-full font-medium hover:bg-[#ff1516] transition">
-        Book <span class="w-1.5 h-1.5 rounded-full bg-[#25D366]"></span>
+      {/* Call, as a circle, hung off the capsule's right edge. Icon-only, so it
+          carries an aria-label and a title — a bare phone glyph tells a screen
+          reader nothing on its own. */}
+      <a
+        href={telHref}
+        data-cta="nav"
+        aria-label={`Call ${business.phoneDisplay}`}
+        title={`Call ${business.phoneDisplay}`}
+        class="hidden md:inline-flex shrink-0 w-14 h-14 items-center justify-center rounded-full
+               min-[1150px]:absolute min-[1150px]:left-full min-[1150px]:top-1/2 min-[1150px]:-translate-y-1/2 min-[1150px]:ml-2
+               bg-white/[0.12] backdrop-blur-2xl backdrop-saturate-[180%] backdrop-brightness-[0.78] text-white ring-1 ring-white/20 shadow-[inset_0_1px_0_rgba(255,255,255,0.35),inset_0_-1px_0_rgba(255,255,255,0.06),0_10px_40px_rgba(0,0,0,0.28)]
+               hover:bg-white hover:text-black hover:scale-[1.06] transition-[background-color,color,transform] duration-200"
+      >
+        <Phone className="w-5 h-5" />
       </a>
     </div>
 
     <!-- mobile menu button -->
-    <button id="menu-open" type="button" aria-label="Open menu" class="md:hidden -mr-2 w-10 h-10 flex items-center justify-center text-white">
+    <button id="menu-open" type="button" aria-label="Open menu" class="md:hidden shrink-0 w-12 h-12 flex items-center justify-center rounded-full bg-white/[0.12] backdrop-blur-2xl backdrop-saturate-[180%] backdrop-brightness-[0.78] text-white ring-1 ring-white/20 shadow-[inset_0_1px_0_rgba(255,255,255,0.35),inset_0_-1px_0_rgba(255,255,255,0.06),0_10px_40px_rgba(0,0,0,0.28)] active:scale-95 transition-transform">
       <Menu className="w-6 h-6" />
     </button>
   </div>
@@ -96,6 +167,60 @@ const wa = business.whatsapp;
       document.body.style.overflow = '';
     }
   });
+
+  // Sliding capsule pill. One element moves and resizes between items, so the
+  // highlight travels rather than cross-fading. Hover borrows it; leaving the
+  // capsule returns it to the current page. If no item matches the URL — the
+  // homepage, a car page — it stays hidden rather than parking on a lie.
+  function lussaroNavPill() {
+    const capsule = document.getElementById('nav-capsule');
+    const pill = document.getElementById('nav-pill');
+    if (!capsule || !pill) return;
+    // Every child except the pill. Selecting on [data-nav-item] missed the one
+    // item that matters: SmartLink renders the current route as a <span> and
+    // does not forward extra attributes, so the active item has no data-* at
+    // all. It does carry aria-current="page", which is the better hook anyway.
+    const items = [...capsule.children].filter((el) => el.id !== 'nav-pill');
+    const active = items.find((el) => el.getAttribute('aria-current') === 'page') || null;
+
+    const moveTo = (el, animate) => {
+      if (!el) { pill.style.opacity = '0'; return; }
+      // Measure against the capsule so scroll position and page width don't matter.
+      const c = capsule.getBoundingClientRect();
+      const r = el.getBoundingClientRect();
+      const prev = pill.style.transitionDuration;
+      if (!animate) pill.style.transitionDuration = '0ms';
+      pill.style.width = `${r.width}px`;
+      pill.style.transform = `translateX(${r.left - c.left}px)`;
+      pill.style.opacity = '1';
+      if (!animate) { void pill.offsetWidth; pill.style.transitionDuration = prev; }
+    };
+
+    // Only ever ADD text-black to the one item sitting on the pill. Toggling a
+    // competing text-white/65 on the others put two same-specificity colour
+    // rules on one element, and stylesheet order — not intent — decided the
+    // winner, which painted the hovered label white on the white pill. The
+    // others simply inherit text-white/65 from the capsule.
+    const setInk = (el) => items.forEach((n) => n.classList.toggle('text-black', n === el));
+
+    // First paint jumps into place; every later move animates.
+    moveTo(active, false);
+    setInk(active);
+
+    items.forEach((el) => {
+      el.addEventListener('mouseenter', () => { moveTo(el, true); setInk(el); });
+    });
+    capsule.addEventListener('mouseleave', () => { moveTo(active, true); setInk(active); });
+    // Re-measure when the bar reflows (font swap, resize) or the pill drifts.
+    window.addEventListener('resize', () => moveTo(active, false), { passive: true });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => moveTo(active, false));
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', lussaroNavPill);
+  } else {
+    lussaroNavPill();
+  }
+  document.addEventListener('astro:page-load', lussaroNavPill);
 
   (function () {
     let last = window.scrollY;
