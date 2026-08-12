@@ -1,5 +1,6 @@
 ---
 import { altFor } from '@/data/image-alt';
+import { getImageKitSrc } from '@/lib/imageKit';
 import Layout from '@/layouts/Layout.astro';
 import Nav from '@/components/site/Nav.astro';
 import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
@@ -20,7 +21,19 @@ const {
   fullFleetLink = false, // show a "See the full fleet" link under a narrowed grid
   schema = null,         // per-page JSON-LD, forwarded to Layout
   ctaTitle = 'Reserve your Miami exotic',
+  // Hero backdrop. Defaults to the shot every landing page has always used, so
+  // pages that do not set it render exactly as before. Give a page its own
+  // image when it should not look like a sibling in a search result.
+  heroImage = 'https://ik.imagekit.io/8i3ae7fac/cars-14.jpg',
 } = Astro.props;
+
+// ImageKit URLs keep the 1600px transform they have always used; a local photo
+// under /cars or /gallery resolves to its pre-generated 1200px WebP instead
+// (scripts/optimize-images.mjs), so a custom hero cannot ship an unoptimised
+// full-size JPEG into the LCP slot.
+const heroSrc = heroImage.includes('ik.imagekit.io')
+  ? `${heroImage}?tr=w-1600,q-70,f-webp`
+  : getImageKitSrc(heroImage, 1200);
 
 const waMessage = `Hi, I'm interested in renting a luxury car with Lussaro Collection (${h1}).`;
 const wa = whatsappWith(waMessage);
@@ -31,7 +44,7 @@ const wa = whatsappWith(waMessage);
   <!-- HERO -->
   <header class="relative bg-black pt-28 md:pt-36 pb-16 md:pb-20 overflow-hidden">
     <div class="absolute inset-0 opacity-30">
-      <img src="https://ik.imagekit.io/8i3ae7fac/cars-14.jpg?tr=w-1600,q-70,f-webp" alt={altFor("https://ik.imagekit.io/8i3ae7fac/cars-14.jpg")} class="w-full h-full object-cover" />
+      <img src={heroSrc} alt={altFor(heroImage)} class="w-full h-full object-cover" />
       <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black"></div>
     </div>
     <div class="relative z-10 max-w-7xl mx-auto px-5 md:px-8">

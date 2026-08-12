@@ -1,0 +1,250 @@
+---
+// "Best exotic car rental Miami" — deliberately NOT a second copy of
+// /exotic-car-rental-miami.
+//
+// That page serves the transactional query ("rent an exotic car in Miami") and
+// is the hub. This one serves the comparison query, which is a different search
+// intent: someone typing "best" is still choosing a company, not a car. Two
+// pages answering the same question would split the topic and let Google pick a
+// winner; so this one answers "how do I judge a Miami exotic rental" and hands
+// the reader a checklist they can run against us AND against anyone else.
+//
+// That framing is also the only honest way to write a page like this. Every
+// claim below is a fact pulled from rental-terms.js, fleet.js or reviews.js —
+// nothing here asserts we are the best, it publishes the numbers and invites the
+// comparison. Transparency IS the argument.
+import LandingLayout from '@/layouts/LandingLayout.astro';
+import { cars } from '@/data/cars';
+import {
+  rentalTerms,
+  deliveryEachWaySummary,
+  roundTripSummary,
+  discountSummary,
+} from '@/data/rental-terms';
+import { reviews, reviewCount, averageRating } from '@/data/reviews';
+import { business } from '@/data/business';
+
+const { deposit, mileage, minimumAge, insurance, cancellation, collection } = rentalTerms;
+
+const prices = cars.map((c) => c.price);
+const low = Math.min(...prices).toLocaleString('en-US');
+const high = Math.max(...prices).toLocaleString('en-US');
+
+// fleet.js stores short names ("S580", "Cullinan") that read oddly once the
+// marque is prepended by the usual `make + name` rule. Same override habit as
+// meta-titles.js, keyed by slug.
+const DISPLAY = {
+  'mercedes-s580': 'Mercedes-Benz S580',
+  'mercedes-maybach-gls-600': 'Mercedes-Maybach GLS 600',
+  'huracan-evo': 'Lamborghini Huracán EVO',
+  sf90: 'Ferrari SF90',
+  'rolls-royce-cullinan': 'Rolls-Royce Cullinan',
+};
+const named = (c) =>
+  DISPLAY[c.slug] ?? (c.name.startsWith(c.make) ? c.name : `${c.make} ${c.name}`);
+
+// The one editorial column on the page. Each line is a reading of that car's
+// own spec row rather than a sales adjective — the reason it is the right pick
+// has to be visible in the numbers beside it.
+const BEST_FOR = {
+  sf90: 'Outright speed. The quickest car we run, and the only hybrid.',
+  'rolls-royce-cullinan': 'Arrivals. Coach doors, a V12 you cannot hear.',
+  'huracan-evo': 'Noise. A naturally aspirated V10 with no quiet mode.',
+  'lamborghini-urus': 'Doing everything. Supercar pace that still takes luggage.',
+  'mercedes-maybach-gls-600': 'Being driven. Reclining rear executive seats.',
+  'mercedes-s580': 'Starting here. Our lowest rate and the quietest cabin.',
+};
+
+// Flagship first: the table doubles as the hierarchy of the fleet.
+const ranked = [...cars].sort((a, b) => b.price - a.price);
+
+const seatsOf = (c) => (c.seatsNote ? `${c.seats} (${c.seatsNote})` : `${c.seats}`);
+
+// The published terms, as one block. Built from rental-terms.js so the page
+// cannot drift out of step with /terms or /pricing.
+const termRows = [
+  ['Security deposit', `${deposit.display}, flat across every car. ${deposit.note}`],
+  ['Mileage included', `${mileage.includedPerDay} miles per day, pooled across the booking.`],
+  ['Delivery', `${deliveryEachWaySummary}. Beyond those two areas, quoted before you book.`],
+  ['Collection', collection.summary],
+  ['Minimum age', `${minimumAge}, with a valid driver's licence.`],
+  ['Insurance', insurance.summary],
+  ['Multi-day rates', `${discountSummary}.`],
+  ['Cancellation', cancellation.summary],
+];
+
+// Two real Google reviews, looked up by name rather than retyped, so editing
+// reviews.js edits this page too and the verbatim rule in that file still holds.
+// See the block comment in reviews.astro for why neither is marked up as
+// structured data: Google-collected reviews about the business, republished on
+// the business's own site, are not eligible for review rich results and marking
+// them up would be self-serving review spam. Do not add Review/AggregateRating.
+const quoted = ['Shaf Irfan', 'Gregory Capo']
+  .map((n) => reviews.find((r) => r.name === n))
+  .filter(Boolean);
+
+const faqs = [
+  {
+    q: 'Which exotic car rental in Miami is the best?',
+    a: `No company can answer that about itself, so here is the checkable version. Ask any Miami rental four things: is the car in the photographs the actual car, is the deposit a published flat figure, is the mileage pooled across the booking or capped daily, and is the delivery fee one way or return. Our answers are yes, ${deposit.display} on every car, pooled at ${mileage.includedPerDay} miles a day, and ${deliveryEachWaySummary} with collection charged separately at typically the same fee. Put the same four questions to anyone else you are considering.`,
+  },
+  {
+    q: 'What is the best exotic car to rent in Miami?',
+    a: `It depends on what the day is for. The Ferrari SF90 is the fastest thing we run at 986 hp and 2.5 seconds to 60. The Rolls-Royce Cullinan is the one for arrivals. The Lamborghini Urus is the car if you want supercar pace and still need to carry people and luggage. The Mercedes-Benz S580 starts at $${low} a day and is the quietest. All six are compared in the table above.`,
+  },
+  {
+    q: 'How much should an exotic car rental in Miami cost?',
+    a: `Ours run from $${low} a day for the S580 to $${high} for the Ferrari SF90, with ${mileage.includedPerDay} miles a day included on every car and the same refundable ${deposit.display} deposit. Longer bookings cost less per day: ${discountSummary}. Treat any quote that omits the deposit, the mileage allowance or the delivery fee as incomplete rather than cheap.`,
+  },
+  {
+    q: 'What should I check before booking an exotic car in Miami?',
+    a: `The deposit figure and when it is returned, whether mileage is pooled or capped per day, what happens if you exceed it, whether the delivery fee is one way or return and whether collection is billed on top, what insurance you are expected to bring, and the cancellation rule. ${cancellation.summary} We publish all of it on this page and on the rate card rather than in a confirmation email.`,
+  },
+  {
+    q: 'Can I rent an exotic car in Miami the same day?',
+    a: 'Often, yes. Message or call and you will usually have an answer in minutes, and most bookings confirm within the hour. Short notice is normal for us — the constraint is which specific car is free, not how quickly we can move.',
+  },
+  {
+    q: 'Do you deliver, or do I collect the car?',
+    a: `We deliver. Hotels, homes, offices and both airports, ${deliveryEachWaySummary}. Collection at the end of the rental is a separate charge and is typically the same as delivery, so plan on ${roundTripSummary} if you want the car brought to you and taken away again. There is no counter to queue at and no depot to find, and anywhere beyond those two areas is quoted before you book.`,
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+
+// The comparison table, as structured data. Plain ListItems pointing at the car
+// pages — the Car nodes themselves already live on those pages, so restating
+// them here would put two descriptions of one vehicle into the index.
+const listSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Exotic cars available to rent in Miami from Lussaro Collection',
+  numberOfItems: ranked.length,
+  itemListElement: ranked.map((c, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: named(c),
+    url: new URL(`/cars/${c.slug}`, Astro.site).href,
+  })),
+};
+---
+<LandingLayout
+  title="Best Exotic Car Rental in Miami | Lussaro Collection"
+  description={`How to judge the best exotic car rental in Miami — deposits, mileage, delivery and insurance compared side by side. Six cars from $${low}/day, delivered.`}
+  h1="Best Exotic Car Rental in Miami"
+  heroImage="/cars/huracan-evo-1.jpg"
+  intro="Every exotic rental in Miami photographs well. Here is what actually separates them — and every one of our own numbers, published so you can hold us to the same test."
+  fleetHeading="The six cars, compared"
+  ctaTitle="Book the car you picked"
+  schema={[faqSchema, listSchema]}
+>
+  <h2>What "best" means once you are the one paying</h2>
+  <p>The differences that matter show up after the booking, not on the website. Whether the car that arrives is the car in the pictures. Whether the deposit is the number you were quoted. Whether the mileage runs out on day two. Whether anyone answers at nine on a Saturday night.</p>
+  <p>All of that is checkable in advance, and the list below is how to check it — on us, and on anyone else you are weighing up. The best exotic rentals in Miami are simply the ones willing to give you all six answers before you pay, in writing. We would rather win the booking on the numbers than on adjectives.</p>
+
+  <h2>How to choose the best exotic car rental in Miami</h2>
+  <p>Six questions. Ask them of us, and ask them of everyone else on your shortlist.</p>
+  <ol>
+    <li><strong>Are the photographs the actual car?</strong> Every listing on this site shows the specific vehicle we deliver, not a stock image of the model, and most are one-of-one in our Miami fleet. A gallery of press shots tells you nothing about the car turning up.</li>
+    <li><strong>Is the deposit a published figure?</strong> Ours is {deposit.display}, flat across all six cars, refundable after the car is inspected on return. "Varies by vehicle" is a number you will not learn until you are committed.</li>
+    <li><strong>Is the mileage pooled or capped daily?</strong> We include {mileage.includedPerDay} miles a day, pooled across the booking — three days is {mileage.includedPerDay * 3} miles to use however you like, and only the total at return is measured. A daily cap that resets at midnight is a materially worse deal at the same headline number.</li>
+    <li><strong>Is the delivery fee one way or return?</strong> This is the one that catches people out. Ours is {deliveryEachWaySummary}. Collection at the end of the rental is charged separately and is typically the same, so a booking needing both usually comes to {roundTripSummary}. We would rather you saw both lines here than found the second one on the invoice.</li>
+    <li><strong>What insurance are you expected to bring?</strong> {insurance.summary} Ask this early — it is the question that most often changes the real price.</li>
+    <li><strong>What is the cancellation rule?</strong> Ours: {cancellation.summary.toLowerCase()} You should read that here rather than discover it in a confirmation email.</li>
+  </ol>
+  <p>The one thing you cannot check from a website is how fast a company actually replies. Message us and see — most enquiries are answered in minutes, and same-day bookings are routine rather than a favour.</p>
+
+  <h2>Our terms, in full</h2>
+  <div class="overflow-x-auto">
+    <table>
+      <tbody>
+        {termRows.map(([label, value]) => (
+          <tr>
+            <th scope="row">{label}</th>
+            <td>{value}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <p>The same figures govern every booking and are restated on the <a href="/pricing">rate card</a> and in the <a href="/terms">terms of service</a>. If a number ever disagrees between those pages, the terms of service is the one that counts.</p>
+
+  <h2>Which car is best for what</h2>
+  <div class="overflow-x-auto compare-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">Car</th>
+          <th scope="col">Per day</th>
+          <th scope="col">Seats</th>
+          <th scope="col">0–60</th>
+          <th scope="col">Best for</th>
+        </tr>
+      </thead>
+      <tbody>
+        {ranked.map((c) => (
+          <tr>
+            <th scope="row"><a href={`/cars/${c.slug}`}>{named(c)}</a></th>
+            <td>${c.price.toLocaleString('en-US')}</td>
+            <td>{seatsOf(c)}</td>
+            <td>{c.zeroToSixty}</td>
+            <td>{BEST_FOR[c.slug]}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <p>Rates fall on longer bookings — {discountSummary} — and every car carries the same deposit and the same {mileage.includedPerDay} miles a day, so the only variable between them is the one in the first column.</p>
+
+  <h2>What renters have said</h2>
+  <p>{averageRating.toFixed(1)} out of 5 across {reviewCount} reviews on Google, reproduced word for word and never edited by us. Two of them:</p>
+  {/* figure/blockquote/figcaption rather than two <p> inside one <blockquote>:
+      Tailwind Typography hangs open-quote on a blockquote's first paragraph and
+      close-quote on its last, so an attribution paragraph inside the quote took
+      the closing mark — it rendered as `Shaf Irfan — Lamborghini"`, reading as
+      though the reviewer's own name were part of what they wrote. Keeping the
+      attribution outside the blockquote puts the mark back on the quote and is
+      the correct markup for a quote with a credit besides. */}
+  {quoted.map((r) => (
+    <figure>
+      <blockquote><p>{r.text}</p></blockquote>
+      <figcaption><strong>{r.name}</strong>{r.car ? ` — ${r.car}` : ''}</figcaption>
+    </figure>
+  ))}
+  <p>All of them are on the <a href="/reviews">reviews page</a>, and you can read them at source on our <a href={business.googleProfileLink} target="_blank" rel="noopener noreferrer">Google Business Profile</a>.</p>
+
+  <h2>Where we deliver</h2>
+  <p>Across Miami, with two neighbourhoods covered in their own right: <a href="/exotic-car-rental-south-beach">South Beach</a> for the Ocean Drive and Collins Avenue hotels, and <a href="/exotic-car-rental-brickell">Brickell</a> for the residential towers and offices. The full service area and the booking process sit on the <a href="/exotic-car-rental-miami">exotic car rental Miami</a> page.</p>
+  <p>Looking for one marque in particular? <a href="/lamborghini-rental-miami">Lamborghini</a>, <a href="/rolls-royce-rental-miami">Rolls-Royce</a>, <a href="/g-wagon-rental-miami">G-Wagon</a>, <a href="/luxury-suv-rental-miami">luxury SUVs</a>, or a <a href="/chauffeur-service-miami">chauffeur</a> if you would rather not drive at all.</p>
+
+  <h2>Common questions</h2>
+  {faqs.map((f) => (
+    <>
+      <h3>{f.q}</h3>
+      <p>{f.a}</p>
+    </>
+  ))}
+</LandingLayout>
+
+<style>
+  /* The five-column comparison table has no business compressing to a phone's
+     width: a table is width:100% by default, so on a 390px screen it shrank to
+     fit instead of scrolling and turned the "Best for" column into a ribbon one
+     or two words wide. A min-width makes it overflow its wrapper, which is what
+     gives overflow-x-auto something to scroll. The terms table above is two
+     columns and reads fine narrow, so it is deliberately left alone.
+
+     Tailwind Typography wraps its element styles in :where(), which carries no
+     specificity, so this wins without !important. */
+  .compare-scroll > table {
+    min-width: 34rem;
+  }
+</style>

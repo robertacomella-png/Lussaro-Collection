@@ -17,6 +17,7 @@ const LABELS = {
   '/gallery': 'Gallery',
   '/chauffeur-service-miami': 'Chauffeur Service Miami',
   '/exotic-car-rental-miami': 'Exotic Car Rental Miami',
+  '/best-exotic-car-rental-miami': 'Best Exotic Car Rental Miami',
   '/lamborghini-rental-miami': 'Lamborghini Rental Miami',
   '/g-wagon-rental-miami': 'G-Wagon Rental Miami',
   '/luxury-suv-rental-miami': 'Luxury SUV Rental Miami',
