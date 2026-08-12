@@ -442,27 +442,36 @@ const productSchema = {
     function lussaroCalendarFallback() {
       const fb = document.querySelector('[data-calendar-fallback]');
       if (!fb) return;
+      if (window.__lussaroFbTimer) clearInterval(window.__lussaroFbTimer);
       fb.removeAttribute('data-show');
-      // Re-query on every check. Holding one reference was the bug: Astro can
-      // swap the island element as it hydrates, so a captured node goes stale
-      // and reports 0 children forever — which showed "could not load" on a
-      // page where the calendar had in fact loaded.
-      const islandNow = () => document.querySelector('astro-island[component-url*="BookingCalendar"]');
+
+      // Re-query on every check. Holding one reference was an earlier bug:
+      // Astro can swap the island element as it hydrates, so a captured node
+      // goes stale and reports 0 children forever.
       const mounted = () => {
-        const el = islandNow();
+        const el = document.querySelector('astro-island[component-url*="BookingCalendar"]');
         return !!(el && el.children.length > 0);
       };
-      const island = islandNow();
-      const settle = () => { if (!mounted()) fb.setAttribute('data-show', ''); };
       if (mounted()) return;
-      // Re-check as soon as the island changes, and give up after 6s.
-      if (island && 'MutationObserver' in window) {
-        const mo = new MutationObserver(() => { if (mounted()) { mo.disconnect(); fb.removeAttribute('data-show'); } });
-        mo.observe(island, { childList: true });
-        setTimeout(() => { mo.disconnect(); settle(); }, 6000);
-      } else {
-        setTimeout(settle, 6000);
-      }
+
+      // Keep watching. The previous version armed a MutationObserver, then at
+      // 6s showed the fallback AND disconnected the observer — so a calendar
+      // that mounted at, say, 7s (cold cache, slow connection, a dev server
+      // compiling on demand) left the "could not load" message on screen
+      // underneath a perfectly working calendar. Nothing was left to take it
+      // down. Polling instead: the fallback appears only while the calendar is
+      // genuinely absent, and retracts the moment it arrives.
+      const started = Date.now();
+      window.__lussaroFbTimer = setInterval(() => {
+        if (mounted()) {
+          fb.removeAttribute('data-show');
+          clearInterval(window.__lussaroFbTimer);
+          return;
+        }
+        if (Date.now() - started > 6000) fb.setAttribute('data-show', '');
+        // Stop eventually so a truly dead bundle doesn't leave a timer running.
+        if (Date.now() - started > 60000) clearInterval(window.__lussaroFbTimer);
+      }, 250);
     }
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', lussaroCalendarFallback);
