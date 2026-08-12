@@ -22,12 +22,17 @@ import { business, telHref, whatsappWith } from '@/data/business';
         <source media="(min-width: 768px)" srcset="https://ik.imagekit.io/8i3ae7fac/cars-14.jpg?tr=w-1920,q-80,f-webp" />
         <img src="https://ik.imagekit.io/8i3ae7fac/cars-11.jpg?tr=w-800,q-75,f-webp" alt="Exotic car rental in Miami" class="w-full h-full object-cover" fetchpriority="high" />
       </picture>
-      {/* The photo runs at full opacity — this scrim is the only thing dimming
-          the hero now, and it is doing real work: the top stop keeps the nav
-          readable, and the heavy bottom stop carries contrast under the CTA row
-          and blends the hero into the black section beneath. Mean hero
-          luminance 65 -> 95 of 255 against the original treatment. */}
-      <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-black/15 to-black/90"></div>
+      {/* Scrim confined to the bottom quarter of the hero: 60% black at the
+          very foot, fading to nothing 25% up. Everything above is the clean
+          photo. It exists to hold contrast under the CTA row and to blend the
+          hero into the black section beneath — the nav carries its own
+          bg-black/40 + backdrop blur and needs nothing from this.
+          Inline rather than Tailwind from/via/to, which cannot place a stop at
+          an arbitrary percentage; the radial glows here are written the same way. */}
+      <div
+        class="absolute inset-0 pointer-events-none"
+        style="background: linear-gradient(to top, rgba(0,0,0,0.60) 0%, rgba(0,0,0,0) 25%);"
+      ></div>
     </div>
 
     <div class="relative z-10 w-full flex-1 flex flex-col max-w-7xl mx-auto px-5 md:px-8 pt-24 md:pt-[24svh] pb-[63px] md:pb-20 text-center">
