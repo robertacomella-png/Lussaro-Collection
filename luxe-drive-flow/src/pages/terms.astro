@@ -1,6 +1,6 @@
 ---
 import { business } from '@/data/business';
-import { rentalTerms, deliverySummary } from '@/data/rental-terms';
+import { rentalTerms } from '@/data/rental-terms';
 import { fleet } from '@/data/fleet';
 import Layout from '@/layouts/Layout.astro';
 import Nav from '@/components/site/Nav.astro';
@@ -90,11 +90,12 @@ import Nav from '@/components/site/Nav.astro';
 
         <section class="space-y-4">
           <h2 class="text-2xl font-semibold">6. Delivery & Collection</h2>
-          <p>We deliver to hotels, residences, offices and airports. Delivery is charged per rental, not per journey:</p>
+          <p>We deliver to hotels, residences, offices and airports. Delivery and collection are charged separately, and the fees below are one way:</p>
           <ul class="list-disc list-inside space-y-2 text-white/70">
             {rentalTerms.delivery.map((d) => (
-              <li>{d.area}: {d.display}</li>
+              <li>{d.area}: {d.display} each way</li>
             ))}
+            <li>Collection at the end of the rental is charged in addition to delivery and is typically the same fee. Both are stated in your quote and agreed before booking.</li>
             <li>Delivery outside these areas is quoted on request before booking.</li>
             <li>Someone meeting the eligibility requirements in section 1 must be present to receive the vehicle.</li>
           </ul>

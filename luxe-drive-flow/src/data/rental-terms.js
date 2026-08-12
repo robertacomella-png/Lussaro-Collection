@@ -57,10 +57,29 @@ export const rentalTerms = {
     summary: 'Cancellations made within 5 days of the rental start date are non-refundable.',
   },
 
+  // THESE FEES ARE ONE WAY. Delivery at the start of the rental and collection
+  // at the end are charged separately, and collection is normally the same
+  // figure as delivery — so a Miami booking needing both is about $250, not
+  // $125.
+  //
+  // The site previously said the opposite — "charged once per rental, not per
+  // journey" — on seven pages including /terms and /pricing, which understated
+  // the real cost by half. Every page now reads the strings below instead of
+  // restating the policy in its own words, so this cannot drift again.
   delivery: [
     { area: 'Miami', fee: 125, display: '$125' },
     { area: 'Fort Lauderdale', fee: 175, display: '$175' },
   ],
+
+  collection: {
+    // Owner's stated policy: collection is *usually* the same as delivery.
+    // "Usually" is doing real work there, so nothing on the site quotes a
+    // round-trip total as a fixed price — the copy says "typically" and points
+    // at the quote, which is where the actual figure is agreed.
+    typicallySameAsDelivery: true,
+    summary:
+      'Delivery and collection are charged separately. Collection is typically the same fee as delivery, and both are confirmed in your quote before you book.',
+  },
 
   insurance: {
     summary:
@@ -68,9 +87,28 @@ export const rentalTerms = {
   },
 };
 
-/** "$125 in Miami, $175 in Fort Lauderdale" */
+/**
+ * "$125 in Miami, $175 in Fort Lauderdale"
+ *
+ * The bare fees, with no indication that they are one way. Prefer
+ * `deliveryEachWaySummary` in body copy — this is kept for the places that
+ * already say "each way" in the surrounding sentence, so the phrase is not
+ * printed twice.
+ */
 export const deliverySummary = rentalTerms.delivery
   .map((d) => `${d.display} in ${d.area}`)
+  .join(', ');
+
+/** "$125 in Miami, $175 in Fort Lauderdale, each way" — the safe default. */
+export const deliveryEachWaySummary = `${deliverySummary}, each way`;
+
+/**
+ * "about $250 in Miami, about $350 in Fort Lauderdale" — delivery plus
+ * collection. Hedged deliberately: collection is only *usually* the same as
+ * delivery, so this is an illustration of the round trip and never a quote.
+ */
+export const roundTripSummary = rentalTerms.delivery
+  .map((d) => `about $${(d.fee * 2).toLocaleString('en-US')} in ${d.area}`)
   .join(', ');
 
 /** One-line fine print reused under booking CTAs. */

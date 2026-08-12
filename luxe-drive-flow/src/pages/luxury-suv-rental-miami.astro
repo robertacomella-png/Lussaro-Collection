@@ -1,6 +1,6 @@
 ---
 import LandingLayout from '@/layouts/LandingLayout.astro';
-import { rentalTerms, deliverySummary } from '@/data/rental-terms';
+import { rentalTerms, deliveryEachWaySummary } from '@/data/rental-terms';
 import { fleet } from '@/data/fleet';
 
 const urus = fleet.find((c) => c.name === 'Lamborghini Urus');
@@ -19,7 +19,7 @@ const faqs = [
   },
   {
     q: 'Can you bring one to a hotel or the airport?',
-    a: `Yes — hotels, residences, offices and both airports all sit inside our delivery area. It runs ${deliverySummary}, billed once against the rental instead of per trip. Give us the address and an arrival window and the car is waiting when you get there.`,
+    a: `Yes — hotels, residences, offices and both airports all sit inside our delivery area. It runs ${deliveryEachWaySummary}, with collection at the end billed separately at typically the same fee. Give us the address and an arrival window and the car is waiting when you get there.`,
   },
 ];
 

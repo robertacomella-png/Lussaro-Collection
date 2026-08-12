@@ -1,6 +1,6 @@
 ---
 import LandingLayout from '@/layouts/LandingLayout.astro';
-import { rentalTerms, deliverySummary, discountSummary } from '@/data/rental-terms';
+import { rentalTerms, deliveryEachWaySummary, discountSummary } from '@/data/rental-terms';
 import { fleet } from '@/data/fleet';
 
 const low = Math.min(...fleet.map((c) => c.price)).toLocaleString('en-US');
@@ -19,7 +19,7 @@ const faqs = [
   },
   {
     q: 'Where will you deliver?',
-    a: `Hotels, homes, offices and airports. Delivery is ${deliverySummary}, charged once per rental rather than per journey. Anywhere beyond those two areas we quote before you book, so the figure is agreed in advance.`,
+    a: `Hotels, homes, offices and airports. Delivery is ${deliveryEachWaySummary}, and collection at the end of the rental is charged separately at typically the same fee. Anywhere beyond those two areas we quote before you book, so the figure is agreed in advance.`,
   },
   {
     q: 'What do I need to rent?',
@@ -55,7 +55,7 @@ const faqSchema = {
 >
   <h2>Renting an exotic car in Miami</h2>
   <p>We keep a deliberately small fleet — six cars — and bring them to you rather than asking you to come to a counter. Rates begin at ${low} a day for the Mercedes-Benz S580 and reach ${high} for the Ferrari SF90, with {mileage.includedPerDay} miles a day included on every one. Same-day is often possible; message us and you will usually have an answer in minutes.</p>
-  <p>Delivery covers hotels, homes, offices and both airports — {deliverySummary}, charged once per rental rather than per trip. Deposits, cancellation and the rest sit on the <a href="/pricing">rate card</a>.</p>
+  <p>Delivery covers hotels, homes, offices and both airports — {deliveryEachWaySummary}, with collection at the end charged separately at typically the same fee. Deposits, cancellation and the rest sit on the <a href="/pricing">rate card</a>.</p>
 
   <h2>The fleet at a glance</h2>
   <ul>

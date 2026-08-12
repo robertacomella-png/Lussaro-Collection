@@ -1,6 +1,6 @@
 ---
 import LandingLayout from '@/layouts/LandingLayout.astro';
-import { rentalTerms, deliverySummary } from '@/data/rental-terms';
+import { rentalTerms, deliveryEachWaySummary } from '@/data/rental-terms';
 import { neighborhoodFor } from '@/data/neighborhood-content';
 
 const { deposit, mileage, minimumAge } = rentalTerms;
@@ -9,7 +9,7 @@ const local = neighborhoodFor('brickell');
 const faqs = [
   {
     q: 'Can the car be brought to a Brickell address?',
-    a: `Yes — residential towers, offices and hotels alike. Delivery across Miami is ${deliverySummary}, applied once to the booking rather than to each journey. Send the address when you enquire and we will confirm the drop-off point before anything is agreed.`,
+    a: `Yes — residential towers, offices and hotels alike. Delivery across Miami is ${deliveryEachWaySummary}, with collection at the end of the rental charged separately at typically the same fee. Send the address when you enquire and we will confirm the drop-off point and both fees before anything is agreed.`,
   },
   {
     q: 'Which cars are easiest to keep in a building garage?',

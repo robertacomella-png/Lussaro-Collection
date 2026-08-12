@@ -7,7 +7,7 @@ import { altFor } from '@/data/image-alt';
 // FAQPage + ItemList schema), reviews, and a lead form.
 import Layout from '@/layouts/Layout.astro';
 import { bookingSteps } from '@/data/booking-steps';
-import { rentalTerms, deliverySummary } from '@/data/rental-terms';
+import { rentalTerms, deliveryEachWaySummary } from '@/data/rental-terms';
 import Nav from '@/components/site/Nav.astro';
 import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
 import CtaBand from '@/components/site/CtaBand.astro';
@@ -34,7 +34,7 @@ const steps = bookingSteps;
 const faqs = [
   { q: 'What do I need to rent?', a: `${rentalTerms.minimumAge}+ with a valid driver’s license. ${rentalTerms.insurance.summary} A refundable ${rentalTerms.deposit.display} security deposit confirms your booking.` },
   { q: 'How fast can I book?', a: 'Often same-day. Message or call — we reply in minutes, and most bookings confirm within the hour.' },
-  { q: 'Do you deliver the car to me?', a: `Yes — hotel, home, or airport. Delivery is ${deliverySummary}. Outside those areas we quote before you book.` },
+  { q: 'Do you deliver the car to me?', a: `Yes — hotel, home, or airport. Delivery is ${deliveryEachWaySummary}, and collection at the end is charged separately at typically the same fee. Outside those areas we quote before you book.` },
   { q: 'Are there discounts for longer rentals?', a: 'Yes: most cars are 15% off at 3+ days, 20% at 5+, 25% at 7+. Exact pricing shows on each car’s calendar.' },
   { q: 'How does the security deposit work?', a: `A flat ${rentalTerms.deposit.display} refundable deposit on every car — disclosed before you book, refunded after inspection.` },
   { q: 'Is the car in the photos the car I get?', a: 'Yes. Every listing is the exact car we deliver — most are one-of-one in Miami.' },
