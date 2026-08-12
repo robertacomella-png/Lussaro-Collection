@@ -131,6 +131,21 @@ export default function BookingCalendar({ pricePerDay = 0, carName = "", vehicle
   const [formError, setFormError] = useState("");
   const fullName = `${firstName} ${lastName}`.trim();
 
+  // On a phone the month grid ran ~580px, pushing the rate and the CTA off the
+  // screen under a wall of dates. There it starts collapsed behind "Check
+  // availability" so the price leads; on desktop there is room, so the calendar
+  // is always open and `collapsible` stays false.
+  const [collapsible, setCollapsible] = useState(false);
+  const [calOpen, setCalOpen] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 1023px)");
+    const apply = () => setCollapsible(mq.matches);
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
+  const gridOpen = !collapsible || calOpen;
+
   // Capture the lead (debounced) once we can reach them — a name + an email or
   // phone — even before they submit.
   useEffect(() => {
@@ -255,6 +270,7 @@ export default function BookingCalendar({ pricePerDay = 0, carName = "", vehicle
 
   return (
     <div>
+      {gridOpen && (<>
       {/* month nav */}
       <div className="flex items-center justify-between mb-3">
         <button type="button" aria-label="Previous month" className={navBtn} disabled={!canPrev}
@@ -267,7 +283,7 @@ export default function BookingCalendar({ pricePerDay = 0, carName = "", vehicle
       {/* weekday header */}
       <div className="grid grid-cols-7 gap-1 mb-1">
         {WEEKDAYS.map((w, i) => (
-          <div key={i} className="h-7 flex items-center justify-center text-[11px] font-medium text-white/35">{w}</div>
+          <div key={i} className="h-6 sm:h-7 flex items-center justify-center text-[11px] font-medium text-white/35">{w}</div>
         ))}
       </div>
 
@@ -281,7 +297,9 @@ export default function BookingCalendar({ pricePerDay = 0, carName = "", vehicle
           const isEnd = sameDay(d, end);
           const inRange = start && end && d > start && d < end;
           const selected = isStart || isEnd;
-          let cls = "relative h-10 rounded-lg flex items-center justify-center text-sm transition ";
+          // h-9 on a phone: still a 36px touch target, but six rows of h-10
+          // made the card taller than an iPhone SE screen on its own.
+          let cls = "relative h-9 sm:h-10 rounded-lg flex items-center justify-center text-sm transition ";
           if (!avail) cls += "text-white/25 cursor-not-allowed";
           else if (selected) cls += "bg-[#c9a96e] text-black font-semibold";
           else if (inRange) cls += "bg-[#c9a96e]/20 text-white";
@@ -304,6 +322,7 @@ export default function BookingCalendar({ pricePerDay = 0, carName = "", vehicle
         <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-amber-400" /> Pending</span>
         <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-red-500/70" /> Unavailable</span>
       </div>
+      </>)}
 
       {/* multi-day savings — tier chips, active one highlighted */}
       <div className="mt-4">
@@ -316,7 +335,9 @@ export default function BookingCalendar({ pricePerDay = 0, carName = "", vehicle
                 key={t.pct}
                 className={`rounded-xl border px-2 py-2.5 text-center transition ${active ? "border-[#c9a96e] bg-[#c9a96e]/10" : "border-white/10 bg-white/[0.02]"}`}
               >
-                <p className={`font-display text-lg font-bold leading-none ${active ? "text-[#c9a96e]" : "text-white/80"}`}>{t.pct}%</p>
+                {/* text-base on phones: uppercase "20% OFF" paints ~81px, which
+                    overruns the 77px chip on a 375px screen at text-lg. */}
+                <p className={`font-display text-base sm:text-lg font-bold leading-none whitespace-nowrap uppercase ${active ? "text-[#c9a96e]" : "text-white/80"}`}>{t.pct}% off</p>
                 <p className="text-[10px] text-white/40 mt-1">{t.days}+ days</p>
               </div>
             );
@@ -324,8 +345,21 @@ export default function BookingCalendar({ pricePerDay = 0, carName = "", vehicle
         </div>
       </div>
 
+      {/* Collapsed on a phone: the tap target that reveals the month grid.
+          Doubles as the primary CTA there, so the card ends on an action. */}
+      {!gridOpen && (
+        <button
+          type="button"
+          onClick={() => setCalOpen(true)}
+          aria-expanded="false"
+          className="w-full mt-4 bg-[#c9a96e] text-black py-3.5 rounded-full font-semibold hover:bg-white transition"
+        >
+          Check availability
+        </button>
+      )}
+
       {/* summary + CTA */}
-      <div className="mt-4 pt-4 border-t border-white/10">
+      <div className={`mt-4 pt-4 border-t border-white/10 ${gridOpen ? "" : "hidden"}`}>
         {start ? (
           <div className="mb-3">
             <div className="flex items-start justify-between gap-3">

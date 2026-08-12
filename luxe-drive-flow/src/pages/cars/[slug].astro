@@ -72,17 +72,21 @@ const faqSchema = carFaqs.length ? {
   mainEntity: carFaqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
 } : null;
 
-const chips = [
-  { label: '0–60', value: car.zeroToSixty },
-  { label: 'Power', value: `${car.power} hp` },
-  { label: 'Miles / day', value: car.miles },
-];
-// `to` = number to roll up to, with decimals + suffix for the count-up animation
-const specs = [
+// One spec list, rendered once. These numbers used to appear three times on a
+// car page: a chips row under the gallery, then a full-width Specifications
+// band whose two rows repeated "Miles / day" between them.
+//
+// `to` means the value counts up when it scrolls into view; `v` renders as-is
+// (the model year should not animate). Anything without a value drops out, so
+// a car missing a seat count simply shows one card fewer.
+const specList = [
   { k: '0–60 mph', to: parseFloat(car.zeroToSixty) || 0, decimals: 1, suffix: 's' },
   { k: 'Horsepower', to: car.power, decimals: 0, suffix: ' hp' },
   { k: 'Miles / day', to: car.miles, decimals: 0, suffix: '' },
-];
+  { k: 'Seats', v: car.seats, sub: car.seatsNote },
+  { k: 'Doors', v: car.doors },
+  { k: 'Model year', v: car.year },
+].filter((x) => x.to || x.v);
 
 // Per-car structured data for richer Google results (price/day + breadcrumb)
 const SITE = 'https://www.lussarocollection.com';
@@ -174,47 +178,47 @@ const productSchema = {
     </div>
   </div>
 
-  <!-- MAIN: gallery + details (left) · booking card (right) -->
-  <section class="bg-black pt-5 pb-14 md:pb-20">
-    <div class="max-w-6xl mx-auto px-5 md:px-8 grid lg:grid-cols-[1.45fr_1fr] gap-8 lg:gap-12 items-start">
+  {/* Page title: one line, one size, centred above the gallery.
+      Uppercasing is done with CSS, not by rewriting the string — the DOM text
+      stays "Lamborghini Urus Rental In Miami, FL" so crawlers and screen
+      readers get natural casing while it renders in caps. The city is wrapped
+      only to tint it — it is the word that distinguishes this page from every
+      other Urus rental listing — and it sits inside the same continuous text
+      run, so the heading still reads as one phrase. */}
+  <header class="bg-black pt-3 md:pt-5 pb-4 md:pb-6">
+    <div class="max-w-6xl mx-auto px-5 md:px-8">
+      {car.comingSoon && (
+        <p class="text-center mb-3">
+          <span class="bg-[#c9a96e] text-black text-[10px] font-bold tracking-[0.15em] uppercase px-2.5 py-1 rounded-full">Coming Soon</span>
+        </p>
+      )}
+      <h1 class="font-display font-extrabold text-white uppercase text-center text-balance tracking-tight leading-[1.1] text-[clamp(1.25rem,3.4vw,2.625rem)]">
+        {fullName} Rental In <span class="text-[#c9a96e]">{business.city}, {business.region}</span>
+      </h1>
+    </div>
+  </header>
 
-      <!-- LEFT -->
-      <div>
-        <div class="relative">
-          <CarGallery images={imgs} name={car.name} slug={`g-${car.slug}`} client:visible />
-          {car.model && (
-            <a href="#see-in-3d" class="absolute top-3 left-3 z-10 inline-flex items-center gap-1.5 bg-[#c9a96e] text-black text-[11px] font-semibold px-3 py-1.5 rounded-full hover:bg-white transition shadow-lg">
-              ◆ View in 3D{car.usdz ? ' & AR' : ''}
-            </a>
-          )}
-        </div>
+  {/* MAIN. Source order is the phone's order — photos, then price + calendar,
+      then the reading matter. Desktop rebuilds the two columns with explicit
+      grid placement rather than CSS `order`, so the tab order a keyboard or
+      screen reader follows always matches what is on screen. */}
+  <section class="bg-black pt-0 pb-14 md:pb-20">
+    <div class="max-w-6xl mx-auto px-5 md:px-8 grid lg:grid-cols-[1.45fr_1fr] gap-5 lg:gap-x-12 lg:gap-y-8 items-start">
 
-        <div class="mt-7">
-          <div class="flex items-center gap-3 mb-2">
-            <p class="text-[#c9a96e] tracking-[0.25em] uppercase text-xs">{car.make}</p>
-            {car.comingSoon && (
-              <span class="bg-[#c9a96e] text-black text-[10px] font-bold tracking-[0.15em] uppercase px-2.5 py-1 rounded-full">Coming Soon</span>
-            )}
-          </div>
-          <h1 class="font-display text-3xl md:text-5xl font-bold text-white tracking-tight leading-[1.05]">{car.name}</h1>
-
-          <div class="flex flex-wrap gap-2 mt-5">
-            {chips.map((c) => (
-              <span class="inline-flex items-baseline gap-1.5 rounded-full border border-white/10 bg-white/[0.03] px-3.5 py-1.5 text-sm">
-                <span class="text-white font-semibold">{c.value}</span>
-                <span class="text-white/45 text-xs">{c.label}</span>
-              </span>
-            ))}
-          </div>
-
-          <p class="text-white/65 leading-relaxed mt-6 max-w-prose">{car.description}</p>
-        </div>
+      <!-- 1 · PHOTOS -->
+      <div class="relative lg:col-start-1 lg:row-start-1">
+        <CarGallery images={imgs} name={car.name} slug={`g-${car.slug}`} client:visible />
+        {car.model && (
+          <a href="#see-in-3d" class="absolute top-3 left-3 z-10 inline-flex items-center gap-1.5 bg-[#c9a96e] text-black text-[11px] font-semibold px-3 py-1.5 rounded-full hover:bg-white transition shadow-lg">
+            ◆ View in 3D{car.usdz ? ' & AR' : ''}
+          </a>
+        )}
       </div>
 
-      <!-- RIGHT: booking card -->
-      <aside>
-        <div class="rounded-2xl border border-white/10 bg-[#0f0f0f] p-5 md:p-6 shadow-[0_20px_60px_rgba(0,0,0,0.4)]">
-          <div class="flex items-end justify-between mb-5">
+      <!-- 2 · PRICE + CALENDAR — straight under the photos on a phone -->
+      <aside class="lg:col-start-2 lg:row-start-1 lg:row-span-2">
+        <div class="rounded-2xl border border-white/10 bg-[#0f0f0f] p-4 md:p-6 shadow-[0_20px_60px_rgba(0,0,0,0.4)]">
+          <div class="flex items-end justify-between mb-4 md:mb-5">
             <div>
               <div class="flex items-center gap-2 mb-1">
                 <span class="text-white/45 text-base line-through">${wasPrice.toLocaleString()}</span>
@@ -226,6 +230,7 @@ const productSchema = {
             <span class="inline-flex items-center gap-1 text-sm text-white/70"><span class="text-[#c9a96e]">★</span> 5.0</span>
           </div>
 
+
           {/* client:only (not client:visible) so the calendar renders fresh on the client
               against the real current date. With static SSR, server HTML bakes in the build-date
               "today", and React hydration won't repaint the stale disabled/red states until a
@@ -236,7 +241,11 @@ const productSchema = {
               off `html.js` is absent so it shows immediately, and with scripting
               on it is hidden at parse time and only restored if the island is
               still empty after the bundle has had time to mount. */}
-          <div class="min-h-[520px]">
+          {/* Reserves the space the island will occupy so the card does not
+              jump as React mounts. Two values because the calendar starts
+              collapsed on a phone and open on desktop — a flat 520px here left
+              the collapsed card padded out with ~290px of nothing. */}
+          <div class="min-h-[150px] lg:min-h-[520px]">
             <BookingCalendar client:only="react" pricePerDay={car.price} carName={car.name} vehicleId={car.dashboardId || null} tiers={car.discountTiers} />
 
             <div data-calendar-fallback class="rounded-2xl border border-white/10 bg-[#0f0f0f] p-6 text-center">
@@ -273,44 +282,41 @@ const productSchema = {
           </div>
         </div>
       </aside>
+
+      {/* 3 · THE READING MATTER — last on a phone, because someone who has
+           already scrolled past the price is browsing rather than booking.
+           On desktop it returns to the left column under the photos. */}
+      <div class="lg:col-start-1 lg:row-start-2 mt-2 lg:mt-0">
+        <p class="text-white/65 leading-relaxed max-w-prose">{car.description}</p>
+
+        {/* Three across from `sm` up, two on a phone. */}
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 mt-6">
+          {specList.map((s) => (
+            <div class="rounded-xl border border-white/10 bg-[#0f0f0f] px-3 py-3.5 text-center">
+              <p class="text-white/45 text-[10px] uppercase tracking-wide mb-1.5">{s.k}</p>
+              {s.to !== undefined ? (
+                <p
+                  class="font-display text-xl lg:text-2xl font-bold text-white leading-none tabular-nums"
+                  data-countup
+                  data-to={s.to}
+                  data-decimals={s.decimals}
+                  data-suffix={s.suffix}
+                >{s.decimals > 0 ? Number(s.to).toFixed(s.decimals) : s.to}{s.suffix}</p>
+              ) : (
+                <p class="font-display text-xl lg:text-2xl font-bold text-white leading-none">{s.v}</p>
+              )}
+              {s.sub && <p class="text-white/40 text-[10px] mt-1 leading-none">{s.sub}</p>}
+            </div>
+          ))}
+        </div>
+        {car.drivetrain && <p class="text-white/50 text-xs mt-3">{car.drivetrain}</p>}
+      </div>
     </div>
   </section>
 
-  <!-- SPECS — full-width, one row across, centered -->
-  <section class="bg-black border-t border-white/5 py-12 md:py-14">
-    <div class="max-w-5xl mx-auto px-5 md:px-8">
-      <h2 class="reveal font-display text-2xl md:text-3xl font-bold text-white text-center mb-7">Specifications</h2>
-      <div class="reveal grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-3 md:mb-4">
-        {[
-          { k: 'Seats', v: car.seats, sub: car.seatsNote },
-          { k: 'Doors', v: car.doors },
-          { k: 'Miles / day', v: car.miles },
-          { k: 'Model year', v: car.year },
-        ].filter((x) => x.v).map((x) => (
-          <div class="rounded-xl border border-white/10 bg-[#0f0f0f] p-4 md:p-5 text-center">
-            <p class="text-white/45 text-[11px] uppercase tracking-wide mb-2">{x.k}</p>
-            <p class="font-display text-2xl md:text-3xl font-bold text-white leading-none">{x.v}</p>
-            {x.sub && <p class="text-white/40 text-[11px] mt-1.5 leading-none">{x.sub}</p>}
-          </div>
-        ))}
-      </div>
-      {car.drivetrain && <p class="reveal text-center text-white/55 text-sm mb-4">{car.drivetrain}</p>}
-      <div class="reveal grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-        {specs.map((s) => (
-          <div class="rounded-xl border border-white/10 bg-[#0f0f0f] p-4 md:p-5 text-center">
-            <p class="text-white/45 text-[11px] uppercase tracking-wide mb-2">{s.k}</p>
-            <p
-              class="font-display text-2xl md:text-3xl font-bold text-white leading-none tabular-nums"
-              data-countup
-              data-to={s.to}
-              data-decimals={s.decimals}
-              data-suffix={s.suffix}
-            >{s.decimals > 0 ? Number(s.to).toFixed(s.decimals) : s.to}{s.suffix}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
+  {/* The full-width "Specifications" band that used to sit here is gone — it
+      restated the spec grid that now lives under the description, and repeated
+      "Miles / day" between its own two rows. */}
 
   {content && (
     <section class="bg-black border-t border-white/5 py-12 md:py-16">
@@ -437,8 +443,16 @@ const productSchema = {
       const fb = document.querySelector('[data-calendar-fallback]');
       if (!fb) return;
       fb.removeAttribute('data-show');
-      const island = document.querySelector('astro-island[component-url*="BookingCalendar"]');
-      const mounted = () => island && island.children.length > 0;
+      // Re-query on every check. Holding one reference was the bug: Astro can
+      // swap the island element as it hydrates, so a captured node goes stale
+      // and reports 0 children forever — which showed "could not load" on a
+      // page where the calendar had in fact loaded.
+      const islandNow = () => document.querySelector('astro-island[component-url*="BookingCalendar"]');
+      const mounted = () => {
+        const el = islandNow();
+        return !!(el && el.children.length > 0);
+      };
+      const island = islandNow();
       const settle = () => { if (!mounted()) fb.setAttribute('data-show', ''); };
       if (mounted()) return;
       // Re-check as soon as the island changes, and give up after 6s.
