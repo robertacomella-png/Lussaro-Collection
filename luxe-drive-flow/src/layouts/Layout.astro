@@ -38,8 +38,21 @@ const breadcrumb = breadcrumbFor(Astro.url.pathname, breadcrumbName);
     <!-- Marks the document as scripting-capable at parse time. Anything that
          must degrade when JS never runs (see the booking-calendar fallback on
          car pages) keys off `html.js` rather than duplicating itself into a
-         <noscript> block. -->
-    <script is:inline>document.documentElement.classList.add('js');</script>
+         <noscript> block.
+
+         Re-applied after every view transition: ClientRouter's swap copies the
+         <html> attributes from the incoming server-rendered document, which has
+         no `js` class, so navigating within the site silently stripped it. That
+         un-hid the calendar fallback on every SPA navigation — the message
+         appeared under a working calendar with its own data-show never set,
+         because the CSS that hides it had stopped matching. -->
+    <script is:inline>
+      (function () {
+        var mark = function () { document.documentElement.classList.add('js'); };
+        mark();
+        document.addEventListener('astro:after-swap', mark);
+      })();
+    </script>
 
     <!-- Google Tag Manager (deferred) -->
     <script is:inline>
