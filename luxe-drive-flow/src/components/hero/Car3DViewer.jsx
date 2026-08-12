@@ -57,7 +57,7 @@ export default function Car3DViewer() {
             transition={{ type: "spring", stiffness: 280, damping: 28 }}
           >
             <div className="flex items-center justify-between px-5 md:px-7 h-14 shrink-0 border-b border-white/[0.06]">
-              <p className="text-[#c9a96e] tracking-[0.25em] uppercase text-[11px]">Lamborghini Urus · 3D</p>
+              <p className="text-[#ff1516] tracking-[0.25em] uppercase text-[11px]">Lamborghini Urus · 3D</p>
               <button
                 type="button"
                 onClick={() => setOpen(false)}
@@ -69,8 +69,8 @@ export default function Car3DViewer() {
             </div>
 
             <div className="relative flex-1">
-              <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(58% 60% at 50% 52%, rgba(201,169,110,0.18), transparent 70%)" }} />
-              <Suspense fallback={<div className="absolute inset-0 flex items-center justify-center"><div className="w-10 h-10 border-2 border-white/20 border-t-[#c9a96e] rounded-full animate-spin" /></div>}>
+              <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(58% 60% at 50% 52%, rgba(255, 21, 22, 0.09), transparent 70%)" }} />
+              <Suspense fallback={<div className="absolute inset-0 flex items-center justify-center"><div className="w-10 h-10 border-2 border-white/20 border-t-[#ff1516] rounded-full animate-spin" /></div>}>
                 <UrusHero />
               </Suspense>
             </div>
@@ -81,7 +81,7 @@ export default function Car3DViewer() {
                 <button
                   type="button"
                   onClick={launchAR}
-                  className="inline-flex items-center gap-1.5 bg-[#c9a96e] text-black text-xs font-semibold px-4 py-2 rounded-full hover:bg-white transition"
+                  className="inline-flex items-center gap-1.5 bg-white text-black text-xs font-semibold px-4 py-2 rounded-full hover:bg-[#ff1516] transition"
                 >
                   ◆ View in AR
                 </button>

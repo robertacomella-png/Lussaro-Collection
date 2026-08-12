@@ -16,7 +16,7 @@ export default function FleetCard({ car, onOpen }) {
     <button
       type="button"
       onClick={() => onOpen(car)}
-      className="group text-left rounded-[22px] md:rounded-[28px] bg-[#111] overflow-hidden shadow-xl border border-[#c9a96e]/25 hover:border-[#c9a96e]/50 transition-all duration-300"
+      className="group text-left rounded-[22px] md:rounded-[28px] bg-[#111] overflow-hidden shadow-xl border border-[#ff1516]/25 hover:border-[#ff1516]/50 transition-all duration-300"
     >
       <div className="relative m-2.5 md:m-4 overflow-hidden rounded-[16px] md:rounded-[22px]">
         <img
@@ -34,7 +34,7 @@ export default function FleetCard({ car, onOpen }) {
         <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/70 via-black/25 to-transparent" />
 
         {car.comingSoon && (
-          <span className="absolute top-3 left-3 bg-[#c9a96e] text-black text-[10px] md:text-[11px] font-bold tracking-[0.15em] uppercase px-2.5 py-1 rounded-full">
+          <span className="absolute top-3 left-3 bg-[#ff1516] text-black text-[10px] md:text-[11px] font-bold tracking-[0.15em] uppercase px-2.5 py-1 rounded-full">
             Coming Soon
           </span>
         )}
@@ -52,7 +52,7 @@ export default function FleetCard({ car, onOpen }) {
             <span className="text-white/45 text-sm line-through">${wasPrice.toLocaleString()}</span>
             <span className="bg-red-500 text-white text-[10px] font-bold tracking-wide px-1.5 py-0.5 rounded">${offAmount} OFF</span>
           </div>
-          <p className="text-[#c9a96e] text-[22px] md:text-3xl leading-none font-semibold tracking-tight">
+          <p className="text-[#ff1516] text-[22px] md:text-3xl leading-none font-semibold tracking-tight">
             ${car.price.toLocaleString()}
             <span className="text-white/45 text-xs md:text-sm font-normal ml-1">
               /day
@@ -94,7 +94,7 @@ export default function FleetCard({ car, onOpen }) {
           target="_blank"
           rel="noopener noreferrer"
           onClick={(e) => e.stopPropagation()}
-          className="flex items-center justify-center gap-2 w-full bg-[#c9a96e] text-black py-2.5 md:py-3 rounded-xl text-sm md:text-base font-semibold hover:bg-white transition"
+          className="flex items-center justify-center gap-2 w-full bg-white text-black py-2.5 md:py-3 rounded-xl text-sm md:text-base font-semibold hover:bg-[#ff1516] transition"
         >
           {car.comingSoon ? "Reserve Early" : "Reserve Now"}
         </a>

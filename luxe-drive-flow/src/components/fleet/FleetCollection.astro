@@ -13,10 +13,10 @@ const {
   pad = 'py-16 md:py-24', // vertical padding — override where the section follows a tight hero
 } = Astro.props;
 ---
-<section id={id} class={`bg-[#f7f5f0] text-[#0a0a0a] ${pad}`}>
+<section id={id} class={`bg-[#ffffff] text-[#0a0a0a] ${pad}`}>
   <div class="max-w-7xl mx-auto px-5 md:px-8">
     <div class="reveal text-center mb-12 md:mb-14">
-      <p class="text-[#c9a96e] tracking-[0.3em] uppercase text-xs font-medium mb-3">{eyebrow}</p>
+      <p class="text-[#e00e10] tracking-[0.3em] uppercase text-xs font-medium mb-3">{eyebrow}</p>
       <h2 class="font-display text-4xl md:text-6xl font-bold tracking-tight">{heading}</h2>
     </div>
 
@@ -35,10 +35,10 @@ const {
             />
             <span class="absolute top-4 left-4 bg-[#0a0a0a]/80 text-white text-[11px] tracking-wide px-3 py-1 rounded-full">{car.make}</span>
             {car.comingSoon && (
-              <span class="absolute top-4 right-4 bg-[#c9a96e] text-black text-[11px] font-bold tracking-[0.12em] uppercase px-3 py-1 rounded-full">Coming Soon</span>
+              <span class="absolute top-4 right-4 bg-[#ff1516] text-black text-[11px] font-bold tracking-[0.12em] uppercase px-3 py-1 rounded-full">Coming Soon</span>
             )}
             {car.model && (
-              <button data-open-3d type="button" class="absolute top-4 right-4 z-20 inline-flex items-center gap-1.5 bg-[#c9a96e] text-black text-[11px] font-semibold px-3 py-1.5 rounded-full hover:bg-white transition">
+              <button data-open-3d type="button" class="absolute top-4 right-4 z-20 inline-flex items-center gap-1.5 bg-white text-black text-[11px] font-semibold px-3 py-1.5 rounded-full hover:bg-[#ff1516] transition">
                 ◆ Explore in 3D
               </button>
             )}
@@ -51,9 +51,9 @@ const {
             <div class="text-right leading-tight">
               <div class="flex items-center justify-end gap-1.5 mb-0.5">
                 <span class="text-[#0a0a0a]/45 text-sm line-through">${(car.wasPrice ?? car.price + 200).toLocaleString()}</span>
-                <span class="bg-red-600 text-white text-[10px] font-bold tracking-wide px-1.5 py-0.5 rounded">${(car.wasPrice ?? car.price + 200) - car.price} OFF</span>
+                <span class="bg-[#ff1516] text-white text-[10px] font-bold tracking-wide px-1.5 py-0.5 rounded">${(car.wasPrice ?? car.price + 200) - car.price} OFF</span>
               </div>
-              <p class="text-[#c9a96e] font-display text-xl font-bold leading-none">${car.price.toLocaleString()}<span class="text-[#0a0a0a]/40 text-xs font-normal">/day</span></p>
+              <p class="text-[#e00e10] font-display text-xl font-bold leading-none">${car.price.toLocaleString()}<span class="text-[#0a0a0a]/40 text-xs font-normal">/day</span></p>
             </div>
           </div>
         </div>

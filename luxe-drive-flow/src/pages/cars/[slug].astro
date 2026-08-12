@@ -172,7 +172,7 @@ const productSchema = {
   <div class="bg-black pt-20 md:pt-24">
     <div class="max-w-6xl mx-auto px-5 md:px-8">
       <a href="/" data-collection-back class="group inline-flex items-center gap-2 text-white/60 hover:text-white text-sm transition">
-        <span class="inline-flex items-center justify-center w-7 h-7 rounded-full border border-white/15 group-hover:border-[#c9a96e] transition">‹</span>
+        <span class="inline-flex items-center justify-center w-7 h-7 rounded-full border border-white/15 group-hover:border-[#ff1516] transition">‹</span>
         Collection
       </a>
     </div>
@@ -189,11 +189,11 @@ const productSchema = {
     <div class="max-w-6xl mx-auto px-5 md:px-8">
       {car.comingSoon && (
         <p class="text-center mb-3">
-          <span class="bg-[#c9a96e] text-black text-[10px] font-bold tracking-[0.15em] uppercase px-2.5 py-1 rounded-full">Coming Soon</span>
+          <span class="bg-[#ff1516] text-black text-[10px] font-bold tracking-[0.15em] uppercase px-2.5 py-1 rounded-full">Coming Soon</span>
         </p>
       )}
       <h1 class="font-display font-extrabold text-white uppercase text-center text-balance tracking-tight leading-[1.1] text-[clamp(1.25rem,3.4vw,2.625rem)]">
-        {fullName} Rental In <span class="text-[#c9a96e]">{business.city}, {business.region}</span>
+        {fullName} Rental In <span class="text-[#ff1516]">{business.city}, {business.region}</span>
       </h1>
     </div>
   </header>
@@ -209,7 +209,7 @@ const productSchema = {
       <div class="relative lg:col-start-1 lg:row-start-1">
         <CarGallery images={imgs} name={car.name} slug={`g-${car.slug}`} client:visible />
         {car.model && (
-          <a href="#see-in-3d" class="absolute top-3 left-3 z-10 inline-flex items-center gap-1.5 bg-[#c9a96e] text-black text-[11px] font-semibold px-3 py-1.5 rounded-full hover:bg-white transition shadow-lg">
+          <a href="#see-in-3d" class="absolute top-3 left-3 z-10 inline-flex items-center gap-1.5 bg-white text-black text-[11px] font-semibold px-3 py-1.5 rounded-full hover:bg-[#ff1516] transition shadow-lg">
             ◆ View in 3D{car.usdz ? ' & AR' : ''}
           </a>
         )}
@@ -222,12 +222,12 @@ const productSchema = {
             <div>
               <div class="flex items-center gap-2 mb-1">
                 <span class="text-white/45 text-base line-through">${wasPrice.toLocaleString()}</span>
-                <span class="bg-red-600 text-white text-[10px] font-bold tracking-wide px-1.5 py-0.5 rounded">${offAmount} OFF</span>
+                <span class="bg-[#ff1516] text-white text-[10px] font-bold tracking-wide px-1.5 py-0.5 rounded">${offAmount} OFF</span>
               </div>
               <span class="font-display text-3xl font-bold text-white">${car.price.toLocaleString()}</span>
               <span class="text-white/45 text-sm"> / day</span>
             </div>
-            <span class="inline-flex items-center gap-1 text-sm text-white/70"><span class="text-[#c9a96e]">★</span> 5.0</span>
+            <span class="inline-flex items-center gap-1 text-sm text-white/70"><span class="text-[#ff1516]">★</span> 5.0</span>
           </div>
 
 
@@ -256,11 +256,11 @@ const productSchema = {
               </p>
               <div class="mt-5 flex flex-col gap-2.5">
                 <a href={wa} data-cta="car_calendar_fallback_whatsapp" target="_blank" rel="noopener noreferrer"
-                  class="inline-flex items-center justify-center bg-[#c9a96e] text-black py-3.5 rounded-full font-semibold hover:bg-white transition">
+                  class="inline-flex items-center justify-center bg-white text-black py-3.5 rounded-full font-semibold hover:bg-[#ff1516] transition">
                   Message us on WhatsApp
                 </a>
                 <a href={telHref} data-cta="car_calendar_fallback_call"
-                  class="inline-flex items-center justify-center border border-white/20 text-white py-3.5 rounded-full font-medium hover:border-[#c9a96e] hover:text-[#c9a96e] transition">
+                  class="inline-flex items-center justify-center border border-white/20 text-white py-3.5 rounded-full font-medium hover:border-[#ff1516] hover:text-[#ff1516] transition">
                   Call {business.phoneDisplayShort}
                 </a>
               </div>
@@ -271,7 +271,7 @@ const productSchema = {
           </div>
 
           <a href={telHref} data-cta="car_booking_card" data-call-inline
-            class="call-pop flex items-center justify-center gap-2 mt-2.5 bg-[#16a34a] text-white py-3.5 rounded-full font-semibold shadow-[0_8px_24px_rgba(22,163,74,0.5)] ring-1 ring-white/15 hover:bg-[#22c55e] transition-colors">
+            class="call-pop flex items-center justify-center gap-2 mt-2.5 bg-[#ff1516] text-white py-3.5 rounded-full font-semibold shadow-[0_8px_24px_rgba(255,21,22,0.45)] ring-1 ring-white/15 hover:bg-[#e00e10] transition-colors">
             <Phone className="w-4 h-4" /> Call to book
           </a>
 
@@ -331,7 +331,7 @@ const productSchema = {
           <ul class="reveal list-disc list-outside pl-5 space-y-2.5 text-white/70">
             {content.goodToKnow.map((g) => <li>{g}</li>)}
           </ul>
-          {content.realMoment && <p class="reveal text-white/70 leading-relaxed border-l-2 border-[#c9a96e] pl-4 italic">{content.realMoment}</p>}
+          {content.realMoment && <p class="reveal text-white/70 leading-relaxed border-l-2 border-[#ff1516] pl-4 italic">{content.realMoment}</p>}
           {content.operatorNotes && <p class="reveal text-white/70 leading-relaxed">{content.operatorNotes}</p>}
           {content.deliveryNotes && <p class="reveal text-white/70 leading-relaxed">{content.deliveryNotes}</p>}
         </div>
@@ -348,7 +348,7 @@ const productSchema = {
             <li>{rentalTerms.minimumAge}+ with a valid licence. {rentalTerms.insurance.summary}</li>
           </ul>
           <p class="reveal text-white/40 text-xs">
-            <a href="/pricing" class="text-[#c9a96e] hover:underline">Full rate card</a> · <a href="/terms" class="text-[#c9a96e] hover:underline">Terms of Service</a>
+            <a href="/pricing" class="text-[#ff1516] hover:underline">Full rate card</a> · <a href="/terms" class="text-[#ff1516] hover:underline">Terms of Service</a>
           </p>
         </div>
 
@@ -360,7 +360,7 @@ const productSchema = {
                 <details class="group py-5">
                   <summary class="flex items-center justify-between cursor-pointer list-none">
                     <span class="font-display text-lg text-white pr-6">{f.q}</span>
-                    <span class="text-[#c9a96e] text-xl shrink-0 transition-transform group-open:rotate-45">+</span>
+                    <span class="text-[#ff1516] text-xl shrink-0 transition-transform group-open:rotate-45">+</span>
                   </summary>
                   <p class="text-white/60 leading-relaxed mt-3">{f.a}</p>
                 </details>
@@ -374,13 +374,13 @@ const productSchema = {
             <h2 class="reveal font-display text-2xl md:text-3xl font-bold text-white tracking-tight">Also consider</h2>
             <div class="reveal grid gap-3 sm:grid-cols-2">
               {siblingCars.map((s) => (
-                <a href={`/cars/${s.slug}`} class="rounded-2xl border border-white/10 bg-[#0f0f0f] p-4 hover:border-[#c9a96e]/50 transition">
+                <a href={`/cars/${s.slug}`} class="rounded-2xl border border-white/10 bg-[#0f0f0f] p-4 hover:border-[#ff1516]/50 transition">
                   <p class="text-white font-display text-lg">{named(s)}</p>
                   <p class="text-white/45 text-sm mt-1">${s.price.toLocaleString()}/day{s.seats ? ` · ${s.seats} seats` : ''} · {s.zeroToSixty} to 60</p>
                 </a>
               ))}
             </div>
-            {content.category && <p class="reveal text-sm"><a href={content.category.href} class="text-[#c9a96e] hover:underline">{content.category.label} →</a></p>}
+            {content.category && <p class="reveal text-sm"><a href={content.category.href} class="text-[#ff1516] hover:underline">{content.category.label} →</a></p>}
           </div>
         )}
       </div>
@@ -390,9 +390,9 @@ const productSchema = {
   <!-- 3D / AR (Urus) — live, spinning model embedded inline -->
   {car.model && (
     <section id="see-in-3d" class="relative bg-black border-t border-white/5 py-16 md:py-24 text-center overflow-hidden scroll-mt-24">
-      <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(60% 55% at 50% 40%, rgba(201,169,110,0.14), transparent 70%);"></div>
+      <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(60% 55% at 50% 40%, rgba(255, 21, 22, 0.07), transparent 70%);"></div>
       <div class="reveal relative z-10 max-w-5xl mx-auto px-5">
-        <p class="text-[#c9a96e] tracking-[0.3em] uppercase text-xs mb-4">Interactive</p>
+        <p class="text-[#ff1516] tracking-[0.3em] uppercase text-xs mb-4">Interactive</p>
         <h2 class="font-display text-3xl md:text-5xl font-bold text-white mb-3">See it in 3D{car.usdz ? ' & AR' : ''}</h2>
         <p class="text-white/60 mb-8 max-w-md mx-auto">Drag to spin the {car.name} from every angle{car.usdz ? ' — or place it in your driveway with AR' : ''}.</p>
 
@@ -411,18 +411,18 @@ const productSchema = {
   <section id="contact" class="bg-[#0c0c0c] border-t border-white/5 py-16 md:py-20">
     <div class="max-w-3xl mx-auto px-5 md:px-8">
       <div class="reveal text-center mb-8">
-        <p class="text-[#c9a96e] tracking-[0.3em] uppercase text-xs mb-3">Reserve</p>
+        <p class="text-[#ff1516] tracking-[0.3em] uppercase text-xs mb-3">Reserve</p>
         <h2 class="font-display text-3xl md:text-5xl font-bold text-white tracking-tight text-balance">Book the {car.name}</h2>
         <p class="text-white/55 mt-3">Fastest reply on WhatsApp — or send your details and we'll confirm availability.</p>
       </div>
 
       <div class="reveal flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-10">
         <a href={wa} data-cta="car_contact" target="_blank" rel="noopener noreferrer"
-          class="flex-1 inline-flex items-center justify-center gap-2 bg-[#c9a96e] text-black px-7 py-4 rounded-full font-semibold hover:bg-white transition">
+          class="flex-1 inline-flex items-center justify-center gap-2 bg-white text-black px-7 py-4 rounded-full font-semibold hover:bg-[#ff1516] transition">
           WhatsApp <span class="w-2 h-2 rounded-full bg-[#1f7a3f]"></span>
         </a>
         <a href={telHref} data-cta="car_contact"
-          class="flex-1 inline-flex items-center justify-center border border-white/20 text-white px-7 py-4 rounded-full font-medium hover:border-[#c9a96e] hover:text-[#c9a96e] transition">
+          class="flex-1 inline-flex items-center justify-center border border-white/20 text-white px-7 py-4 rounded-full font-medium hover:border-[#ff1516] hover:text-[#ff1516] transition">
           Call Now
         </a>
       </div>

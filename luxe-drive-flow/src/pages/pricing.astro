@@ -78,7 +78,7 @@ const faqSchema = {
 
   <header class="bg-black pt-28 md:pt-36 pb-10 md:pb-14">
     <div class="max-w-5xl mx-auto px-5 md:px-8">
-      <p class="text-[#c9a96e] tracking-[0.3em] uppercase text-xs mb-4">Rates &amp; policies</p>
+      <p class="text-[#ff1516] tracking-[0.3em] uppercase text-xs mb-4">Rates &amp; policies</p>
       <h1 class="font-display text-4xl md:text-6xl font-bold text-white tracking-tight text-balance">
         Pricing &amp; Policies — No Surprises
       </h1>
@@ -106,7 +106,7 @@ const faqSchema = {
                 <th class="px-4 py-3 font-medium">Vehicle</th>
                 <th class="px-4 py-3 font-medium">1–{discountTiers[0].days - 1} days</th>
                 {discountTiers.map((t) => (
-                  <th class="px-4 py-3 font-medium">{t.days}+ days <span class="text-[#c9a96e]">−{t.pct}%</span></th>
+                  <th class="px-4 py-3 font-medium">{t.days}+ days <span class="text-[#ff1516]">−{t.pct}%</span></th>
                 ))}
                 <th class="px-4 py-3 font-medium">Miles/day</th>
                 <th class="px-4 py-3 font-medium">Deposit</th>
@@ -150,7 +150,7 @@ const faqSchema = {
           Every rental includes {mileage.includedPerDay} miles per day. {mileage.allowanceNote}
         </p>
         <div class="rounded-[16px] border border-white/10 bg-[#0f0f0f] p-5">
-          <p class="text-[#c9a96e] text-xs uppercase tracking-[0.22em] mb-3">Worked example</p>
+          <p class="text-[#ff1516] text-xs uppercase tracking-[0.22em] mb-3">Worked example</p>
           <p class="text-white/70 leading-relaxed text-sm">
             A {exDays}-day {named(exCar)} rental at {usd(rateForDays(exCar.price, exDays).perDay)}/day
             includes {exIncluded.toLocaleString()} miles in total ({mileage.includedPerDay} × {exDays}), to use however you like across the week.
@@ -197,7 +197,7 @@ const faqSchema = {
           <li>{insurance.summary}</li>
         </ul>
         <p class="text-white/40 text-xs">
-          Full detail in our <a href="/terms" class="text-[#c9a96e] hover:underline">Terms of Service</a>.
+          Full detail in our <a href="/terms" class="text-[#ff1516] hover:underline">Terms of Service</a>.
         </p>
       </div>
 
@@ -209,7 +209,7 @@ const faqSchema = {
             <details class="group py-5">
               <summary class="flex items-center justify-between cursor-pointer list-none">
                 <span class="font-display text-lg text-white pr-6">{f.q}</span>
-                <span class="text-[#c9a96e] text-xl shrink-0 transition-transform group-open:rotate-45">+</span>
+                <span class="text-[#ff1516] text-xl shrink-0 transition-transform group-open:rotate-45">+</span>
               </summary>
               <p class="text-white/60 leading-relaxed mt-3">{f.a}</p>
             </details>
@@ -218,8 +218,8 @@ const faqSchema = {
       </div>
 
       <div class="flex flex-col sm:flex-row gap-3">
-        <a href="/fleet" data-cta="pricing_fleet" class="flex-1 inline-flex items-center justify-center bg-[#c9a96e] text-black px-7 py-4 rounded-full font-semibold hover:bg-white transition">See the fleet</a>
-        <a href={wa} data-cta="pricing_whatsapp" target="_blank" rel="noopener noreferrer" class="flex-1 inline-flex items-center justify-center gap-2 border border-white/20 text-white px-7 py-4 rounded-full font-medium hover:border-[#c9a96e] hover:text-[#c9a96e] transition">
+        <a href="/fleet" data-cta="pricing_fleet" class="flex-1 inline-flex items-center justify-center bg-white text-black px-7 py-4 rounded-full font-semibold hover:bg-[#ff1516] transition">See the fleet</a>
+        <a href={wa} data-cta="pricing_whatsapp" target="_blank" rel="noopener noreferrer" class="flex-1 inline-flex items-center justify-center gap-2 border border-white/20 text-white px-7 py-4 rounded-full font-medium hover:border-[#ff1516] hover:text-[#ff1516] transition">
           Get a quote on WhatsApp <span class="w-2 h-2 rounded-full bg-[#1f7a3f]"></span>
         </a>
       </div>

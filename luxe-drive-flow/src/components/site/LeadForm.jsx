@@ -33,14 +33,14 @@ export default function LeadForm({ defaultVehicle = "" }) {
   if (status === "ok") {
     return (
       <div className="text-center max-w-md mx-auto py-10">
-        <p className="text-[#c9a96e] text-4xl mb-4">✓</p>
+        <p className="text-[#ff1516] text-4xl mb-4">✓</p>
         <h3 className="font-display text-2xl font-semibold text-white mb-2">Request received</h3>
         <p className="text-white/60">We'll be in touch shortly. For the fastest response, message us on WhatsApp.</p>
       </div>
     );
   }
 
-  const field = "w-full bg-white/[0.04] border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/35 focus:outline-none focus:border-[#c9a96e] transition";
+  const field = "w-full bg-white/[0.04] border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/35 focus:outline-none focus:border-[#ff1516] transition";
 
   return (
     <form onSubmit={onSubmit} className="max-w-xl mx-auto grid gap-3">
@@ -65,7 +65,7 @@ export default function LeadForm({ defaultVehicle = "" }) {
       <button
         type="submit"
         disabled={status === "sending"}
-        className="w-full bg-[#c9a96e] text-black py-4 rounded-full font-semibold hover:bg-white transition disabled:opacity-60"
+        className="w-full bg-white text-black py-4 rounded-full font-semibold hover:bg-[#ff1516] transition disabled:opacity-60"
       >
         {status === "sending" ? "Sending…" : "Request Availability"}
       </button>

@@ -23,7 +23,7 @@ export default function ArButton({ usdz = "/models/urus.usdz", glb = "/models/ur
     <button
       type="button"
       onClick={() => launchAR(mode, { usdz, glb, title })}
-      className="mt-6 inline-flex items-center gap-2 bg-[#c9a96e] text-black px-9 py-4 rounded-full font-semibold hover:bg-white transition"
+      className="mt-6 inline-flex items-center gap-2 bg-white text-black px-9 py-4 rounded-full font-semibold hover:bg-[#ff1516] transition"
     >
       ◆ View in AR
     </button>

@@ -37,12 +37,12 @@ const now = new Date();
 
   <header class="bg-black pt-28 md:pt-36 pb-10 md:pb-14">
     <div class="max-w-3xl mx-auto px-5 md:px-8">
-      <p class="text-[#c9a96e] tracking-[0.3em] uppercase text-xs mb-4">What renters say</p>
+      <p class="text-[#ff1516] tracking-[0.3em] uppercase text-xs mb-4">What renters say</p>
       <h1 class="font-display text-4xl md:text-6xl font-bold text-white tracking-tight text-balance">
         {business.brandName} Reviews
       </h1>
       <p class="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2 text-white/60 text-sm">
-        <span class="text-[#c9a96e] text-base tracking-[0.15em]" aria-hidden="true">★★★★★</span>
+        <span class="text-[#ff1516] text-base tracking-[0.15em]" aria-hidden="true">★★★★★</span>
         <span class="text-white font-medium">{averageRating.toFixed(1)} out of 5</span>
         <span class="text-white/30">·</span>
         <span>{reviewCount} reviews on Google</span>
@@ -60,7 +60,7 @@ const now = new Date();
         <article class="rounded-[20px] border border-white/10 bg-[#0f0f0f] p-5 md:p-7">
           <div class="flex items-start gap-4">
             <div
-              class="shrink-0 w-11 h-11 rounded-full bg-[#c9a96e]/15 border border-[#c9a96e]/25 flex items-center justify-center font-display text-lg font-semibold text-[#c9a96e]"
+              class="shrink-0 w-11 h-11 rounded-full bg-[#ff1516]/15 border border-[#ff1516]/25 flex items-center justify-center font-display text-lg font-semibold text-[#ff1516]"
               aria-hidden="true"
             >
               {r.name.trim().charAt(0).toUpperCase()}
@@ -72,7 +72,7 @@ const now = new Date();
                 <p class="text-white/40 text-xs">{relativeMonth(r.month, now)}</p>
               </div>
 
-              <p class="mt-1.5 text-[#c9a96e] text-sm tracking-[0.15em]" aria-label={`${r.rating} out of 5 stars`}>
+              <p class="mt-1.5 text-[#ff1516] text-sm tracking-[0.15em]" aria-label={`${r.rating} out of 5 stars`}>
                 <span aria-hidden="true">{'★'.repeat(r.rating)}</span>
               </p>
 
@@ -100,7 +100,7 @@ const now = new Date();
           data-cta="reviews_google_profile"
           target="_blank"
           rel="noopener noreferrer"
-          class="flex-1 inline-flex items-center justify-center text-center border border-white/20 text-white px-6 py-4 rounded-full font-medium hover:border-[#c9a96e] hover:text-[#c9a96e] transition"
+          class="flex-1 inline-flex items-center justify-center text-center border border-white/20 text-white px-6 py-4 rounded-full font-medium hover:border-[#ff1516] hover:text-[#ff1516] transition"
         >
           Read all our reviews on Google
         </a>
@@ -109,7 +109,7 @@ const now = new Date();
           data-cta="reviews_leave_review"
           target="_blank"
           rel="noopener noreferrer"
-          class="flex-1 inline-flex items-center justify-center text-center border border-white/20 text-white px-6 py-4 rounded-full font-medium hover:border-[#c9a96e] hover:text-[#c9a96e] transition"
+          class="flex-1 inline-flex items-center justify-center text-center border border-white/20 text-white px-6 py-4 rounded-full font-medium hover:border-[#ff1516] hover:text-[#ff1516] transition"
         >
           Leave a review
         </a>
@@ -118,7 +118,7 @@ const now = new Date();
       <SmartLink
         href="/fleet"
         data-cta="reviews_fleet"
-        class="mt-3 w-full inline-flex items-center justify-center bg-[#c9a96e] text-black px-7 py-4 rounded-full font-semibold hover:bg-white transition"
+        class="mt-3 w-full inline-flex items-center justify-center bg-white text-black px-7 py-4 rounded-full font-semibold hover:bg-[#ff1516] transition"
       >
         Rent with us
       </SmartLink>

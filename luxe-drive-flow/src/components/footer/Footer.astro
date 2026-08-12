@@ -7,9 +7,13 @@ const year = new Date().getFullYear();
 <footer class="bg-black text-white pt-16 pb-10 border-t border-white/10">
   <div class="max-w-7xl mx-auto px-6 grid gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5">
     <div class="space-y-4">
-      <h3 class="text-[#c9a96e] text-xl font-semibold tracking-tight">{business.brandName}</h3>
+      {/* Same wordmark treatment as the nav — first word red, rest white —
+          derived from business.brandName rather than hard-coded. */}
+      <h3 class="text-white text-xl font-semibold tracking-tight">
+        <span class="text-[#ff1516]">{business.brandName.split(' ')[0]}</span>{business.brandName.slice(business.brandName.indexOf(' '))}
+      </h3>
       <p class="text-white/60 text-sm leading-relaxed max-w-xs">
-        Miami luxury and exotic car rentals with premium delivery, insider service, and first-class attention. <SmartLink href="/about" class="text-[#c9a96e] hover:text-white transition-colors">Our story →</SmartLink>
+        Miami luxury and exotic car rentals with premium delivery, insider service, and first-class attention. <SmartLink href="/about" class="text-white/80 underline decoration-white/25 underline-offset-4 hover:text-white hover:decoration-white transition-colors">Our story →</SmartLink>
       </p>
     </div>
 

@@ -1,3 +1,34 @@
+/* ---------------------------------------------------------------------------
+   BRAND PALETTE. Replaced a gold accent (#c9a96e) in Aug 2026.
+   Sampled from the logo mark (public/favicon.png), not guessed.
+
+     #ff1516   brand red   the logo's field colour, used as-is. On DARK:
+                           5.06:1 on #0a0a0a, 4.90:1 on #0f0f0f cards.
+                           BLACK text on it is 5.37:1 — safe at any size.
+                           WHITE text on it is 3.91:1 — clears AA only for
+                           large/bold text (>=18.7px bold or 24px). The Call
+                           buttons and the "$200 OFF" badge use white on red by
+                           design decision; see the note below.
+     #e00e10   ink red     same hue darkened to clear 4.5:1 on WHITE (4.92:1).
+                           For red TEXT inside the light #ffffff sections, where
+                           brand red manages only 3.91:1. Also the Call buttons'
+                           hover — white on it is 4.95:1, so hover is the more
+                           legible state.
+     #ffffff   white       the logo's mark colour. Primary BUTTON fill with
+                           black text (e.g. "See Cars & Prices", "Explore in
+                           3D"); those hover to brand red.
+     #0a0a0a   near-black  page ground.   #0f0f0f  raised cards.
+
+   Two button roles: WHITE = primary/browse, RED = call. The Call buttons were
+   green until Aug 2026; only the small WhatsApp indicator dots (#25D366,
+   #1f7a3f) stay green, since that green is WhatsApp's own mark.
+
+   KNOWN TRADE-OFF: white-on-red at 3.91:1 is under the 4.5:1 AA bar for normal
+   text. It is an explicit brand choice, not an oversight. If it ever needs to
+   pass, switching those fills to #e00e10 takes white text to 4.95:1 at almost
+   no visible difference.
+   --------------------------------------------------------------------------- */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -107,12 +138,12 @@
   scrollbar-width: none;
 }
 
-/* Pulsing green halo shared by the sticky "Call" buttons (desktop pill + mobile
+/* Pulsing red halo shared by the sticky "Call" buttons (desktop pill + mobile
    bar) so they pop and pull the eye. Disabled under reduced-motion. */
 @keyframes callPop {
-  0%   { box-shadow: 0 10px 30px rgba(22, 163, 74, 0.45), 0 0 0 0 rgba(34, 197, 94, 0.55); }
-  70%  { box-shadow: 0 10px 30px rgba(22, 163, 74, 0.45), 0 0 0 18px rgba(34, 197, 94, 0); }
-  100% { box-shadow: 0 10px 30px rgba(22, 163, 74, 0.45), 0 0 0 0 rgba(34, 197, 94, 0); }
+  0%   { box-shadow: 0 10px 30px rgba(255, 21, 22, 0.42), 0 0 0 0 rgba(255, 21, 22, 0.5); }
+  70%  { box-shadow: 0 10px 30px rgba(255, 21, 22, 0.42), 0 0 0 18px rgba(255, 21, 22, 0); }
+  100% { box-shadow: 0 10px 30px rgba(255, 21, 22, 0.42), 0 0 0 0 rgba(255, 21, 22, 0); }
 }
 .call-pop {
   animation: callPop 1.8s ease-out infinite;
@@ -131,13 +162,15 @@
   pointer-events: none;
 }
 
-/* Primary CTA "pop": a warm gold glow plus a light-sweep that glides across
-   every few seconds — premium shimmer, not a gimmick. Used on the /fleet hero's
-   "See Cars & Prices" button. Disabled under reduced-motion. */
+/* Primary CTA "pop": a soft halo plus a light-sweep that glides across every
+   few seconds — premium shimmer, not a gimmick. Used on the /fleet hero's
+   "See Cars & Prices" button. Disabled under reduced-motion.
+   The halo is neutral: the button is white, and a red glow around a white
+   pill read as a colour fringe rather than a lift. */
 .cta-shine {
   position: relative;
   overflow: hidden;
-  box-shadow: 0 8px 30px rgba(201, 169, 110, 0.45);
+  box-shadow: 0 8px 30px rgba(255, 255, 255, 0.22);
 }
 .cta-shine::after {
   content: '';

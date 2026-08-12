@@ -60,7 +60,7 @@ import Nav from '@/components/site/Nav.astro';
         <section class="space-y-4">
           <h2 class="text-2xl font-semibold">5. Analytics & Advertising Tools</h2>
           <p>This site loads Google Tag Manager, which we use to manage measurement tags including Google Analytics. These tools collect usage data such as pages visited, approximate location, device and browser type, and how you arrived at the site. We use this to understand how the site is used and to measure our advertising.</p>
-          <p>You can opt out of Google Analytics across all sites using Google’s <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer" class="text-[#c9a96e] hover:underline">browser opt-out add-on</a>, and manage Google ad personalisation in your <a href="https://myadcenter.google.com/" target="_blank" rel="noopener noreferrer" class="text-[#c9a96e] hover:underline">Google Ad Center</a>.</p>
+          <p>You can opt out of Google Analytics across all sites using Google’s <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer" class="text-[#ff1516] hover:underline">browser opt-out add-on</a>, and manage Google ad personalisation in your <a href="https://myadcenter.google.com/" target="_blank" rel="noopener noreferrer" class="text-[#ff1516] hover:underline">Google Ad Center</a>.</p>
         </section>
 
         <section class="space-y-4">
@@ -87,9 +87,9 @@ import Nav from '@/components/site/Nav.astro';
           <p><span class="text-white/90">California residents (CCPA/CPRA)</span> and <span class="text-white/90">Florida residents (Florida Digital Bill of Rights)</span> may exercise these rights directly, or through an authorised agent. We will verify your identity before responding, and will respond within the timeframe required by applicable law.</p>
           <p>To make a request, contact us by {business.email ? 'email, ' : ''}WhatsApp or phone:</p>
           <ul class="list-disc list-inside space-y-2 text-white/70">
-            {business.email && <li>Email: <a href={`mailto:${business.email}`} class="text-[#c9a96e] hover:underline">{business.email}</a></li>}
-            <li>WhatsApp: <a href={business.whatsapp} target="_blank" rel="noopener noreferrer" class="text-[#c9a96e] hover:underline">{business.phoneDisplay}</a></li>
-            <li>Phone: <a href={`tel:${business.phone}`} class="text-[#c9a96e] hover:underline">{business.phoneDisplay}</a></li>
+            {business.email && <li>Email: <a href={`mailto:${business.email}`} class="text-[#ff1516] hover:underline">{business.email}</a></li>}
+            <li>WhatsApp: <a href={business.whatsapp} target="_blank" rel="noopener noreferrer" class="text-[#ff1516] hover:underline">{business.phoneDisplay}</a></li>
+            <li>Phone: <a href={`tel:${business.phone}`} class="text-[#ff1516] hover:underline">{business.phoneDisplay}</a></li>
           </ul>
           <p>Contact us to exercise any of these rights.</p>
         </section>

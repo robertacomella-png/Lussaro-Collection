@@ -94,7 +94,7 @@ export default function GalleryView() {
           transition={{ duration: 0.65 }}
           className="mb-10 md:mb-14"
         >
-          <p className="text-[#c9a96e] tracking-[0.32em] uppercase text-[11px] md:text-xs font-medium mb-4">
+          <p className="text-[#ff1516] tracking-[0.32em] uppercase text-[11px] md:text-xs font-medium mb-4">
             Curated Visual Archive
           </p>
           <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">

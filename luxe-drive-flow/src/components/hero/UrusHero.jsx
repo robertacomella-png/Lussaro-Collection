@@ -65,7 +65,7 @@ export default function UrusHero({ src = MODEL_URL, poster = POSTER }) {
     key.shadow.camera.top = 8; key.shadow.camera.bottom = -8;
     key.shadow.bias = -0.0004;
     scene.add(key);
-    const rim = new THREE.DirectionalLight(0xc9a96e, 1.2);
+    const rim = new THREE.DirectionalLight(0xff1516, 1.2);
     rim.position.set(-7, 4, -5);
     scene.add(rim);
 

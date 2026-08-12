@@ -75,21 +75,21 @@ const fleetSchema = {
       <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black"></div>
     </div>
     <div class="relative z-10 max-w-7xl mx-auto px-5 md:px-8 text-center">
-      <p class="text-[#c9a96e] tracking-[0.3em] uppercase text-[11px] md:text-xs font-medium mb-4">Lussaro Collection · Miami</p>
+      <p class="text-[#ff1516] tracking-[0.3em] uppercase text-[11px] md:text-xs font-medium mb-4">Lussaro Collection · Miami</p>
       <h1 class="font-display text-4xl md:text-6xl font-bold leading-[1.02] tracking-tight text-white text-balance">
-        Miami's Most-Wanted Exotics<span class="text-[#c9a96e]"> — from $445/day</span>
+        Miami's Most-Wanted Exotics<span class="text-[#ff1516]"> — from $445/day</span>
       </h1>
 
       <!-- Trust chips — the whole pitch, scannable in one second -->
       <div class="mt-6 flex flex-wrap items-center justify-center gap-2">
-        <span class="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 backdrop-blur px-4 py-1.5 text-[13px] text-white/85"><span class="text-[#c9a96e]">★</span> 5.0 on Google</span>
+        <span class="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 backdrop-blur px-4 py-1.5 text-[13px] text-white/85"><span class="text-[#ff1516]">★</span> 5.0 on Google</span>
         <span class="inline-flex items-center rounded-full border border-white/15 bg-white/5 backdrop-blur px-4 py-1.5 text-[13px] text-white/85">Door-to-door delivery</span>
         <span class="inline-flex items-center rounded-full border border-white/15 bg-white/5 backdrop-blur px-4 py-1.5 text-[13px] text-white/85">Same-day booking</span>
       </div>
 
       <div class="mt-7 flex flex-row gap-2.5 max-w-md mx-auto">
-        <a href="#fleet" class="cta-shine flex-1 inline-flex items-center justify-center bg-[#c9a96e] text-black px-3 py-3 md:px-5 md:py-3.5 rounded-full font-bold text-sm md:text-base whitespace-nowrap hover:bg-white transition-colors">See Cars &amp; Prices ↓</a>
-        <a href={telHref} data-cta="fleet_hero" data-call-inline class="call-pop flex-1 inline-flex items-center justify-center gap-1.5 bg-[#16a34a] text-white px-3 py-3 md:px-5 md:py-3.5 rounded-full font-semibold text-sm md:text-base whitespace-nowrap shadow-[0_8px_24px_rgba(22,163,74,0.5)] ring-1 ring-white/15 hover:bg-[#22c55e] transition-colors">
+        <a href="#fleet" class="cta-shine flex-1 inline-flex items-center justify-center bg-white text-black px-3 py-3 md:px-5 md:py-3.5 rounded-full font-bold text-sm md:text-base whitespace-nowrap hover:bg-[#ff1516] transition-colors">See Cars &amp; Prices ↓</a>
+        <a href={telHref} data-cta="fleet_hero" data-call-inline class="call-pop flex-1 inline-flex items-center justify-center gap-1.5 bg-[#ff1516] text-white px-3 py-3 md:px-5 md:py-3.5 rounded-full font-semibold text-sm md:text-base whitespace-nowrap shadow-[0_8px_24px_rgba(255,21,22,0.45)] ring-1 ring-white/15 hover:bg-[#e00e10] transition-colors">
           <Phone className="w-4 h-4 shrink-0" />
           <span class="lg:hidden">Call Now</span>
           <span class="hidden lg:inline">Call {business.phoneDisplayShort}</span>
@@ -106,7 +106,7 @@ const fleetSchema = {
   <section class="bg-black py-20 md:py-28">
     <div class="max-w-7xl mx-auto px-5 md:px-8">
       <div class="reveal text-center mb-14">
-        <p class="text-[#c9a96e] tracking-[0.3em] uppercase text-xs mb-3">Every Rental</p>
+        <p class="text-[#ff1516] tracking-[0.3em] uppercase text-xs mb-3">Every Rental</p>
         <h2 class="font-display text-3xl md:text-5xl font-bold text-white">What's included</h2>
       </div>
       <div class="reveal grid sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
@@ -124,13 +124,13 @@ const fleetSchema = {
   <section id="process" class="bg-[#0c0c0c] py-20 md:py-28">
     <div class="max-w-7xl mx-auto px-5 md:px-8">
       <div class="reveal text-center mb-14">
-        <p class="text-[#c9a96e] tracking-[0.3em] uppercase text-xs mb-3">How It Works</p>
+        <p class="text-[#ff1516] tracking-[0.3em] uppercase text-xs mb-3">How It Works</p>
         <h2 class="font-display text-3xl md:text-5xl font-bold text-white">Booked in three steps.</h2>
       </div>
       <div class="reveal grid md:grid-cols-3 gap-8">
         {steps.map((s) => (
           <div class="text-center">
-            <div class="w-14 h-14 rounded-full border border-[#c9a96e]/40 text-[#c9a96e] flex items-center justify-center mx-auto mb-5 font-display text-xl">{s.n}</div>
+            <div class="w-14 h-14 rounded-full border border-[#ff1516]/40 text-[#ff1516] flex items-center justify-center mx-auto mb-5 font-display text-xl">{s.n}</div>
             <h3 class="font-display text-xl font-semibold text-white mb-2">{s.t}</h3>
             <p class="text-white/50 leading-relaxed">{s.d}</p>
           </div>
@@ -143,7 +143,7 @@ const fleetSchema = {
   <section class="bg-black border-t border-white/5 py-20 md:py-28">
     <div class="max-w-3xl mx-auto px-5 md:px-8">
       <div class="reveal mb-10 text-center">
-        <p class="text-[#c9a96e] tracking-[0.3em] uppercase text-xs mb-4">Good to know</p>
+        <p class="text-[#ff1516] tracking-[0.3em] uppercase text-xs mb-4">Good to know</p>
         <h2 class="font-display text-3xl md:text-5xl font-bold text-white tracking-tight">Renting, answered</h2>
       </div>
       <div class="reveal divide-y divide-white/10 border-y border-white/10">
@@ -151,7 +151,7 @@ const fleetSchema = {
           <details class="group py-5">
             <summary class="flex items-center justify-between cursor-pointer list-none">
               <span class="font-display text-lg text-white pr-6">{f.q}</span>
-              <span class="text-[#c9a96e] text-xl shrink-0 transition-transform group-open:rotate-45">+</span>
+              <span class="text-[#ff1516] text-xl shrink-0 transition-transform group-open:rotate-45">+</span>
             </summary>
             <p class="text-white/60 leading-relaxed mt-3">{f.a}</p>
           </details>
@@ -164,16 +164,16 @@ const fleetSchema = {
   <section id="contact" class="bg-black py-20 md:py-24">
     <div class="max-w-3xl mx-auto px-5 md:px-8">
       <div class="reveal text-center mb-8">
-        <p class="text-[#c9a96e] tracking-[0.3em] uppercase text-xs mb-3">Reserve</p>
+        <p class="text-[#ff1516] tracking-[0.3em] uppercase text-xs mb-3">Reserve</p>
         <h2 class="font-display text-3xl md:text-5xl font-bold text-white tracking-tight text-balance">Lock in your dates</h2>
         <p class="text-white/55 mt-4">Fastest on WhatsApp — or send your details and we'll confirm in minutes.</p>
-        <a href={business.googleMaps} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 mt-4 text-sm text-white/55 hover:text-white transition"><span class="text-[#c9a96e]">★★★★★</span> 5.0 on Google — read reviews →</a>
+        <a href={business.googleMaps} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 mt-4 text-sm text-white/55 hover:text-white transition"><span class="text-[#ff1516]">★★★★★</span> 5.0 on Google — read reviews →</a>
       </div>
       <div class="reveal flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-10">
-        <a href={wa} data-cta="fleet_reserve" target="_blank" rel="noopener noreferrer" class="flex-1 inline-flex items-center justify-center gap-2 bg-[#c9a96e] text-black px-7 py-4 rounded-full font-semibold hover:bg-white transition">
+        <a href={wa} data-cta="fleet_reserve" target="_blank" rel="noopener noreferrer" class="flex-1 inline-flex items-center justify-center gap-2 bg-white text-black px-7 py-4 rounded-full font-semibold hover:bg-[#ff1516] transition">
           WhatsApp <span class="w-2 h-2 rounded-full bg-[#1f7a3f]"></span>
         </a>
-        <a href={telHref} data-cta="fleet_reserve" class="flex-1 inline-flex items-center justify-center border border-white/20 text-white px-7 py-4 rounded-full font-medium hover:border-[#c9a96e] hover:text-[#c9a96e] transition">
+        <a href={telHref} data-cta="fleet_reserve" class="flex-1 inline-flex items-center justify-center border border-white/20 text-white px-7 py-4 rounded-full font-medium hover:border-[#ff1516] hover:text-[#ff1516] transition">
           Call now
         </a>
       </div>
@@ -181,7 +181,7 @@ const fleetSchema = {
     </div>
   </section>
 
-  <CtaBand title={'Your Miami arrival,<br><span class="text-[#c9a96e]">unforgettable.</span>'} message={waMsg} />
+  <CtaBand title={'Your Miami arrival,<br><span class="text-[#ff1516]">unforgettable.</span>'} message={waMsg} />
 
   <StickyMobileCta />
   <Car3DViewer client:idle />

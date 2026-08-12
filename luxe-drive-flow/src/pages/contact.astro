@@ -37,7 +37,7 @@ const contactSchema = {
   <!-- HERO + DIRECT CONTACT -->
   <header class="bg-black pt-28 md:pt-36 pb-14 md:pb-20">
     <div class="max-w-6xl mx-auto px-5 md:px-8">
-      <p class="text-[#c9a96e] tracking-[0.3em] uppercase text-xs mb-4">Get in touch</p>
+      <p class="text-[#ff1516] tracking-[0.3em] uppercase text-xs mb-4">Get in touch</p>
       <h1 class="font-display text-4xl md:text-6xl font-bold text-white tracking-tight text-balance">
         Contact {business.brandName}
       </h1>
@@ -50,11 +50,11 @@ const contactSchema = {
         <!-- DIRECT CONTACT -->
         <div class="rounded-[24px] border border-white/10 bg-[#0f0f0f] p-6 md:p-8">
           <a href={wa} data-cta="contact_whatsapp" target="_blank" rel="noopener noreferrer"
-            class="flex items-center justify-center gap-2 bg-[#c9a96e] text-black px-7 py-4 rounded-full font-semibold hover:bg-white transition">
+            class="flex items-center justify-center gap-2 bg-white text-black px-7 py-4 rounded-full font-semibold hover:bg-[#ff1516] transition">
             Message us on WhatsApp <span class="w-2 h-2 rounded-full bg-[#1f7a3f]"></span>
           </a>
           <a href={telHref} data-cta="contact_call"
-            class="flex items-center justify-center gap-2 mt-3 border border-white/20 text-white px-7 py-4 rounded-full font-medium hover:border-[#c9a96e] hover:text-[#c9a96e] transition">
+            class="flex items-center justify-center gap-2 mt-3 border border-white/20 text-white px-7 py-4 rounded-full font-medium hover:border-[#ff1516] hover:text-[#ff1516] transition">
             Call {business.phoneDisplay}
           </a>
 
@@ -82,7 +82,7 @@ const contactSchema = {
                   {business.city}, {business.region} {business.postalCode}
                 </address>
                 <a href={business.googleMaps} target="_blank" rel="noopener noreferrer"
-                  class="inline-block mt-2 text-[#c9a96e] hover:text-white transition-colors">Open in Google Maps →</a>
+                  class="inline-block mt-2 text-[#ff1516] hover:text-white transition-colors">Open in Google Maps →</a>
               </dd>
             </div>
           </dl>
@@ -109,13 +109,13 @@ const contactSchema = {
   <section class="bg-black border-t border-white/5 py-16 md:py-20">
     <div class="max-w-5xl mx-auto px-5 md:px-8">
       <div class="reveal text-center mb-10">
-        <p class="text-[#c9a96e] tracking-[0.3em] uppercase text-xs mb-3">How booking works</p>
+        <p class="text-[#ff1516] tracking-[0.3em] uppercase text-xs mb-3">How booking works</p>
         <h2 class="font-display text-3xl md:text-4xl font-bold text-white tracking-tight">Three steps, start to keys</h2>
       </div>
       <div class="reveal grid gap-8 md:grid-cols-3">
         {bookingSteps.map((s) => (
           <div class="text-center">
-            <div class="w-14 h-14 rounded-full border border-[#c9a96e]/40 text-[#c9a96e] flex items-center justify-center mx-auto mb-5 font-display text-xl">{s.n}</div>
+            <div class="w-14 h-14 rounded-full border border-[#ff1516]/40 text-[#ff1516] flex items-center justify-center mx-auto mb-5 font-display text-xl">{s.n}</div>
             <h3 class="font-display text-xl font-semibold text-white mb-2">{s.t}</h3>
             <p class="text-white/50 leading-relaxed">{s.d}</p>
           </div>
@@ -128,7 +128,7 @@ const contactSchema = {
   <section id="enquiry" class="bg-[#0c0c0c] border-t border-white/5 py-16 md:py-20">
     <div class="max-w-3xl mx-auto px-5 md:px-8">
       <div class="reveal text-center mb-8">
-        <p class="text-[#c9a96e] tracking-[0.3em] uppercase text-xs mb-3">Send an enquiry</p>
+        <p class="text-[#ff1516] tracking-[0.3em] uppercase text-xs mb-3">Send an enquiry</p>
         <h2 class="font-display text-3xl md:text-5xl font-bold text-white tracking-tight text-balance">Tell us what you need</h2>
         <p class="text-white/55 mt-3">Prefer to write it out? Send your details and we will confirm availability.</p>
       </div>

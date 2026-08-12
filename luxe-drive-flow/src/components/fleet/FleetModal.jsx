@@ -88,7 +88,7 @@ export default function FleetModal({ car, setCar, activeImage, setActiveImage })
                       onClick={() => setActiveImage(index)}
                       className={`overflow-hidden rounded-2xl border ${
                         activeImage === index
-                          ? "border-[#c9a96e]"
+                          ? "border-[#ff1516]"
                           : "border-white/10 opacity-60"
                       }`}
                     >
@@ -108,11 +108,11 @@ export default function FleetModal({ car, setCar, activeImage, setActiveImage })
 
               <div className="text-white flex flex-col justify-center">
                 <div className="flex items-center gap-3 mb-3">
-                  <p className="text-[#c9a96e] tracking-[0.25em] uppercase text-xs">
+                  <p className="text-[#ff1516] tracking-[0.25em] uppercase text-xs">
                     {car.make}
                   </p>
                   {car.comingSoon && (
-                    <span className="bg-[#c9a96e] text-black text-[10px] font-bold tracking-[0.15em] uppercase px-2.5 py-1 rounded-full">
+                    <span className="bg-[#ff1516] text-black text-[10px] font-bold tracking-[0.15em] uppercase px-2.5 py-1 rounded-full">
                       Coming Soon
                     </span>
                   )}
@@ -128,7 +128,7 @@ export default function FleetModal({ car, setCar, activeImage, setActiveImage })
                       Starting At
                     </p>
                     <div className="flex items-center gap-3 flex-wrap">
-                      <p className="text-[#c9a96e] text-3xl md:text-4xl font-semibold">
+                      <p className="text-[#ff1516] text-3xl md:text-4xl font-semibold">
                         ${car.price.toLocaleString()}
                         <span className="text-white/45 text-sm ml-1">/day</span>
                       </p>
@@ -141,7 +141,7 @@ export default function FleetModal({ car, setCar, activeImage, setActiveImage })
                     href={whatsappWith(car.comingSoon ? `Hi, I'd like to reserve the ${car.name} early with Lussaro Collection — I hear it's arriving soon.` : `Hi, I'm interested in booking the ${car.name} with Lussaro Collection.`)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center bg-[#c9a96e] text-black px-7 py-3.5 rounded-full text-sm font-semibold hover:bg-white transition"
+                    className="inline-flex items-center justify-center bg-white text-black px-7 py-3.5 rounded-full text-sm font-semibold hover:bg-[#ff1516] transition"
                   >
                     {car.comingSoon ? "Reserve Early" : "Reserve Now"}
                   </a>

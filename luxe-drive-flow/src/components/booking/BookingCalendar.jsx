@@ -51,7 +51,7 @@ function getVisitorLeadId() {
 }
 
 const fieldCls =
-  "w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-white/35 focus:border-[#c9a96e] outline-none transition";
+  "w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-white/35 focus:border-[#ff1516] outline-none transition";
 
 // Expand an inclusive {start,end} ISO range into individual ISO day strings.
 function expandRange(startISO, endISO, out) {
@@ -266,7 +266,7 @@ export default function BookingCalendar({ pricePerDay = 0, carName = "", vehicle
     }
   }
 
-  const navBtn = "w-9 h-9 inline-flex items-center justify-center rounded-full border border-white/15 text-white/80 hover:border-[#c9a96e] hover:text-white transition disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:border-white/15";
+  const navBtn = "w-9 h-9 inline-flex items-center justify-center rounded-full border border-white/15 text-white/80 hover:border-[#ff1516] hover:text-white transition disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:border-white/15";
 
   return (
     <div>
@@ -301,8 +301,8 @@ export default function BookingCalendar({ pricePerDay = 0, carName = "", vehicle
           // made the card taller than an iPhone SE screen on its own.
           let cls = "relative h-9 sm:h-10 rounded-lg flex items-center justify-center text-sm transition ";
           if (!avail) cls += "text-white/25 cursor-not-allowed";
-          else if (selected) cls += "bg-[#c9a96e] text-black font-semibold";
-          else if (inRange) cls += "bg-[#c9a96e]/20 text-white";
+          else if (selected) cls += "bg-white text-black font-semibold";
+          else if (inRange) cls += "bg-[#ff1516]/20 text-white";
           else cls += "text-white hover:bg-white/10";
           const dotColor = !avail ? "bg-red-500/70" : pend ? "bg-amber-400" : "bg-emerald-400";
           return (
@@ -333,11 +333,11 @@ export default function BookingCalendar({ pricePerDay = 0, carName = "", vehicle
             return (
               <div
                 key={t.pct}
-                className={`rounded-xl border px-2 py-2.5 text-center transition ${active ? "border-[#c9a96e] bg-[#c9a96e]/10" : "border-white/10 bg-white/[0.02]"}`}
+                className={`rounded-xl border px-2 py-2.5 text-center transition ${active ? "border-[#ff1516] bg-[#ff1516]/10" : "border-white/10 bg-white/[0.02]"}`}
               >
                 {/* text-base on phones: uppercase "20% OFF" paints ~81px, which
                     overruns the 77px chip on a 375px screen at text-lg. */}
-                <p className={`font-display text-base sm:text-lg font-bold leading-none whitespace-nowrap uppercase ${active ? "text-[#c9a96e]" : "text-white/80"}`}>{t.pct}% off</p>
+                <p className={`font-display text-base sm:text-lg font-bold leading-none whitespace-nowrap uppercase ${active ? "text-[#ff1516]" : "text-white/80"}`}>{t.pct}% off</p>
                 <p className="text-[10px] text-white/40 mt-1">{t.days}+ days</p>
               </div>
             );
@@ -352,7 +352,7 @@ export default function BookingCalendar({ pricePerDay = 0, carName = "", vehicle
           type="button"
           onClick={() => setCalOpen(true)}
           aria-expanded="false"
-          className="w-full mt-4 bg-[#c9a96e] text-black py-3.5 rounded-full font-semibold hover:bg-white transition"
+          className="w-full mt-4 bg-white text-black py-3.5 rounded-full font-semibold hover:bg-[#ff1516] transition"
         >
           Check availability
         </button>
@@ -387,7 +387,7 @@ export default function BookingCalendar({ pricePerDay = 0, carName = "", vehicle
         ) : (
           <>
             <button type="button" disabled={!start} onClick={() => { setFormError(""); setModalOpen(true); }}
-              className="w-full bg-[#c9a96e] text-black py-3.5 rounded-full font-semibold hover:bg-white transition disabled:opacity-40 disabled:cursor-not-allowed">
+              className="w-full bg-white text-black py-3.5 rounded-full font-semibold hover:bg-[#ff1516] transition disabled:opacity-40 disabled:cursor-not-allowed">
               Book Now
             </button>
             {start && (
@@ -421,7 +421,7 @@ export default function BookingCalendar({ pricePerDay = 0, carName = "", vehicle
                 <X className="w-4 h-4 text-white" />
               </button>
 
-              <p className="text-[#c9a96e] tracking-[0.22em] uppercase text-[11px] mb-1">Reserve</p>
+              <p className="text-[#ff1516] tracking-[0.22em] uppercase text-[11px] mb-1">Reserve</p>
               <h3 className="text-2xl font-semibold text-white">{carName}</h3>
               <p className="text-white/55 text-sm mt-1">{datesText} · <span className="text-white/80">${total.toLocaleString()} est.</span></p>
 
@@ -440,7 +440,7 @@ export default function BookingCalendar({ pricePerDay = 0, carName = "", vehicle
               {formError && <p className="text-xs text-red-400 mt-3">{formError}</p>}
 
               <button type="button" onClick={submitBooking} disabled={submitting}
-                className="w-full mt-4 bg-[#c9a96e] text-black py-3.5 rounded-full font-semibold hover:bg-white transition disabled:opacity-60">
+                className="w-full mt-4 bg-white text-black py-3.5 rounded-full font-semibold hover:bg-[#ff1516] transition disabled:opacity-60">
                 {submitting ? "Sending…" : "Book Now"}
               </button>
               <a href={wa} target="_blank" rel="noopener noreferrer" data-cta="calendar_book"
