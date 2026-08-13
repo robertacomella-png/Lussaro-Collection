@@ -40,25 +40,33 @@ export default function LeadForm({ defaultVehicle = "" }) {
     );
   }
 
-  const field = "w-full bg-white/[0.04] border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/35 focus:outline-none focus:border-[#ff1516] transition";
+  // placeholder-white/50 rather than /35: white at 35% over this field's near
+  // black sits at 3.0:1, under the 4.5:1 WCAG AA floor for body text.
+  const field = "w-full bg-white/[0.04] border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/50 focus:outline-none focus:border-[#ff1516] transition";
 
+  // Every control carries an explicit aria-label. The visible cue is the
+  // placeholder, and a <select> has no placeholder attribute to fall back on —
+  // so it reached screen readers and AI agents as an unnamed combobox. The
+  // inputs are labelled for the same reason rather than leaning on their
+  // placeholder, which is only a fallback accessible name and disappears the
+  // moment someone types.
   return (
     <form onSubmit={onSubmit} className="max-w-xl mx-auto grid gap-3">
       <div className="grid sm:grid-cols-2 gap-3">
-        <input name="name" required placeholder="Name*" className={field} />
-        <input name="phone" required placeholder="Phone*" inputMode="tel" className={field} />
+        <input name="name" required placeholder="Name*" aria-label="Your name" className={field} />
+        <input name="phone" required placeholder="Phone*" inputMode="tel" aria-label="Your phone number" className={field} />
       </div>
-      <input name="email" type="email" placeholder="Email" className={field} />
+      <input name="email" type="email" placeholder="Email" aria-label="Your email address" className={field} />
       <div className="grid sm:grid-cols-2 gap-3">
-        <select name="vehicle" className={field} defaultValue={defaultVehicle}>
+        <select name="vehicle" aria-label="Choose a car" className={field} defaultValue={defaultVehicle}>
           <option value="" disabled>Choose a car</option>
           {fleet.map((c) => (
             <option key={c.id} value={c.name} className="bg-[#111]">{c.name}</option>
           ))}
         </select>
-        <input name="dates" placeholder="Dates (e.g. Jun 20–22)" className={field} />
+        <input name="dates" placeholder="Dates (e.g. Jun 20–22)" aria-label="Rental dates" className={field} />
       </div>
-      <textarea name="message" rows="3" placeholder="Anything else?" className={field}></textarea>
+      <textarea name="message" rows="3" placeholder="Anything else?" aria-label="Anything else we should know?" className={field}></textarea>
 
       {status === "error" && <p className="text-red-400 text-sm">{error}</p>}
 
@@ -69,7 +77,7 @@ export default function LeadForm({ defaultVehicle = "" }) {
       >
         {status === "sending" ? "Sending…" : "Request Availability"}
       </button>
-      <p className="text-white/35 text-xs text-center">Prefer to talk now? Call or WhatsApp us — we reply in minutes.</p>
+      <p className="text-white/50 text-xs text-center">Prefer to talk now? Call or WhatsApp us — we reply in minutes.</p>
     </form>
   );
 }

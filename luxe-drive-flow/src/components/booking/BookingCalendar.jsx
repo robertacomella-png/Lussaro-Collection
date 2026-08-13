@@ -283,7 +283,7 @@ export default function BookingCalendar({ pricePerDay = 0, carName = "", vehicle
       {/* weekday header */}
       <div className="grid grid-cols-7 gap-1 mb-1">
         {WEEKDAYS.map((w, i) => (
-          <div key={i} className="h-6 sm:h-7 flex items-center justify-center text-[11px] font-medium text-white/35">{w}</div>
+          <div key={i} className="h-6 sm:h-7 flex items-center justify-center text-[11px] font-medium text-white/50">{w}</div>
         ))}
       </div>
 
@@ -317,7 +317,7 @@ export default function BookingCalendar({ pricePerDay = 0, carName = "", vehicle
       </div>
 
       {/* legend */}
-      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-3 text-[11px] text-white/45">
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-3 text-[11px] text-white/50">
         <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-emerald-400" /> Available</span>
         <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-amber-400" /> Pending</span>
         <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-red-500/70" /> Unavailable</span>
@@ -326,7 +326,7 @@ export default function BookingCalendar({ pricePerDay = 0, carName = "", vehicle
 
       {/* multi-day savings — tier chips, active one highlighted */}
       <div className="mt-4">
-        <p className="text-[10px] uppercase tracking-[0.2em] text-white/35 mb-2">Multi-day savings</p>
+        <p className="text-[10px] uppercase tracking-[0.2em] text-white/50 mb-2">Multi-day savings</p>
         <div className="grid grid-cols-3 gap-2">
           {tiers.map((t) => {
             const active = discountPct === t.pct;
@@ -338,7 +338,7 @@ export default function BookingCalendar({ pricePerDay = 0, carName = "", vehicle
                 {/* text-base on phones: uppercase "20% OFF" paints ~81px, which
                     overruns the 77px chip on a 375px screen at text-lg. */}
                 <p className={`font-display text-base sm:text-lg font-bold leading-none whitespace-nowrap uppercase ${active ? "text-[#ff1516]" : "text-white/80"}`}>{t.pct}% off</p>
-                <p className="text-[10px] text-white/40 mt-1">{t.days}+ days</p>
+                <p className="text-[10px] text-white/50 mt-1">{t.days}+ days</p>
               </div>
             );
           })}
@@ -366,9 +366,9 @@ export default function BookingCalendar({ pricePerDay = 0, carName = "", vehicle
               <span className="text-white/70 text-sm">{datesText}</span>
               <span className="text-right shrink-0">
                 {discountPct > 0 && (
-                  <span className="block text-white/35 text-xs line-through leading-none mb-0.5">${subtotal.toLocaleString()}</span>
+                  <span className="block text-white/50 text-xs line-through leading-none mb-0.5">${subtotal.toLocaleString()}</span>
                 )}
-                <span className="text-white font-semibold">${total.toLocaleString()}<span className="text-white/40 text-xs font-normal"> est.</span></span>
+                <span className="text-white font-semibold">${total.toLocaleString()}<span className="text-white/50 text-xs font-normal"> est.</span></span>
               </span>
             </div>
             {discountPct > 0 && (
@@ -376,7 +376,7 @@ export default function BookingCalendar({ pricePerDay = 0, carName = "", vehicle
             )}
           </div>
         ) : (
-          <p className="text-white/45 text-sm mb-3">Pick your pick-up{end ? "" : " and return"} dates to see your rate.</p>
+          <p className="text-white/50 text-sm mb-3">Pick your pick-up{end ? "" : " and return"} dates to see your rate.</p>
         )}
 
         {submitted ? (
@@ -392,7 +392,7 @@ export default function BookingCalendar({ pricePerDay = 0, carName = "", vehicle
             </button>
             {start && (
               <button type="button" onClick={() => { setStart(null); setEnd(null); }}
-                className="w-full mt-2 text-white/40 text-xs hover:text-white/70 transition">
+                className="w-full mt-2 text-white/50 text-xs hover:text-white/70 transition">
                 Clear dates
               </button>
             )}
@@ -432,7 +432,7 @@ export default function BookingCalendar({ pricePerDay = 0, carName = "", vehicle
                 <input className={`${fieldCls} col-span-2`} type="email" inputMode="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" />
                 <input className={`${fieldCls} col-span-2`} placeholder="Driver's license number" value={licenseNumber} onChange={(e) => setLicenseNumber(e.target.value)} />
                 <div className="col-span-2">
-                  <label className="block text-[11px] text-white/40 mb-1 ml-1">Date of birth</label>
+                  <label className="block text-[11px] text-white/50 mb-1 ml-1">Date of birth</label>
                   <input className={fieldCls} type="date" value={dob} onChange={(e) => setDob(e.target.value)} />
                 </div>
               </div>
@@ -447,7 +447,7 @@ export default function BookingCalendar({ pricePerDay = 0, carName = "", vehicle
                 className="flex items-center justify-center gap-2 mt-2 border border-white/15 text-white py-3 rounded-full text-sm font-medium hover:bg-white/10 transition">
                 or Reserve on WhatsApp <span className="w-2 h-2 rounded-full bg-[#1f7a3f]" />
               </a>
-              <p className="text-white/30 text-[11px] text-center mt-3">No charge now — we confirm availability &amp; pricing first.</p>
+              <p className="text-white/50 text-[11px] text-center mt-3">No charge now — we confirm availability &amp; pricing first.</p>
             </motion.div>
           </motion.div>
         )}

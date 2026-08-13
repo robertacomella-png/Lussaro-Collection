@@ -55,7 +55,7 @@ import { business, telHref, whatsappWith } from '@/data/business';
       <div class="mt-auto">
         <div class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
           <a href="#fleet" class="cta-shine flex-1 inline-flex items-center justify-center bg-white text-black px-7 py-4 rounded-full font-semibold whitespace-nowrap hover:bg-[#ff1516] transition-colors">See Cars &amp; Prices ↓</a>
-          <a href={telHref} data-cta="hero" data-call-inline class="call-pop flex-1 order-first sm:order-none inline-flex items-center justify-center gap-2 bg-[#ff1516] text-white px-7 py-4 rounded-full font-semibold whitespace-nowrap shadow-[0_8px_24px_rgba(255,21,22,0.45)] ring-1 ring-white/15 hover:bg-[#e00e10] transition-colors">
+          <a href={telHref} data-cta="hero" data-call-inline class="call-pop flex-1 order-first sm:order-none inline-flex items-center justify-center gap-2 bg-[#e00e10] text-white px-7 py-4 rounded-full font-semibold whitespace-nowrap shadow-[0_8px_24px_rgba(255,21,22,0.45)] ring-1 ring-white/15 hover:bg-[#c40c0e] transition-colors">
             <Phone className="w-4 h-4 shrink-0" /> Call {business.phoneDisplayShort}
           </a>
         </div>
@@ -70,11 +70,11 @@ import { business, telHref, whatsappWith } from '@/data/business';
   <section class="bg-black border-y border-white/5 py-6">
     <div class="max-w-7xl mx-auto px-5 md:px-8 flex flex-wrap items-center justify-center md:justify-between gap-x-8 gap-y-3 text-center text-white/55 text-sm">
       <span>⚡ Same-day booking</span>
-      <span class="hidden md:inline text-white/15">|</span>
+      <span class="hidden md:inline text-white/15" aria-hidden="true">|</span>
       <span>🛡️ Flexible insurance options</span>
-      <span class="hidden md:inline text-white/15">|</span>
+      <span class="hidden md:inline text-white/15" aria-hidden="true">|</span>
       <span>🚗 Delivered to your door</span>
-      <span class="hidden md:inline text-white/15">|</span>
+      <span class="hidden md:inline text-white/15" aria-hidden="true">|</span>
       <span>💬 60-second WhatsApp booking</span>
     </div>
   </section>
@@ -129,7 +129,7 @@ import { business, telHref, whatsappWith } from '@/data/business';
       <p class="text-[#e00e10] tracking-[0.3em] uppercase text-xs mb-4">Trusted in Miami</p>
       <p class="text-[#e00e10] text-3xl mb-5">★★★★★</p>
       <p class="font-display text-2xl md:text-3xl font-semibold leading-snug">Rated 5.0 on Google</p>
-      <p class="text-[#0a0a0a]/55 mt-4 max-w-md mx-auto">White-glove delivery, immaculate vehicles, and concierge service across South Beach and Brickell.</p>
+      <p class="text-[#0a0a0a]/60 mt-4 max-w-md mx-auto">White-glove delivery, immaculate vehicles, and concierge service across South Beach and Brickell.</p>
       <a href={business.googleMaps} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 mt-6 text-[#0a0a0a] border-b border-[#0a0a0a]/30 hover:border-[#e00e10] pb-1 transition">Read our Google reviews →</a>
     </div>
   </section>

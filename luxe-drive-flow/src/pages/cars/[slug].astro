@@ -189,7 +189,7 @@ const productSchema = {
     <div class="max-w-6xl mx-auto px-5 md:px-8">
       {car.comingSoon && (
         <p class="text-center mb-3">
-          <span class="bg-[#ff1516] text-black text-[10px] font-bold tracking-[0.15em] uppercase px-2.5 py-1 rounded-full">Coming Soon</span>
+          <span class="bg-[#e00e10] text-black text-[10px] font-bold tracking-[0.15em] uppercase px-2.5 py-1 rounded-full">Coming Soon</span>
         </p>
       )}
       <h1 class="font-display font-extrabold text-white uppercase text-center text-balance tracking-tight leading-[1.1] text-[clamp(1.25rem,3.4vw,2.625rem)]">
@@ -221,11 +221,11 @@ const productSchema = {
           <div class="flex items-end justify-between mb-4 md:mb-5">
             <div>
               <div class="flex items-center gap-2 mb-1">
-                <span class="text-white/45 text-base line-through">${wasPrice.toLocaleString()}</span>
-                <span class="bg-[#ff1516] text-white text-[10px] font-bold tracking-wide px-1.5 py-0.5 rounded">${offAmount} OFF</span>
+                <span class="text-white/50 text-base line-through">${wasPrice.toLocaleString()}</span>
+                <span class="bg-[#e00e10] text-white text-[10px] font-bold tracking-wide px-1.5 py-0.5 rounded">${offAmount} OFF</span>
               </div>
               <span class="font-display text-3xl font-bold text-white">${car.price.toLocaleString()}</span>
-              <span class="text-white/45 text-sm"> / day</span>
+              <span class="text-white/50 text-sm"> / day</span>
             </div>
             <span class="inline-flex items-center gap-1 text-sm text-white/70"><span class="text-[#ff1516]">★</span> 5.0</span>
           </div>
@@ -264,18 +264,18 @@ const productSchema = {
                   Call {business.phoneDisplayShort}
                 </a>
               </div>
-              <p class="mt-4 text-white/40 text-xs">
+              <p class="mt-4 text-white/50 text-xs">
                 ${car.price.toLocaleString('en-US')} / day · {milesPerDay} miles included
               </p>
             </div>
           </div>
 
           <a href={telHref} data-cta="car_booking_card" data-call-inline
-            class="call-pop flex items-center justify-center gap-2 mt-2.5 bg-[#ff1516] text-white py-3.5 rounded-full font-semibold shadow-[0_8px_24px_rgba(255,21,22,0.45)] ring-1 ring-white/15 hover:bg-[#e00e10] transition-colors">
+            class="call-pop flex items-center justify-center gap-2 mt-2.5 bg-[#e00e10] text-white py-3.5 rounded-full font-semibold shadow-[0_8px_24px_rgba(255,21,22,0.45)] ring-1 ring-white/15 hover:bg-[#c40c0e] transition-colors">
             <Phone className="w-4 h-4" /> Call to book
           </a>
 
-          <div class="flex items-center justify-center gap-x-4 gap-y-1 flex-wrap mt-5 text-[11px] text-white/40">
+          <div class="flex items-center justify-center gap-x-4 gap-y-1 flex-wrap mt-5 text-[11px] text-white/50">
             <span>✓ Insurance options</span>
             <span>✓ Miami Delivery</span>
             <span>✓ Replies in minutes</span>
@@ -293,7 +293,7 @@ const productSchema = {
         <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 mt-6">
           {specList.map((s) => (
             <div class="rounded-xl border border-white/10 bg-[#0f0f0f] px-3 py-3.5 text-center">
-              <p class="text-white/45 text-[10px] uppercase tracking-wide mb-1.5">{s.k}</p>
+              <p class="text-white/50 text-[10px] uppercase tracking-wide mb-1.5">{s.k}</p>
               {s.to !== undefined ? (
                 <p
                   class="font-display text-xl lg:text-2xl font-bold text-white leading-none tabular-nums"
@@ -305,7 +305,7 @@ const productSchema = {
               ) : (
                 <p class="font-display text-xl lg:text-2xl font-bold text-white leading-none">{s.v}</p>
               )}
-              {s.sub && <p class="text-white/40 text-[10px] mt-1 leading-none">{s.sub}</p>}
+              {s.sub && <p class="text-white/50 text-[10px] mt-1 leading-none">{s.sub}</p>}
             </div>
           ))}
         </div>
@@ -347,7 +347,7 @@ const productSchema = {
             <li>Delivery {deliveryEachWaySummary}; collection charged separately; further afield is quoted first.</li>
             <li>{rentalTerms.minimumAge}+ with a valid licence. {rentalTerms.insurance.summary}</li>
           </ul>
-          <p class="reveal text-white/40 text-xs">
+          <p class="reveal text-white/50 text-xs">
             <a href="/pricing" class="text-[#ff1516] hover:underline">Full rate card</a> · <a href="/terms" class="text-[#ff1516] hover:underline">Terms of Service</a>
           </p>
         </div>
@@ -376,7 +376,7 @@ const productSchema = {
               {siblingCars.map((s) => (
                 <a href={`/cars/${s.slug}`} class="rounded-2xl border border-white/10 bg-[#0f0f0f] p-4 hover:border-[#ff1516]/50 transition">
                   <p class="text-white font-display text-lg">{named(s)}</p>
-                  <p class="text-white/45 text-sm mt-1">${s.price.toLocaleString()}/day{s.seats ? ` · ${s.seats} seats` : ''} · {s.zeroToSixty} to 60</p>
+                  <p class="text-white/50 text-sm mt-1">${s.price.toLocaleString()}/day{s.seats ? ` · ${s.seats} seats` : ''} · {s.zeroToSixty} to 60</p>
                 </a>
               ))}
             </div>
@@ -399,7 +399,7 @@ const productSchema = {
         <!-- live spinning model (lazy-loads when scrolled into view; mobile + desktop) -->
         <div class="relative w-full h-[56svh] md:h-[54svh] rounded-[24px] overflow-hidden border border-white/10 bg-gradient-to-b from-[#161616] to-[#0a0a0a]">
           <UrusHero src={car.model} poster={car.poster} client:visible />
-          <span class="absolute bottom-3 inset-x-0 text-center text-white/35 text-[11px] pointer-events-none">Drag to explore</span>
+          <span class="absolute bottom-3 inset-x-0 text-center text-white/50 text-[11px] pointer-events-none">Drag to explore</span>
         </div>
 
         {car.usdz && <ArButton client:visible title={car.name} usdz={car.usdz} glb={car.model} />}
@@ -428,7 +428,7 @@ const productSchema = {
       </div>
 
       <LeadForm client:visible defaultVehicle={car.name} />
-      <p class="text-white/35 text-xs mt-8 text-center max-w-md mx-auto">{termsSummary} {rentalTerms.cancellation.summary} <a href="/pricing" class="underline hover:text-white/60">Pricing &amp; policies</a> · <a href="/terms" class="underline hover:text-white/60">Full terms</a>.</p>
+      <p class="text-white/50 text-xs mt-8 text-center max-w-md mx-auto">{termsSummary} {rentalTerms.cancellation.summary} <a href="/pricing" class="underline hover:text-white/60">Pricing &amp; policies</a> · <a href="/terms" class="underline hover:text-white/60">Full terms</a>.</p>
     </div>
   </section>
 

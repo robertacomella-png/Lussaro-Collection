@@ -106,7 +106,7 @@ export default function GalleryView() {
                 A closer look at the vehicles, moments, and details that define the Lussaro experience.
               </p>
             </div>
-            <p className="text-white/30 text-xs md:text-sm">{galleryImages.length} images</p>
+            <p className="text-white/50 text-xs md:text-sm">{galleryImages.length} images</p>
           </div>
         </motion.div>
 

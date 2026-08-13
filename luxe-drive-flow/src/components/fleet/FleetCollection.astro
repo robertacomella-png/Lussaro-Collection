@@ -46,14 +46,14 @@ const {
           <div class="p-5 flex items-center justify-between">
             <div>
               <h3 class="font-display text-lg font-semibold">{car.name}</h3>
-              <p class="text-[#0a0a0a]/50 text-xs">{car.zeroToSixty} · {car.power} HP</p>
+              <p class="text-[#0a0a0a]/60 text-xs">{car.zeroToSixty} · {car.power} HP</p>
             </div>
             <div class="text-right leading-tight">
               <div class="flex items-center justify-end gap-1.5 mb-0.5">
-                <span class="text-[#0a0a0a]/45 text-sm line-through">${(car.wasPrice ?? car.price + 200).toLocaleString()}</span>
-                <span class="bg-[#ff1516] text-white text-[10px] font-bold tracking-wide px-1.5 py-0.5 rounded">${(car.wasPrice ?? car.price + 200) - car.price} OFF</span>
+                <span class="text-[#0a0a0a]/60 text-sm line-through">${(car.wasPrice ?? car.price + 200).toLocaleString()}</span>
+                <span class="bg-[#e00e10] text-white text-[10px] font-bold tracking-wide px-1.5 py-0.5 rounded">${(car.wasPrice ?? car.price + 200) - car.price} OFF</span>
               </div>
-              <p class="text-[#e00e10] font-display text-xl font-bold leading-none">${car.price.toLocaleString()}<span class="text-[#0a0a0a]/40 text-xs font-normal">/day</span></p>
+              <p class="text-[#e00e10] font-display text-xl font-bold leading-none">${car.price.toLocaleString()}<span class="text-[#0a0a0a]/60 text-xs font-normal">/day</span></p>
             </div>
           </div>
         </div>

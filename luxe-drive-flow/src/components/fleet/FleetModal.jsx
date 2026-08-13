@@ -124,16 +124,16 @@ export default function FleetModal({ car, setCar, activeImage, setActiveImage })
 
                 <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-6">
                   <div>
-                    <p className="text-white/40 text-xs uppercase tracking-[0.22em] mb-2">
+                    <p className="text-white/50 text-xs uppercase tracking-[0.22em] mb-2">
                       Starting At
                     </p>
                     <div className="flex items-center gap-3 flex-wrap">
                       <p className="text-[#ff1516] text-3xl md:text-4xl font-semibold">
                         ${car.price.toLocaleString()}
-                        <span className="text-white/45 text-sm ml-1">/day</span>
+                        <span className="text-white/50 text-sm ml-1">/day</span>
                       </p>
-                      <span className="text-white/45 text-base line-through">${wasPrice.toLocaleString()}</span>
-                      <span className="bg-red-500 text-white text-[10px] font-bold tracking-wide px-2 py-0.5 rounded">${offAmount} OFF</span>
+                      <span className="text-white/50 text-base line-through">${wasPrice.toLocaleString()}</span>
+                      <span className="bg-[#e00e10] text-white text-[10px] font-bold tracking-wide px-2 py-0.5 rounded">${offAmount} OFF</span>
                     </div>
                   </div>
 
@@ -150,17 +150,17 @@ export default function FleetModal({ car, setCar, activeImage, setActiveImage })
                 <div className="grid grid-cols-3 gap-3 mb-8">
                   <div className="bg-white/5 p-3 rounded-xl text-center">
                     <p>{car.zeroToSixty}</p>
-                    <p className="text-xs text-white/40">0–60</p>
+                    <p className="text-xs text-white/50">0–60</p>
                   </div>
 
                   <div className="bg-white/5 p-3 rounded-xl text-center">
                     <p>{car.power}</p>
-                    <p className="text-xs text-white/40">HP</p>
+                    <p className="text-xs text-white/50">HP</p>
                   </div>
 
                   <div className="bg-white/5 p-3 rounded-xl text-center">
                     <p>{car.miles}</p>
-                    <p className="text-xs text-white/40">Miles/day</p>
+                    <p className="text-xs text-white/50">Miles/day</p>
                   </div>
                 </div>
 
@@ -169,7 +169,7 @@ export default function FleetModal({ car, setCar, activeImage, setActiveImage })
                     {car.description}
                   </p>
 
-                  <p className="text-white/40 text-xs border-t border-white/10 pt-3">
+                  <p className="text-white/50 text-xs border-t border-white/10 pt-3">
                     {termsSummary}
                   </p>
                 </div>

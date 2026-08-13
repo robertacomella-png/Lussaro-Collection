@@ -76,7 +76,7 @@ export default function Car3DViewer() {
             </div>
 
             <div className="flex items-center justify-center gap-4 py-3 shrink-0 border-t border-white/[0.06]">
-              <span className="text-white/35 text-[11px] tracking-[0.25em] uppercase">↻ Drag to spin</span>
+              <span className="text-white/50 text-[11px] tracking-[0.25em] uppercase">↻ Drag to spin</span>
               {arMode !== "none" && (
                 <button
                   type="button"
