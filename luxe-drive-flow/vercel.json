@@ -2,7 +2,6 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "headers": [
     {
-      "comment": "Security headers, applied to every response. These cover the Lighthouse Trust & Safety audits that are actually reachable on a static site. Two are deliberately absent: a strict CSP and Trusted Types both require per-request nonces on inline scripts, which an SSG build cannot mint, and would break Google Tag Manager and the Meta Pixel besides.",
       "source": "/(.*)",
       "headers": [
         {
@@ -12,11 +11,7 @@
         { "key": "X-Content-Type-Options", "value": "nosniff" },
         { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        {
-          "comment": "same-origin, not same-origin-allow-popups: every outbound link here (WhatsApp, Instagram, Google) is a plain navigation carrying rel=noopener, so nothing depends on window.opener.",
-          "key": "Cross-Origin-Opener-Policy",
-          "value": "same-origin"
-        }
+        { "key": "Cross-Origin-Opener-Policy", "value": "same-origin" }
       ]
     },
     {
