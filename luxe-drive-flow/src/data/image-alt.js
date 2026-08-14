@@ -21,6 +21,12 @@ const ALT = {
   '/cars/huracan-evo-1.jpg':
     'Purple Lamborghini Huracan EVO rental on a rooftop deck with the downtown Miami skyline behind',
 
+  // --- Blog hero (viewed before writing) ------------------------------------
+  // No identifiable Miami landmark in frame, so the location is left out per
+  // the rule at the top of this file.
+  '/cars/urus-3317.jpg':
+    'Purple Lamborghini Urus rental parked on a palm-lined side street beside a muraled concrete wall, front three-quarter view',
+
   '/gallery/gallery-1.jpg':
     'Mercedes-Maybach GLS 600 and Lamborghini Urus rentals parked side by side in downtown Miami, Metromover track overhead',
   '/gallery/gallery-2.jpg':
