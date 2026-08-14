@@ -35,6 +35,14 @@ const breadcrumb = breadcrumbFor(Astro.url.pathname, breadcrumbName);
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- MUST stay first. The charset declaration has to land inside the first
+         1024 bytes of the document or the browser may begin parsing with the
+         wrong encoding — Lighthouse flags it as "charset declaration is missing
+         or occurs too late". It used to sit below the GTM block, which is large
+         enough on its own to push it past the limit. Nothing goes above this. -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
     <!-- Marks the document as scripting-capable at parse time. Anything that
          must degrade when JS never runs (see the booking-calendar fallback on
          car pages) keys off `html.js` rather than duplicating itself into a
@@ -67,15 +75,26 @@ const breadcrumb = breadcrumbFor(Astro.url.pathname, breadcrumbName);
         s.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-5J937M8K';
         f.parentNode.insertBefore(s, f);
       }
+      // Any real interaction loads the tags immediately, so an engaged visitor
+      // is always tracked without delay. This path is unchanged.
       ['click', 'keydown', 'mousemove', 'touchstart', 'scroll'].forEach(function (e) {
         window.addEventListener(e, function h() { loadGTM(); }, { passive: true, once: true });
       });
-      if ('requestIdleCallback' in window) requestIdleCallback(loadGTM, { timeout: 3000 });
-      else setTimeout(loadGTM, 3000);
+
+      // For everyone else, wait for `load` before even scheduling idle work.
+      // The container pulls roughly 600 KB across GTM, the Meta Pixel, Clarity
+      // and Google Ads. Evaluating that on the main thread while the hero image
+      // was sitting decoded and waiting to paint was adding ~1.2s of LCP element
+      // render delay on mobile — the image itself downloads in 6.5ms. Firing on
+      // a bare 3s idle timeout landed the tags squarely inside the paint window.
+      function scheduleGTM() {
+        if ('requestIdleCallback' in window) requestIdleCallback(loadGTM, { timeout: 4000 });
+        else setTimeout(loadGTM, 2000);
+      }
+      if (document.readyState === 'complete') scheduleGTM();
+      else window.addEventListener('load', scheduleGTM, { once: true });
     </script>
 
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta

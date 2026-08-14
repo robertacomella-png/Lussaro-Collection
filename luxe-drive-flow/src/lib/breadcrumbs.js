@@ -53,6 +53,12 @@ export const breadcrumbFor = (pathname, leafName) => {
     // leaf honestly, so emit nothing rather than guess from the slug.
     if (!leafName) return null;
     trail = [HOME, FLEET, { name: leafName, path }];
+  } else if (path.startsWith('/blog/')) {
+    // Home > <post title>. Two levels rather than three: there is no /blog
+    // index yet, and a crumb linking to a 404 is worse than a shorter trail.
+    // Add a BLOG constant here and make this three levels once one exists.
+    if (!leafName) return null;
+    trail = [HOME, { name: leafName, path }];
   } else if (LABELS[path]) {
     trail = [HOME, { name: LABELS[path], path }];
   } else {

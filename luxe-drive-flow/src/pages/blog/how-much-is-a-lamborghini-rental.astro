@@ -1,0 +1,633 @@
+---
+// KEYWORD CLUSTER — see /used-keywords.md
+//   PRIMARY:    how much is a rental lamborghini
+//   SECONDARY:  lamborghini rental · lamborghini urus rental ·
+//               lamborghini huracan rental · lamborghini rental miami ·
+//               rent a lamborghini in miami
+//
+// The primary is deliberately the informational term. The commercial term
+// "lamborghini rental" belongs to /lamborghini-rental-miami — pointing this
+// post at it would split one query across two pages. This post takes the
+// research intent and links down to the landing page.
+//
+// Built to the full on-page SEO checklist (onpage-seo-checklist.html) while
+// holding the voice in references/voice.md, humour.md, stats.md, stories.md
+// and opinions.md. American English, "we" throughout, polished register.
+//
+// The skip-to-content link lives on this page rather than in Layout.astro on
+// purpose: the other 19 routes have no #main target yet, and a skip link that
+// lands nowhere is worse than none. Move it up to the layout once every page
+// has a <main id="main">.
+//
+// Every figure renders from the data files, so the copy cannot drift from the
+// fleet or the terms.
+import Layout from '@/layouts/Layout.astro';
+import Nav from '@/components/site/Nav.astro';
+import CtaBand from '@/components/site/CtaBand.astro';
+import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
+import { getImageKitSrc, getImageKitSrcSet } from '@/lib/imageKit';
+import { altFor } from '@/data/image-alt';
+import { cars } from '@/data/cars';
+import { reviews } from '@/data/reviews';
+import { business, telHref, whatsappWith, addressLine, hoursSummary } from '@/data/business';
+import {
+  rentalTerms,
+  deliveryEachWaySummary,
+  roundTripSummary,
+  discountSummary,
+  rateForDays,
+} from '@/data/rental-terms';
+
+const bySlug = (s) => cars.find((c) => c.slug === s);
+const urus = bySlug('lamborghini-urus');
+const huracan = bySlug('huracan-evo');
+
+const { deposit, mileage, minimumAge, cancellation, insurance } = rentalTerms;
+const perDay = mileage.includedPerDay;
+const usd = (n) => `$${n.toLocaleString('en-US')}`;
+
+// Worked example: three days in the Urus, delivered and collected in Miami.
+const ex = rateForDays(urus.price, 3);
+const exCar = ex.perDay * 3;
+const exDelivery = rentalTerms.delivery[0].fee * 2;
+const exSubtotal = exCar + exDelivery;
+
+const SITE = 'https://www.lussarocollection.com';
+const PATH = '/blog/how-much-is-a-lamborghini-rental';
+const PAGE_URL = `${SITE}${PATH}`;
+
+// Dedicated hero variants rather than the shared /cars/opt/ ones. This image
+// renders at 25% opacity behind a dark gradient, so it tolerates far heavier
+// compression than a car-page photo can — 61 KB at 1400w and 29 KB at 800w,
+// against 89 KB for the shared variant. The car pages keep their quality.
+const HERO = '/cars/urus-3317.jpg'; // alt-text key in image-alt.js
+const heroSrc = '/blog/lamborghini-rental-hero-1400.webp';
+const heroSrcSet =
+  '/blog/lamborghini-rental-hero-800.webp 800w, /blog/lamborghini-rental-hero-1400.webp 1400w';
+const heroAlt = altFor(HERO);
+const OG_IMAGE = `${SITE}/og/lamborghini-rental-cost-miami.jpg`;
+
+const PUBLISHED_ISO = '2026-08-14';
+const UPDATED_ISO = '2026-08-14';
+const published = 'August 14, 2026';
+const updated = 'August 14, 2026';
+
+const TITLE = 'How Much Is a Lamborghini Rental? Miami Rates';
+const waMessage = "Hi, I read the Lamborghini pricing guide — I'd like to check availability.";
+const wa = whatsappWith(waMessage);
+
+// A named reviewer, quoted verbatim from Google. Never edited — see reviews.js.
+const testimonial = reviews.find((r) => r.car === 'Lamborghini') ?? reviews[0];
+
+// Table of contents. Each entry's id is the anchor on its H2.
+const toc = [
+  { id: 'cost', label: 'What a Lamborghini rental costs' },
+  { id: 'urus-vs-huracan', label: 'Urus rental or Huracán EVO?' },
+  { id: 'included', label: "What's included in the day rate" },
+  { id: 'extras', label: 'The costs that are not the day rate' },
+  { id: 'requirements', label: 'What you need to rent one' },
+  { id: 'example', label: 'A real three-day booking' },
+  { id: 'condition', label: 'Why condition beats the rate' },
+  { id: 'wrong-call', label: 'When it is the wrong call' },
+  { id: 'which', label: 'So which one' },
+  { id: 'faq', label: 'Common questions' },
+];
+
+const faqs = [
+  {
+    q: 'How much is a Lamborghini rental per day?',
+    a: `In Miami, our Lamborghini Urus is ${usd(urus.price)} a day and the Huracán EVO is ${usd(huracan.price)} a day. Both include ${perDay} miles a day and carry the same refundable ${deposit.display} deposit. Longer bookings cost less per day: ${discountSummary}.`,
+  },
+  {
+    q: 'Do you need insurance to rent a Lamborghini?',
+    a: `Yes. ${insurance.summary} If you need a policy from us it starts at ${usd(99)} a day and reaches ${usd(499)} a day on the Urus, depending on the vehicle and the driver's age. It is a pass-through cost rather than a margin line, which is why it is the one figure we do not move on.`,
+  },
+  {
+    q: 'How old do you have to be to rent a Lamborghini in Miami?',
+    a: `${minimumAge}, with a valid license and qualifying insurance, and that is the minimum on every car we run — the Huracán included. Ask before you plan around it elsewhere, because a number of Miami companies quietly require 25 for anything with a supercar badge and do not state it on the page.`,
+  },
+  {
+    q: 'Should I rent the Urus or the Huracán EVO?',
+    a: `The Urus if anyone is coming with you. It reaches sixty in ${urus.zeroToSixty}, the same as the Huracán, carries four adults and their luggage, and costs ${usd(huracan.price - urus.price)} a day less. The Huracán if the point is the car itself: ${huracan.power} hp, two seats, and a V10 an SUV cannot imitate.`,
+  },
+  {
+    q: 'How many miles are included with a Lamborghini rental?',
+    a: `${perDay} miles a day, pooled across the whole booking rather than capped daily. Three days is ${perDay * 3} miles in total, spendable however you like, and only the figure at return is counted. Beyond the allowance it is ${usd(5)} a mile.`,
+  },
+  {
+    q: 'Can you rent a Lamborghini for one day?',
+    a: `Yes, and most bookings run one to three days. Because ${discountSummary.toLowerCase()}, it is worth pricing three days before assuming two is cheaper. ${cancellation.summary}`,
+  },
+];
+
+const authorSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': `${SITE}/about#robert`,
+  name: 'Robert Comella',
+  jobTitle: 'Founder',
+  url: `${SITE}/about`,
+  worksFor: { '@type': 'Organization', name: business.brandName, url: `${SITE}/` },
+};
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: TITLE,
+  description: `What a Lamborghini rental costs in Miami: ${usd(urus.price)} a day for the Urus, ${usd(huracan.price)} for the Huracán EVO, with deposit, insurance, mileage and delivery published in full.`,
+  image: OG_IMAGE,
+  datePublished: PUBLISHED_ISO,
+  dateModified: UPDATED_ISO,
+  author: { '@id': `${SITE}/about#robert` },
+  publisher: {
+    '@type': 'Organization',
+    name: business.brandName,
+    logo: { '@type': 'ImageObject', url: `${SITE}/favicon.png` },
+  },
+  mainEntityOfPage: { '@type': 'WebPage', '@id': PAGE_URL },
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+
+const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addressLine)}`;
+---
+<Layout
+  title={`${TITLE} | Lussaro`}
+  description={`A Lamborghini rental in Miami is ${usd(urus.price)} a day for the Urus, ${usd(huracan.price)} for the Huracán EVO. Deposit, insurance, mileage and delivery, all published. Check dates.`}
+  image={OG_IMAGE}
+  type="article"
+  breadcrumbName="How Much Is a Lamborghini Rental?"
+  schema={[articleSchema, authorSchema, faqSchema]}
+>
+  <a
+    href="#main"
+    class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-white focus:text-black focus:px-5 focus:py-3 focus:rounded-full focus:font-semibold focus:ring-2 focus:ring-[#ff1516]"
+  >
+    Skip to content
+  </a>
+
+  <Nav />
+
+  <header class="relative bg-black pt-28 md:pt-36 pb-14 md:pb-20 overflow-hidden">
+    <div class="absolute inset-0 opacity-25">
+      <img
+        src={heroSrc}
+        srcset={heroSrcSet}
+        sizes="100vw"
+        width="1400"
+        height="984"
+        alt={heroAlt}
+        fetchpriority="high"
+        decoding="async"
+        class="w-full h-full object-cover"
+      />
+      <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black"></div>
+    </div>
+
+    <div class="relative z-10 max-w-3xl mx-auto px-5 md:px-8">
+      <nav aria-label="Breadcrumb" class="mb-5">
+        <ol class="flex flex-wrap items-center gap-2 text-xs text-white/50">
+          <li><a href="/" class="hover:text-white transition">Home</a></li>
+          <li aria-hidden="true">/</li>
+          <li aria-current="page" class="text-white/70">How much is a Lamborghini rental?</li>
+        </ol>
+      </nav>
+
+      <p class="text-[#ff1516] tracking-[0.3em] uppercase text-xs mb-4">Miami · What it costs</p>
+      <h1 class="font-display text-3xl md:text-5xl font-bold tracking-tight text-white leading-[1.1]">
+        How much is a Lamborghini rental?
+      </h1>
+      <p class="text-white/65 max-w-2xl text-base md:text-lg leading-relaxed mt-5">
+        Two Lamborghinis, two very different weekends, and every number that reaches the invoice —
+        including the ones most companies leave until after you have paid.
+      </p>
+
+      <p class="mt-6 text-sm text-white/60">
+        By <a href="/about" class="text-white underline decoration-white/30 hover:decoration-white">Robert Comella</a>,
+        founder <span aria-hidden="true">·</span>
+        <time datetime={PUBLISHED_ISO}>{published}</time>
+        <span aria-hidden="true">·</span> Updated <time datetime={UPDATED_ISO}>{updated}</time>
+      </p>
+
+      <div class="mt-7 flex flex-col sm:flex-row gap-3 max-w-md">
+        <a
+          href={wa}
+          data-cta="blog_hero"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex-1 inline-flex items-center justify-center gap-2 min-h-[48px] bg-white text-black px-7 py-4 rounded-full font-semibold hover:bg-[#ff1516] transition"
+        >
+          Check your dates <span class="w-2 h-2 rounded-full bg-[#1f7a3f]" aria-hidden="true"></span>
+        </a>
+        <a
+          href={telHref}
+          data-cta="blog_hero"
+          data-call-inline
+          class="flex-1 inline-flex items-center justify-center min-h-[48px] border border-white/25 text-white px-7 py-4 rounded-full font-medium hover:border-[#e00e10] hover:text-[#e00e10] transition"
+        >
+          Call {business.phoneDisplayShort}
+        </a>
+      </div>
+
+      <p class="mt-5 flex items-center gap-3 text-sm text-white/60">
+        <span class="text-[#ff1516]" aria-hidden="true">★★★★★</span>
+        5.0 on Google <span aria-hidden="true">·</span> Delivered across Miami
+      </p>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <article class="bg-white text-[#0a0a0a] py-14 md:py-20">
+      <!-- No `reveal` class here on purpose. It starts its subtree at opacity:0
+           and only fades in on intersection, which left the entire article body
+           invisible until the reader scrolled — and made the body copy a hidden
+           LCP element. Article text stays visible at all times. -->
+      <!-- Inline links are underlined by default rather than the sitewide
+           no-underline treatment. A link inside a paragraph that is only
+           distinguished by color fails WCAG 1.4.1 (axe: "links rely on color to
+           be distinguishable"). The decoration is held at 40% so it still reads
+           as restrained rather than default-browser blue-underline. -->
+      <div class="prose prose-neutral max-w-3xl mx-auto px-5 md:px-8 prose-headings:font-display prose-a:text-[#e00e10] prose-a:underline prose-a:decoration-[#e00e10]/40 prose-a:underline-offset-2 hover:prose-a:decoration-[#e00e10] prose-table:text-sm">
+
+        <nav aria-label="Table of contents" class="not-prose mb-10 rounded-2xl border border-black/10 bg-[#fafafa] p-6">
+          <h2 class="font-display text-base font-bold mb-3">On this page</h2>
+          <ol class="grid sm:grid-cols-2 gap-x-6 gap-y-2 text-sm">
+            {toc.map((t, i) => (
+              <li>
+                <a href={`#${t.id}`} class="text-[#e00e10] hover:underline">
+                  <span class="text-black/60 tabular-nums mr-1">{i + 1}.</span>{t.label}
+                </a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+
+        <!-- Opening joke, then the direct answer immediately after. The joke is
+             aimed at the industry rather than at ourselves — per references/
+             humour.md, self-deprecation never opens a piece. It is held to one
+             line so the bolded answer still lands inside the first 100 words and
+             stays the obvious featured-snippet candidate. -->
+        <p>
+          Most Miami rental sites answer this question with “contact us for pricing.” That is also a
+          price. It is just not one anybody wants written down.
+        </p>
+
+        <p>
+          <strong>
+            A Lamborghini rental in Miami runs {usd(urus.price)} a day for the Urus and
+            {' '}{usd(huracan.price)} a day for the Huracán EVO. Both include {perDay} miles a day and
+            a refundable {deposit.display} deposit. Delivery is {deliveryEachWaySummary}, and
+            insurance starts at {usd(99)} a day if you do not carry your own.
+          </strong>
+        </p>
+
+        <p>
+          That is the short answer. The longer one is worth two minutes, because the day rate is
+          rarely the number that decides what a booking actually costs.
+        </p>
+
+        <h2 id="cost">What a Lamborghini rental costs in Miami</h2>
+
+        <table>
+          <caption class="sr-only">Lamborghini rental rates in Miami, per day</caption>
+          <thead>
+            <tr><th scope="col">Car</th><th scope="col">Per day</th><th scope="col">Power</th><th scope="col">0–60</th><th scope="col">Seats</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row" class="font-normal">Lamborghini Urus</th>
+              <td><strong>{usd(urus.price)}</strong></td>
+              <td>{urus.power} hp</td>
+              <td>{urus.zeroToSixty}</td>
+              <td>Four adults, luggage</td>
+            </tr>
+            <tr>
+              <th scope="row" class="font-normal">Lamborghini Huracán EVO</th>
+              <td><strong>{usd(huracan.price)}</strong></td>
+              <td>{huracan.power} hp</td>
+              <td>{huracan.zeroToSixty}</td>
+              <td>Two</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>
+          Those are the rates before any multi-day reduction. Longer bookings fall on a fixed ladder:
+          {' '}{discountSummary}. Nothing about that ladder changes depending on who is asking.
+        </p>
+
+        <h2 id="urus-vs-huracan">Lamborghini Urus rental or Huracán EVO?</h2>
+
+        <p>
+          The arithmetic surprises people. The Urus reaches sixty in {urus.zeroToSixty} — the same
+          figure as the Huracán — while carrying three passengers and their bags, for
+          {' '}{usd(huracan.price - urus.price)} a day less. On paper it is the obvious booking.
+        </p>
+
+        <p>
+          It is also the only one of the two you can put a fourth person in. Nobody has ever rented a
+          Lamborghini for the trunk space, and we have stopped bringing it up.
+        </p>
+
+        <p>
+          What the Huracán has is everything paper cannot hold: the shape, the seating position, and a
+          naturally aspirated V10 behind your head that no SUV will imitate. Full specifications for
+          both sit on
+          {' '}<a href="https://www.lamborghini.com/en-en/models/urus" target="_blank" rel="noopener noreferrer">Lamborghini's own model pages</a>,
+          and they are worth reading before you decide, because these two cars share a badge and
+          almost nothing else.
+        </p>
+
+        <p>
+          If the Huracán is what you came to Miami for, the Urus will not scratch it. We would rather
+          say that than sell you the cheaper car and have you spend the weekend wishing you had not
+          listened to us.
+        </p>
+
+        <h2 id="included">What the day rate includes</h2>
+
+        <ul>
+          <li><strong>{perDay} miles a day, pooled across the booking.</strong> Three days is {perDay * 3} miles in total, used however you like — only the figure at return counts. A daily cap that resets at midnight is a materially worse deal at the same headline price.</li>
+          <li><strong>Delivery and collection across Miami</strong>, to hotels, homes, offices and both airports.</li>
+          <li><strong>A refundable {deposit.display} deposit</strong>, identical on every car we run.</li>
+        </ul>
+
+        <h2 id="extras">The costs that are not the day rate</h2>
+
+        <p>Three of them, and this is where quotes in this city diverge from invoices.</p>
+
+        <p>
+          <strong>Delivery is {deliveryEachWaySummary} — each way.</strong> Collection at the end of
+          the rental is charged separately and is typically the same figure again, so a Miami booking
+          needing both usually lands at {roundTripSummary}. Our own site understated this for a while,
+          across eight pages, in a direction that happened to flatter us. It now reads from a single
+          file so it cannot drift again.
+        </p>
+
+        <p>
+          <strong>Insurance starts at {usd(99)} a day</strong> and reaches {usd(499)} on the Urus,
+          depending on the car and the driver's age. {insurance.summary} We do not move on this one.
+          Full coverage on a Lamborghini for a driver with no policy of their own costs what it costs,
+          and we would rather explain the number than bury it.
+        </p>
+
+        <p>
+          <strong>Mileage beyond the allowance is {usd(5)} a mile.</strong> Most Miami weekends never
+          reach it. South Beach to Brickell, dinner, somewhere afterward, home, is around thirty miles
+          on a busy night — and Ocean Drive at eight in the evening moves at eleven miles an hour, so
+          there is time to be admired. Most people use forty across a whole weekend and feel as though
+          they got away with something. Worth knowing separately: the expressways here are cashless, so tolls are
+          billed by plate through
+          {' '}<a href="https://www.sunpass.com/" target="_blank" rel="noopener noreferrer">Florida's SunPass system</a>
+          {' '}and passed on after the rental.
+        </p>
+
+        <h2 id="requirements">What you need to rent a Lamborghini in Miami</h2>
+
+        <p>
+          Three things, and none of them should be a surprise at handover:
+        </p>
+
+        <ol>
+          <li><strong>A valid driver's license</strong>, and you must be at least {minimumAge}. That is the minimum on every car we run, the Huracán included.</li>
+          <li><strong>Insurance that covers the rental vehicle.</strong> Florida sets its own minimum coverage requirements for drivers, which the
+            {' '}<a href="https://www.flhsmv.gov/insurance/" target="_blank" rel="noopener noreferrer">Florida Department of Highway Safety and Motor Vehicles</a>
+            {' '}publishes in full — but a personal policy meeting the state minimum is not automatically a policy that covers a supercar. Check with your insurer before you assume it transfers.</li>
+          <li><strong>The {deposit.display} deposit</strong>, refundable after the car is inspected on return.</li>
+        </ol>
+
+        <p>
+          Sort the insurance question first. It changes what a booking actually costs more often than
+          the choice of car does.
+        </p>
+
+        <h2 id="example">A real three-day booking</h2>
+
+        <p>The Urus, Friday to Monday, delivered and collected in Miami:</p>
+
+        <ul>
+          <li>{usd(urus.price)} a day, less the {ex.pct}% three-day discount, is {usd(ex.perDay)} a day — <strong>{usd(exCar)}</strong></li>
+          <li>Delivery and collection — <strong>{usd(exDelivery)}</strong></li>
+          <li><strong>{usd(exSubtotal)}</strong> if you carry your own qualifying insurance</li>
+          <li>Plus a {deposit.display} deposit, returned after inspection</li>
+          <li>{perDay * 3} miles, pooled</li>
+        </ul>
+
+        <p>
+          If you need coverage from us, add it at the daily rate for your car and age. On the Urus at
+          the top of that range it is a further {usd(499 * 3)} across the three days, which is a
+          number. It is also exactly why it belongs at the start of the conversation rather than the
+          end of it. Nobody enjoys discovering it at handover, us included.
+        </p>
+
+        <h2 id="condition">Why the rate matters less than the car behind it</h2>
+
+        <p>
+          A lot of companies in Miami undercut the market, and the mechanism is not mysterious. Cheap
+          rates require volume, volume wears cars out, and what arrives has been driven hard by
+          everyone who came before you. The saving is real. It is simply funded by the condition of
+          the car.
+        </p>
+
+        <p>
+          What you are paying the difference for is the feeling that the car is yours for the weekend,
+          rather than a clapped out Lamborghini you got a good deal on. Those are two genuinely
+          different weekends, and only one of them photographs well on Monday.
+        </p>
+
+        <p>
+          The first time our Urus went out, the renter spent roughly twenty minutes well north of
+          100 mph on the way back from a party. We shut the car down remotely the following morning
+          and recovered it. He lost the balance of the booking and his deposit.
+        </p>
+
+        <p>
+          That is why we screen every renter, and it is the whole reason the car you collect has not
+          been treated that way. Six cars is a small fleet. It also means we know exactly where each
+          one has been.
+        </p>
+
+        <figure class="not-prose my-10 rounded-2xl border border-black/10 bg-[#fafafa] p-6">
+          <blockquote class="text-[#0a0a0a]/80 leading-relaxed">
+            <p>“{testimonial.text}”</p>
+          </blockquote>
+          <figcaption class="mt-4 text-sm text-[#0a0a0a]/60">
+            <span class="text-[#e00e10]" aria-hidden="true">★★★★★</span>
+            <span class="font-semibold text-[#0a0a0a]"> {testimonial.name}</span> — verified Google review
+          </figcaption>
+        </figure>
+
+        <h2 id="wrong-call">When a Lamborghini rental is the wrong call</h2>
+
+        <p>
+          One night in Miami, staying on the beach, eating within walking distance of the hotel? A
+          Lamborghini is an expensive way to park a car. Delivery both ways plus a day rate, for eight
+          miles of driving and a valet who has seen better. The valet has always seen better.
+        </p>
+
+        <p>
+          Book it for the Saturday instead of the whole stay and you get the same photographs for a
+          third of the money. We will still be here on Saturday.
+        </p>
+
+        <p>
+          If the occasion is an arrival rather than a drive — a wedding, a dinner where the car is part
+          of the evening — the
+          {' '}<a href="/rolls-royce-rental-miami">Rolls-Royce Cullinan</a> does that job better than
+          either Lamborghini, and it does it while carrying four people comfortably. And if you simply
+          want something quick and quiet for a work trip, the Mercedes-Benz S580 on our
+          {' '}<a href="/pricing">rate card</a> starts at {usd(445)} a day.
+        </p>
+
+        <p>
+          We would rather point you at the right car than the expensive one. It is a shorter path to
+          the second booking.
+        </p>
+
+        <h2 id="which">So which one</h2>
+
+        <p>
+          <strong>Book the Urus</strong> if anyone is coming with you, if there is luggage, or if the
+          car needs to work across a whole weekend rather than one evening. At {usd(urus.price)} it is
+          the most car per dollar we run.
+        </p>
+
+        <p>
+          <strong>Book the Huracán EVO</strong> if the car is the occasion. Two seats,
+          {' '}{huracan.power} hp, and the noise. Nothing else in the fleet does what it does.
+        </p>
+
+        <p>
+          Both are on the <a href="/lamborghini-rental-miami">Lamborghini rental page</a>, with full
+          specifications on the <a href="/cars/lamborghini-urus">Urus</a> and
+          {' '}<a href="/cars/huracan-evo">Huracán EVO</a> pages, and every term we hold you to is set
+          out under <a href="/pricing">pricing and policies</a>.
+        </p>
+
+        <h2 id="faq">Common questions</h2>
+
+        {faqs.map((f) => (
+          <div>
+            <h3>{f.q}</h3>
+            <p>{f.a}</p>
+          </div>
+        ))}
+
+        <p>
+          Still deciding? Send us the dates and who is coming, and we will tell you which of the two
+          actually suits the weekend — including when it is the cheaper one. What are you thinking?
+        </p>
+
+        <div class="not-prose mt-10 flex flex-col sm:flex-row gap-3 max-w-md">
+          <a
+            href={wa}
+            data-cta="blog_body"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex-1 inline-flex items-center justify-center min-h-[48px] bg-[#0a0a0a] text-white px-7 py-4 rounded-full font-semibold hover:bg-[#e00e10] transition"
+          >
+            Message us on WhatsApp
+          </a>
+          <a
+            href={telHref}
+            data-cta="blog_body"
+            data-call-inline
+            class="flex-1 inline-flex items-center justify-center min-h-[48px] border border-[#0a0a0a]/20 text-[#0a0a0a] px-7 py-4 rounded-full font-medium hover:border-[#e00e10] hover:text-[#e00e10] transition"
+          >
+            Call {business.phoneDisplayShort}
+          </a>
+        </div>
+
+        <!-- Author bio — E-E-A-T. Credentials stated honestly: the company is
+             eight months old, so no tenure is claimed anywhere. -->
+        <aside class="not-prose mt-12 rounded-2xl border border-black/10 bg-[#fafafa] p-6 flex flex-col sm:flex-row gap-5">
+          <img
+            src="/favicon-96.png"
+            width="64"
+            height="64"
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+            decoding="async"
+            class="w-16 h-16 rounded-full shrink-0 object-cover ring-1 ring-black/10"
+          />
+          <div>
+            <p class="font-display font-bold text-lg">
+              <a href="/about" class="hover:text-[#e00e10] transition">Robert Comella</a>
+            </p>
+            <p class="text-sm text-[#0a0a0a]/70 mt-1">Founder, {business.brandName}</p>
+            <p class="text-sm text-[#0a0a0a]/70 mt-3 leading-relaxed">
+              Robert founded Lussaro Collection in Miami and runs it hands-on — he answers the phone,
+              screens the renters and hands over the keys himself. The fleet started with a single
+              Mercedes-Maybach GLS 600 bought with his own savings and now runs to six cars. Every
+              price, deposit and fee quoted here is one he sets and honors personally.
+              <a href="/about" class="text-[#e00e10] underline decoration-[#e00e10]/40 underline-offset-2 hover:decoration-[#e00e10]"> More about Lussaro Collection</a>.
+            </p>
+          </div>
+        </aside>
+
+        <!-- NAP + hours + map. Conversion block; the source checklist marks this
+             category service-pages-only, so it is kept compact here. -->
+        <aside class="not-prose mt-8 rounded-2xl border border-black/10 p-6">
+          <h2 class="font-display text-lg font-bold">Lussaro Collection</h2>
+          <dl class="mt-4 grid sm:grid-cols-2 gap-x-8 gap-y-3 text-sm">
+            <div>
+              <dt class="font-semibold">Address</dt>
+              <dd class="text-[#0a0a0a]/70">{addressLine}</dd>
+            </div>
+            <div>
+              <dt class="font-semibold">Hours</dt>
+              <dd class="text-[#0a0a0a]/70">{hoursSummary}</dd>
+            </div>
+            <div>
+              <dt class="font-semibold">Phone</dt>
+              <dd>
+                <a href={telHref} data-cta="blog_nap" class="text-[#e00e10] hover:underline">{business.phoneDisplay}</a>
+              </dd>
+            </div>
+            <div>
+              <dt class="font-semibold">Delivery area</dt>
+              <dd class="text-[#0a0a0a]/70">Miami, South Beach, Brickell, both airports. Fort Lauderdale at {usd(rentalTerms.delivery[1].fee)} each way.</dd>
+            </div>
+          </dl>
+          <!-- Deliberately a link, not an embedded map. A Google Maps iframe
+               pulls in third-party JS and cookies, which costs Performance and
+               Best Practices on a page whose job is to be read. The source
+               checklist marks the conversion category "service pages only", so
+               the embed belongs on /contact, not here. -->
+          <p class="mt-5">
+            <a
+              href={mapLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 min-h-[48px] text-sm text-[#e00e10] underline decoration-[#e00e10]/40 underline-offset-2 hover:decoration-[#e00e10]"
+            >
+              Open {addressLine} in Google Maps
+            </a>
+          </p>
+        </aside>
+
+        <p class="not-prose mt-10 text-center">
+          <a href="#main" class="inline-flex items-center gap-2 min-h-[48px] px-5 py-3 text-sm text-[#0a0a0a]/60 hover:text-[#e00e10] transition">
+            <span aria-hidden="true">↑</span> Back to top
+          </a>
+        </p>
+      </div>
+    </article>
+  </main>
+
+  <CtaBand
+    title={'Two Lamborghinis.<br><span class="text-[#ff1516]">One of them is yours this weekend.</span>'}
+    subtitle="Delivered across Miami. Replies usually take minutes."
+    message={waMessage}
+  />
+  <StickyMobileCta message={waMessage} />
+</Layout>

@@ -1,0 +1,75 @@
+keyword,cluster,intent,priority,target_page,status,monthly_volume,kd,cpc,notes
+exotic car rental miami,core,commercial,high,/exotic-car-rental-miami,covered,,,,"Head term. SERP is company homepages, not editorial — keep this a service page."
+best exotic car rental miami,core,commercial,high,/best-exotic-car-rental-miami,cannibalization-risk,,,,Overlaps /exotic-car-rental-miami and homepage. Decide which page owns 'best' vs generic.
+luxury car rental miami,core,commercial,high,/,covered,,,,Homepage title already targets this alongside exotic.
+exotic car rental miami beach,core,commercial,high,/exotic-car-rental-south-beach,needs-work,,,,South Beach page covers part of this. Miami Beach is a distinct query.
+supercar rental miami,core,commercial,high,,gap,,,,No page. Distinct from 'exotic' and 'luxury' — buyer wants Ferrari/Lamborghini specifically.
+sports car rental miami,core,commercial,medium,,gap,,,,Lower value than supercar but same buyer.
+exotic rental cars miami,core,commercial,medium,/exotic-car-rental-miami,covered,,,,Word-order variant. No separate page needed.
+rent exotic car miami,core,commercial,medium,/exotic-car-rental-miami,covered,,,,Verb-form variant.
+luxury suv rental miami,core,commercial,high,/luxury-suv-rental-miami,covered,,,,Urus and GLS 600 both qualify.
+exotic car rental fort lauderdale,core,commercial,high,,gap,,,,We deliver there at $175 each way. No page exists. Real revenue gap.
+lussaro collection,brand,navigational,high,/,covered,,,,Protect. Should rank first.
+lussaro collection reviews,brand,navigational,medium,/reviews,covered,,,,All 5 reviews are 5-star.
+lussaro collection miami,brand,navigational,medium,/,covered,,,,
+ferrari rental miami,car,commercial,high,,gap,,,,BIGGEST GAP. We own an SF90 at $2195/day — the flagship — and have no Ferrari landing page.
+rent a ferrari in miami,car,commercial,high,,gap,,,,Same gap. Verb form.
+ferrari sf90 rental miami,car,commercial,medium,/cars/sf90,needs-work,,,,Car page exists but no landing page feeding it.
+lamborghini rental,car,commercial,high,/lamborghini-rental-miami,needs-work,3600,24,0.50,"National term, no city. KD 24 is very winnable at this volume. Low CPC ($0.50) suggests diffuse research intent rather than booking intent - treat as traffic/awareness, not conversions. Miami page can rank but will convert below local variants. SECONDARY in the cluster on /blog/how-much-is-a-lamborghini-rental; primary target stays /lamborghini-rental-miami."
+how much is a rental lamborghini,informational,informational,high,/blog/how-much-is-a-lamborghini-rental,covered,,,,"PRIMARY for the Lamborghini cluster. Informational, so it does not compete with /lamborghini-rental-miami."
+lamborghini urus rental,car,commercial,high,/blog/how-much-is-a-lamborghini-rental,covered,,,,"Secondary in the Lamborghini cluster. $995/day, the volume car."
+lamborghini huracan rental,car,commercial,high,/blog/how-much-is-a-lamborghini-rental,covered,,,,Secondary in the Lamborghini cluster. $1295/day.
+lamborghini rental las vegas,geo-out-of-market,commercial,low,,do-not-target,,,,Out of market. Miami only - we cannot serve Nevada and should not rank for it.
+lamborghini rental dallas,geo-out-of-market,commercial,low,,do-not-target,,,,Out of market. Miami only.
+lamborghini rental los angeles,geo-out-of-market,commercial,low,,do-not-target,,,,Out of market. Miami only.
+lamborghini rental miami,car,commercial,high,/lamborghini-rental-miami,covered,,,,Two Lamborghinis in fleet — Urus and Huracan EVO.
+rent a lamborghini in miami,car,commercial,high,/lamborghini-rental-miami,covered,,,,Verb form.
+lamborghini urus rental miami,car,commercial,medium,/cars/lamborghini-urus,covered,,,,$995/day. The volume car.
+lamborghini huracan rental miami,car,commercial,medium,/cars/huracan-evo,covered,,,,$1295/day.
+rolls royce rental miami,car,commercial,high,/rolls-royce-rental-miami,covered,,,,
+rolls royce cullinan rental miami,car,commercial,medium,/cars/rolls-royce-cullinan,covered,,,,$1495/day.
+maybach rental miami,car,commercial,high,,gap,,,,No page. The GLS 600 is the founding car and also the chauffeur vehicle.
+mercedes maybach gls 600 rental miami,car,commercial,medium,/cars/mercedes-maybach-gls-600,needs-work,,,,Car page only. No landing page.
+mercedes rental miami,car,commercial,medium,,gap,,,,"Three Mercedes in fleet — S580, GLS 600, plus G63 on request."
+mercedes s class rental miami,car,commercial,medium,/cars/mercedes-s580,needs-work,,,,S580 at $445 is the entry car and the downsell target.
+g wagon rental miami,car,commercial,medium,/g-wagon-rental-miami,needs-work,,,,"Page exists but G63 is sourced on request, not held. Copy must stay honest about that."
+mercedes g63 rental miami,car,commercial,low,/g-wagon-rental-miami,needs-work,,,,Same caveat as g wagon.
+exotic car rental south beach,location,commercial,high,/exotic-car-rental-south-beach,covered,,,,
+exotic car rental brickell,location,commercial,high,/exotic-car-rental-brickell,covered,,,,
+luxury car rental south beach,location,commercial,medium,/exotic-car-rental-south-beach,covered,,,,
+exotic car rental downtown miami,location,commercial,medium,,gap,,,,Business address is 900 Biscayne Blvd — downtown is our own backyard.
+exotic car rental miami airport,location,commercial,high,,gap,,,,We deliver to both airports. High-intent arrival query with no page.
+luxury car rental mia airport,location,commercial,medium,,gap,,,,Airport variant.
+exotic car rental wynwood,location,commercial,low,,gap,,,,Low volume. Only if building a neighborhood set.
+exotic car rental coral gables,location,commercial,low,,gap,,,,Low priority.
+chauffeur service miami,service,commercial,high,/chauffeur-service-miami,covered,,,,$250/hr. NOTE: 3-hour minimum is not on the page.
+miami chauffeur service hourly,service,commercial,medium,/chauffeur-service-miami,needs-work,,,,Add the 3-hour minimum before driving traffic here.
+luxury car service miami,service,commercial,medium,/chauffeur-service-miami,needs-work,,,,Adjacent to chauffeur. Different searcher.
+exotic car rental with delivery miami,service,commercial,medium,,gap,,,,"Delivery is a genuine differentiator — $125 each way, both airports."
+exotic car rental miami prices,decision,commercial,high,/pricing,covered,,,,Rate card page. Strong asset — most competitors publish nothing.
+exotic car rental miami cost,decision,commercial,high,/pricing,covered,,,,Variant.
+exotic car rental miami no deposit,decision,commercial,low,,do-not-target,,,,We require $1000. Do not chase a query we can't satisfy.
+cheap exotic car rental miami,decision,commercial,low,,do-not-target,,,,Conflicts with brand position — see opinions.md #1. Cheap buys a worn car.
+exotic car rental miami under 25,decision,commercial,medium,,gap,,,,"We rent at 21+, which beats most competitors requiring 25. Real advantage, unpublicized."
+how much does it cost to rent an exotic car in miami,informational,informational,high,,gap,,,,PAA. No blog exists. Strong fit — we publish real numbers and competitors don't.
+how old do you have to be to rent an exotic car in miami,informational,informational,high,,gap,,,,PAA. Our answer is 21 on every car including the Ferrari. Competitors often require 25.
+what do you need to rent an exotic car in miami,informational,informational,high,,gap,,,,"PAA. License, insurance, 21+."
+do you need insurance to rent an exotic car,informational,informational,high,,gap,,,,PAA. Our biggest unpublished number — $99 to $499/day depending on car and age.
+exotic car rental deposit miami,informational,informational,medium,,gap,,,,$1000 flat on every car. Competitors publish nothing; Miami range is $1000-$5000.
+exotic car rental mileage limit,informational,informational,medium,,gap,,,,"100/day pooled, $5/mile over. Pooling is a genuine differentiator."
+can you rent an exotic car for one day,informational,informational,medium,,gap,,,,PAA. Yes — most bookings are 1-3 days.
+what happens if you go over the mileage limit,informational,informational,low,,gap,,,,"$5/mile. Now confirmed, not yet on site."
+is renting an exotic car in miami worth it,informational,informational,medium,,gap,,,,Blog fit. Honest answer builds trust — sometimes it isn't.
+best car to rent in miami,informational,informational,medium,,gap,,,,Blog fit. Which car for which weekend.
+what is the best exotic car to rent in miami,informational,informational,medium,/best-exotic-car-rental-miami,covered,,,,Answered in existing FAQ.
+exotic car rental miami for wedding,occasion,commercial,medium,,gap,,,,Cullinan is the arrival car. Real use case.
+exotic car rental miami photoshoot,occasion,commercial,medium,,gap,,,,Common Miami use case. Gallery page supports it.
+exotic car rental miami birthday,occasion,commercial,medium,,gap,,,,One review references a child's special day.
+exotic car rental miami music video,occasion,commercial,low,,gap,,,,Niche but real in Miami.
+exotic car rental miami prom,occasion,commercial,low,,do-not-target,,,,Minimum age is 21. Prom renters are 17-18. Cannot serve.
+exotic car rental miami bachelor party,occasion,commercial,low,,gap,,,,Screening position may conflict — evaluate before targeting.
+luxury car rental miami monthly,duration,commercial,low,,gap,,,,Only if we want long-term rentals. Discount ladder tops out at 7+ days.
+weekend exotic car rental miami,duration,commercial,medium,,gap,,,,Matches actual booking pattern — most rentals are 1-3 days.
+3 day exotic car rental miami,duration,commercial,low,,gap,,,,15% discount tier starts at 3 days.
+exotic car rental miami reddit,research,informational,low,,do-not-target,,,,Cannot own. Monitor for brand mentions instead.
+exotic car rental miami reviews,research,commercial,medium,/reviews,covered,,,,"5 reviews, all 5-star."
