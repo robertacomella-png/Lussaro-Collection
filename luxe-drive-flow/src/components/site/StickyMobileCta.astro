@@ -1,19 +1,61 @@
 ---
-// Sticky mobile "Call" button — a green pill in the bottom-right corner (mobile
-// only; desktop has its own StickyCall pill). Phone icon beside a readable
-// "Call" label, with the shared pulsing green halo (call-pop) so it draws the
-// eye. Hidden while any inline data-call-inline CTA is on screen (observer in
-// Layout.astro). The tel: click is auto-tracked as `call_click` via data-cta.
-import { Phone } from 'lucide-react';
+// Sticky mobile contact pair — WhatsApp and Call as two equal pills pinned to
+// the bottom edge (mobile only; desktop has its own pair in StickyCall).
+//
+// Two circular icon buttons stacked bottom-right, WhatsApp above Call —
+// matching the left-to-right order the two take everywhere else. Covers a
+// corner rather than a strip of every page, which matters on the one screen
+// size where this floats over content for the entire scroll.
+//
+// Back at the original pill size — px-6/py-4, text-base, w-5 icons — with the
+// labels reading "Text" and "Call" rather than naming the channel, so the two
+// stay short enough to stack in a corner.
+//
+// items-stretch is what keeps them equal: the column sizes to the wider label
+// ("Text") and the Call pill stretches to match, with no hard-coded width to
+// re-tune if either is reworded. There is deliberately no flex-1 — in a column
+// that grows children VERTICALLY and would stretch the pills tall.
+//
+// The aria-labels stay even though the text is back: they carry the brand and
+// the number ("Call Lussaro Collection at …"), which a bare "Call" does not.
+//
+// bottom is a calc with env(safe-area-inset-bottom) so the pair clears the home
+// indicator on notched phones instead of sitting under the gesture bar.
+//
+// Hidden while any inline data-call-inline CTA is on screen, via the observer
+// in Layout.astro — it keys off data-sticky-cta on the WRAPPER, since hiding a
+// single anchor would strand the other pill on screen. Both clicks are
+// auto-tracked off data-cta: tel: fires call_click, wa.me fires whatsapp_click.
+import { Phone, MessageCircle } from 'lucide-react';
 import { business, telHref, whatsappWith } from '@/data/business';
+
+const wa = whatsappWith(
+  "Hi, I'd like to book a car with Lussaro Collection. Which dates do you have open?"
+);
 ---
-<a
-  href={telHref}
-  data-cta="sticky_mobile"
-  aria-label={`Call ${business.brandName} at ${business.phoneDisplayShort}`}
-  class="call-pop md:hidden fixed right-4 z-50 inline-flex items-center justify-center gap-2.5 px-6 py-4 rounded-full bg-[#e00e10] text-white font-semibold text-base shadow-[0_8px_24px_rgba(255,21,22,0.45)] ring-1 ring-white/15 active:scale-95 transition-[opacity,transform] duration-300 ease-out"
+<div
+  data-sticky-cta
+  class="md:hidden fixed right-4 z-50 flex flex-col items-stretch gap-2.5 transition-[opacity,transform] duration-300 ease-out"
   style="bottom: calc(1rem + env(safe-area-inset-bottom));"
 >
-  <Phone className="w-5 h-5" />
-  <span>Call</span>
-</a>
+  <a
+    href={wa}
+    data-cta="sticky_mobile_wa"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label={`Message ${business.brandName} on WhatsApp`}
+    class="wa-pop inline-flex items-center justify-center gap-2.5 px-6 py-4 rounded-full bg-[#128f42] text-white font-semibold text-base ring-1 ring-white/15 active:scale-95 transition-transform duration-300 ease-out"
+  >
+    <MessageCircle className="w-5 h-5 shrink-0" />
+    <span>Text</span>
+  </a>
+  <a
+    href={telHref}
+    data-cta="sticky_mobile"
+    aria-label={`Call ${business.brandName} at ${business.phoneDisplayShort}`}
+    class="call-pop inline-flex items-center justify-center gap-2.5 px-6 py-4 rounded-full bg-[#e00e10] text-white font-semibold text-base ring-1 ring-white/15 active:scale-95 transition-transform duration-300 ease-out"
+  >
+    <Phone className="w-5 h-5 shrink-0" />
+    <span>Call</span>
+  </a>
+</div>

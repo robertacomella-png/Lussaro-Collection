@@ -8,7 +8,7 @@ import UrusHero from '@/components/hero/UrusHero.jsx';
 import ArButton from '@/components/hero/ArButton.jsx';
 import CarGallery from '@/components/fleet/CarGallery.jsx';
 import BookingCalendar from '@/components/booking/BookingCalendar.jsx';
-import { Phone } from 'lucide-react';
+import { Phone, MessageCircle } from 'lucide-react';
 import { cars } from '@/data/cars';
 import { rentalTerms, termsSummary, deliveryEachWaySummary } from '@/data/rental-terms';
 import { descriptionFor } from '@/data/meta-descriptions';
@@ -270,10 +270,26 @@ const productSchema = {
             </div>
           </div>
 
-          <a href={telHref} data-cta="car_booking_card" data-call-inline
-            class="call-pop flex items-center justify-center gap-2 mt-2.5 bg-[#e00e10] text-white py-3.5 rounded-full font-semibold shadow-[0_8px_24px_rgba(255,21,22,0.45)] ring-1 ring-white/15 hover:bg-[#c40c0e] transition-colors">
-            <Phone className="w-4 h-4" /> Call to book
-          </a>
+          {/* Call was full width here; it gives up half to WhatsApp so both
+              channels sit under the calendar. Labels shorten to "Call" and
+              "WhatsApp" — "Call to book" no longer fits a half-width pill in
+              this column on a narrow phone, and whitespace-nowrap would push it
+              past the edge rather than wrap it.
+
+              data-call-inline stays on the Call anchor only. It is what hides
+              the floating sticky pair while this card is on screen, and one
+              marked element is enough to trigger that — putting it on both
+              would just double-count the same card. */}
+          <div class="flex gap-2.5 mt-2.5">
+            <a href={wa} data-cta="car_booking_card_whatsapp" target="_blank" rel="noopener noreferrer"
+              class="wa-pop flex-1 inline-flex items-center justify-center gap-1.5 px-3 bg-[#128f42] text-white py-3.5 rounded-full font-semibold text-sm md:text-base whitespace-nowrap shadow-[0_8px_24px_rgba(37,211,102,0.5)] ring-1 ring-white/15 hover:bg-[#0f7536] transition-colors">
+              <MessageCircle className="w-4 h-4 shrink-0" /> WhatsApp
+            </a>
+            <a href={telHref} data-cta="car_booking_card" data-call-inline
+              class="call-pop flex-1 inline-flex items-center justify-center gap-1.5 px-3 bg-[#e00e10] text-white py-3.5 rounded-full font-semibold text-sm md:text-base whitespace-nowrap shadow-[0_8px_24px_rgba(255,21,22,0.45)] ring-1 ring-white/15 hover:bg-[#c40c0e] transition-colors">
+              <Phone className="w-4 h-4 shrink-0" /> Call
+            </a>
+          </div>
 
           <div class="flex items-center justify-center gap-x-4 gap-y-1 flex-wrap mt-5 text-[11px] text-white/50">
             <span>✓ Insurance options</span>

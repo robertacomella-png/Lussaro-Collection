@@ -1,19 +1,51 @@
 ---
-// Floating "Call" button — sticky bottom-right on desktop (md+). Lets a
-// customer tap to call directly from any page. Vivid green with a pulsing glow
-// so it stands out against the dark site. Mobile already has a sticky Call in
-// StickyMobileCta, so this stays hidden below md to avoid overlapping that
-// full-width bar. The tel: click is auto-tracked as `call_click` in
-// Layout.astro via the data-cta attribute.
-import { Phone } from 'lucide-react';
+// Floating contact pair — sticky bottom-right on desktop (md+): WhatsApp and
+// Call as two equal pills, so a customer can reach us either way from any point
+// on any page. Mobile has its own sticky in StickyMobileCta, so this stays
+// hidden below md rather than overlapping it.
+//
+// The pills are a fixed w-40 each rather than auto-width. Auto-width would size
+// them by their labels and the pair would come out lopsided, which is why the
+// Call label is just "Call" here while the hero's inline button still carries
+// the full number — at this size the pair reading as one unit matters more than
+// restating the digits, and the tel: link carries them anyway.
+//
+// Order matches the hero pair (WhatsApp left, Call right) so the two contact
+// affordances on a page never appear in opposite orders.
+//
+// Both clicks are auto-tracked in Layout.astro off data-cta: the tel: fires
+// call_click, the wa.me fires whatsapp_click, each tagged with its location.
+// The show/hide observer keys off data-sticky-cta on the WRAPPER, not on the
+// anchors — hiding one anchor would strand the other on screen.
+import { Phone, MessageCircle } from 'lucide-react';
 import { business, telHref, whatsappWith } from '@/data/business';
+
+const wa = whatsappWith(
+  "Hi, I'd like to book a car with Lussaro Collection. Which dates do you have open?"
+);
 ---
-<a
-  href={telHref}
-  data-cta="sticky_call_desktop"
-  aria-label={`Call ${business.brandName} at ${business.phoneDisplayShort}`}
-  class="call-pop hidden md:inline-flex fixed bottom-6 right-6 z-50 items-center gap-2.5 bg-[#e00e10] text-white pl-5 pr-6 py-3.5 rounded-full font-semibold shadow-[0_10px_40px_rgba(255,21,22,0.5)] ring-1 ring-white/15 hover:bg-[#c40c0e] hover:scale-[1.05] transition-[opacity,transform] duration-300 ease-out"
+<div
+  data-sticky-cta
+  class="hidden md:flex fixed bottom-6 right-6 z-50 items-stretch gap-2.5 transition-[opacity,transform] duration-300 ease-out"
 >
-  <Phone className="w-[18px] h-[18px]" />
-  <span>Call {business.phoneDisplayShort}</span>
-</a>
+  <a
+    href={wa}
+    data-cta="sticky_wa_desktop"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label={`Message ${business.brandName} on WhatsApp`}
+    class="wa-pop w-40 inline-flex items-center justify-center gap-2 bg-[#128f42] text-white py-3.5 rounded-full font-semibold ring-1 ring-white/15 hover:bg-[#0f7536] hover:scale-[1.05] transition-[background-color,transform] duration-300 ease-out"
+  >
+    <MessageCircle className="w-[18px] h-[18px]" />
+    <span>WhatsApp</span>
+  </a>
+  <a
+    href={telHref}
+    data-cta="sticky_call_desktop"
+    aria-label={`Call ${business.brandName} at ${business.phoneDisplayShort}`}
+    class="call-pop w-40 inline-flex items-center justify-center gap-2 bg-[#e00e10] text-white py-3.5 rounded-full font-semibold ring-1 ring-white/15 hover:bg-[#c40c0e] hover:scale-[1.05] transition-[background-color,transform] duration-300 ease-out"
+  >
+    <Phone className="w-[18px] h-[18px]" />
+    <span>Call</span>
+  </a>
+</div>

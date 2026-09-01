@@ -246,16 +246,19 @@ const breadcrumb = breadcrumbFor(Astro.url.pathname, breadcrumbName);
       <style>.reveal { opacity: 1 !important; transform: none !important; }</style>
     </noscript>
 
-    <!-- Hide the floating Call buttons (mobile pill + desktop pill) while ANY
-         inline Call CTA (marked with data-call-inline — the /fleet hero button,
-         a car page's "Call to book", …) is on screen, so two call buttons never
-         stack. Re-syncs on every view-transition navigation; a single observer
-         is kept and swapped so listeners never accumulate. -->
+    <!-- Hide the floating CTAs (mobile pill + the desktop WhatsApp/Call pair)
+         while ANY inline Call CTA (marked with data-call-inline — the /fleet
+         hero button, a car page's "Call to book", …) is on screen, so two call
+         buttons never stack. Both stickies are now WhatsApp/Call PAIRS, so the
+         match is data-sticky-cta on each pair's WRAPPER rather than data-cta on
+         an anchor — hiding one anchor would strand its partner on screen.
+         Re-syncs on every view-transition navigation; a single observer is kept
+         and swapped so listeners never accumulate. -->
     <script>
       let callCtaObserver;
       function syncCallButtons() {
         const stickies = document.querySelectorAll(
-          '[data-cta="sticky_mobile"], [data-cta="sticky_call_desktop"]'
+          '[data-sticky-cta]'
         );
         const inlines = document.querySelectorAll('[data-call-inline]');
         if (callCtaObserver) { callCtaObserver.disconnect(); callCtaObserver = undefined; }

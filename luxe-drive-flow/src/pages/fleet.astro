@@ -14,9 +14,15 @@ import CtaBand from '@/components/site/CtaBand.astro';
 import LeadForm from '@/components/site/LeadForm.jsx';
 import Car3DViewer from '@/components/hero/Car3DViewer.jsx';
 import FleetCollection from '@/components/fleet/FleetCollection.astro';
-import { Phone } from 'lucide-react';
+import { Phone, MessageCircle } from 'lucide-react';
 import { cars } from '@/data/cars';
 import { business, telHref, whatsappWith } from '@/data/business';
+
+// Ad traffic lands here, so the prefill names the page's own promise —
+// dates and rates — rather than the homepage's generic booking opener.
+const heroWa = whatsappWith(
+  "Hi, I'd like to check availability and rates for my dates with Lussaro Collection."
+);
 
 const SITE = 'https://www.lussarocollection.com';
 const waMsg = "Hi, I'm interested in renting an exotic car with Lussaro Collection. What's available?";
@@ -87,8 +93,21 @@ const fleetSchema = {
         <span class="inline-flex items-center rounded-full border border-white/15 bg-white/5 backdrop-blur px-4 py-1.5 text-[13px] text-white/85">Same-day booking</span>
       </div>
 
+      {/* WhatsApp replaces the old "See Cars & Prices ↓" jump link: on /fleet
+          that button scrolled to a collection already sitting just below the
+          fold, so it spent the hero's primary slot on navigation the page did
+          not need. Colours and pulse match the homepage pair (#128f42 chosen so
+          white type clears the red button's own 3.91:1 — see the note there),
+          but the sizing is this page's, not the homepage's: px-3/py-3 and
+          text-sm, since these two sit side by side from the narrowest screen up
+          rather than stacking. Label collapses to "WhatsApp" below lg for the
+          same reason the Call button collapses to "Call Now". */}
       <div class="mt-7 flex flex-row gap-2.5 max-w-md mx-auto">
-        <a href="#fleet" class="cta-shine flex-1 inline-flex items-center justify-center bg-white text-black px-3 py-3 md:px-5 md:py-3.5 rounded-full font-bold text-sm md:text-base whitespace-nowrap hover:bg-[#ff1516] transition-colors">See Cars &amp; Prices ↓</a>
+        <a href={heroWa} data-cta="fleet_hero" target="_blank" rel="noopener noreferrer" class="wa-pop flex-1 inline-flex items-center justify-center gap-1.5 bg-[#128f42] text-white px-3 py-3 md:px-5 md:py-3.5 rounded-full font-semibold text-sm md:text-base whitespace-nowrap shadow-[0_8px_24px_rgba(37,211,102,0.5)] ring-1 ring-white/15 hover:bg-[#0f7536] transition-colors">
+          <MessageCircle className="w-4 h-4 shrink-0" />
+          <span class="lg:hidden">WhatsApp</span>
+          <span class="hidden lg:inline">WhatsApp Message</span>
+        </a>
         <a href={telHref} data-cta="fleet_hero" data-call-inline class="call-pop flex-1 inline-flex items-center justify-center gap-1.5 bg-[#e00e10] text-white px-3 py-3 md:px-5 md:py-3.5 rounded-full font-semibold text-sm md:text-base whitespace-nowrap shadow-[0_8px_24px_rgba(255,21,22,0.45)] ring-1 ring-white/15 hover:bg-[#c40c0e] transition-colors">
           <Phone className="w-4 h-4 shrink-0" />
           <span class="lg:hidden">Call Now</span>
