@@ -33,11 +33,24 @@ const heroWa = whatsappWith(
             700/1200, so regenerate this one directly with sharp if it changes.
             Mobile is the same shoot framed portrait (2478x3764, a 0.66 aspect
             against the desktop file's 1.50), so a tall phone viewport crops far
-            less of it than a landscape source would. Same treatment: local
-            WebP, width 800 at q75, matching the w-800,q-75 transform the CDN
-            was serving for this slot. */}
+            less of it than a landscape source would.
+
+            Mobile ships a srcset, NOT a lone 800px file. The CDN slot this
+            replaced requested w-800, and at 800 the hero was visibly soft: with
+            object-cover on a 100svh box the image covers by HEIGHT, so on a
+            430x932 phone it paints ~614 CSS px wide — wider than the viewport —
+            and at DPR 3 that wants ~1840px of image. An 800px file was being
+            upscaled 2.3x. Hence 1200 and 1600 variants.
+
+            sizes is 150vw rather than 100vw for the same reason: the painted
+            width runs about 1.43x the viewport width on typical phone aspects
+            (it is viewportHeight x 0.66 / viewportWidth), so 100vw would
+            under-request and reintroduce the blur. */}
         <source media="(min-width: 768px)" srcset="/hero/hero-perf-rims-1920.webp" />
-        <img src="/hero/hero-vertical-800.webp" alt="Exotic car rental in Miami" class="w-full h-full object-cover" fetchpriority="high" />
+        <img src="/hero/hero-vertical-800.webp"
+             srcset="/hero/hero-vertical-800.webp 800w, /hero/hero-vertical-1200.webp 1200w, /hero/hero-vertical-1600.webp 1600w"
+             sizes="150vw"
+             alt="Exotic car rental in Miami" class="w-full h-full object-cover" fetchpriority="high" />
       </picture>
       {/* Scrim confined to the bottom quarter of the hero: 60% black at the
           very foot, fading to nothing 25% up. Everything above is the clean
@@ -52,7 +65,7 @@ const heroWa = whatsappWith(
       ></div>
     </div>
 
-    <div class="relative z-10 w-full flex-1 flex flex-col max-w-7xl mx-auto px-5 md:px-8 pt-24 md:pt-[24svh] pb-[63px] md:pb-20 text-center">
+    <div class="relative z-10 w-full flex-1 flex flex-col max-w-7xl mx-auto px-5 md:px-8 pt-24 md:pt-[24svh] pb-[33px] md:pb-20 text-center">
       <!-- TEXT — top -->
       <div>
         {/* White, not red — this line sits over a photograph, and small red
