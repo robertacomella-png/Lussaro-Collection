@@ -23,8 +23,21 @@ const heroWa = whatsappWith(
   <header class="relative min-h-[100svh] flex flex-col overflow-hidden bg-black">
     <div class="absolute inset-0">
       <picture>
-        <source media="(min-width: 768px)" srcset="https://ik.imagekit.io/8i3ae7fac/cars-14.jpg?tr=w-1920,q-80,f-webp" />
-        <img src="https://ik.imagekit.io/8i3ae7fac/cars-11.jpg?tr=w-800,q-75,f-webp" alt="Exotic car rental in Miami" class="w-full h-full object-cover" fetchpriority="high" />
+        {/* Desktop hero is a local WebP, not an ik.imagekit.io URL: this shot
+            (the Urus on silver performance rims) was never uploaded to the CDN,
+            and the car photos have been migrating to committed local variants
+            anyway — see the note at the top of scripts/optimize-images.mjs.
+            Generated from "hero image perf rims.jpg" (3840x2560) at width 1920,
+            WebP q80, matching the w-1920,q-80,f-webp transform this slot used to
+            request from ImageKit. That script only covers /cars and /gallery at
+            700/1200, so regenerate this one directly with sharp if it changes.
+            Mobile is the same shoot framed portrait (2478x3764, a 0.66 aspect
+            against the desktop file's 1.50), so a tall phone viewport crops far
+            less of it than a landscape source would. Same treatment: local
+            WebP, width 800 at q75, matching the w-800,q-75 transform the CDN
+            was serving for this slot. */}
+        <source media="(min-width: 768px)" srcset="/hero/hero-perf-rims-1920.webp" />
+        <img src="/hero/hero-vertical-800.webp" alt="Exotic car rental in Miami" class="w-full h-full object-cover" fetchpriority="high" />
       </picture>
       {/* Scrim confined to the bottom quarter of the hero: 60% black at the
           very foot, fading to nothing 25% up. Everything above is the clean
