@@ -154,6 +154,33 @@
   }
 }
 
+/* The WhatsApp twin of callPop, on the same 1.8s beat and unoffset, so the two
+   hero pills breathe together as one pair rather than ping-ponging the eye.
+   The halo is bright #25D366 even though the pill itself is the darker #128f42
+   — white type cannot sit on WhatsApp's own green, but the glow carries no
+   text, so the brand colour survives around the button rather than under it.
+   Halo only — #25D366 is WhatsApp's own green and it stays a glow around a
+   near-black pill, never a fill, which is the palette rule stated up top.
+   The spread stops at 16px rather than callPop's 18px: the pills sit a 12px
+   gap apart, and the wider ring pushed a visible green wash under the red one.
+   Both rules restate the button's resting drop shadow in every keyframe, since
+   an animated box-shadow replaces the Tailwind one outright; under
+   reduced-motion the animation drops and that Tailwind shadow takes back over. */
+@keyframes waPop {
+  0%   { box-shadow: 0 10px 30px rgba(37, 211, 102, 0.42), 0 0 0 0 rgba(37, 211, 102, 0.5); }
+  70%  { box-shadow: 0 10px 30px rgba(37, 211, 102, 0.42), 0 0 0 16px rgba(37, 211, 102, 0); }
+  100% { box-shadow: 0 10px 30px rgba(37, 211, 102, 0.42), 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+.wa-pop {
+  animation: waPop 1.8s ease-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wa-pop {
+    animation: none;
+  }
+}
+
 /* Slides the floating mobile Call button out of the way when an inline Call CTA
    is on screen (e.g. the car page's "Call to book" under the calendar). */
 .sticky-hidden {

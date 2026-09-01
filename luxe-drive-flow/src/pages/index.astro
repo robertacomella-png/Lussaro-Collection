@@ -6,8 +6,12 @@ import CtaBand from '@/components/site/CtaBand.astro';
 import LeadForm from '@/components/site/LeadForm.jsx';
 import Car3DViewer from '@/components/hero/Car3DViewer.jsx';
 import FleetCollection from '@/components/fleet/FleetCollection.astro';
-import { Phone } from 'lucide-react';
+import { Phone, MessageCircle } from 'lucide-react';
 import { business, telHref, whatsappWith } from '@/data/business';
+
+const heroWa = whatsappWith(
+  "Hi, I'd like to book a car with Lussaro Collection. Which dates do you have open?"
+);
 ---
 <Layout
   title="Luxury & Exotic Car Rental Miami | Lussaro Collection"
@@ -53,11 +57,27 @@ import { business, telHref, whatsappWith } from '@/data/business';
 
       <!-- CTAs + rating — bottom on mobile and desktop -->
       <div class="mt-auto">
-        <div class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-          <a href="#fleet" class="cta-shine flex-1 inline-flex items-center justify-center bg-white text-black px-7 py-4 rounded-full font-semibold whitespace-nowrap hover:bg-[#ff1516] transition-colors">See Cars &amp; Prices ↓</a>
+        {/* Two contact CTAs, structurally identical — same pill, padding,
+            weight, icon gap, ring, shadow and pulse — so they read as one pair
+            and differ only by channel colour. Browsing the fleet keeps its
+            white treatment but moves beneath them.
+
+            #128f42 is not WhatsApp's #25D366: white type needs 4.5:1 and the
+            brand green gives 1.9:1, so the fill is darkened until the label
+            holds 4.17:1. That is deliberately pitched just above the 3.91:1
+            this file's palette note accepts for white-on-red — no reason to
+            hold this button to a stricter bar than the one beside it. The
+            halo stays true #25D366, since a glow carries no text. */}
+        <div class="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
+          <a href={heroWa} data-cta="hero" target="_blank" rel="noopener noreferrer" class="wa-pop flex-1 inline-flex items-center justify-center gap-2 bg-[#128f42] text-white px-7 py-4 rounded-full font-semibold whitespace-nowrap shadow-[0_8px_24px_rgba(37,211,102,0.5)] ring-1 ring-white/15 hover:bg-[#0f7536] transition-colors">
+            <MessageCircle className="w-4 h-4 shrink-0" /> WhatsApp Message
+          </a>
           <a href={telHref} data-cta="hero" data-call-inline class="call-pop flex-1 order-first sm:order-none inline-flex items-center justify-center gap-2 bg-[#e00e10] text-white px-7 py-4 rounded-full font-semibold whitespace-nowrap shadow-[0_8px_24px_rgba(255,21,22,0.45)] ring-1 ring-white/15 hover:bg-[#c40c0e] transition-colors">
             <Phone className="w-4 h-4 shrink-0" /> Call {business.phoneDisplayShort}
           </a>
+        </div>
+        <div class="mt-3 flex justify-center">
+          <a href="#fleet" class="cta-shine inline-flex items-center justify-center bg-white text-black px-7 py-4 rounded-full font-semibold whitespace-nowrap hover:bg-[#ff1516] transition-colors">See Cars &amp; Prices ↓</a>
         </div>
         <div class="mt-5 flex items-center justify-center gap-3 text-sm text-white/55">
           <span class="text-[#ff1516]">★★★★★</span> 5.0 Google · Miami Delivery
