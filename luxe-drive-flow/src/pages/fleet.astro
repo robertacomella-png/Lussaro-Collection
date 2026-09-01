@@ -14,7 +14,8 @@ import CtaBand from '@/components/site/CtaBand.astro';
 import LeadForm from '@/components/site/LeadForm.jsx';
 import Car3DViewer from '@/components/hero/Car3DViewer.jsx';
 import FleetCollection from '@/components/fleet/FleetCollection.astro';
-import { Phone, MessageCircle } from 'lucide-react';
+import { Phone } from 'lucide-react';
+import WhatsAppIcon from '@/components/site/WhatsAppIcon.astro';
 import { cars } from '@/data/cars';
 import { business, telHref, whatsappWith } from '@/data/business';
 
@@ -104,7 +105,7 @@ const fleetSchema = {
           same reason the Call button collapses to "Call Now". */}
       <div class="mt-7 flex flex-row gap-2.5 max-w-md mx-auto">
         <a href={heroWa} data-cta="fleet_hero" target="_blank" rel="noopener noreferrer" class="wa-pop flex-1 inline-flex items-center justify-center gap-1.5 bg-[#128f42] text-white px-3 py-3 md:px-5 md:py-3.5 rounded-full font-semibold text-sm md:text-base whitespace-nowrap shadow-[0_8px_24px_rgba(37,211,102,0.5)] ring-1 ring-white/15 hover:bg-[#0f7536] transition-colors">
-          <MessageCircle className="w-4 h-4 shrink-0" />
+          <WhatsAppIcon class="w-4 h-4 shrink-0" />
           <span class="lg:hidden">WhatsApp</span>
           <span class="hidden lg:inline">WhatsApp Message</span>
         </a>

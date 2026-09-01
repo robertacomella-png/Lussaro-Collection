@@ -1,6 +1,7 @@
 ---
 import SmartLink from '@/components/site/SmartLink.astro';
-import { Menu, X, Phone, MessageCircle } from 'lucide-react';
+import { Menu, X, Phone } from 'lucide-react';
+import WhatsAppIcon from '@/components/site/WhatsAppIcon.astro';
 import { business, telHref, whatsappWith } from '@/data/business';
 const wa = business.whatsapp;
 ---
@@ -148,7 +149,7 @@ const wa = business.whatsapp;
         <Phone className="w-4 h-4" /> Call
       </a>
       <a href={wa} data-cta="menu" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 bg-white text-black py-3.5 rounded-full font-semibold">
-        <MessageCircle className="w-4 h-4 text-[#1f7a3f]" /> WhatsApp
+        <WhatsAppIcon class="w-4 h-4 text-[#1f7a3f]" /> WhatsApp
       </a>
     </div>
   </div>

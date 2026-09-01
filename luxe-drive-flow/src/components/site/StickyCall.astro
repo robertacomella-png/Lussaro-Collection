@@ -17,7 +17,8 @@
 // call_click, the wa.me fires whatsapp_click, each tagged with its location.
 // The show/hide observer keys off data-sticky-cta on the WRAPPER, not on the
 // anchors — hiding one anchor would strand the other on screen.
-import { Phone, MessageCircle } from 'lucide-react';
+import { Phone } from 'lucide-react';
+import WhatsAppIcon from '@/components/site/WhatsAppIcon.astro';
 import { business, telHref, whatsappWith } from '@/data/business';
 
 const wa = whatsappWith(
@@ -36,7 +37,7 @@ const wa = whatsappWith(
     aria-label={`Message ${business.brandName} on WhatsApp`}
     class="wa-pop w-40 inline-flex items-center justify-center gap-2 bg-[#128f42] text-white py-3.5 rounded-full font-semibold ring-1 ring-white/15 hover:bg-[#0f7536] hover:scale-[1.05] transition-[background-color,transform] duration-300 ease-out"
   >
-    <MessageCircle className="w-[18px] h-[18px]" />
+    <WhatsAppIcon class="w-[18px] h-[18px]" />
     <span>WhatsApp</span>
   </a>
   <a

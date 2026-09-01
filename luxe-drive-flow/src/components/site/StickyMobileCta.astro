@@ -7,17 +7,20 @@
 // corner rather than a strip of every page, which matters on the one screen
 // size where this floats over content for the entire scroll.
 //
-// Back at the original pill size — px-6/py-4, text-base, w-5 icons — with the
-// labels reading "Text" and "Call" rather than naming the channel, so the two
-// stay short enough to stack in a corner.
+// Icon-only circles rather than labelled pills: the marks are the real WhatsApp
+// glyph and a phone, which name themselves. This only became reasonable once
+// WhatsAppIcon replaced lucide's generic bubble — that bubble read as "chat" and
+// would have needed a word beside it.
 //
-// items-stretch is what keeps them equal: the column sizes to the wider label
-// ("Text") and the Call pill stretches to match, with no hard-coded width to
-// re-tune if either is reworded. There is deliberately no flex-1 — in a column
-// that grows children VERTICALLY and would stretch the pills tall.
+// Side by side at 64px (w-16/h-16), comfortably past the 44px minimum. Square
+// dimensions plus rounded-full is what makes them circles — padding-based
+// sizing would track the icon and go oval.
+
 //
-// The aria-labels stay even though the text is back: they carry the brand and
-// the number ("Call Lussaro Collection at …"), which a bare "Call" does not.
+// THE aria-label ON EACH ANCHOR IS LOAD-BEARING, not a nicety: no visible text
+// remains, so it is the only thing naming these controls for a screen reader.
+// Do not drop it. The desktop pair in StickyCall keeps its labels — there is
+// room for them in a corner that is not competing with content.
 //
 // bottom is a calc with env(safe-area-inset-bottom) so the pair clears the home
 // indicator on notched phones instead of sitting under the gesture bar.
@@ -26,7 +29,8 @@
 // in Layout.astro — it keys off data-sticky-cta on the WRAPPER, since hiding a
 // single anchor would strand the other pill on screen. Both clicks are
 // auto-tracked off data-cta: tel: fires call_click, wa.me fires whatsapp_click.
-import { Phone, MessageCircle } from 'lucide-react';
+import { Phone } from 'lucide-react';
+import WhatsAppIcon from '@/components/site/WhatsAppIcon.astro';
 import { business, telHref, whatsappWith } from '@/data/business';
 
 const wa = whatsappWith(
@@ -35,7 +39,7 @@ const wa = whatsappWith(
 ---
 <div
   data-sticky-cta
-  class="md:hidden fixed right-4 z-50 flex flex-col items-stretch gap-2.5 transition-[opacity,transform] duration-300 ease-out"
+  class="md:hidden fixed right-4 z-50 flex flex-row items-center gap-3 transition-[opacity,transform] duration-300 ease-out"
   style="bottom: calc(1rem + env(safe-area-inset-bottom));"
 >
   <a
@@ -44,18 +48,16 @@ const wa = whatsappWith(
     target="_blank"
     rel="noopener noreferrer"
     aria-label={`Message ${business.brandName} on WhatsApp`}
-    class="wa-pop inline-flex items-center justify-center gap-2.5 px-6 py-4 rounded-full bg-[#128f42] text-white font-semibold text-base ring-1 ring-white/15 active:scale-95 transition-transform duration-300 ease-out"
+    class="wa-pop w-16 h-16 inline-flex items-center justify-center rounded-full bg-[#128f42] text-white ring-1 ring-white/15 active:scale-95 transition-transform duration-300 ease-out"
   >
-    <MessageCircle className="w-5 h-5 shrink-0" />
-    <span>Text</span>
+    <WhatsAppIcon class="w-7 h-7" />
   </a>
   <a
     href={telHref}
     data-cta="sticky_mobile"
     aria-label={`Call ${business.brandName} at ${business.phoneDisplayShort}`}
-    class="call-pop inline-flex items-center justify-center gap-2.5 px-6 py-4 rounded-full bg-[#e00e10] text-white font-semibold text-base ring-1 ring-white/15 active:scale-95 transition-transform duration-300 ease-out"
+    class="call-pop w-16 h-16 inline-flex items-center justify-center rounded-full bg-[#e00e10] text-white ring-1 ring-white/15 active:scale-95 transition-transform duration-300 ease-out"
   >
-    <Phone className="w-5 h-5 shrink-0" />
-    <span>Call</span>
+    <Phone className="w-7 h-7" />
   </a>
 </div>

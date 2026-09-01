@@ -8,7 +8,8 @@ import UrusHero from '@/components/hero/UrusHero.jsx';
 import ArButton from '@/components/hero/ArButton.jsx';
 import CarGallery from '@/components/fleet/CarGallery.jsx';
 import BookingCalendar from '@/components/booking/BookingCalendar.jsx';
-import { Phone, MessageCircle } from 'lucide-react';
+import { Phone } from 'lucide-react';
+import WhatsAppIcon from '@/components/site/WhatsAppIcon.astro';
 import { cars } from '@/data/cars';
 import { rentalTerms, termsSummary, deliveryEachWaySummary } from '@/data/rental-terms';
 import { descriptionFor } from '@/data/meta-descriptions';
@@ -283,7 +284,7 @@ const productSchema = {
           <div class="flex gap-2.5 mt-2.5">
             <a href={wa} data-cta="car_booking_card_whatsapp" target="_blank" rel="noopener noreferrer"
               class="wa-pop flex-1 inline-flex items-center justify-center gap-1.5 px-3 bg-[#128f42] text-white py-3.5 rounded-full font-semibold text-sm md:text-base whitespace-nowrap shadow-[0_8px_24px_rgba(37,211,102,0.5)] ring-1 ring-white/15 hover:bg-[#0f7536] transition-colors">
-              <MessageCircle className="w-4 h-4 shrink-0" /> WhatsApp
+              <WhatsAppIcon class="w-4 h-4 shrink-0" /> WhatsApp
             </a>
             <a href={telHref} data-cta="car_booking_card" data-call-inline
               class="call-pop flex-1 inline-flex items-center justify-center gap-1.5 px-3 bg-[#e00e10] text-white py-3.5 rounded-full font-semibold text-sm md:text-base whitespace-nowrap shadow-[0_8px_24px_rgba(255,21,22,0.45)] ring-1 ring-white/15 hover:bg-[#c40c0e] transition-colors">

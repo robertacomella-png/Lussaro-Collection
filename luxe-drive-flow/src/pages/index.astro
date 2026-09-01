@@ -6,7 +6,8 @@ import CtaBand from '@/components/site/CtaBand.astro';
 import LeadForm from '@/components/site/LeadForm.jsx';
 import Car3DViewer from '@/components/hero/Car3DViewer.jsx';
 import FleetCollection from '@/components/fleet/FleetCollection.astro';
-import { Phone, MessageCircle } from 'lucide-react';
+import { Phone } from 'lucide-react';
+import WhatsAppIcon from '@/components/site/WhatsAppIcon.astro';
 import { business, telHref, whatsappWith } from '@/data/business';
 
 const heroWa = whatsappWith(
@@ -96,7 +97,7 @@ const heroWa = whatsappWith(
             halo stays true #25D366, since a glow carries no text. */}
         <div class="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
           <a href={heroWa} data-cta="hero" target="_blank" rel="noopener noreferrer" class="wa-pop flex-1 inline-flex items-center justify-center gap-2 bg-[#128f42] text-white px-7 py-4 rounded-full font-semibold whitespace-nowrap shadow-[0_8px_24px_rgba(37,211,102,0.5)] ring-1 ring-white/15 hover:bg-[#0f7536] transition-colors">
-            <MessageCircle className="w-4 h-4 shrink-0" /> WhatsApp Message
+            <WhatsAppIcon class="w-4 h-4 shrink-0" /> WhatsApp Message
           </a>
           <a href={telHref} data-cta="hero" data-call-inline class="call-pop flex-1 order-first sm:order-none inline-flex items-center justify-center gap-2 bg-[#e00e10] text-white px-7 py-4 rounded-full font-semibold whitespace-nowrap shadow-[0_8px_24px_rgba(255,21,22,0.45)] ring-1 ring-white/15 hover:bg-[#c40c0e] transition-colors">
             <Phone className="w-4 h-4 shrink-0" /> Call {business.phoneDisplayShort}
