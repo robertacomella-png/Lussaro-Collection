@@ -14,17 +14,17 @@ const ALT = {
     'Mercedes-Maybach GLS 600 and Lamborghini Urus rentals parked under the Metromover track in downtown Miami',
 
   // --- Car photos used on /about (viewed before writing) --------------------
-  '/cars/sf90-0.jpg':
+  '/cars/ferrari-sf90-rental-miami-front-quarter.jpg':
     'White Ferrari SF90 rental parked on an open deck with the downtown Miami skyline and construction cranes behind',
-  '/cars/maybach-1.jpg':
+  '/cars/mercedes-maybach-gls-600-rental-miami-front-quarter.jpg':
     'Black Mercedes-Maybach GLS 600 rental on a palm-lined paver driveway beside the water in Miami',
-  '/cars/huracan-evo-1.jpg':
+  '/cars/lamborghini-huracan-evo-rental-miami-front-quarter.jpg':
     'Purple Lamborghini Huracan EVO rental on a rooftop deck with the downtown Miami skyline behind',
 
   // --- Blog hero (viewed before writing) ------------------------------------
   // No identifiable Miami landmark in frame, so the location is left out per
   // the rule at the top of this file.
-  '/cars/urus-3317.jpg':
+  '/cars/lamborghini-urus-rental-miami-front-quarter.jpg':
     'Purple Lamborghini Urus rental parked on a palm-lined side street beside a muraled concrete wall, front three-quarter view',
 
   '/gallery/gallery-1.jpg':

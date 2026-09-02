@@ -2,34 +2,38 @@
 import LandingLayout from '@/layouts/LandingLayout.astro';
 import { business, whatsappWith } from '@/data/business';
 
-// We do not keep a G63 in the standing fleet. Every mention on this page is
-// framed as sourced-on-request; nothing here promises a car we hold.
+// The G63 IS in the standing fleet again — see fleet.js. This page previously
+// framed every mention as sourced-on-request, because for a spell we did not
+// hold one. That framing is now wrong and actively steered the highest-intent
+// G-Wagon traffic we get toward other cars, so it has been rewritten around the
+// car we actually have. If the G63 ever leaves the fleet again, this page has to
+// change back — it is the one page that promises this specific car.
 const wa = whatsappWith("Hi, I'd like to check G63 availability and rates for my dates.");
 ---
 <LandingLayout
   title="G-Wagon Rental Miami | Lussaro Collection"
-  description="Mercedes-AMG G63 in Miami, sourced on request for your dates. Message us on WhatsApp for availability and rates, or browse the cars we keep on hand."
+  description="Rent a Mercedes-AMG G63 in Miami from $795/day. 577 hp twin-turbo V8, 100 miles included, delivered to your hotel, home or airport."
   h1="G-Wagon Rental Miami"
-  intro="The Mercedes-AMG G63 is sourced on request for your dates rather than kept on the lot. Message us on WhatsApp and we will confirm availability and rates."
+  intro="Our Mercedes-AMG G63 is on the lot and bookable on live dates, from $795 a day with 100 miles included. Delivered anywhere in Miami."
   fleetHeading="Also in our Miami fleet"
-  ctaTitle="Ask about the G-Wagon"
+  ctaTitle="Book the G-Wagon"
 >
-  <h2>How a G-Wagon booking works here</h2>
-  <p>We do not hold a Mercedes-AMG G63 in the standing fleet. When someone wants one we source it for their dates, which means availability and price depend on the window you need rather than on a published rate. <a href={wa}>Message us on WhatsApp</a> with your dates and we will come back with both.</p>
-  <p>If your dates are fixed and short-notice, say so up front — sourcing takes longer than handing over a car we already have, and it is better to know early whether it is realistic.</p>
+  <h2>The G63 we run</h2>
+  <p>It is a 577 hp Mercedes-AMG G63 — the twin-turbo V8 car, in matte grey over a red leather cabin. Full specification, photographs and live availability are on the <a href="/cars/mercedes-amg-g63">G63 rental page</a>, or <a href={wa}>message us on WhatsApp</a> with your dates and we will confirm both.</p>
+  <p>Booking works the way it does for every car we hold: pick your dates, we confirm, and the car is delivered. Nothing is sourced in from elsewhere, so short-notice and same-day requests are realistic rather than a gamble.</p>
 
   <h3>What the G63 offers</h3>
   <ul>
     <li>Unmistakable boxy silhouette, and the curb appeal that comes with it.</li>
-    <li>Twin-turbo V8 power with AMG engineering.</li>
-    <li>A tall, upright cabin that seats four in comfort.</li>
+    <li>577 hp twin-turbo V8, 0-60 mph in 4.5 seconds.</li>
+    <li>A tall, upright cabin with five seats and a square, usable boot.</li>
     <li>Ride height that shrugs off ramps and speed bumps.</li>
   </ul>
 
-  <h3>Available now instead</h3>
-  <p>If you would rather book something today, the cars above are ours and ready on live dates. The <a href="/cars/mercedes-maybach-gls-600">Maybach GLS 600</a> is the closest in spirit — a large Mercedes SUV built around its back seat — and the <a href="/cars/lamborghini-urus">Lamborghini Urus</a> covers the same want-presence-and-space brief with considerably more noise. Both appear on our <a href="/luxury-suv-rental-miami">luxury SUV comparison</a>.</p>
+  <h3>If you are weighing it against something else</h3>
+  <p>The <a href="/cars/mercedes-maybach-gls-600">Maybach GLS 600</a> is the closest in spirit — a large Mercedes SUV, but built around its back seat rather than its presence — and the <a href="/cars/lamborghini-urus">Lamborghini Urus</a> answers the same want-presence-and-space brief with considerably more noise. All three appear on our <a href="/luxury-suv-rental-miami">luxury SUV comparison</a>.</p>
   <p>For the full picture, see <a href="/exotic-car-rental-miami">exotic car rental in Miami</a> or the complete <a href="/fleet">fleet</a>.</p>
 
   <h3>What you can rely on</h3>
-  <p>Whatever we source, the terms are the ones published on our <a href="/pricing">rate card</a>: the deposit, the mileage allowance and the delivery fees do not change because a car came in specially. You will have the rate in writing before anything is committed.</p>
+  <p>The terms are the ones published on our <a href="/pricing">rate card</a>: the deposit, the mileage allowance and the delivery fees are the same on every car we run. You will have the rate in writing before anything is committed.</p>
 </LandingLayout>

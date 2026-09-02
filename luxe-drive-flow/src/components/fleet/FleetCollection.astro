@@ -11,7 +11,14 @@ const {
   eyebrow = 'Curated Luxury Fleet',
   heading = 'The Collection',
   pad = 'py-16 md:py-24', // vertical padding — override where the section follows a tight hero
+  filter = true,          // set false to render the grid with no brand filter
 } = Astro.props;
+
+// Brands in FLEET ORDER, deduped — so the pills follow the same sequence as the
+// grid rather than an arbitrary alphabetical one. Derived from the data, so a
+// new marque in fleet.js gets a pill automatically and one that leaves loses it.
+const brands = [...new Set(cars.map((c) => c.make))];
+const showFilter = filter && brands.length > 1;
 ---
 <section id={id} class={`bg-[#ffffff] text-[#0a0a0a] ${pad}`}>
   <div class="max-w-7xl mx-auto px-5 md:px-8">
@@ -20,9 +27,30 @@ const {
       <h2 class="font-display text-4xl md:text-6xl font-bold tracking-tight">{heading}</h2>
     </div>
 
+    {/* Progressive enhancement on purpose: every card is in the server HTML and
+        the filter only hides them client-side, so crawlers and no-JS visitors
+        still see the whole fleet. The pills are real buttons with aria-pressed
+        rather than links, since this filters in place and does not change the
+        URL. */}
+    {showFilter && (
+      <div
+        data-brand-filter
+        role="group"
+        aria-label="Filter the collection by brand"
+        class="reveal mb-8 md:mb-11 flex md:flex-wrap items-center md:justify-center gap-2
+               -mx-5 px-5 md:mx-0 md:px-0
+               overflow-x-auto md:overflow-visible no-scrollbar snap-x"
+      >
+        <button type="button" data-brand="all" aria-pressed="true">All</button>
+        {brands.map((b) => (
+          <button type="button" data-brand={b} aria-pressed="false">{b}</button>
+        ))}
+      </div>
+    )}
+
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {cars.map((car) => (
-        <div class="reveal group relative rounded-[24px] bg-white overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.15)] transition-shadow">
+        <div data-car-make={car.make} class="reveal group relative rounded-[24px] bg-white overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.15)] transition-shadow">
           <a href={`/cars/${car.slug}`} class="absolute inset-0 z-10" aria-label={`View the ${car.name}`}></a>
           <div class="relative aspect-[16/11] overflow-hidden">
             <img
@@ -61,3 +89,81 @@ const {
     </div>
   </div>
 </section>
+
+<style>
+  /* Pills follow the section's light palette: black-on-white, red only on the
+     active one, matching the WHITE = browse / RED = act split the rest of the
+     site uses. Contrast is 4.92:1 on the active pill (white on #e00e10). */
+  /* On a phone the row is a single edge-to-edge scroller rather than a wrapping
+     block: five pills across ~350px wrapped into a ragged 3-then-2 that read as
+     broken rather than centred. It bleeds past the section padding (-mx-5 px-5)
+     so the last pill is visibly cut off at the edge — that overflow is the only
+     honest affordance that there is more to scroll, since the scrollbar itself
+     is hidden. From md up it goes back to a centred wrap, where there is room.
+     shrink-0 is what stops flex squashing the pills to fit instead of
+     overflowing, which would defeat the whole arrangement. */
+  [data-brand-filter] button {
+    flex: none;
+    scroll-snap-align: start;
+    border-radius: 9999px;
+    min-height: 2.75rem; /* 44px — the tap-target floor on mobile */
+    padding: 0.45rem 1.05rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    white-space: nowrap;
+    color: rgba(10, 10, 10, 0.62);
+    border: 1px solid rgba(10, 10, 10, 0.16);
+    background: #fff;
+    transition: color 0.2s, border-color 0.2s, background-color 0.2s;
+  }
+  @media (min-width: 768px) {
+    /* Desktop has a pointer and no reach problem, so the pills can be tighter. */
+    [data-brand-filter] button { min-height: 2.375rem; }
+  }
+  [data-brand-filter] button:hover {
+    color: #0a0a0a;
+    border-color: rgba(10, 10, 10, 0.45);
+  }
+  [data-brand-filter] button[aria-pressed='true'] {
+    background: #e00e10;
+    border-color: #e00e10;
+    color: #fff;
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    function initBrandFilter() {
+      document.querySelectorAll('[data-brand-filter]').forEach(function (bar) {
+        if (bar.dataset.bound === '1') return;
+        bar.dataset.bound = '1';
+        var section = bar.closest('section');
+        if (!section) return;
+        var cards = section.querySelectorAll('[data-car-make]');
+        bar.addEventListener('click', function (e) {
+          var btn = e.target.closest('button[data-brand]');
+          if (!btn) return;
+          var want = btn.getAttribute('data-brand');
+          bar.querySelectorAll('button[data-brand]').forEach(function (b) {
+            b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+          });
+          cards.forEach(function (card) {
+            var show = want === 'all' || card.getAttribute('data-car-make') === want;
+            card.hidden = !show;
+            // A card that was hidden while the reveal observer ran never got
+            // .in, and .reveal sits at opacity 0 — so it would come back
+            // invisible. Mark it seen as it is revealed.
+            if (show) card.classList.add('in');
+          });
+        });
+      });
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initBrandFilter);
+    } else {
+      initBrandFilter();
+    }
+    // The router swaps the DOM on navigation, so re-bind against the new nodes.
+    document.addEventListener('astro:page-load', initBrandFilter);
+  })();
+</script>

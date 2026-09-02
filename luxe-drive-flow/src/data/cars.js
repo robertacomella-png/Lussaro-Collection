@@ -9,13 +9,14 @@ const SLUGS = {
   "Cullinan": "rolls-royce-cullinan",
   "GLS 600 Maybach": "mercedes-maybach-gls-600",
   "S580": "mercedes-s580",
+  "S580 Maybach": "mercedes-maybach-s580",
 };
 
 // 3D showpieces (by slug): GLB for the web viewer, USDZ for iOS AR, and a poster
 // shown while the model loads. Add a car here to give it the 3D/AR section.
 const MODELS = {
   "lamborghini-urus": { model: "/models/urus.glb", usdz: "/models/urus.usdz" },
-  sf90: { model: "/models/sf90.glb", usdz: "/models/sf90.usdz", poster: "/cars/sf90-0.jpg" },
+  sf90: { model: "/models/sf90.glb", usdz: "/models/sf90.usdz", poster: "/cars/ferrari-sf90-rental-miami-front-quarter.jpg" },
 };
 
 // Per-car multi-day discount tiers (by slug). Omit a car to use the default

@@ -4,9 +4,9 @@
 // boilerplate stem with `car.description.slice(0, 110)` and clipped mid-word —
 // "...Glide t" was live on the Maybach page.
 //
-// Only live routes are listed. The six cars here are the current fleet; there
-// are deliberately no entries for huracan-sto or mercedes-amg-g63, which left
-// the fleet in June.
+// Only live routes are listed. The nine cars here are the current fleet; there
+// is deliberately no entry for huracan-sto, which left the fleet in June. The
+// G63 left at the same time and has since returned.
 //
 // cars/[slug].astro looks these up by slug. Static pages set their own
 // description prop on <Layout> and are not duplicated here.
@@ -22,6 +22,12 @@ export const META_DESCRIPTIONS = {
     'Rent the Ferrari SF90 in Miami: 986 hp hybrid, 0-60 in 2.5s, $2,195/day. The fastest car in our fleet, delivered to your door.',
   '/cars/huracan-evo':
     'Rent the Lamborghini Huracan EVO in Miami: screaming V10, 602 hp, $1,295/day with 100 miles included. Same-day delivery available.',
+  '/cars/mercedes-maybach-s580':
+    'Rent the Mercedes-Maybach S580 in Miami: reclining executive rear seats, 496 hp, $895/day with 100 miles included. Chauffeur-grade comfort, delivered.',
+  '/cars/huracan-evo-spyder':
+    'Rent the Lamborghini Huracan EVO Spyder in Miami: open-top V10, 602 hp, $1,495/day with 100 miles included. Roof down in 17 seconds.',
+  '/cars/mercedes-amg-g63':
+    'Rent the Mercedes-AMG G63 in Miami: 577 hp twin-turbo V8, $795/day with 100 miles included. Delivered to your hotel, home or airport.',
   '/cars/rolls-royce-cullinan':
     'Rent the Rolls-Royce Cullinan in Miami: 563 hp, effortless presence, $1,495/day with 100 miles included. Delivered anywhere in Miami.',
 };
