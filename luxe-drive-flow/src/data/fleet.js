@@ -10,6 +10,7 @@ export const fleet = [
     make: "Lamborghini",
     year: 2019,
     price: 995,
+    wasPrice: 1095,
     power: 641,
     miles: 100,
     // Owner-confirmed per car. `seatsNote` is the layout qualifier where the
@@ -38,6 +39,7 @@ export const fleet = [
     make: "Mercedes-Benz",
     year: 2023,
     price: 895,
+    wasPrice: 995,
     power: 550,
     miles: 100,
     seats: 4,
@@ -99,7 +101,8 @@ export const fleet = [
     dashboardId: "",
     make: "Rolls-Royce",
     year: 2023,
-    price: 1495,
+    price: 1295,
+    wasPrice: 1495,
     power: 563,
     miles: 100,
     seats: 5,
@@ -135,7 +138,8 @@ export const fleet = [
     dashboardId: "",
     make: "Lamborghini",
     year: 2023,
-    price: 1495,
+    price: 1295,
+    wasPrice: 1495,
     // The rear-wheel-drive Spyder, same 602 hp V10 as our coupe. The AWD EVO
     // makes 631 hp and 3.1s — do not mix the two sets of figures. Dropping the
     // roof costs about two tenths against the coupe's 3.3s.
@@ -164,6 +168,7 @@ export const fleet = [
     make: "Mercedes-Benz",
     year: 2023,
     price: 795,
+    wasPrice: 895,
     power: 577,
     miles: 100,
     seats: 5,
@@ -191,7 +196,7 @@ export const fleet = [
     dashboardId: "",
     make: "Ferrari",
     year: 2023,
-    price: 2195,
+    price: 2495,
     power: 986,
     miles: 100,
     seats: 2,
@@ -219,7 +224,7 @@ export const fleet = [
     dashboardId: "",
     make: "Lamborghini",
     year: 2023,
-    price: 1295,
+    price: 1195,
     // Owner-confirmed as the rear-wheel-drive EVO, not the AWD car: 602 hp and
     // 3.3s to 60. The 650 hp / 3.2s previously listed here matched no Huracán
     // EVO variant Lamborghini ever sold.
@@ -253,6 +258,7 @@ export const fleet = [
     make: "Mercedes-Benz",
     year: 2023,
     price: 895,
+    wasPrice: 1095,
     power: 496,
     miles: 100,
     // Four, not five. The rear is a pair of executive seats either side of a

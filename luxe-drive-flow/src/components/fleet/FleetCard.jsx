@@ -9,8 +9,11 @@ export default function FleetCard({ car, onOpen }) {
   );
 
   const imageSrc = getImageKitSrc(car.images?.[0] || car.image, 700);
-  const wasPrice = car.wasPrice ?? car.price + 200;
-  const offAmount = wasPrice - car.price;
+  // A car is on sale only when fleet.js gives it an explicit wasPrice. There
+  // is no fallback: an invented struck-through figure is a discount we never
+  // ran, and it would contradict the rate the customer is actually quoted.
+  const onSale = car.wasPrice > car.price;
+  const offAmount = car.wasPrice - car.price;
 
   return (
     <button
@@ -48,10 +51,12 @@ export default function FleetCard({ car, onOpen }) {
 
       <div className="px-3.5 md:px-5 pb-3.5 md:pb-5 text-white">
         <div className="mb-3 leading-tight">
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-white/50 text-sm line-through">${wasPrice.toLocaleString()}</span>
-            <span className="bg-[#e00e10] text-white text-[10px] font-bold tracking-wide px-1.5 py-0.5 rounded">${offAmount} OFF</span>
-          </div>
+          {onSale && (
+            <div className="flex items-center gap-2 mb-1">
+              <span className="text-white/50 text-sm line-through">${car.wasPrice.toLocaleString()}</span>
+              <span className="bg-[#e00e10] text-white text-[10px] font-bold tracking-wide px-1.5 py-0.5 rounded">${offAmount} OFF</span>
+            </div>
+          )}
           <p className="text-[#ff1516] text-[22px] md:text-3xl leading-none font-semibold tracking-tight">
             ${car.price.toLocaleString()}
             <span className="text-white/50 text-xs md:text-sm font-normal ml-1">

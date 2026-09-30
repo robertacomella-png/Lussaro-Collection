@@ -31,8 +31,8 @@ export default function FleetModal({ car, setCar, activeImage, setActiveImage })
       ? `Hi, I'd like to reserve the ${car.name} early with Lussaro Collection — I hear it's arriving soon.`
       : `Hi, I'm interested in booking the ${car.name} with Lussaro Collection.`
   );
-  const wasPrice = car.wasPrice ?? car.price + 200;
-  const offAmount = wasPrice - car.price;
+  const onSale = car.wasPrice > car.price;
+  const offAmount = car.wasPrice - car.price;
 
   return (
     <AnimatePresence>
@@ -132,8 +132,12 @@ export default function FleetModal({ car, setCar, activeImage, setActiveImage })
                         ${car.price.toLocaleString()}
                         <span className="text-white/50 text-sm ml-1">/day</span>
                       </p>
-                      <span className="text-white/50 text-base line-through">${wasPrice.toLocaleString()}</span>
-                      <span className="bg-[#e00e10] text-white text-[10px] font-bold tracking-wide px-2 py-0.5 rounded">${offAmount} OFF</span>
+                      {onSale && (
+                        <>
+                          <span className="text-white/50 text-base line-through">${car.wasPrice.toLocaleString()}</span>
+                          <span className="bg-[#e00e10] text-white text-[10px] font-bold tracking-wide px-2 py-0.5 rounded">${offAmount} OFF</span>
+                        </>
+                      )}
                     </div>
                   </div>
 
