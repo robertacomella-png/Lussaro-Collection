@@ -10,15 +10,15 @@ export const fleet = [
     make: "Lamborghini",
     year: 2019,
     price: 599,
-    // Owner's call, Oct 2026: this car leads with its 60-mile rate, so `price`
-    // IS the 60-mile tier and `miles` below says 60 — the two must move
+    // Owner's call, Oct 2026: this car leads with its 50-mile rate, so `price`
+    // IS the 50-mile tier and `miles` below says 50 — the two must move
     // together or the page quotes a rate against an allowance it does not buy.
     // The 100-mile rate is the upgrade. The upgrade tier is the only one stored
     // here; the base is always this car's own miles at its own price, so
     // repricing above moves the selector with it. No wasPrice — no sale badge.
     mileageUpgrade: { milesPerDay: 100, pricePerDay: 899 },
     power: 641,
-    miles: 60,
+    miles: 50,
     // Owner-confirmed per car. `seatsNote` is the layout qualifier where the
     // count alone would overstate it (a 4+1 bench is not four equal seats);
     // the spec card renders it small under the number, and omits it when absent.
@@ -47,7 +47,7 @@ export const fleet = [
     price: 499,
     mileageUpgrade: { milesPerDay: 100, pricePerDay: 899 },
     power: 550,
-    miles: 60,
+    miles: 50,
     seats: 4,
     doors: 4,
     drivetrain: 'All-wheel drive · 4.0L twin-turbo V8',
