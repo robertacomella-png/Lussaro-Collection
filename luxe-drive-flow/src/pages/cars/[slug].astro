@@ -8,6 +8,7 @@ import UrusHero from '@/components/hero/UrusHero.jsx';
 import ArButton from '@/components/hero/ArButton.jsx';
 import CarGallery from '@/components/fleet/CarGallery.jsx';
 import BookingCalendar from '@/components/booking/BookingCalendar.jsx';
+import BookingRequestCard from '@/components/booking/BookingRequestCard.jsx';
 import { Phone } from 'lucide-react';
 import WhatsAppIcon from '@/components/site/WhatsAppIcon.astro';
 import { cars } from '@/data/cars';
@@ -55,6 +56,13 @@ const siblingCars = (content?.siblings ?? [])
 const named = (c) => (c.name.startsWith(c.make) ? c.name : `${c.make} ${c.name}`);
 
 const milesPerDay = car.miles ?? rentalTerms.mileage.includedPerDay;
+
+// The weekly rate is DERIVED, never typed in: seven days run through the same
+// discount ladder the booking card and /pricing use, so repricing a car in
+// fleet.js moves this line with it and the two can't disagree.
+const bookingTiers = car.discountTiers ?? rentalTerms.discountTiers;
+const weekPct = bookingTiers.reduce((acc, t) => (7 >= t.days ? t.pct : acc), 0);
+const weeklyRate = Math.round(car.price * 7 * (1 - weekPct / 100));
 const exDays = 3;
 
 // Four questions, all answered from data that exists: deposit, mileage,
@@ -247,6 +255,10 @@ const productSchema = {
             <span class="inline-flex items-center gap-1 text-sm text-white/70"><span class="text-[#ff1516]">★</span> 5.0</span>
           </div>
 
+          <p class="text-white/50 text-xs -mt-3 mb-4 md:-mt-3.5 md:mb-5">
+            ${weeklyRate.toLocaleString('en-US')} / week at the {weekPct}% seven-day rate
+          </p>
+
 
           {/* client:only (not client:visible) so the calendar renders fresh on the client
               against the real current date. With static SSR, server HTML bakes in the build-date
@@ -288,6 +300,16 @@ const productSchema = {
             </div>
           </div>
           )}
+
+          {/* The booking request card. client:visible rather than client:only so
+              the fields and the reassurance copy are in the server HTML — this
+              is the page's primary conversion unit and it must exist for a
+              crawler, and for anyone whose bundle is slow. It collects dates
+              but checks no availability: nothing here can tell a visitor a car
+              is free when it is not. */}
+          <BookingRequestCard client:visible pricePerDay={car.price} carName={car.name} tiers={bookingTiers} />
+
+          <p class="text-white/50 text-[11px] text-center mt-4 mb-2">Prefer to talk?</p>
 
           {/* Call was full width here; it gives up half to WhatsApp so both
               channels sit under the calendar. Labels shorten to "Call" and
