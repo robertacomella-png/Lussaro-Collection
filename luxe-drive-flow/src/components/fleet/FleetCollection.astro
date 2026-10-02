@@ -22,9 +22,10 @@ const showFilter = filter && brands.length > 1;
 ---
 {/* Dark, on the page ground rather than pure black, with hairline rules top and
     bottom: on the homepage this sits between two bg-black sections and would
-    otherwise merge into one unbroken slab. #e00e10 cannot come along — it is
-    the red tuned for white backgrounds and measures 3.87:1 on a #0f0f0f card,
-    under the AA floor. #ff1516 is 4.90:1 there and 5.06:1 on the ground. */}
+    otherwise merge into one unbroken slab. #e00e10 cannot come along as text —
+    it is the red tuned for white backgrounds and measures 3.87:1 on a #0f0f0f
+    card, under the AA floor. The eyebrow uses #ff1516 at 5.06:1 on the ground;
+    the price is plain white, leaving red to the OFF badge alone. */}
 <section id={id} class={`bg-[#0a0a0a] text-white border-y border-white/5 ${pad}`}>
   <div class="max-w-7xl mx-auto px-5 md:px-8">
     <div class="reveal text-center mb-12 md:mb-14">
@@ -100,7 +101,7 @@ const showFilter = filter && brands.length > 1;
                   <span class="bg-[#e00e10] text-white text-[10px] font-bold tracking-wide px-1.5 py-0.5 rounded">${car.wasPrice - car.price} OFF</span>
                 </div>
               )}
-              <p class="text-[#ff1516] font-display text-xl font-bold leading-none">${car.price.toLocaleString()}<span class="text-white/50 text-xs font-normal">/day</span></p>
+              <p class="text-white font-display text-xl font-bold leading-none">${car.price.toLocaleString()}<span class="text-white/50 text-xs font-normal">/day</span></p>
             </div>
           </div>
         </div>
