@@ -62,6 +62,15 @@ const showFilter = filter && brands.length > 1;
               class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
             <span class="absolute top-4 left-4 bg-[#0a0a0a]/80 text-white text-[11px] tracking-wide px-3 py-1 rounded-full">{car.make}</span>
+            {/* Bottom-left: the only free corner. Top-left is the make, and
+                top-right is taken by Coming Soon or the 3D button.
+
+                WhatsApp's green, but its #0f7536 hover shade rather than the
+                #128f42 fill — white on the fill measures 4.17:1, under the
+                4.5:1 AA floor for text this size. The hover shade is 5.80:1. */}
+            {car.offerLabel && (
+              <span class="absolute bottom-4 left-4 bg-[#0f7536] text-white text-[11px] font-bold tracking-[0.12em] uppercase px-3 py-1 rounded-full">{car.offerLabel}</span>
+            )}
             {car.comingSoon && (
               <span class="absolute top-4 right-4 bg-[#ff1516] text-black text-[11px] font-bold tracking-[0.12em] uppercase px-3 py-1 rounded-full">Coming Soon</span>
             )}
@@ -81,14 +90,6 @@ const showFilter = filter && brands.length > 1;
                 <div class="flex items-center justify-end gap-1.5 mb-0.5">
                   <span class="text-[#0a0a0a]/60 text-sm line-through">${car.wasPrice.toLocaleString()}</span>
                   <span class="bg-[#e00e10] text-white text-[10px] font-bold tracking-wide px-1.5 py-0.5 rounded">${car.wasPrice - car.price} OFF</span>
-                </div>
-              )}
-              {/* A car leading with a reduced-allowance rate carries no struck
-                  price, so it takes the same slot the OFF badge would. Only one
-                  of the two ever renders. */}
-              {car.offerLabel && !(car.wasPrice > car.price) && (
-                <div class="flex items-center justify-end mb-0.5">
-                  <span class="bg-[#e00e10] text-white text-[10px] font-bold tracking-wide uppercase px-1.5 py-0.5 rounded">{car.offerLabel}</span>
                 </div>
               )}
               <p class="text-[#e00e10] font-display text-xl font-bold leading-none">${car.price.toLocaleString()}<span class="text-[#0a0a0a]/60 text-xs font-normal">/day</span></p>
