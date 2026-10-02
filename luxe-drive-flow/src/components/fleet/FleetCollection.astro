@@ -83,6 +83,14 @@ const showFilter = filter && brands.length > 1;
                   <span class="bg-[#e00e10] text-white text-[10px] font-bold tracking-wide px-1.5 py-0.5 rounded">${car.wasPrice - car.price} OFF</span>
                 </div>
               )}
+              {/* A car leading with a reduced-allowance rate carries no struck
+                  price, so it takes the same slot the OFF badge would. Only one
+                  of the two ever renders. */}
+              {car.offerLabel && !(car.wasPrice > car.price) && (
+                <div class="flex items-center justify-end mb-0.5">
+                  <span class="bg-[#e00e10] text-white text-[10px] font-bold tracking-wide uppercase px-1.5 py-0.5 rounded">{car.offerLabel}</span>
+                </div>
+              )}
               <p class="text-[#e00e10] font-display text-xl font-bold leading-none">${car.price.toLocaleString()}<span class="text-[#0a0a0a]/60 text-xs font-normal">/day</span></p>
             </div>
           </div>

@@ -17,6 +17,10 @@ export const fleet = [
     // here; the base is always this car's own miles at its own price, so
     // repricing above moves the selector with it. No wasPrice — no sale badge.
     mileageUpgrade: { milesPerDay: 100, pricePerDay: 899 },
+    // Marks the card in the fleet grid. These two lead with a reduced-allowance
+    // rate rather than a struck-through one, so without a label they read as
+    // simply cheap next to cars quoting a full 100-mile day.
+    offerLabel: 'Special offer',
     power: 641,
     miles: 50,
     // Owner-confirmed per car. `seatsNote` is the layout qualifier where the
@@ -46,6 +50,7 @@ export const fleet = [
     year: 2023,
     price: 499,
     mileageUpgrade: { milesPerDay: 100, pricePerDay: 899 },
+    offerLabel: 'Special offer',
     power: 550,
     miles: 50,
     seats: 4,
