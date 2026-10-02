@@ -9,8 +9,8 @@ export const fleet = [
     dashboardId: "",
     make: "Lamborghini",
     year: 2019,
-    price: 995,
-    wasPrice: 1095,
+    price: 899,
+    wasPrice: 999,
     // Reduced-allowance rate, owner-set Oct 2026. The standard tier is NOT
     // repeated here — it is always this car's own `miles` at its own `price`,
     // so repricing above moves the selector with it. Only cars carrying this
@@ -43,8 +43,8 @@ export const fleet = [
     dashboardId: "71d29a72-b904-4318-80e5-0c133d2cb665",
     make: "Mercedes-Benz",
     year: 2023,
-    price: 895,
-    wasPrice: 995,
+    price: 899,
+    wasPrice: 999,
     reducedMileage: { milesPerDay: 60, pricePerDay: 499 },
     power: 550,
     miles: 100,
@@ -73,8 +73,8 @@ export const fleet = [
     dashboardId: "",
     make: "Mercedes-Benz",
     year: 2023,
-    price: 445,
-    wasPrice: 495,
+    price: 449,
+    wasPrice: 499,
     power: 496,
     miles: 100,
     seats: 5,
@@ -107,8 +107,8 @@ export const fleet = [
     dashboardId: "",
     make: "Rolls-Royce",
     year: 2023,
-    price: 1295,
-    wasPrice: 1495,
+    price: 1299,
+    wasPrice: 1499,
     power: 563,
     miles: 100,
     seats: 5,
@@ -144,8 +144,8 @@ export const fleet = [
     dashboardId: "",
     make: "Lamborghini",
     year: 2023,
-    price: 1295,
-    wasPrice: 1495,
+    price: 1299,
+    wasPrice: 1499,
     // The rear-wheel-drive Spyder, same 602 hp V10 as our coupe. The AWD EVO
     // makes 631 hp and 3.1s — do not mix the two sets of figures. Dropping the
     // roof costs about two tenths against the coupe's 3.3s.
@@ -173,8 +173,8 @@ export const fleet = [
     dashboardId: "",
     make: "Mercedes-Benz",
     year: 2023,
-    price: 795,
-    wasPrice: 895,
+    price: 799,
+    wasPrice: 899,
     power: 577,
     miles: 100,
     seats: 5,
@@ -202,7 +202,7 @@ export const fleet = [
     dashboardId: "",
     make: "Ferrari",
     year: 2023,
-    price: 2495,
+    price: 2499,
     power: 986,
     miles: 100,
     seats: 2,
@@ -230,7 +230,7 @@ export const fleet = [
     dashboardId: "",
     make: "Lamborghini",
     year: 2023,
-    price: 1195,
+    price: 1199,
     // Owner-confirmed as the rear-wheel-drive EVO, not the AWD car: 602 hp and
     // 3.3s to 60. The 650 hp / 3.2s previously listed here matched no Huracán
     // EVO variant Lamborghini ever sold.
@@ -255,7 +255,7 @@ export const fleet = [
   },
   {
     id: 4,
-    // NOT the S580 above. That is the standard Mercedes-Benz S-Class at $445;
+    // NOT the S580 above. That is the standard Mercedes-Benz S-Class at $449;
     // this is the Mercedes-Maybach S580 — longer wheelbase, four seats, and its
     // own slug (mercedes-maybach-s580, set in cars.js). Keep the two distinct
     // in copy as well as in data, or the pages start cannibalising each other.
@@ -263,8 +263,8 @@ export const fleet = [
     dashboardId: "",
     make: "Mercedes-Benz",
     year: 2023,
-    price: 895,
-    wasPrice: 1095,
+    price: 899,
+    wasPrice: 1099,
     power: 496,
     miles: 100,
     // Four, not five. The rear is a pair of executive seats either side of a
