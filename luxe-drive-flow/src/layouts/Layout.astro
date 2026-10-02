@@ -43,6 +43,20 @@ const breadcrumb = breadcrumbFor(Astro.url.pathname, breadcrumbName);
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
+    <!-- OpenAI Pixel — base setup. Supplied by the marketing team and kept
+         verbatim, debug:true included. It sits as high as a script legally can:
+         the charset declaration above has to land inside the first 1024 bytes
+         and cannot be displaced.
+
+         One setup script per page, which this layout gives for free — it is the
+         only <head> in the site, so there is no second copy to drift out of sync.
+
+         `oaiq` is a queueing stub until the SDK lands, so the lead_created call
+         in lib/track.js is safe to fire before the network finishes. The
+         `if(w.oaiq)return` guard makes it a no-op should a view transition ever
+         re-run it. -->
+    <script is:inline>!function(w,d,s,u){if(w.oaiq)return;var q=function(){q.q.push(arguments)};q.q=[];w.oaiq=q;var j=d.createElement(s);j.async=1;j.src=u;var f=d.getElementsByTagName(s)[0];f.parentNode.insertBefore(j,f)}(window,document,"script","https://bzrcdn.openai.com/sdk/oaiq.min.js");oaiq("init",{pixelId:"Sed9HtBUf7qjiKJ1WcuL3V",debug:true});</script>
+
     <!-- Marks the document as scripting-capable at parse time. Anything that
          must degrade when JS never runs (see the booking-calendar fallback on
          car pages) keys off `html.js` rather than duplicating itself into a
