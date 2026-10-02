@@ -235,11 +235,12 @@ const productSchema = {
         )}
       </div>
 
-      <!-- 2 · PRICE — straight under the photos on a phone.
-           Row 1 only. It used to span both rows because the calendar made it
-           tall enough to run alongside the gallery AND the reading matter;
-           without the calendar that span left most of the column empty. -->
-      <aside class="lg:col-start-2 lg:row-start-1">
+      <!-- 2 · PRICE + BOOKING — straight under the photos on a phone.
+           Spans both rows on desktop. The booking card runs ~800px against the
+           gallery's ~430px, so it has to reach down past the gallery alongside
+           the reading matter; confine it to row 1 and the left column opens a
+           void under the photos the full height of the form. -->
+      <aside class="lg:col-start-2 lg:row-start-1 lg:row-span-2">
         <div class="rounded-2xl border border-white/10 bg-[#0f0f0f] p-4 md:p-6 shadow-[0_20px_60px_rgba(0,0,0,0.4)]">
           <div class="flex items-end justify-between mb-4 md:mb-5">
             <div>
@@ -342,16 +343,13 @@ const productSchema = {
 
       {/* 3 · THE READING MATTER — last on a phone, because someone who has
            already scrolled past the price is browsing rather than booking.
-           On desktop it runs the full width under both columns: the price card
-           no longer reaches down beside it, and keeping this in the left column
-           alone would leave the right half of row 2 empty. Source order still
-           matches visual order, so tab order is unchanged. */}
-      <div class="lg:col-start-1 lg:col-span-2 lg:row-start-2 mt-2 lg:mt-0">
+           On desktop it returns to the left column under the photos, filling
+           the height the booking card occupies beside it. */}
+      <div class="lg:col-start-1 lg:row-start-2 mt-2 lg:mt-0">
         <p class="text-white/65 leading-relaxed max-w-prose">{car.description}</p>
 
-        {/* Two across on a phone, three from `sm`. Six at `lg`, where this block
-            spans the full grid — three would stretch each card to ~370px. */}
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 mt-6">
+        {/* Three across from `sm` up, two on a phone. */}
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 mt-6">
           {specList.map((s) => (
             <div class="rounded-xl border border-white/10 bg-[#0f0f0f] px-3 py-3.5 text-center">
               <p class="text-white/50 text-[10px] uppercase tracking-wide mb-1.5">{s.k}</p>
