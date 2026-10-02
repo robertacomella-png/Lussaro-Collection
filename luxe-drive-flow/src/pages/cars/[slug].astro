@@ -97,15 +97,16 @@ const faqSchema = carFaqs.length ? {
 // band whose two rows repeated "Miles / day" between them.
 //
 // `to` means the value counts up when it scrolls into view; `v` renders as-is
-// (the model year should not animate). Anything without a value drops out, so
-// a car missing a seat count simply shows one card fewer.
+// (a seat count should not animate). Anything without a value drops out, so a
+// car missing a seat count simply shows one card fewer.
+// Miles/day, doors and model year were dropped from this grid (owner's call,
+// Oct 2026) — mileage is already stated under the booking card, and the other
+// two earned their space least. They are still emitted in `additionalProperty`
+// below, so the structured data keeps the full spec sheet.
 const specList = [
   { k: '0–60 mph', to: parseFloat(car.zeroToSixty) || 0, decimals: 1, suffix: 's' },
   { k: 'Horsepower', to: car.power, decimals: 0, suffix: ' hp' },
-  { k: 'Miles / day', to: car.miles, decimals: 0, suffix: '' },
   { k: 'Seats', v: car.seats, sub: car.seatsNote },
-  { k: 'Doors', v: car.doors },
-  { k: 'Model year', v: car.year },
 ].filter((x) => x.to || x.v);
 
 // Per-car structured data for richer Google results (price/day + breadcrumb)
