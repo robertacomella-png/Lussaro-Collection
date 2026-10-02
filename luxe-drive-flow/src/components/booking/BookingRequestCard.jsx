@@ -37,7 +37,7 @@ export default function BookingRequestCard({
   carName = "",
   tiers = rentalTerms.discountTiers,
   milesPerDay = rentalTerms.mileage.includedPerDay,
-  reducedMileage = null,
+  mileageUpgrade = null,
 }) {
   const [mode, setMode] = useState("dates"); // "dates" | "flexible"
   const [start, setStart] = useState("");
@@ -48,16 +48,16 @@ export default function BookingRequestCard({
   const [status, setStatus] = useState("idle"); // idle | sending | ok | error
   const [error, setError] = useState("");
 
-  // A car offers a mileage choice only if fleet.js gives it `reducedMileage`.
-  // The standard tier is built from this car's own allowance and rate rather
-  // than stored a second time, so the pair cannot drift when a car is repriced.
+  // A car offers a mileage choice only if fleet.js gives it `mileageUpgrade`.
+  // The base tier is built from this car's own allowance and rate rather than
+  // stored a second time, so the pair cannot drift when a car is repriced.
   // Without that field the card states the one allowance instead of presenting
   // a choice the fleet does not sell.
-  const mileTiers = reducedMileage ? [reducedMileage, { milesPerDay, pricePerDay }] : [];
+  const mileTiers = mileageUpgrade ? [{ milesPerDay, pricePerDay }, mileageUpgrade] : [];
   const hasMileChoice = mileTiers.length > 1;
-  // Defaults to the standard tier — last in the list — so the selected rate
-  // agrees with the headline price sitting directly above the card.
-  const [mileIdx, setMileIdx] = useState(Math.max(0, mileTiers.length - 1));
+  // Defaults to the base tier — first in the list — so the selected rate agrees
+  // with the headline price sitting directly above the card.
+  const [mileIdx, setMileIdx] = useState(0);
   const mileTier = hasMileChoice ? mileTiers[mileIdx] : null;
 
   const dayRate = mileTier ? mileTier.pricePerDay : pricePerDay;
