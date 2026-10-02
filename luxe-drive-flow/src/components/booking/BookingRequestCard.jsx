@@ -36,6 +36,8 @@ export default function BookingRequestCard({
   pricePerDay = 0,
   carName = "",
   tiers = rentalTerms.discountTiers,
+  milesPerDay = rentalTerms.mileage.includedPerDay,
+  reducedMileage = null,
 }) {
   const [mode, setMode] = useState("dates"); // "dates" | "flexible"
   const [start, setStart] = useState("");
@@ -46,12 +48,16 @@ export default function BookingRequestCard({
   const [status, setStatus] = useState("idle"); // idle | sending | ok | error
   const [error, setError] = useState("");
 
-  // The mileage selector is driven by rental-terms.js. One allowance is the
-  // honest default — the fleet sells a single 100 mi/day pooled allowance — so
-  // with fewer than two tiers defined this renders a statement, not a choice.
-  const mileTiers = Array.isArray(rentalTerms.mileage.tiers) ? rentalTerms.mileage.tiers : [];
+  // A car offers a mileage choice only if fleet.js gives it `reducedMileage`.
+  // The standard tier is built from this car's own allowance and rate rather
+  // than stored a second time, so the pair cannot drift when a car is repriced.
+  // Without that field the card states the one allowance instead of presenting
+  // a choice the fleet does not sell.
+  const mileTiers = reducedMileage ? [reducedMileage, { milesPerDay, pricePerDay }] : [];
   const hasMileChoice = mileTiers.length > 1;
-  const [mileIdx, setMileIdx] = useState(0);
+  // Defaults to the standard tier — last in the list — so the selected rate
+  // agrees with the headline price sitting directly above the card.
+  const [mileIdx, setMileIdx] = useState(Math.max(0, mileTiers.length - 1));
   const mileTier = hasMileChoice ? mileTiers[mileIdx] : null;
 
   const dayRate = mileTier ? mileTier.pricePerDay : pricePerDay;
@@ -315,7 +321,7 @@ export default function BookingRequestCard({
       </p>
 
       <p className="text-white/50 text-[11px] text-center mt-1.5">
-        {rentalTerms.mileage.includedPerDay} miles/day included
+        {mileTier ? mileTier.milesPerDay : milesPerDay} miles/day included
         {rentalTerms.mileage.pooled ? ", pooled across the rental" : ""} ·{" "}
         {rentalTerms.deposit.display} deposit
       </p>

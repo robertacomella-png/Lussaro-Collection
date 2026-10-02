@@ -11,6 +11,11 @@ export const fleet = [
     year: 2019,
     price: 995,
     wasPrice: 1095,
+    // Reduced-allowance rate, owner-set Oct 2026. The standard tier is NOT
+    // repeated here — it is always this car's own `miles` at its own `price`,
+    // so repricing above moves the selector with it. Only cars carrying this
+    // field offer a mileage choice in the booking card.
+    reducedMileage: { milesPerDay: 60, pricePerDay: 599 },
     power: 641,
     miles: 100,
     // Owner-confirmed per car. `seatsNote` is the layout qualifier where the
@@ -40,6 +45,7 @@ export const fleet = [
     year: 2023,
     price: 895,
     wasPrice: 995,
+    reducedMileage: { milesPerDay: 60, pricePerDay: 499 },
     power: 550,
     miles: 100,
     seats: 4,
