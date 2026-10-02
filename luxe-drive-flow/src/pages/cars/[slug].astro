@@ -22,6 +22,16 @@ export function getStaticPaths() {
 }
 
 const { car } = Astro.props;
+
+// TEMPORARY — owner's call, Oct 2026. Hides the availability calendar on every
+// car page. Nothing is deleted: the island, its no-JS fallback and the
+// fallback-watcher script all stay wired, so flipping this back to true
+// restores the booking flow exactly as it was.
+//
+// While it is false the card reads price → WhatsApp/Call → trust line, and
+// those two CTAs are the only booking path on a car page.
+const SHOW_BOOKING_CALENDAR = false;
+
 // A car is on sale only when fleet.js gives it an explicit wasPrice.
 const onSale = car.wasPrice > car.price;
 const offAmount = car.wasPrice - car.price;
@@ -249,6 +259,7 @@ const productSchema = {
               jump as React mounts. Two values because the calendar starts
               collapsed on a phone and open on desktop — a flat 520px here left
               the collapsed card padded out with ~290px of nothing. */}
+          {SHOW_BOOKING_CALENDAR && (
           <div class="min-h-[150px] lg:min-h-[520px]">
             <BookingCalendar client:only="react" pricePerDay={car.price} carName={car.name} vehicleId={car.dashboardId || null} tiers={car.discountTiers} />
 
@@ -273,6 +284,7 @@ const productSchema = {
               </p>
             </div>
           </div>
+          )}
 
           {/* Call was full width here; it gives up half to WhatsApp so both
               channels sit under the calendar. Labels shorten to "Call" and
