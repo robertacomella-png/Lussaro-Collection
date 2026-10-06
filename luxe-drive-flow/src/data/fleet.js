@@ -9,20 +9,15 @@ export const fleet = [
     dashboardId: "",
     make: "Lamborghini",
     year: 2019,
-    price: 599,
-    // Owner's call, Oct 2026: this car leads with its 50-mile rate, so `price`
-    // IS the 50-mile tier and `miles` below says 50 — the two must move
-    // together or the page quotes a rate against an allowance it does not buy.
-    // The 100-mile rate is the upgrade. The upgrade tier is the only one stored
-    // here; the base is always this car's own miles at its own price, so
-    // repricing above moves the selector with it. No wasPrice — no sale badge.
-    mileageUpgrade: { milesPerDay: 100, pricePerDay: 899 },
-    // Marks the card in the fleet grid. These two lead with a reduced-allowance
-    // rate rather than a struck-through one, so without a label they read as
-    // simply cheap next to cars quoting a full 100-mile day.
-    offerLabel: 'Special offer',
+    // One rate, one allowance (owner's call, Oct 2026). The reduced 50-mile
+    // tier is withdrawn, so `mileageUpgrade` is gone and `miles` returns to
+    // 100 — those two always move together, or the page quotes a rate against
+    // an allowance it does not buy. No wasPrice and no offerLabel either: with
+    // nothing struck through and no cheaper tier, a "Special offer" badge would
+    // be advertising a discount that does not exist.
+    price: 999,
     power: 641,
-    miles: 50,
+    miles: 100,
     // Owner-confirmed per car. `seatsNote` is the layout qualifier where the
     // count alone would overstate it (a 4+1 bench is not four equal seats);
     // the spec card renders it small under the number, and omits it when absent.
@@ -48,11 +43,9 @@ export const fleet = [
     dashboardId: "71d29a72-b904-4318-80e5-0c133d2cb665",
     make: "Mercedes-Benz",
     year: 2023,
-    price: 499,
-    mileageUpgrade: { milesPerDay: 100, pricePerDay: 899 },
-    offerLabel: 'Special offer',
+    price: 899,
     power: 550,
-    miles: 50,
+    miles: 100,
     seats: 4,
     doors: 4,
     drivetrain: 'All-wheel drive · 4.0L twin-turbo V8',

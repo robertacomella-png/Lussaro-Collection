@@ -13,9 +13,9 @@
 
 export const META_DESCRIPTIONS = {
   '/cars/lamborghini-urus':
-    'Rent the Lamborghini Urus in Miami: 641 hp, 0-60 in 3.3s, from $599/day with 50 miles included. Delivered anywhere in Miami, same-day available.',
+    'Rent the Lamborghini Urus in Miami: 641 hp, 0-60 in 3.3s, $999/day with 100 miles included. Delivered anywhere in Miami, same-day available.',
   '/cars/mercedes-maybach-gls-600':
-    'Rent the Maybach GLS 600 in Miami: chauffeur-grade luxury, 550 hp, from $499/day with 50 miles included. Hotel, home or airport delivery.',
+    'Rent the Maybach GLS 600 in Miami: chauffeur-grade luxury, 550 hp, $899/day with 100 miles included. Hotel, home or airport delivery.',
   '/cars/mercedes-s580':
     'Rent the Mercedes S580 in Miami from $449/day — our most accessible luxury sedan. 496 hp, 100 miles/day included, delivered across Miami.',
   '/cars/sf90':
