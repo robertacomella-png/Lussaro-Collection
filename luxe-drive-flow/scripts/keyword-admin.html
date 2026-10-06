@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Keyword admin · Lussaro</title>
+<style>
+  :root {
+    --ground: #0a0a0a; --card: #0f0f0f; --line: rgba(255,255,255,.12);
+    --text: #fff; --dim: rgba(255,255,255,.55); --red: #ff1516; --green: #0f7536;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--text);
+         font: 14px/1.5 Inter, -apple-system, BlinkMacSystemFont, system-ui, sans-serif; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 28px 20px 80px; }
+  h1 { font-size: 20px; margin: 0 0 2px; letter-spacing: -.01em; }
+  .sub { color: var(--dim); font-size: 12px; margin-bottom: 22px; }
+  .sub code { color: rgba(255,255,255,.75); }
+
+  .counts { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+  .chip { border: 1px solid var(--line); background: rgba(255,255,255,.04); color: var(--dim);
+          border-radius: 999px; padding: 5px 12px; font-size: 12px; cursor: pointer; }
+  .chip.on { background: var(--red); border-color: var(--red); color: #0a0a0a; font-weight: 600; }
+  .chip b { color: inherit; }
+
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px; margin-bottom: 18px; }
+  .card h2 { font-size: 14px; margin: 0 0 14px; font-weight: 600; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; }
+  label { display: block; font-size: 11px; color: var(--dim); margin-bottom: 5px; }
+  input, select, textarea {
+    width: 100%; background: rgba(255,255,255,.04); border: 1px solid var(--line);
+    color: var(--text); border-radius: 9px; padding: 9px 11px; font: inherit; font-size: 13px;
+  }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--red); }
+  textarea { resize: vertical; min-height: 58px; }
+  select { color-scheme: dark; }
+
+  .msg { margin-top: 12px; display: grid; gap: 6px; }
+  .bad, .warn, .good { font-size: 12.5px; padding: 9px 12px; border-radius: 9px; border: 1px solid; }
+  .bad  { color: #ff8a8a; border-color: rgba(255,21,22,.45); background: rgba(255,21,22,.08); }
+  .warn { color: #ffd38a; border-color: rgba(255,176,32,.4); background: rgba(255,176,32,.07); }
+  .good { color: #8ee0ab; border-color: rgba(15,117,54,.6); background: rgba(15,117,54,.14); }
+
+  .actions { display: flex; gap: 10px; margin-top: 14px; align-items: center; }
+  button { border: 0; border-radius: 999px; padding: 10px 20px; font: inherit; font-weight: 600;
+           cursor: pointer; background: #fff; color: #000; }
+  button:hover:not(:disabled) { background: var(--red); color: #fff; }
+  button:disabled { opacity: .45; cursor: not-allowed; }
+  button.ghost { background: transparent; color: var(--dim); border: 1px solid var(--line); }
+  button.ghost:hover { color: #fff; border-color: rgba(255,255,255,.45); background: transparent; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; font-size: 10.5px; text-transform: uppercase; letter-spacing: .08em;
+       color: var(--dim); font-weight: 600; padding: 0 10px 9px; border-bottom: 1px solid var(--line); }
+  td { padding: 9px 10px; border-bottom: 1px solid rgba(255,255,255,.06); vertical-align: top; }
+  tr:hover td { background: rgba(255,255,255,.03); }
+  .kw { font-weight: 600; }
+  .tag { display: inline-block; font-size: 10.5px; font-weight: 700; text-transform: uppercase;
+         letter-spacing: .05em; padding: 2px 7px; border-radius: 5px; white-space: nowrap; }
+  .t-gap { background: var(--green); color: #fff; }
+  .t-needswork { background: #8a6400; color: #fff; }
+  .t-covered { background: rgba(255,255,255,.12); color: var(--dim); }
+  .t-cannibalizationrisk { background: #7a3d00; color: #fff; }
+  .t-donottarget { background: var(--red); color: #0a0a0a; }
+  .dim { color: var(--dim); }
+  .edit { background: none; border: 0; color: var(--dim); cursor: pointer; padding: 0; font: inherit;
+          text-decoration: underline; text-underline-offset: 2px; }
+  .edit:hover { color: #fff; background: none; }
+  .empty { color: var(--dim); padding: 22px 10px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Keyword admin</h1>
+  <p class="sub">Writes <code id="csvpath">keywords.csv</code> directly — whatever you save is what the blog skill reads next run, and what <code>git diff</code> shows.</p>
+
+  <div class="counts" id="counts"></div>
+
+  <div class="card">
+    <h2 id="formTitle">Add a keyword</h2>
+    <div class="grid">
+      <div style="grid-column: 1 / -1">
+        <label for="f-keyword">Keyword</label>
+        <input id="f-keyword" placeholder="ferrari rental miami" autocomplete="off" />
+      </div>
+      <div><label for="f-cluster">Cluster</label><input id="f-cluster" placeholder="Ferrari" autocomplete="off" /></div>
+      <div><label for="f-intent">Intent</label><select id="f-intent"></select></div>
+      <div><label for="f-priority">Priority</label><select id="f-priority"></select></div>
+      <div><label for="f-status">Status</label><select id="f-status"></select></div>
+      <div><label for="f-target_page">Target page</label><input id="f-target_page" placeholder="/ferrari-rental-miami" autocomplete="off" /></div>
+      <div><label for="f-monthly_volume">Volume</label><input id="f-monthly_volume" autocomplete="off" /></div>
+      <div><label for="f-kd">KD</label><input id="f-kd" autocomplete="off" /></div>
+      <div><label for="f-cpc">CPC</label><input id="f-cpc" autocomplete="off" /></div>
+      <div style="grid-column: 1 / -1">
+        <label for="f-notes">Notes</label>
+        <textarea id="f-notes" placeholder="Why this matters, or why it is parked."></textarea>
+      </div>
+    </div>
+    <div class="msg" id="msg"></div>
+    <div class="actions">
+      <button id="save">Save to keywords.csv</button>
+      <button class="ghost" id="cancel" hidden>Cancel edit</button>
+      <button class="ghost" id="del" hidden>Delete</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 id="tableTitle">Inventory</h2>
+    <table>
+      <thead><tr><th>Keyword</th><th>Status</th><th>Intent</th><th>Priority</th><th>Target page</th><th></th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const FIELDS = ['keyword','cluster','intent','priority','target_page','status','monthly_volume','kd','cpc','notes'];
+let DATA = null, filter = 'all', editing = null;
+
+const tagClass = (s) => 't-' + String(s||'').replace(/[^a-z]/gi,'').toLowerCase();
+
+async function load() {
+  DATA = await (await fetch('/api/data')).json();
+  $('csvpath').textContent = DATA.csvPath;
+  fillSelect($('f-status'), DATA.statuses);
+  fillSelect($('f-intent'), DATA.intents);
+  fillSelect($('f-priority'), DATA.priorities);
+  render();
+}
+function fillSelect(el, opts) {
+  if (el.options.length) return;
+  el.innerHTML = opts.map((o) => `<option value="${o}">${o}</option>`).join('');
+}
+
+function render() {
+  const counts = {};
+  for (const r of DATA.rows) counts[r.status] = (counts[r.status] || 0) + 1;
+  const chips = [['all', DATA.rows.length], ...DATA.statuses.map((s) => [s, counts[s] || 0])];
+  $('counts').innerHTML = chips
+    .map(([s, n]) => `<button class="chip ${filter===s?'on':''}" data-f="${s}">${s} <b>${n}</b></button>`)
+    .join('');
+  $('counts').querySelectorAll('.chip').forEach((c) =>
+    c.onclick = () => { filter = c.dataset.f; render(); });
+
+  const rows = DATA.rows.filter((r) => filter === 'all' || r.status === filter);
+  $('tableTitle').textContent = `Inventory — ${rows.length} shown`;
+  $('rows').innerHTML = rows.length ? rows.map((r) => `
+    <tr>
+      <td class="kw">${escapeHtml(r.keyword)}${r.notes ? `<div class="dim" style="font-weight:400;font-size:11.5px;margin-top:3px">${escapeHtml(r.notes)}</div>` : ''}</td>
+      <td><span class="tag ${tagClass(r.status)}">${escapeHtml(r.status)}</span></td>
+      <td class="dim">${escapeHtml(r.intent)}</td>
+      <td class="dim">${escapeHtml(r.priority)}</td>
+      <td class="dim">${escapeHtml(r.target_page)}</td>
+      <td><button class="edit" data-k="${escapeHtml(r.keyword)}">edit</button></td>
+    </tr>`).join('') : '<tr><td colspan="6" class="empty">Nothing with that status.</td></tr>';
+
+  $('rows').querySelectorAll('.edit').forEach((b) =>
+    b.onclick = () => startEdit(DATA.rows.find((r) => r.keyword === b.dataset.k)));
+}
+
+const escapeHtml = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function startEdit(row) {
+  editing = row.keyword;
+  for (const f of FIELDS) $('f-' + f).value = row[f] ?? '';
+  $('formTitle').textContent = 'Editing — ' + row.keyword;
+  $('cancel').hidden = false; $('del').hidden = false;
+  check();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function reset() {
+  editing = null;
+  for (const f of FIELDS) $('f-' + f).value = '';
+  $('f-status').value = 'gap';
+  $('formTitle').textContent = 'Add a keyword';
+  $('cancel').hidden = true; $('del').hidden = true;
+  $('msg').innerHTML = '';
+}
+$('cancel').onclick = reset;
+
+let timer;
+$('f-keyword').addEventListener('input', () => { clearTimeout(timer); timer = setTimeout(check, 180); });
+
+// Mirrors the server's own check, so a collision is visible before you commit
+// to the row rather than after the skill skips it.
+async function check() {
+  const keyword = $('f-keyword').value.trim();
+  if (!keyword) { $('msg').innerHTML = ''; $('save').disabled = false; return; }
+  const r = await (await fetch('/api/check', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ keyword, ignore: editing }),
+  })).json();
+  $('save').disabled = r.problems.length > 0;
+  $('msg').innerHTML =
+    r.problems.map((p) => `<div class="bad">${escapeHtml(p)}</div>`).join('') +
+    r.notes.map((n) => `<div class="warn">${escapeHtml(n)}</div>`).join('') +
+    (!r.problems.length && !r.notes.length ? '<div class="good">Clear — no page or retired primary owns this.</div>' : '');
+}
+
+$('save').onclick = async () => {
+  const row = Object.fromEntries(FIELDS.map((f) => [f, $('f-' + f).value.trim()]));
+  const res = await fetch('/api/save', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ row, original: editing }),
+  });
+  const out = await res.json();
+  if (!out.ok) { $('msg').innerHTML = out.problems.map((p) => `<div class="bad">${escapeHtml(p)}</div>`).join(''); return; }
+  reset(); await load();
+};
+
+$('del').onclick = async () => {
+  if (!editing || !confirm(`Remove "${editing}" from keywords.csv?`)) return;
+  await fetch('/api/delete', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ keyword: editing }),
+  });
+  reset(); await load();
+};
+
+load().then(reset);
+</script>
+</body>
+</html>

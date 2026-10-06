@@ -180,6 +180,18 @@ Before shipping copy, reread and cut anything that reads as generated: tricolon 
 
 # Development Rules
 
+**Rule 0 — Never overwrite someone else's work.** More than one hand edits this site: the owner, an SEO agency, and you. `content-owners.md` records who owns each page and data file, at three levels.
+
+- **`locked`** — do not edit without approval **for that specific change**. Describe the diff, say why, and wait. This holds even when the change looks obviously correct, and even when the user has asked for something that would require it: say which locked file is in the way and what you propose. Approval covers the one change you described, not the file from then on.
+- **`review`** — edit as part of normal work, then say exactly what changed and why, so it can be reversed.
+- **`open`** — edit freely.
+
+**Never regenerate a published blog post or landing page.** If a locked page needs work, change the section that needs it and leave the rest untouched. Those pages carry ranking history that a rewrite throws away — which is the whole reason this rule exists.
+
+Run `npm run check:locks` before saying you're done on any task that touched content. It exits non-zero if a locked path moved. It is the backstop; this rule is the guardrail.
+
+When new content ships, add it to `content-owners.md` in the same commit.
+
 **Rule 1 — Read first.** Read this file before acting. Read the file you're about to change before changing it. The `src/index.css` palette block and the commit messages on `git log` carry reasoning that isn't repeated anywhere else.
 
 **Rule 2 — Define before you build.** Anything beyond a small edit gets a short plan and approval first.
