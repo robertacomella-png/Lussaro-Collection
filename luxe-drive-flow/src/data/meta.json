@@ -1,0 +1,58 @@
+{
+  "entries": [
+    {
+      "path": "/cars/huracan-evo",
+      "title": "Lamborghini Huracan EVO Rental Miami | Lussaro",
+      "description": "Rent the Lamborghini Huracan EVO in Miami: screaming V10, 602 hp, $1,199/day with 100 miles included. Same-day delivery available.",
+      "note": "fleet.js calls it \"Huracan EVO\"."
+    },
+    {
+      "path": "/cars/huracan-evo-spyder",
+      "title": "Lamborghini Huracan EVO Spyder Rental Miami | Lussaro",
+      "description": "Rent the Lamborghini Huracan EVO Spyder in Miami: open-top V10, 602 hp, $1,299/day with 100 miles included. Roof down in 17 seconds.",
+      "note": "fleet.js calls it \"Huracan EVO Spyder\"; the marque leads, and \"Spyder\" is what separates this title from the coupe's in a results page."
+    },
+    {
+      "path": "/cars/lamborghini-urus",
+      "title": "",
+      "description": "Rent the Lamborghini Urus in Miami: 641 hp, 0-60 in 3.3s, $999/day with 100 miles included. Delivered anywhere in Miami, same-day available.",
+      "note": ""
+    },
+    {
+      "path": "/cars/mercedes-amg-g63",
+      "title": "Mercedes-AMG G63 Rental Miami | Lussaro Collection",
+      "description": "Rent the Mercedes-AMG G63 in Miami: 577 hp twin-turbo V8, $799/day with 100 miles included. Delivered to your hotel, home or airport.",
+      "note": "fleet.js calls it \"G63\"; the marque and AMG lead, and \"G-Wagon\" is the higher-volume query — but that term already owns /g-wagon-rental-miami, so this title takes the model name and leaves the nickname to that page."
+    },
+    {
+      "path": "/cars/mercedes-maybach-gls-600",
+      "title": "Mercedes-Maybach GLS 600 Rental Miami | Lussaro",
+      "description": "Rent the Maybach GLS 600 in Miami: chauffeur-grade luxury, 550 hp, $899/day with 100 miles included. Hotel, home or airport delivery.",
+      "note": "\"GLS 600 Maybach Rental Miami\" reads backwards; the marque leads."
+    },
+    {
+      "path": "/cars/mercedes-maybach-s580",
+      "title": "Mercedes-Maybach S580 Rental Miami | Lussaro",
+      "description": "Rent the Mercedes-Maybach S580 in Miami: reclining executive rear seats, 496 hp, $899/day with 100 miles included. Chauffeur-grade comfort, delivered.",
+      "note": "fleet.js calls it \"S580 Maybach\"; the marque leads and \"Maybach\" must stay in the title, since /cars/mercedes-s580 is a different, cheaper car."
+    },
+    {
+      "path": "/cars/mercedes-s580",
+      "title": "Mercedes-Benz S580 Rental Miami | Lussaro Collection",
+      "description": "Rent the Mercedes S580 in Miami from $399/day — our most accessible luxury sedan. 496 hp, 100 miles/day included, delivered across Miami.",
+      "note": "fleet.js calls it \"S580\"; spell out the marque for search."
+    },
+    {
+      "path": "/cars/rolls-royce-cullinan",
+      "title": "Rolls-Royce Cullinan Rental Miami | Lussaro",
+      "description": "Rent the Rolls-Royce Cullinan in Miami: 563 hp, effortless presence, $1,299/day with 100 miles included. Delivered anywhere in Miami.",
+      "note": "fleet.js calls it \"Cullinan\"."
+    },
+    {
+      "path": "/cars/sf90",
+      "title": "Ferrari SF90 Rental Miami | Lussaro Collection",
+      "description": "Rent the Ferrari SF90 in Miami: 986 hp hybrid, 0-60 in 2.5s, $2,499/day. The fastest car in our fleet, delivered to your door.",
+      "note": "fleet.js calls it \"SF90\"."
+    }
+  ]
+}

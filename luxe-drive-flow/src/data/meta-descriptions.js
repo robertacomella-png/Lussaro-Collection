@@ -10,27 +10,19 @@
 //
 // cars/[slug].astro looks these up by slug. Static pages set their own
 // description prop on <Layout> and are not duplicated here.
+//
+// THE DATA NOW LIVES IN `meta.json`, alongside the title for the same path, so
+// the two are edited together and cannot drift apart. That file is what the CMS
+// edits. This module is unchanged as an API — it still exports
+// META_DESCRIPTIONS and descriptionFor, so no page had to be touched.
 
-export const META_DESCRIPTIONS = {
-  '/cars/lamborghini-urus':
-    'Rent the Lamborghini Urus in Miami: 641 hp, 0-60 in 3.3s, $999/day with 100 miles included. Delivered anywhere in Miami, same-day available.',
-  '/cars/mercedes-maybach-gls-600':
-    'Rent the Maybach GLS 600 in Miami: chauffeur-grade luxury, 550 hp, $899/day with 100 miles included. Hotel, home or airport delivery.',
-  '/cars/mercedes-s580':
-    'Rent the Mercedes S580 in Miami from $399/day — our most accessible luxury sedan. 496 hp, 100 miles/day included, delivered across Miami.',
-  '/cars/sf90':
-    'Rent the Ferrari SF90 in Miami: 986 hp hybrid, 0-60 in 2.5s, $2,499/day. The fastest car in our fleet, delivered to your door.',
-  '/cars/huracan-evo':
-    'Rent the Lamborghini Huracan EVO in Miami: screaming V10, 602 hp, $1,199/day with 100 miles included. Same-day delivery available.',
-  '/cars/mercedes-maybach-s580':
-    'Rent the Mercedes-Maybach S580 in Miami: reclining executive rear seats, 496 hp, $899/day with 100 miles included. Chauffeur-grade comfort, delivered.',
-  '/cars/huracan-evo-spyder':
-    'Rent the Lamborghini Huracan EVO Spyder in Miami: open-top V10, 602 hp, $1,299/day with 100 miles included. Roof down in 17 seconds.',
-  '/cars/mercedes-amg-g63':
-    'Rent the Mercedes-AMG G63 in Miami: 577 hp twin-turbo V8, $799/day with 100 miles included. Delivered to your hotel, home or airport.',
-  '/cars/rolls-royce-cullinan':
-    'Rent the Rolls-Royce Cullinan in Miami: 563 hp, effortless presence, $1,299/day with 100 miles included. Delivered anywhere in Miami.',
-};
+import data from './meta.json';
+
+const entries = data.entries;
+
+export const META_DESCRIPTIONS = Object.fromEntries(
+  entries.filter((e) => e.description).map((e) => [e.path, e.description]),
+);
 
 export const descriptionFor = (path) => META_DESCRIPTIONS[path] ?? null;
 

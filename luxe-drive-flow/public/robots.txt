@@ -1,4 +1,9 @@
 User-agent: *
 Allow: /
 
+# The CMS admin and its API. Never useful in a search result, and an indexed
+# admin route invites probing. Kept out of the sitemap too.
+Disallow: /keystatic
+Disallow: /api/
+
 Sitemap: https://www.lussarocollection.com/sitemap-index.xml
