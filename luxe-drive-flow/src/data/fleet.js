@@ -10,12 +10,13 @@ export const fleet = [
     make: "Lamborghini",
     year: 2019,
     // One rate, one allowance (owner's call, Oct 2026). The reduced 50-mile
-    // tier is withdrawn, so `mileageUpgrade` is gone and `miles` returns to
-    // 100 — those two always move together, or the page quotes a rate against
-    // an allowance it does not buy. No wasPrice and no offerLabel either: with
-    // nothing struck through and no cheaper tier, a "Special offer" badge would
-    // be advertising a discount that does not exist.
+    // tier is withdrawn, so there is no `mileageUpgrade` and `miles` is 100 —
+    // those two always move together, or the page quotes a rate against an
+    // allowance it does not buy. The $100 saving rides on wasPrice, which is
+    // what draws the strike-through and the OFF badge; no offerLabel is needed
+    // now that a real discount is on the card.
     price: 999,
+    wasPrice: 1099,
     power: 641,
     miles: 100,
     // Owner-confirmed per car. `seatsNote` is the layout qualifier where the
@@ -44,6 +45,7 @@ export const fleet = [
     make: "Mercedes-Benz",
     year: 2023,
     price: 899,
+    wasPrice: 999,
     power: 550,
     miles: 100,
     seats: 4,
@@ -71,7 +73,7 @@ export const fleet = [
     dashboardId: "",
     make: "Mercedes-Benz",
     year: 2023,
-    price: 449,
+    price: 399,
     wasPrice: 499,
     power: 496,
     miles: 100,
@@ -253,7 +255,7 @@ export const fleet = [
   },
   {
     id: 4,
-    // NOT the S580 above. That is the standard Mercedes-Benz S-Class at $449;
+    // NOT the S580 above. That is the standard Mercedes-Benz S-Class at $399;
     // this is the Mercedes-Maybach S580 — longer wheelbase, four seats, and its
     // own slug (mercedes-maybach-s580, set in cars.js). Keep the two distinct
     // in copy as well as in data, or the pages start cannibalising each other.

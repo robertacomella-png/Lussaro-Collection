@@ -17,7 +17,7 @@ export const META_DESCRIPTIONS = {
   '/cars/mercedes-maybach-gls-600':
     'Rent the Maybach GLS 600 in Miami: chauffeur-grade luxury, 550 hp, $899/day with 100 miles included. Hotel, home or airport delivery.',
   '/cars/mercedes-s580':
-    'Rent the Mercedes S580 in Miami from $449/day — our most accessible luxury sedan. 496 hp, 100 miles/day included, delivered across Miami.',
+    'Rent the Mercedes S580 in Miami from $399/day — our most accessible luxury sedan. 496 hp, 100 miles/day included, delivered across Miami.',
   '/cars/sf90':
     'Rent the Ferrari SF90 in Miami: 986 hp hybrid, 0-60 in 2.5s, $2,499/day. The fastest car in our fleet, delivered to your door.',
   '/cars/huracan-evo':

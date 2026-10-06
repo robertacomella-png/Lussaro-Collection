@@ -43,7 +43,7 @@ export const carContent = {
   },
 
   'mercedes-s580': {
-    useCases: `The S580 is the quiet one, and that is precisely its job. It is the most affordable car we run at $449 a day, and the one to take when the occasion rewards arriving well rather than arriving loudly — a client meeting in Brickell, a wedding where you are not the couple, an airport run where a calm cabin beats a loud exhaust. The 4.0-litre V8 and air suspension mean it is quick and unruffled rather than theatrical. If you want the car to make an impression without making a scene, this is it.`,
+    useCases: `The S580 is the quiet one, and that is precisely its job. It is the most affordable car we run at $399 a day, and the one to take when the occasion rewards arriving well rather than arriving loudly — a client meeting in Brickell, a wedding where you are not the couple, an airport run where a calm cabin beats a loud exhaust. The 4.0-litre V8 and air suspension mean it is quick and unruffled rather than theatrical. If you want the car to make an impression without making a scene, this is it.`,
     goodToKnow: [
       'Standard AIRMATIC air suspension with adjustable ride height — the smoothest car in the fleet over Miami road joints.',
       'The V8 has 48-volt mild-hybrid assist, which never needs charging and cannot drive on electricity alone.',
