@@ -31,7 +31,7 @@ const wa = whatsappWith(message);
   <Nav />
 
   <header class="bg-[#0a0a0a] pt-28 pb-12 md:pt-36 md:pb-16">
-    <div class="max-w-5xl mx-auto px-5 md:px-8 text-center">
+    <div class="max-w-[1140px] mx-auto px-5 md:px-8 text-center">
       <p class="text-[#ff1516] tracking-[0.3em] uppercase text-xs font-medium mb-3">Rental Guides</p>
       <h1 class="font-display text-4xl md:text-6xl font-bold tracking-tight text-white">
         Renting an exotic in <span class="text-[#ff1516]">Miami</span>
@@ -44,11 +44,11 @@ const wa = whatsappWith(message);
   </header>
 
   <section class="bg-[#0a0a0a] border-y border-white/5 pb-16 md:pb-24">
-    <div class="max-w-5xl mx-auto px-5 md:px-8">
+    <div class="max-w-[1140px] mx-auto px-5 md:px-8">
       {postsByDate.length === 0 ? (
         <p class="text-white/50 text-center py-10">Nothing published yet.</p>
       ) : (
-        <div class="grid gap-6 md:grid-cols-2">
+        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {postsByDate.map((post) => (
             <article class="reveal group relative rounded-[24px] bg-[#0f0f0f] border border-[#ff1516]/25 overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.4)] hover:border-[#ff1516]/50 transition-colors">
               {/* Whole-card link, with the heading carrying the accessible name
@@ -58,7 +58,10 @@ const wa = whatsappWith(message);
                 <img
                   src={getImageKitSrc(post.hero, 800)}
                   srcset={getImageKitSrcSet(post.hero)}
-                  sizes="(min-width: 768px) 50vw, 100vw"
+                  {/* Three across at lg renders each card ~342px, not 50vw.
+                      Leaving the old value here would have each phone-sized card
+                      pulling a near-full-width file. */}
+                  sizes="(min-width: 1024px) 342px, (min-width: 768px) 50vw, 100vw"
                   alt={altFor(post.hero)}
                   width="800"
                   height="450"
