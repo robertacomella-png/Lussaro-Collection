@@ -1,0 +1,103 @@
+---
+// /blog — the hub the posts never had.
+//
+// Until this existed, /blog returned 404 and nothing on the site linked to the
+// one published post: the footer reaches 21 URLs on every page and none of them
+// was the blog. The post survived on sitemap crumbs alone. A hub plus the
+// footer link is worth more than the next three posts, because without it every
+// post lands orphaned.
+//
+// No Blog or CollectionPage schema is emitted here. SchemaOrg.astro already
+// puts one Organization + LocalBusiness graph on every page, and the breadcrumb
+// comes from lib/breadcrumbs.js. A second entity on one URL is worse than none.
+import Layout from '@/layouts/Layout.astro';
+import Nav from '@/components/site/Nav.astro';
+import SmartLink from '@/components/site/SmartLink.astro';
+import CtaBand from '@/components/site/CtaBand.astro';
+import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
+import { getImageKitSrc, getImageKitSrcSet } from '@/lib/imageKit';
+import { altFor } from '@/data/image-alt';
+import { postsByDate, postPath, formatPostDate } from '@/data/posts';
+import { whatsappWith } from '@/data/business';
+
+const message = "Hi, I'd like to check availability and rates for my dates with Lussaro Collection.";
+const wa = whatsappWith(message);
+---
+<Layout
+  title="Miami Exotic Car Rental Guides | Lussaro Collection"
+  description="Straight answers on renting an exotic car in Miami — what each car costs a day, what the deposit covers, and what is included before anything is added."
+  breadcrumbName="Rental Guides"
+>
+  <Nav />
+
+  <header class="bg-[#0a0a0a] pt-28 pb-12 md:pt-36 md:pb-16">
+    <div class="max-w-5xl mx-auto px-5 md:px-8 text-center">
+      <p class="text-[#ff1516] tracking-[0.3em] uppercase text-xs font-medium mb-3">Rental Guides</p>
+      <h1 class="font-display text-4xl md:text-6xl font-bold tracking-tight text-white">
+        Renting an exotic in <span class="text-[#ff1516]">Miami</span>
+      </h1>
+      <p class="text-white/60 max-w-2xl mx-auto mt-5 leading-relaxed">
+        What the cars cost, what the deposit covers, and what is included before anything is added.
+        Every figure here comes from the same rate card we quote on the phone.
+      </p>
+    </div>
+  </header>
+
+  <section class="bg-[#0a0a0a] border-y border-white/5 pb-16 md:pb-24">
+    <div class="max-w-5xl mx-auto px-5 md:px-8">
+      {postsByDate.length === 0 ? (
+        <p class="text-white/50 text-center py-10">Nothing published yet.</p>
+      ) : (
+        <div class="grid gap-6 md:grid-cols-2">
+          {postsByDate.map((post) => (
+            <article class="reveal group relative rounded-[24px] bg-[#0f0f0f] border border-[#ff1516]/25 overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.4)] hover:border-[#ff1516]/50 transition-colors">
+              {/* Whole-card link, with the heading carrying the accessible name
+                  so a screen reader announces the title rather than "link". */}
+              <SmartLink href={postPath(post)} class="absolute inset-0 z-10" aria-label={post.title} />
+              <div class="relative aspect-[16/9] overflow-hidden">
+                <img
+                  src={getImageKitSrc(post.hero, 800)}
+                  srcset={getImageKitSrcSet(post.hero)}
+                  sizes="(min-width: 768px) 50vw, 100vw"
+                  alt={altFor(post.hero)}
+                  width="800"
+                  height="450"
+                  loading="lazy"
+                  decoding="async"
+                  class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <span class="absolute top-4 left-4 bg-[#0a0a0a]/80 text-white text-[11px] tracking-wide px-3 py-1 rounded-full">
+                  {post.cluster}
+                </span>
+              </div>
+              <div class="p-5 md:p-6">
+                <h2 class="font-display text-xl md:text-2xl font-semibold text-white leading-tight">
+                  {post.title}
+                </h2>
+                <p class="text-white/60 text-sm mt-2.5 leading-relaxed">{post.excerpt}</p>
+                <p class="text-white/50 text-xs mt-4">
+                  <time datetime={post.published}>{formatPostDate(post.published)}</time>
+                  <span aria-hidden="true"> · </span>{post.readingMinutes} min read
+                </p>
+              </div>
+            </article>
+          ))}
+        </div>
+      )}
+
+      {/* The hub is also a crawl path into the commercial pages, not just out of
+          them — otherwise it is one more page that only receives links. */}
+      <div class="mt-12 md:mt-16 text-center">
+        <p class="text-white/50 text-sm">
+          Ready to book instead?{' '}
+          <SmartLink href="/fleet" class="text-white underline decoration-white/30 underline-offset-4 hover:decoration-white transition-colors">See the fleet and rates</SmartLink>
+          <span aria-hidden="true"> · </span>
+          <SmartLink href="/pricing" class="text-white underline decoration-white/30 underline-offset-4 hover:decoration-white transition-colors">Pricing and policies</SmartLink>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand message={message} />
+  <StickyMobileCta message={message} />
+</Layout>

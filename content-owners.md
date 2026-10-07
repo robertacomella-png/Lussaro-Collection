@@ -40,6 +40,7 @@ When an agency asks how edits are tracked, this is the answer.
 
 | Path | Owner | Level | Why |
 |---|---|---|---|
+| /blog | Lussaro | review | The guides hub. Lists whatever `posts.js` holds, so the page itself rarely changes. |
 | /blog/how-much-is-a-lamborghini-rental | Lussaro | locked | Hand-written SEO post, 2,278 words, built to the blog skill's 53 checks. Regenerating it would discard the work and reset its ranking history. |
 | /exotic-car-rental-miami | Lussaro | locked | Head-term landing page. Owns "exotic car rental miami". |
 | /best-exotic-car-rental-miami | Lussaro | locked | SEO landing copy. |
@@ -76,6 +77,8 @@ When an agency asks how edits are tracked, this is the answer.
 | src/data/meta-titles.js | SEO | review | Hand-written overrides. An agency will want these. |
 | src/data/meta-descriptions.js | SEO | review | Same. |
 | src/data/neighborhood-content.js | SEO | review | |
+| src/data/posts.js | SEO | review | The blog registry. A post missing from here is invisible — never remove an entry for a post that is still published. |
+| src/data/meta.json | SEO | review | Titles and meta descriptions, edited through the CMS. The two modules that read it are thin wrappers. |
 | src/data/image-alt.js | shared | open | Accessibility text. |
 | src/data/booking-steps.js | shared | open | |
 | src/data/cars.js | generated | open | Derived from fleet.js. |

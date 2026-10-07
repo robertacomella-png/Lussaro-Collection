@@ -24,6 +24,7 @@ const LABELS = {
   '/rolls-royce-rental-miami': 'Rolls-Royce Rental Miami',
   '/exotic-car-rental-brickell': 'Exotic Car Rental Brickell',
   '/exotic-car-rental-south-beach': 'Exotic Car Rental South Beach',
+  '/blog': 'Rental Guides',
 };
 
 // The site standardizes breadcrumb item URLs on the no-trailing-slash form.
@@ -35,6 +36,7 @@ const url = (path) => `${SITE}${path === '/' ? '/' : path}`;
 
 const HOME = { name: 'Home', path: '/' };
 const FLEET = { name: 'Fleet', path: '/fleet' };
+const BLOG = { name: 'Rental Guides', path: '/blog' };
 
 /**
  * Returns a BreadcrumbList for the given route, or null for routes that should
@@ -54,11 +56,11 @@ export const breadcrumbFor = (pathname, leafName) => {
     if (!leafName) return null;
     trail = [HOME, FLEET, { name: leafName, path }];
   } else if (path.startsWith('/blog/')) {
-    // Home > <post title>. Two levels rather than three: there is no /blog
-    // index yet, and a crumb linking to a 404 is worse than a shorter trail.
-    // Add a BLOG constant here and make this three levels once one exists.
+    // Home > Rental Guides > <post title>. Three levels now that /blog exists —
+    // it was two while that route 404'd, since a crumb pointing at a missing
+    // page is worse than a shorter trail.
     if (!leafName) return null;
-    trail = [HOME, { name: leafName, path }];
+    trail = [HOME, BLOG, { name: leafName, path }];
   } else if (LABELS[path]) {
     trail = [HOME, { name: LABELS[path], path }];
   } else {

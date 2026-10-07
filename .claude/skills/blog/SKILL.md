@@ -147,9 +147,13 @@ For a real performance number, serve the production build and measure it. The de
 
 ## 9. Record it
 
+**`luxe-drive-flow/src/data/posts.js`** — add the post to the registry. **A post missing from here is invisible**: it will not appear on `/blog`, nothing on the site will link to it, and it will live on sitemap crumbs alone. That is exactly how the first post sat orphaned from August to October 2026 with zero internal links. Add `slug`, `title`, `excerpt`, `published`, `updated`, `hero`, `cluster` and `readingMinutes`. The `excerpt` is the card on `/blog`, not the meta description.
+
 **`/used-keywords.md`** — add the primary to the retired table and a detail block listing the secondaries and the reason for that primary. It can never be used again.
 
 **`/keywords.csv`** — set `target_page` to the new post and `status` to `covered` for the primary and any secondaries the post genuinely covers.
+
+**`content-owners.md`** — add the post as `locked`. Once published it carries ranking history, and nothing automated should rewrite it afterwards.
 
 The sitemap needs no action; `@astrojs/sitemap` picks the post up automatically, and `public/robots.txt` already points at it.
 
@@ -173,7 +177,9 @@ Tell the user:
 | `luxe-drive-flow/public/blog/<slug>-hero-{800,1400}.webp` | created |
 | `luxe-drive-flow/public/og/<slug>.jpg` | created |
 | `luxe-drive-flow/src/data/image-alt.js` | alt entry added |
+| `luxe-drive-flow/src/data/posts.js` | **post registered — without this it is orphaned** |
 | `used-keywords.md` | primary retired |
 | `keywords.csv` | status and target_page updated |
+| `content-owners.md` | post recorded as `locked` |
 
 Never commit or push unless explicitly asked.
