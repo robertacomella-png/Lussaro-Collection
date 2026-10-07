@@ -1,0 +1,55 @@
+---
+// "Continue reading" — the block that turns a set of posts into a cluster.
+//
+// Posts linking out to money pages is only half of it. Without posts linking to
+// each other, every new one lands as an island reachable from the hub and
+// nowhere else. One component rather than markup in each template, so adding a
+// post wires it into the others automatically through posts.js.
+//
+// Cards are <div>, not <article>, deliberately: this block sits inside the
+// post's own <article>, and a nested one makes `<article>.*?</article>` close
+// at the first card — which silently truncated the word count verify.py reads.
+//
+// Renders nothing when there is nothing to show. With one post published that
+// is the correct output, and an empty "Continue reading" heading would be worse
+// than none.
+import SmartLink from '@/components/site/SmartLink.astro';
+import { postsByDate, postPath } from '@/data/posts';
+import { getImageKitSrc, getImageKitSrcSet } from '@/lib/imageKit';
+import { altFor } from '@/data/image-alt';
+
+const { currentSlug, limit = 2 } = Astro.props;
+
+const related = postsByDate.filter((p) => p.slug !== currentSlug).slice(0, limit);
+---
+{related.length > 0 && (
+  <aside class="not-prose mt-14 pt-10 border-t border-black/10" aria-labelledby="continue-reading">
+    <h2 id="continue-reading" class="font-display text-xl font-bold mb-6">Continue reading</h2>
+
+    <div class="grid gap-5 sm:grid-cols-2">
+      {related.map((post) => (
+        <div class="group relative rounded-2xl border border-black/10 overflow-hidden hover:border-[#e00e10]/40 transition-colors">
+          <SmartLink href={postPath(post)} class="absolute inset-0 z-10" aria-label={post.title} />
+          <div class="relative aspect-[16/9] overflow-hidden bg-[#0f0f0f]">
+            <img
+              src={getImageKitSrc(post.hero, 700)}
+              srcset={getImageKitSrcSet(post.hero)}
+              sizes="(min-width: 640px) 50vw, 100vw"
+              alt={altFor(post.hero)}
+              width="700"
+              height="394"
+              loading="lazy"
+              decoding="async"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+          </div>
+          <div class="p-5">
+            <p class="text-[11px] uppercase tracking-[0.15em] text-black/60">{post.cluster}</p>
+            <h3 class="font-display text-base font-semibold leading-snug mt-1.5">{post.title}</h3>
+            <p class="text-black/60 text-sm mt-2 leading-relaxed">{post.excerpt}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </aside>
+)}

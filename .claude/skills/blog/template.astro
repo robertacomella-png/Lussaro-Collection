@@ -39,6 +39,7 @@ import Layout from '@/layouts/Layout.astro';
 import Nav from '@/components/site/Nav.astro';
 import CtaBand from '@/components/site/CtaBand.astro';
 import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
+import RelatedPosts from '@/components/blog/RelatedPosts.astro';
 import { altFor } from '@/data/image-alt';
 import { cars } from '@/data/cars';
 import { reviews } from '@/data/reviews';
@@ -379,6 +380,8 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
             Call {business.phoneDisplayShort}
           </a>
         </div>
+
+        <RelatedPosts currentSlug=">>> FILL-slug" />
 
         {/* Author bio — E-E-A-T. Never claims tenure: the company was formed
              December 2025 and registration is public. */}

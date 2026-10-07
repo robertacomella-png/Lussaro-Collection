@@ -4,6 +4,7 @@ import Nav from '@/components/site/Nav.astro';
 import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
 import CtaBand from '@/components/site/CtaBand.astro';
 import { fleet } from '@/data/fleet';
+import { postsByDate, postPath } from '@/data/posts';
 import { business, whatsappWith } from '@/data/business';
 import {
   rentalTerms,
@@ -99,6 +100,19 @@ const faqSchema = {
         <p class="text-white/60 text-sm">
           Nightly rates by length of stay. Discounts apply automatically at checkout —
           {discountSummary}.
+        </p>
+        {/* Into the guides. The posts quote these same figures from the same
+            data files, so the rate card and the long-form cannot disagree — and
+            the link gives each post a route in from a commercial page rather
+            than only out of one. */}
+        <p class="text-white/60 text-sm">
+          Working out which car to take?{' '}
+          {postsByDate.map((post, i) => (
+            <>
+              {i > 0 && <span aria-hidden="true"> · </span>}
+              <a href={postPath(post)} class="text-white underline decoration-white/30 underline-offset-4 hover:decoration-white transition-colors">{post.title}</a>
+            </>
+          ))}
         </p>
         <div class="overflow-x-auto rounded-[16px] border border-white/10">
           <table class="w-full text-left text-sm">

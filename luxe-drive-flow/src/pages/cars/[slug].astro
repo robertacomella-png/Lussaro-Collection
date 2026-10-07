@@ -12,6 +12,7 @@ import BookingRequestCard from '@/components/booking/BookingRequestCard.jsx';
 import { Phone } from 'lucide-react';
 import WhatsAppIcon from '@/components/site/WhatsAppIcon.astro';
 import { cars } from '@/data/cars';
+import { postsForCar, postPath } from '@/data/posts';
 import { rentalTerms, termsSummary, deliveryEachWaySummary } from '@/data/rental-terms';
 import { descriptionFor } from '@/data/meta-descriptions';
 import { titleFor } from '@/data/meta-titles';
@@ -56,6 +57,10 @@ const siblingCars = (content?.siblings ?? [])
 const named = (c) => (c.name.startsWith(c.make) ? c.name : `${c.make} ${c.name}`);
 
 const milesPerDay = car.miles ?? rentalTerms.mileage.includedPerDay;
+
+// Guides that cover this car. The posts link down to these pages; without
+// this the link only runs one way and each post stays an island.
+const guides = postsForCar(car.slug);
 
 // The weekly rate is DERIVED, never typed in: seven days run through the same
 // discount ladder the booking card and /pricing use, so repricing a car in
@@ -370,6 +375,18 @@ const productSchema = {
           ))}
         </div>
         {car.drivetrain && <p class="text-white/50 text-xs mt-3">{car.drivetrain}</p>}
+
+        {guides.length > 0 && (
+          <p class="text-white/60 text-sm mt-6">
+            {guides.length === 1 ? 'Related guide:' : 'Related guides:'}{' '}
+            {guides.map((g, i) => (
+              <>
+                {i > 0 && <span aria-hidden="true"> · </span>}
+                <a href={postPath(g)} class="text-white underline decoration-white/30 underline-offset-4 hover:decoration-white transition-colors">{g.title}</a>
+              </>
+            ))}
+          </p>
+        )}
       </div>
     </div>
   </section>

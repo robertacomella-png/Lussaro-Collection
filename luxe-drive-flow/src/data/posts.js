@@ -16,6 +16,21 @@
 
 export const posts = [
   {
+    slug: 'mercedes-s580-vs-maybach-s580-rental-miami',
+    title: 'Mercedes S580 vs Maybach S580: Which to Rent',
+    excerpt:
+      'Two cars, one badge, several hundred dollars a day between them. The engine is the same in both — the difference is entirely in the back seat, and it only matters if someone is sitting there.',
+    published: '2026-10-06',
+    updated: '2026-10-06',
+    hero: '/cars/mercedes-maybach-s580-rental-miami-side-profile.jpg',
+    cluster: 'Comparison',
+    readingMinutes: 6,
+    // Car pages that should link to this post. This is the other half of the
+    // cluster: posts link out to the money pages, and the money pages have to
+    // link back or every post stays an island.
+    relatedCars: ['mercedes-s580', 'mercedes-maybach-s580'],
+  },
+  {
     slug: 'how-much-is-a-lamborghini-rental',
     title: 'How Much Is a Lamborghini Rental? Miami Rates',
     excerpt:
@@ -26,6 +41,7 @@ export const posts = [
     hero: '/cars/lamborghini-urus-rental-miami-front-quarter.jpg',
     cluster: 'Lamborghini',
     readingMinutes: 9,
+    relatedCars: ['lamborghini-urus', 'huracan-evo', 'huracan-evo-spyder'],
   },
 ];
 
@@ -35,6 +51,10 @@ export const postsByDate = [...posts].sort((a, b) => b.published.localeCompare(a
 export const postPath = (post) => `/blog/${post.slug}`;
 
 export const postBySlug = (slug) => posts.find((p) => p.slug === slug) ?? null;
+
+/** Posts that should surface on a given car page, newest first. */
+export const postsForCar = (carSlug) =>
+  postsByDate.filter((p) => (p.relatedCars ?? []).includes(carSlug));
 
 /** "August 14, 2026" — matches the dateline the posts themselves print. */
 export const formatPostDate = (iso) =>
