@@ -10,15 +10,26 @@ Numbers marked **[code]** are transcribed from the data files, which remain the 
 
 | Car | Year | Per day | Power | 0–60 |
 |---|---|---|---|---|
-| Ferrari SF90 | 2023 | **$2,195** | 986 hp | 2.5s |
-| Rolls-Royce Cullinan | 2022 | **$1,495** | 563 hp | 4.9s |
-| Lamborghini Huracán EVO | 2023 | **$1,295** | 602 hp | 3.3s |
-| Lamborghini Urus | 2019 | **$995** | 641 hp | 3.3s |
-| Mercedes-Maybach GLS 600 | 2023 | **$895** | 550 hp | 4.6s |
-| Mercedes-Benz S580 | 2023 | **$445** (from $495) | 496 hp | 4.4s |
+| Ferrari SF90 | 2023 | **$2,499** | 986 hp | 2.5s |
+| Rolls-Royce Cullinan | 2023 | **$1,299** (from $1,499) | 563 hp | 4.9s |
+| Lamborghini Huracán EVO Spyder | 2023 | **$1,299** (from $1,499) | 602 hp | 3.5s |
+| Lamborghini Huracán EVO | 2023 | **$1,199** | 602 hp | 3.3s |
+| Lamborghini Urus | 2019 | **$999** (from $1,099) | 641 hp | 3.3s |
+| Mercedes-Maybach GLS 600 | 2023 | **$899** (from $999) | 550 hp | 4.6s |
+| Mercedes-Maybach S580 | 2023 | **$899** (from $1,099) | 496 hp | 4.8s |
+| Mercedes-AMG G63 | 2023 | **$799** (from $899) | 577 hp | 4.5s |
+| Mercedes-Benz S580 | 2023 | **$399** (from $499) | 496 hp | 4.4s |
 
-- **Six cars.** Say "six," never "a fleet of luxury vehicles."
-- **Range: $445 to $2,195 per day.**
+*Transcribed from `fleet.js` on 6 October 2026. The previous table was six cars at
+the pre-October prices and was missing the Maybach S580, the Huracán EVO Spyder and
+the G63 entirely — a post about a car absent from this file cannot be written at all,
+since nothing outside it may appear in copy. Re-transcribe whenever a price moves.*
+
+- **Nine cars.** Say "nine," never "a fleet of luxury vehicles."
+- **Range: $399 to $2,499 per day.**
+- **Two different S580s, and they get confused.** The Mercedes-Benz S580 is $399; the
+  Mercedes-Maybach S580 is $899. Same 496 hp V8, different car. `fleet.js` carries the
+  same warning. Never write "the S580" without the marque in front of it.
 - `fleet.js` stores short internal names — "SF90," "Cullinan," "GLS 600 Maybach." In customer-facing copy the marque leads, as above.
 
 ## Rental terms **[code]**

@@ -1,14 +1,10 @@
 ---
 // ============================================================================
-// LUSSARO BLOG — BASE TEMPLATE
+// LUSSARO BLOG — COMPARISON TEMPLATE
 //
-// The shared layout every post type uses, and the starting point for a new one.
-// If you are writing a head-to-head, start from templates/comparison.astro
-// instead — it has the two-car frontmatter and the spec table already wired.
-//
-// To add a type: copy this file to templates/<type>.astro, change only the
-// marked BODY region and whatever frontmatter that body needs, and record the
-// type in SKILL.md. The layout above and below the body does not move.
+// Derived from /blog/mercedes-s580-vs-maybach-s580-rental-miami, which shipped
+// at 53/53 on verify.py. The layout is shared with every post type; only the
+// marked BODY region is specific to a comparison.
 //
 // Anything marked >>> FILL is yours to replace. Anything else stays.
 //
@@ -52,19 +48,20 @@ import {
 
 const bySlug = (s) => cars.find((c) => c.slug === s);
 
-// >>> FILL — pull only the cars this post actually discusses. Slugs:
-// lamborghini-urus · huracan-evo · huracan-evo-spyder · sf90 ·
-// rolls-royce-cullinan · mercedes-maybach-gls-600 · mercedes-s580 ·
-// mercedes-maybach-s580 · mercedes-amg-g63
-const car = bySlug('>>> FILL-slug');
+// >>> FILL — the two cars being compared. Slugs: lamborghini-urus ·
+// huracan-evo · huracan-evo-spyder · sf90 · rolls-royce-cullinan ·
+// mercedes-maybach-gls-600 · mercedes-s580 · mercedes-maybach-s580 ·
+// mercedes-amg-g63
+const carA = bySlug('>>> FILL-slug-a');
+const carB = bySlug('>>> FILL-slug-b');
 
 const { deposit, mileage, minimumAge, cancellation } = rentalTerms;
 const perDay = mileage.includedPerDay;
 const usd = (n) => `$${n.toLocaleString('en-US')}`;
 
-// rateForDays returns { pct, perDay } — an object. Render .perDay or the page
-// prints "$[object Object]".
-const weekRate = rateForDays(car.price, 7).perDay;
+const gap = Math.abs(carB.price - carA.price);
+const weekA = rateForDays(carA.price, 7).perDay;   // .perDay — it returns an object
+const weekB = rateForDays(carB.price, 7).perDay;
 
 const SITE = 'https://www.lussarocollection.com';
 const PATH = '/blog/>>> FILL-slug';           // must match the filename
@@ -108,6 +105,8 @@ const toc = [
   { id: 'section-one', label: '>>> FILL' },
   { id: 'section-two', label: '>>> FILL' },
   { id: 'section-three', label: '>>> FILL' },
+  { id: 'section-four', label: '>>> FILL' },
+  { id: 'section-five', label: '>>> FILL' },
   { id: 'faq', label: 'Common questions' },
 ];
 
@@ -270,8 +269,8 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
             <p class="text-lg md:text-xl leading-relaxed">
               <strong>
                 >>> FILL — 40–60 words answering the query outright, with the real figures
-                rendered from the data files. This is the featured-snippet target and the
-                first bolded text on the page.
+                from carA and carB. This is the featured-snippet target and the first
+                {'<'}strong{'>'} on the page.
               </strong>
             </p>
           </div>
@@ -309,14 +308,44 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
         {/* ===================== BODY — YOURS TO WRITE =====================
              One H2 per toc entry, ids matching exactly. H3s only under H2s.
              Every number renders from the data files; never type a literal.
-             Keep {/* */} comments — HTML comments ship to the browser.
+
+             The comparison shape that works, in order:
+               1. What the two share       — kill the assumption up front
+               2. What the money buys      — the real difference, with the table
+               3. When to take the cheaper — the opinion, said plainly
+               4. What is identical        — deposit, mileage, age, delivery
+               5. The question that decides it
+
+             Put the spec table in section 1 or 2, and the inline figure beside
+             whichever section it argues for. Keep a {/* */} comment style —
+             HTML comments ship to the browser and eat the window verify.py
+             uses to find the bolded answer.
         ===================================================================== */}
 
         <h2 id="section-one">>>> FILL — H2 carrying a supporting keyword</h2>
 
         <p>>>> FILL</p>
 
-        {/* INLINE FIGURE. Lazy, never fetchpriority — the hero owns that. */}
+        {/* SPEC TABLE — the comparison's spine. Values from fleet.js only. */}
+        <table>
+          <thead>
+            <tr><th>&nbsp;</th><th>{carA.name}</th><th>{carB.name}</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Per day</td><td><strong>{usd(carA.price)}</strong></td><td><strong>{usd(carB.price)}</strong></td></tr>
+            <tr><td>Power</td><td>{carA.power} hp</td><td>{carB.power} hp</td></tr>
+            <tr><td>0–60</td><td>{carA.zeroToSixty}</td><td>{carB.zeroToSixty}</td></tr>
+            <tr><td>Seats</td><td>{carA.seats}</td><td>{carB.seats}</td></tr>
+            <tr><td>Per day, 7+ days</td><td>{usd(weekA)}</td><td>{usd(weekB)}</td></tr>
+          </tbody>
+        </table>
+
+        <h2 id="section-two">>>> FILL</h2>
+
+        <p>>>> FILL</p>
+
+        {/* INLINE FIGURE. Lazy, never fetchpriority — the hero owns that.
+            Place it beside the section it illustrates, not as decoration. */}
         <figure class="not-prose my-10">
           <img
             src={bodySrc}
@@ -332,12 +361,13 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
           <figcaption class="text-black/60 text-sm mt-3">>>> FILL — a caption that argues, not one that repeats the alt</figcaption>
         </figure>
 
-        <h2 id="section-two">>>> FILL</h2>
+        <h2 id="section-three">>>> FILL — when the cheaper one is the right call</h2>
 
-        <p>>>> FILL</p>
+        <p>>>> FILL. Say it plainly. See references/opinions.md #4.</p>
 
-        {/* Real Google review. Verbatim, never edited. Pick one with NO
-            exclamation marks — verify.py bans [a-z]! in the article body. */}
+        {/* Real Google review. Verbatim, never edited, never invented.
+            Pick one WITHOUT exclamation marks — verify.py bans [a-z]! in the
+            article body and a review may not be edited to comply. */}
         <figure class="not-prose my-10 rounded-2xl border border-black/10 bg-[#fafafa] p-6">
           <blockquote class="text-[#0a0a0a]/80 leading-relaxed">
             <p>“{testimonial.text}”</p>
@@ -348,10 +378,14 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
           </figcaption>
         </figure>
 
-        <h2 id="section-three">>>> FILL</h2>
+        <h2 id="section-four">>>> FILL — what is identical on both</h2>
 
-        <p>>>> FILL — 3–5 internal links with descriptive anchors across these
-           sections. 2–3 external links, each verified 200 before use.</p>
+        <p>>>> FILL — deposit, mileage, age, delivery. All from rental-terms.js.</p>
+
+        <h2 id="section-five">>>> FILL — the question that decides it</h2>
+
+        <p>>>> FILL — 3–5 internal links with descriptive anchors live in here and
+           the sections above. 2–3 external links, each verified 200 first.</p>
 
         <h2 id="faq">Common questions</h2>
 

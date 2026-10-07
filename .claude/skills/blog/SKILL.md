@@ -7,7 +7,26 @@ description: Generate a complete, publish-ready Lussaro Collection blog post —
 
 Produces one blog post, start to finish, to the same standard every time.
 
-**The page structure is already solved.** `template.astro` in this directory produces Accessibility 100, SEO 100 and LCP ~1.5s on mobile, measured on the production build. Do not redesign it, do not "improve" it, do not restructure the schema. Fill in the marked slots and write.
+**The page structure is already solved.** Fill in the marked slots and write. Do not redesign the layout, do not restructure the schema.
+
+## Pick a template
+
+| Post type | File | Use when |
+|---|---|---|
+| **Comparison** | `templates/comparison.astro` | Head-to-head between two cars we rent. Two-car frontmatter and the spec table are already wired. |
+| **Anything else** | `template.astro` | The shared base. Also the starting point for a new type. |
+
+To add a type: copy `template.astro` to `templates/<type>.astro`, change only the marked BODY region and whatever frontmatter that body needs, and add a row above. Everything outside the body — hero, rails, schema, author, NAP, CTA — is shared and does not move.
+
+## Five things that will bite you
+
+Learned shipping `/blog/mercedes-s580-vs-maybach-s580-rental-miami`. All five are already handled in the templates; do not undo them.
+
+1. **`<header>` sits OUTSIDE `<article>`.** The hero's markup — a six-candidate `srcset` alone is ~450 characters — otherwise eats the 4000-character window `verify.py` uses to confirm the bolded answer is near the top. Fighting that budget by shaving characters wastes a build cycle per attempt.
+2. **Developer notes use `{/* */}`, never `<!-- -->`.** HTML comments are emitted to the browser and count against the same window. Eight of them cost 1,239 characters on one page.
+3. **The featured image is shown, not hidden.** It used to sit at 25% opacity behind a gradient, which is why it was encoded at quality 38 — unusable once visible. Encode at **72–78**, and build the full ladder (see step 6) or a phone pulls a 1,500px file to paint 390 pixels.
+4. **Pick a review with no exclamation marks.** `verify.py` bans `[a-z]!` in the article body and `reviews.js` forbids editing a review to comply. `reviews[0]` and `reviews[4]` contain them; `reviews[1]`, `[2]` and `[3]` are clean.
+5. **`rateForDays(price, days)` returns `{ pct, perDay }`** — an object, not a number. Render `.perDay` or the page prints `$[object Object]`.
 
 Everything below is a step. Do them in order. Do not skip step 8.
 
@@ -87,15 +106,30 @@ For each post:
 1. **Pick a photo that matches the subject.** A Lamborghini post uses a Lamborghini.
 2. **Open the image and look at it** before writing alt text. `src/data/image-alt.js` forbids writing alt from filenames, and only names a Miami location when the photo actually shows one.
 3. **Add the alt entry** to `image-alt.js`, keyed on the original path.
-4. **Generate the hero variants.** The hero sits at 25% opacity behind a gradient, so it takes heavy compression — target ~60 KB at 1400w and ~30 KB at 800w:
+4. **Generate the hero variants.** The hero is a visible figure in the split header, rendering about **520px wide on desktop** and full-width on a phone. Build the whole ladder — gaps in it are what make a phone download a 1,500px file for a 390px slot:
 
 ```bash
 node -e "
 const sharp=require('sharp');
-Promise.all([
-  sharp('public/cars/SOURCE.jpg').resize(1400).webp({quality:38,effort:6}).toFile('public/blog/SLUG-hero-1400.webp'),
-  sharp('public/cars/SOURCE.jpg').resize(800).webp({quality:42,effort:6}).toFile('public/blog/SLUG-hero-800.webp'),
-]).then(r=>r.forEach(i=>console.log(i.width+'x'+i.height, Math.round(i.size/1024)+' KB')));
+const S='public/cars/SOURCE.jpg';
+// 3:2. In a side-by-side column 16:9 reads as a letterbox strip, not a photo.
+const mk=(w,q)=>sharp(S).resize(w,Math.round(w*2/3),{fit:'cover',position:'centre'})
+  .webp({quality:q,effort:6}).toFile('public/blog/SLUG-hero-'+w+'.webp');
+Promise.all([mk(560,78),mk(760,76),mk(800,74),mk(1120,72),mk(1200,72),mk(1560,70)])
+  .then(r=>r.forEach(i=>console.log(i.width+'x'+i.height, Math.round(i.size/1024)+' KB')));
+"
+```
+
+Measured result: phone @2x 33 KB, phone @3x 55 KB, laptop @1x 23 KB, laptop @2x 50 KB.
+
+Then the inline body image, which renders ~760px wide inside the prose column:
+
+```bash
+node -e "
+const sharp=require('sharp');
+const mk=(w,q)=>sharp('public/cars/SOURCE2.jpg').resize(w).webp({quality:q,effort:6})
+  .toFile('public/blog/SLUG-body-'+w+'.webp');
+Promise.all([mk(700,76),mk(1000,74)]).then(r=>r.forEach(i=>console.log(i.width+'x'+i.height, Math.round(i.size/1024)+' KB')));
 "
 ```
 
@@ -173,8 +207,9 @@ Tell the user:
 
 | Path | Action |
 |---|---|
-| `luxe-drive-flow/src/pages/blog/<slug>.astro` | created |
-| `luxe-drive-flow/public/blog/<slug>-hero-{800,1400}.webp` | created |
+| `luxe-drive-flow/src/pages/blog/<slug>.astro` | created from a template above |
+| `luxe-drive-flow/public/blog/<slug>-hero-{560,760,800,1120,1200,1560}.webp` | created |
+| `luxe-drive-flow/public/blog/<slug>-body-{700,1000}.webp` | created |
 | `luxe-drive-flow/public/og/<slug>.jpg` | created |
 | `luxe-drive-flow/src/data/image-alt.js` | alt entry added |
 | `luxe-drive-flow/src/data/posts.js` | **post registered — without this it is orphaned** |
