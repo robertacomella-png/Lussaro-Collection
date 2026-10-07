@@ -100,7 +100,7 @@ These are documented behaviors, observed in real customer conversations. Not asp
 ## Hard rules
 
 - **Never claim or imply tenure.** The company was formed December 2025 and started trading January 2026. No "years of experience," no "long established," no "trusted for years." Registration is public. Say nothing about age; nobody notices the absence.
-- **Never state a fleet count at all**, and never claim ranking superiority. Not "largest fleet," not "#1 in Miami," not "best in Florida" — and not "six cars" or "nine cars" either. A count invites a comparison we lose, since one competitor lists 80+, and it is wrong the day a car is bought or sold. Describe the fleet as small and deliberately chosen, or name the cars. What's true and stronger: *every review we have is five stars.*
+- **Never pin copy to a fleet snapshot.** No count — not "six cars," not "nine cars" — and no hardcoded list of models. **Cars come and go from the fleet constantly**, so anything written against today's line-up is wrong within weeks and nobody notices: `/fleet` shipped a meta description reading "Six exotic cars: Urus, Huracan EVO, SF90, Cullinan, Maybach GLS 600, S580" for a month after three cars were added. Name *marques*, which survive a rotation, or derive the line-up from `fleet.js` so it updates itself. Also never claim ranking superiority — not "largest fleet," not "#1 in Miami." What's true and stronger: *every review we have is five stars.*
 - **Never invent a customer, a review, or a booking.** Real reviews live in `src/data/reviews.js`, quoted verbatim or not at all.
 - **Never publish utilization, revenue, or booking volume.** Internal only.
 - **Never state a number that isn't in `stats.md`.**

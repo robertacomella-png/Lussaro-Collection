@@ -25,12 +25,12 @@ the pre-October prices and was missing the Maybach S580, the Huracán EVO Spyder
 the G63 entirely — a post about a car absent from this file cannot be written at all,
 since nothing outside it may appear in copy. Re-transcribe whenever a price moves.*
 
-- **Never publish a fleet count.** Not "nine cars," not "six cars," not "a fleet
-  of luxury vehicles." Owner's call, 6 October 2026, and it matches the rule in
-  `voice.md`: a number invites a comparison we lose, and it is wrong the day a
-  car is bought or sold. Name the cars or describe the fleet as small and
-  deliberately chosen. The table above exists so copy can quote a *car*, never
-  so it can count them.
+- **Never publish a fleet count, and never hardcode the line-up.** Owner's call,
+  6 October 2026: cars come and go from the fleet constantly, so copy written
+  against today's table is wrong within weeks. Name marques, or derive the list
+  from `fleet.js`. This table exists so copy can quote a *car*, never so it can
+  count them — and a car being in it today is not a promise it is there next
+  month.
 - **Range: $399 to $2,499 per day.**
 - **Two different S580s, and they get confused.** The Mercedes-Benz S580 is $399; the
   Mercedes-Maybach S580 is $899. Same 496 hp V8, different car. `fleet.js` carries the

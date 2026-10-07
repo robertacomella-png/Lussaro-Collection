@@ -17,6 +17,14 @@ import FleetCollection from '@/components/fleet/FleetCollection.astro';
 import { Phone } from 'lucide-react';
 import WhatsAppIcon from '@/components/site/WhatsAppIcon.astro';
 import { cars } from '@/data/cars';
+
+// Marques, not models, and no count. The fleet rotates — cars come and go — so
+// copy pinned to a snapshot goes stale on its own. This description used to
+// read "Six exotic cars... Urus, Huracan EVO, SF90, Cullinan, Maybach GLS 600,
+// S580": a count that was wrong and a list missing three cars. Marques survive
+// a rotation within a marque, and this derives them anyway.
+const marques = [...new Set(cars.map((c) => c.make))].map((m) => (m === 'Mercedes-Benz' ? 'Mercedes-Maybach' : m));
+const marqueText = `${marques.slice(0, -1).join(', ')} and ${marques.at(-1)}`;
 import { business, telHref, whatsappWith } from '@/data/business';
 
 // Ad traffic lands here, so the prefill names the page's own promise —
@@ -68,7 +76,7 @@ const fleetSchema = {
 ---
 <Layout
   title="Exotic Car Rental Fleet Miami | $399/Day | Lussaro Collection"
-  description="Six exotic cars, one Miami fleet: Urus, Huracan EVO, SF90, Cullinan, Maybach GLS 600, S580. From $399/day with multi-day discounts up to 25%."
+  description={`Miami exotic car rental fleet: ${marqueText}, delivered across Miami. From $399/day with multi-day discounts up to 25%.`}
   schema={[fleetSchema, faqSchema]}
 >
   <Nav />
