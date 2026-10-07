@@ -9,6 +9,28 @@ import FleetCollection from '@/components/fleet/FleetCollection.astro';
 import { Phone } from 'lucide-react';
 import WhatsAppIcon from '@/components/site/WhatsAppIcon.astro';
 import { business, telHref, whatsappWith } from '@/data/business';
+import { cars } from '@/data/cars';
+import { rentalTerms, deliveryEachWaySummary, discountSummary } from '@/data/rental-terms';
+
+const SITE = 'https://www.lussarocollection.com';
+const usd = (n) => `$${n.toLocaleString('en-US')}`;
+const fleetFrom = Math.min(...cars.map((c) => c.price));
+const perDayMiles = rentalTerms.mileage.includedPerDay;
+
+// The same ItemList /fleet emits for the identical car grid. The homepage
+// rendered the grid without it, so the one page most likely to be crawled
+// first said nothing structured about what it lists.
+const fleetSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Lussaro Collection — Miami luxury and exotic car rental fleet',
+  itemListElement: cars.map((c, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: c.name,
+    url: `${SITE}/cars/${c.slug}`,
+  })),
+};
 
 const heroWa = whatsappWith(
   "Hi, I'd like to book a car with Lussaro Collection. Which dates do you have open?"
@@ -16,7 +38,8 @@ const heroWa = whatsappWith(
 ---
 <Layout
   title="Luxury & Exotic Car Rental Miami | Lussaro Collection"
-  description="Rent a Lamborghini, Ferrari or Rolls-Royce in Miami from $399/day. Delivered to your hotel, home or airport. Book on WhatsApp in minutes."
+  description={`Luxury and exotic car rental in Miami: Lamborghini, Ferrari and Rolls-Royce from ${usd(fleetFrom)} a day, delivered to your hotel, home or airport. Booked on WhatsApp.`}
+  schema={[fleetSchema]}
 >
   <Nav />
 
@@ -127,7 +150,9 @@ const heroWa = whatsappWith(
   </section>
 
   <!-- FLEET — "The Collection" (shared with /fleet so the two stay identical) -->
-  <FleetCollection id="fleet" />
+  <FleetCollection id="fleet"
+    eyebrow="Luxury & Exotic · Miami"
+    heading="The cars we rent in Miami" />
 
   <!-- 3D MOMENT (the accent) -->
   <section class="relative bg-black py-20 md:py-28 overflow-hidden">
@@ -147,7 +172,7 @@ const heroWa = whatsappWith(
     <div class="max-w-7xl mx-auto px-5 md:px-8">
       <div class="reveal text-center mb-14">
         <p class="text-[#ff1516] tracking-[0.3em] uppercase text-xs mb-3">How It Works</p>
-        <h2 class="font-display text-4xl md:text-5xl font-bold text-white">Booked in three steps.</h2>
+        <h2 class="font-display text-4xl md:text-5xl font-bold text-white">How renting a car in Miami works</h2>
       </div>
       <div class="reveal grid md:grid-cols-3 gap-8">
         <div class="text-center">
