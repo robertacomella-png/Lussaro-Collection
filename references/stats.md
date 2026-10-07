@@ -25,7 +25,12 @@ the pre-October prices and was missing the Maybach S580, the Huracán EVO Spyder
 the G63 entirely — a post about a car absent from this file cannot be written at all,
 since nothing outside it may appear in copy. Re-transcribe whenever a price moves.*
 
-- **Nine cars.** Say "nine," never "a fleet of luxury vehicles."
+- **Never publish a fleet count.** Not "nine cars," not "six cars," not "a fleet
+  of luxury vehicles." Owner's call, 6 October 2026, and it matches the rule in
+  `voice.md`: a number invites a comparison we lose, and it is wrong the day a
+  car is bought or sold. Name the cars or describe the fleet as small and
+  deliberately chosen. The table above exists so copy can quote a *car*, never
+  so it can count them.
 - **Range: $399 to $2,499 per day.**
 - **Two different S580s, and they get confused.** The Mercedes-Benz S580 is $399; the
   Mercedes-Maybach S580 is $899. Same 496 hp V8, different car. `fleet.js` carries the
@@ -75,7 +80,7 @@ The distinction that keeps published pricing honest:
 ## The business **[Robert]**
 
 - **Company formed December 2025. Trading since January 2026.**
-- **Six cars inside the first year**, starting from one Maybach GLS 600 bought with Robert's savings.
+- **Six cars inside the first year**, starting from one Maybach GLS 600 bought with Robert's savings. *Internal context only — never published, see the fleet-count rule above.*
 - **Never claim or imply tenure.** No "years of experience." Registration is public. Best practice: say nothing about age at all.
 - **Internal target: 12–14 rental days per car per month.** This is a *goal*, not a result. **Never publish it** — it tells competitors the economics and tells customers nothing.
 

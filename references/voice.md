@@ -100,7 +100,7 @@ These are documented behaviors, observed in real customer conversations. Not asp
 ## Hard rules
 
 - **Never claim or imply tenure.** The company was formed December 2025 and started trading January 2026. No "years of experience," no "long established," no "trusted for years." Registration is public. Say nothing about age; nobody notices the absence.
-- **Never claim fleet size or ranking superiority.** Not "largest fleet," not "#1 in Miami," not "best in Florida." Six cars is six cars, and one competitor lists 80+. What's true and stronger: *every review we have is five stars.*
+- **Never state a fleet count at all**, and never claim ranking superiority. Not "largest fleet," not "#1 in Miami," not "best in Florida" — and not "six cars" or "nine cars" either. A count invites a comparison we lose, since one competitor lists 80+, and it is wrong the day a car is bought or sold. Describe the fleet as small and deliberately chosen, or name the cars. What's true and stronger: *every review we have is five stars.*
 - **Never invent a customer, a review, or a booking.** Real reviews live in `src/data/reviews.js`, quoted verbatim or not at all.
 - **Never publish utilization, revenue, or booking volume.** Internal only.
 - **Never state a number that isn't in `stats.md`.**

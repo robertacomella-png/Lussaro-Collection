@@ -25,12 +25,11 @@ const fullName = (c) => (c.name.startsWith(c.make) ? c.name : `${c.make} ${c.nam
 const lineup = fleet.map(fullName);
 const lineupText = `${lineup.slice(0, -1).join(', ')} and the ${lineup.at(-1)}`;
 
-// Spelled out and DERIVED. This page said "six cars" in one paragraph and then
-// listed nine in the next, because the list came from fleet.js and the number
-// was typed by hand. Adding a car must not be able to create that again.
-const NUMBER_WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven',
-  'eight', 'nine', 'ten', 'eleven', 'twelve'];
-const fleetCount = NUMBER_WORDS[fleet.length] ?? String(fleet.length);
+// NO FLEET COUNT IN COPY. This page used to say "six cars" beside a list of
+// nine, so the first fix was to derive the number — but the number should not
+// be there at all. A count invites a comparison we lose (one competitor lists
+// 80+), and it goes stale on every purchase. Name the cars, never count them.
+// See references/voice.md.
 
 const photos = [
   '/cars/lamborghini-huracan-evo-rental-miami-front-quarter.jpg',
@@ -78,7 +77,7 @@ const aboutSchema = {
         </p>
         <p class="text-white/70 leading-relaxed">
           So the aim was never to run the largest fleet in the city. It was to run a small one
-          we can stand behind personally — {fleetCount} cars, each chosen because we would want to drive
+          we can stand behind personally — every car chosen because we would want to drive
           it ourselves, each handed over clean, prepared, and exactly as photographed.
         </p>
       </div>
@@ -101,7 +100,7 @@ const aboutSchema = {
           car. Longer stays cost less per day: 15% off at three days, 20% at five, 25% at seven.
         </p>
         <p class="text-white/70 leading-relaxed">
-          The {fleetCount}, as they stand today: the {lineupText}. If you are not sure which one suits
+          The fleet, as it stands today: the {lineupText}. If you are not sure which one suits
           the occasion, tell us what you have planned over WhatsApp and we will match you to the
           right car in a message — usually faster than scrolling through listings, and it means
           you hear straight away whether your dates are open.
