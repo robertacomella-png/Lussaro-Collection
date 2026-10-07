@@ -53,6 +53,11 @@ const ALT = {
   // suggests.
   '/cars/mercedes-maybach-s580-rental-miami-side-profile.jpg':
     'Two-tone Mercedes-Maybach S580 rental in side profile, cream over black with the Maybach monogram on the rear pillar, parked on open concrete in front of a graffitied grandstand and palm trees in Miami',
+  // Viewed before writing, for the condition post. No Miami landmark is visible
+  // through the glass, so the alt does not claim one.
+  '/cars/ferrari-sf90-rental-miami-red-interior.jpg':
+    'Red leather and Alcantara seats in the Ferrari SF90 rental, prancing horse headrests, carbon-shell seat backs and red belts, shot through the open driver door',
+
   '/cars/mercedes-maybach-s580-rental-miami-executive-rear-seats.jpg':
     'Rear cabin of the Mercedes-Maybach S580 rental with the right-hand seat reclined and its calf rest raised, white diamond-quilted leather, loose pillows and a screen on the seatback',
 };

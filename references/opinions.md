@@ -18,6 +18,8 @@ Everything below came from Robert directly, or is a policy the business demonstr
 
 **The limit:** only usable while our own cars are genuinely kept sharp. It's an argument that can be checked at handover.
 
+**The operational detail behind it** (Robert, 7 October 2026): every car is detailed between rentals, and an **ozone treatment** is run through the cabin once the detail is finished — it oxidises residue in the headliner and vents that a wipe-down cannot reach. The nuance worth keeping whenever this is written: ozone only works on a cabin that has already been cleaned properly. On a dirty car it masks the smell rather than removing it, so the order is the point. Usable in copy; it is specific, checkable at handover, and nothing competitors say.
+
 ---
 
 ## 2. Who we say no to is part of what you're buying

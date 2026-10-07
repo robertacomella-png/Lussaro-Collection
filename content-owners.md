@@ -43,6 +43,7 @@ When an agency asks how edits are tracked, this is the answer.
 | /blog | Lussaro | review | The guides hub. Lists whatever `posts.js` holds, so the page itself rarely changes. |
 | /blog/how-much-is-a-lamborghini-rental | Lussaro | locked | Hand-written SEO post, 2,278 words, built to the blog skill's 53 checks. Regenerating it would discard the work and reset its ranking history. |
 | /blog/mercedes-s580-vs-maybach-s580-rental-miami | Lussaro | locked | Published 6 Oct 2026, 1,511 words, 53/53 on the verifier. First post in the comparison cluster. Edit sections, never regenerate. |
+| /blog/well-kept-exotic-car-rental-miami | Lussaro | locked | Published 7 Oct 2026, 1,731 words, 53/53. Carries the brand in the H1 for brand-SERP coverage, and the operational detail (ozone after detailing) came from the owner directly. Edit sections, never regenerate. |
 | /exotic-car-rental-miami | Lussaro | locked | Head-term landing page. Owns "exotic car rental miami". |
 | /best-exotic-car-rental-miami | Lussaro | locked | SEO landing copy. |
 | /lamborghini-rental-miami | Lussaro | locked | SEO landing copy. Owns the Lamborghini commercial cluster. |

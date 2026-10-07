@@ -14,6 +14,7 @@ This is what stops the site competing with itself — the failure mode where two
 |---|---|---|---|
 | how much is a rental lamborghini | [/blog/how-much-is-a-lamborghini-rental](../luxe-drive-flow/src/pages/blog/how-much-is-a-lamborghini-rental.astro) | 2026-08-14 | Lamborghini |
 | mercedes s580 vs maybach s580 rental miami | [/blog/mercedes-s580-vs-maybach-s580-rental-miami](../luxe-drive-flow/src/pages/blog/mercedes-s580-vs-maybach-s580-rental-miami.astro) | 2026-10-06 | Comparison |
+| well kept exotic car rental miami | [/blog/well-kept-exotic-car-rental-miami](../luxe-drive-flow/src/pages/blog/well-kept-exotic-car-rental-miami.astro) | 2026-10-07 | The standard |
 
 ---
 
@@ -53,6 +54,30 @@ comparison cluster.
 **Note on the SERP:** it is dominated by car-buying content — KBB, CarBuzz, owner forums — rather
 than rental pages. The "rental miami" qualifier shifts intent, but this is a harder SERP than the
 keyword's gap status suggests, and it was written knowing that.
+
+---
+
+### well kept exotic car rental miami
+**Post:** `/blog/well-kept-exotic-car-rental-miami`
+**Date:** October 7, 2026
+
+**Secondaries used:**
+- exotic car rental condition miami
+- clean exotic car rental miami
+- owner operated exotic car rental miami
+- what to check before renting an exotic car
+
+**Why this primary:** low volume on purpose. This is a trust and conversion asset rather than a
+traffic one — the argument in `references/opinions.md` #1, in Robert's own words. It is also a
+deliberate **brand-SERP** play: the H1 and title carry "Lussaro Collection", so the post can hold a
+second slot on a brand search and push a competitor's comparison page further down.
+
+**What was rejected and why:** the owner originally asked for a headline claiming Lussaro is the
+"premier" or "highest quality" rental in Miami. `verify.py` blocks `#1`, `number one` and
+`best in miami` outright, and `voice.md` bans ranking superiority — but the stronger objection was
+that it is the line every competitor in Miami already runs. The specifics do the arguing instead:
+detailing between every rental, ozone after the detail, owner-operated. The reader reaches the
+conclusion themselves, which is the version a competitor cannot copy.
 
 ---
 

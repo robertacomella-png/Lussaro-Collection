@@ -16,6 +16,18 @@
 
 export const posts = [
   {
+    slug: 'well-kept-exotic-car-rental-miami',
+    title: "Why Our Miami Exotic Rentals Don't Smell of Smoke",
+    excerpt:
+      'Every company in this city says the cars are immaculate. Here is what we actually do between rentals, and the three things you can check yourself before handing anyone a deposit.',
+    published: '2026-10-07',
+    updated: '2026-10-07',
+    hero: '/cars/ferrari-sf90-rental-miami-red-interior.jpg',
+    cluster: 'The standard',
+    readingMinutes: 7,
+    relatedCars: ['sf90', 'mercedes-s580'],
+  },
+  {
     slug: 'mercedes-s580-vs-maybach-s580-rental-miami',
     title: 'Mercedes S580 vs Maybach S580: Which to Rent',
     excerpt:
