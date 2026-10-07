@@ -7,7 +7,7 @@ import { altFor } from '@/data/image-alt';
 // FAQPage + ItemList schema), reviews, and a lead form.
 import Layout from '@/layouts/Layout.astro';
 import { bookingSteps } from '@/data/booking-steps';
-import { rentalTerms, deliveryEachWaySummary } from '@/data/rental-terms';
+import { rentalTerms, deliveryEachWaySummary, discountSummary } from '@/data/rental-terms';
 import Nav from '@/components/site/Nav.astro';
 import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
 import CtaBand from '@/components/site/CtaBand.astro';
@@ -23,6 +23,21 @@ import { cars } from '@/data/cars';
 // read "Six exotic cars... Urus, Huracan EVO, SF90, Cullinan, Maybach GLS 600,
 // S580": a count that was wrong and a list missing three cars. Marques survive
 // a rotation within a marque, and this derives them anyway.
+const usd = (n) => `$${n.toLocaleString('en-US')}`;
+
+// The supercars specifically — the mid-engined cars a "supercar rental" search
+// is actually after. The fleet's cheapest car is a Mercedes sedan, so anchoring
+// this page's headline on $399 would promise a supercar at saloon money.
+const SUPERCAR_SLUGS = ['sf90', 'huracan-evo', 'huracan-evo-spyder'];
+const supercars = cars.filter((c) => SUPERCAR_SLUGS.includes(c.slug));
+const supercarFrom = Math.min(...supercars.map((c) => c.price));
+const bySlug = (x) => cars.find((c) => c.slug === x);
+const sf90 = bySlug('sf90');
+const evo = bySlug('huracan-evo');
+const spyder = bySlug('huracan-evo-spyder');
+const perDayMiles = rentalTerms.mileage.includedPerDay;
+const fleetFrom = Math.min(...cars.map((c) => c.price));
+
 const marques = [...new Set(cars.map((c) => c.make))].map((m) => (m === 'Mercedes-Benz' ? 'Mercedes-Maybach' : m));
 const marqueText = `${marques.slice(0, -1).join(', ')} and ${marques.at(-1)}`;
 import { business, telHref, whatsappWith } from '@/data/business';
@@ -75,8 +90,8 @@ const fleetSchema = {
 };
 ---
 <Layout
-  title="Exotic Car Rental Fleet Miami | $399/Day | Lussaro Collection"
-  description={`Miami exotic car rental fleet: ${marqueText}, delivered across Miami. From $399/day with multi-day discounts up to 25%.`}
+  title="Supercar Rental Miami | The Fleet | Lussaro Collection"
+  description={`Supercar rental in Miami: Ferrari and Lamborghini from ${usd(supercarFrom)} a day, the wider fleet from ${usd(fleetFrom)}. Delivered to your hotel, home or airport. Up to 25% off.`}
   schema={[fleetSchema, faqSchema]}
 >
   <Nav />
@@ -92,8 +107,16 @@ const fleetSchema = {
     <div class="relative z-10 max-w-7xl mx-auto px-5 md:px-8 text-center">
       <p class="text-[#ff1516] tracking-[0.3em] uppercase text-[11px] md:text-xs font-medium mb-4">Lussaro Collection · Miami</p>
       <h1 class="font-display text-4xl md:text-6xl font-bold leading-[1.02] tracking-tight text-white text-balance">
-        Miami's Most-Wanted Exotics<span class="text-[#ff1516]"> — from $399/day</span>
+        Supercar Rental in <span class="text-[#ff1516]">Miami</span>
       </h1>
+      {/* The price anchor moved out of the H1 and gained a qualifier. The
+          cheapest car here is a Mercedes sedan, so "from $399" under a supercar
+          headline promised a Ferrari at saloon money. Both figures render from
+          fleet.js. */}
+      <p class="text-white/70 text-base md:text-lg max-w-2xl mx-auto mt-5 leading-relaxed">
+        Ferrari and Lamborghini from {usd(supercarFrom)} a day. The wider fleet — Rolls-Royce,
+        Maybach, AMG — opens at {usd(fleetFrom)}. Every car below is the exact one that arrives.
+      </p>
 
       <!-- Trust chips — the whole pitch, scannable in one second -->
       <div class="mt-6 flex flex-wrap items-center justify-center gap-2">
@@ -128,7 +151,70 @@ const fleetSchema = {
 
   <!-- THE COLLECTION — identical to the homepage section (shared component);
        tighter top padding since it sits directly under the compact hero -->
-  <FleetCollection id="fleet" pad="pt-8 pb-16 md:pt-12 md:pb-24" />
+  <FleetCollection id="fleet" pad="pt-8 pb-16 md:pt-12 md:pb-24"
+    eyebrow="Supercars & Luxury · Miami"
+    heading="Every car in the fleet" />
+
+  {/* DEPTH. This page carried 800 words and targeted no keyword — thin for a
+      commercial category page. The section below answers the question the
+      search actually asks ("is this a supercar or just a fast luxury car?")
+      and names which car suits which trip. Every figure renders from the data
+      files. */}
+  <section class="bg-black border-t border-white/5 py-20 md:py-28">
+    <div class="max-w-3xl mx-auto px-5 md:px-8">
+      <h2 class="font-display text-3xl md:text-5xl font-bold text-white tracking-tight">
+        What separates a supercar rental from a luxury one
+      </h2>
+
+      <div class="mt-7 space-y-5 text-white/70 leading-relaxed">
+        <p>
+          A supercar is mid-engined, seats two, and is built around the engine rather than the
+          cabin. In this fleet that means the {sf90.make} {sf90.name}, the {evo.make} {evo.name}
+          and the {spyder.name}. The {bySlug('lamborghini-urus').name}, the Cullinan, the Maybachs
+          and the G63 are luxury cars that happen to be quick, which is a different purchase.
+        </p>
+        <p>
+          The distinction matters on a Miami booking because the two do different jobs. A Huracán
+          is the car you take down Ocean Drive at eight in the evening with the windows down. A
+          Maybach is the car you take when four people need to arrive unbothered. Booking the
+          wrong one is the most common mistake we see, and it almost always comes down to how
+          many people are coming.
+        </p>
+
+        <h3 class="font-display text-xl md:text-2xl font-bold text-white pt-4">Which supercar suits the trip</h3>
+        <p>
+          The <a href="/cars/sf90" class="text-white underline decoration-white/30 underline-offset-4 hover:decoration-white">{sf90.make} {sf90.name}</a> is
+          the quickest car we run — {sf90.power} hp, {sf90.zeroToSixty} to 60, at {usd(sf90.price)} a
+          day. It is a hybrid, so it will leave a hotel forecourt in silence and then stop being
+          silent.
+        </p>
+        <p>
+          The <a href="/cars/huracan-evo" class="text-white underline decoration-white/30 underline-offset-4 hover:decoration-white">{evo.make} {evo.name}</a> at
+          {' '}{usd(evo.price)} is the one most people picture: a naturally aspirated V10 making
+          {' '}{evo.power} hp, which is rare now and is most of the reason to book it. The
+          {' '}<a href="/cars/huracan-evo-spyder" class="text-white underline decoration-white/30 underline-offset-4 hover:decoration-white">{spyder.name}</a> is
+          the same car with the roof gone in seventeen seconds, at {usd(spyder.price)}. Take the
+          Spyder if the drive is the plan and the coupé if you are parking somewhere you cannot
+          watch it.
+        </p>
+
+        <h3 class="font-display text-xl md:text-2xl font-bold text-white pt-4">What is the same whichever you take</h3>
+        <p>
+          Every rate includes {perDayMiles} miles a day, pooled across the booking rather than
+          capped daily — three days is {perDayMiles * 3} miles in total, spent however you like.
+          The deposit is {rentalTerms.deposit.display} flat on every car, returned after the car is
+          inspected on its way back. Delivery is {deliveryEachWaySummary}, to a hotel, a residence
+          or either airport.
+        </p>
+        <p>
+          Longer bookings cost less per day: {discountSummary}. The {sf90.name} runs its own ladder,
+          which the price on its page already reflects. Rates are published here and are the same
+          number for you as for anyone — see the full{' '}
+          <a href="/pricing" class="text-white underline decoration-white/30 underline-offset-4 hover:decoration-white">rate card and policies</a>.
+        </p>
+      </div>
+    </div>
+  </section>
 
   <!-- WHAT'S INCLUDED -->
   <section class="bg-black py-20 md:py-28">

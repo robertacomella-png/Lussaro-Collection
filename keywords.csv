@@ -3,8 +3,8 @@ exotic car rental miami,core,commercial,high,/exotic-car-rental-miami,covered,,,
 best exotic car rental miami,core,commercial,high,/best-exotic-car-rental-miami,cannibalization-risk,,,,Overlaps /exotic-car-rental-miami and homepage. Decide which page owns 'best' vs generic.
 luxury car rental miami,core,commercial,high,/,covered,,,,Homepage title already targets this alongside exotic.
 exotic car rental miami beach,core,commercial,high,/exotic-car-rental-south-beach,needs-work,,,,South Beach page covers part of this. Miami Beach is a distinct query.
-supercar rental miami,core,commercial,high,,gap,,,,No page. Distinct from 'exotic' and 'luxury' — buyer wants Ferrari/Lamborghini specifically.
-sports car rental miami,core,commercial,medium,,gap,,,,Lower value than supercar but same buyer.
+supercar rental miami,core,commercial,high,/fleet,covered,,,,"/fleet owns this from 6 Oct 2026. Distinct buyer from exotic/luxury, and /fleet is literally the supercar listing. No overlap with /exotic-car-rental-miami, which keeps the head term."
+sports car rental miami,core,commercial,medium,/fleet,needs-work,,,,"Adjacent to /fleet but the copy says supercar, not sports car. Left needs-work rather than claimed - marking it covered would be a lie to our own plan."
 exotic rental cars miami,core,commercial,medium,/exotic-car-rental-miami,covered,,,,Word-order variant. No separate page needed.
 rent exotic car miami,core,commercial,medium,/exotic-car-rental-miami,covered,,,,Verb-form variant.
 luxury suv rental miami,core,commercial,high,/luxury-suv-rental-miami,covered,,,,Urus and GLS 600 both qualify.
