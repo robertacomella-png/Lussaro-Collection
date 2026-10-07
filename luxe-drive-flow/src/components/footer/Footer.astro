@@ -20,16 +20,16 @@ const year = new Date().getFullYear();
     <div>
       <h4 class="text-white text-sm uppercase tracking-[0.25em] mb-4">Explore</h4>
       <ul class="space-y-3 text-white/60 text-sm">
+        {/* First in the column, deliberately. The footer renders on every page,
+            so this link is what gives the blog crawl equity sitewide — without
+            it a post is reachable only from the sitemap, which is how the first
+            one sat orphaned for two months. */}
+        <li><SmartLink href="/blog" class="hover:text-white transition-colors">Blog</SmartLink></li>
         <li><SmartLink href="/fleet" class="hover:text-white transition-colors">The fleet</SmartLink></li>
         <li><SmartLink href="/pricing" class="hover:text-white transition-colors">Pricing &amp; policies</SmartLink></li>
         <li><SmartLink href="/chauffeur-service-miami" class="hover:text-white transition-colors">Chauffeur service</SmartLink></li>
         <li><SmartLink href="/gallery" class="hover:text-white transition-colors">Photo gallery</SmartLink></li>
         <li><SmartLink href="/reviews" class="hover:text-white transition-colors">Reviews</SmartLink></li>
-        {/* The footer renders on every page, so this one link is what gives the
-            blog crawl equity sitewide. Without it a post is reachable only from
-            the sitemap, which is how the first one sat orphaned for two
-            months. */}
-        <li><SmartLink href="/blog" class="hover:text-white transition-colors">Rental guides</SmartLink></li>
         <li><SmartLink href="/about" class="hover:text-white transition-colors">Our story</SmartLink></li>
         <li><SmartLink href="/contact" class="hover:text-white transition-colors">Get in touch</SmartLink></li>
         <li><SmartLink href="/exotic-car-rental-miami" class="hover:text-white transition-colors">Exotic car rental in Miami</SmartLink></li>
