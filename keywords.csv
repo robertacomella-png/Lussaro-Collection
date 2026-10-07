@@ -31,7 +31,7 @@ rolls royce cullinan rental miami,car,commercial,medium,/cars/rolls-royce-cullin
 maybach rental miami,car,commercial,high,,gap,,,,No page. The GLS 600 is the founding car and also the chauffeur vehicle.
 mercedes maybach gls 600 rental miami,car,commercial,medium,/cars/mercedes-maybach-gls-600,needs-work,,,,Car page only. No landing page.
 mercedes rental miami,car,commercial,medium,,gap,,,,"Three Mercedes in fleet — S580, GLS 600, plus G63 on request."
-mercedes s class rental miami,car,commercial,medium,/cars/mercedes-s580,needs-work,,,,S580 at $445 is the entry car and the downsell target.
+mercedes s class rental miami,car,commercial,medium,/cars/mercedes-s580,needs-work,,,,S580 at $399 is the entry car and the downsell target.
 g wagon rental miami,car,commercial,medium,/g-wagon-rental-miami,needs-work,,,,"Page exists but G63 is sourced on request, not held. Copy must stay honest about that."
 mercedes g63 rental miami,car,commercial,low,/g-wagon-rental-miami,needs-work,,,,Same caveat as g wagon.
 exotic car rental south beach,location,commercial,high,/exotic-car-rental-south-beach,covered,,,,
@@ -74,7 +74,7 @@ weekend exotic car rental miami,duration,commercial,medium,,gap,,,,Matches actua
 exotic car rental miami reddit,research,informational,low,,do-not-target,,,,Cannot own. Monitor for brand mentions instead.
 exotic car rental miami reviews,research,commercial,medium,/reviews,covered,,,,"5 reviews, all 5-star."
 lamborghini huracan evo vs spyder rental miami,comparison,informational,high,,gap,,,,"We rent both - coupe $1199 and Spyder $1299. Same V10, same price band, a genuine agonizing choice. No competitor owns both sides."
-mercedes s580 vs maybach s580 rental miami,comparison,informational,high,,gap,,,,"Uniquely ours: we run both S-Classes, $399 and $899. Nobody else can write this with real numbers on both."
+mercedes s580 vs maybach s580 rental miami,comparison,informational,high,/blog/mercedes-s580-vs-maybach-s580-rental-miami,covered,,,,"First post in the comparison cluster. We run both S-Classes, $399 and $899."
 lamborghini urus vs g63 rental miami,comparison,informational,high,,gap,,,,"The classic Miami performance-SUV decision. $999 vs $799, both in our fleet."
 lamborghini urus vs rolls royce cullinan rental miami,comparison,informational,medium,,gap,,,,"Performance against presence. $999 vs $1299, both ours."
 maybach gls 600 vs rolls royce cullinan rental miami,comparison,informational,medium,,gap,,,,"Luxury SUV head to head, Maybach against Rolls. $899 vs $1299."

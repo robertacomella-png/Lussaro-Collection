@@ -45,6 +45,16 @@ const ALT = {
     'Low front view of the purple Lamborghini Urus rental on cobblestones under a bright Miami sky',
   '/gallery/gallery-9.jpg':
     'Interior of the Lamborghini Urus rental with quilted leather seats, Lamborghini crest headrests and panoramic sunroof',
+
+  // --- Maybach S580, viewed before writing (for the S580 comparison post) ----
+  // The grandstand behind the car is left undescribed beyond "graffitied
+  // concrete" on purpose: it looks like a known Miami structure, but naming a
+  // landmark we have not confirmed would be asserting something the photo only
+  // suggests.
+  '/cars/mercedes-maybach-s580-rental-miami-side-profile.jpg':
+    'Two-tone Mercedes-Maybach S580 rental in side profile, cream over black with the Maybach monogram on the rear pillar, parked on open concrete in front of a graffitied grandstand and palm trees in Miami',
+  '/cars/mercedes-maybach-s580-rental-miami-executive-rear-seats.jpg':
+    'Rear cabin of the Mercedes-Maybach S580 rental with the right-hand seat reclined and its calf rest raised, white diamond-quilted leather, loose pillows and a screen on the seatback',
 };
 
 // Strip ImageKit transforms / cache-busting params so callers may pass either

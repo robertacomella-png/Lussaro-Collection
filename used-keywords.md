@@ -13,6 +13,7 @@ This is what stops the site competing with itself — the failure mode where two
 | Primary keyword | Used on | Date | Cluster |
 |---|---|---|---|
 | how much is a rental lamborghini | [/blog/how-much-is-a-lamborghini-rental](../luxe-drive-flow/src/pages/blog/how-much-is-a-lamborghini-rental.astro) | 2026-08-14 | Lamborghini |
+| mercedes s580 vs maybach s580 rental miami | [/blog/mercedes-s580-vs-maybach-s580-rental-miami](../luxe-drive-flow/src/pages/blog/mercedes-s580-vs-maybach-s580-rental-miami.astro) | 2026-10-06 | Comparison |
 
 ---
 
@@ -30,6 +31,28 @@ This is what stops the site competing with itself — the failure mode where two
 - rent a lamborghini in miami
 
 **Why this primary and not `lamborghini rental`:** the commercial term belongs to `/lamborghini-rental-miami`, which already exists. Pointing a blog post at it would have split the same query across two pages. The informational term has no page competing for it, and it funnels to the landing page rather than fighting it.
+
+---
+
+### mercedes s580 vs maybach s580 rental miami
+**Post:** `/blog/mercedes-s580-vs-maybach-s580-rental-miami`
+**Date:** October 6, 2026
+
+**Secondaries used:**
+- mercedes s class rental miami
+- maybach s580 rental miami
+- mercedes s580 rental miami
+- difference between s580 and maybach s580
+- luxury sedan rental miami
+
+**Why this primary and not `mercedes s class rental miami`:** that commercial term belongs to
+`/cars/mercedes-s580`, which already targets it. The comparison phrasing is informational, has no
+page competing for it, and funnels into both car pages instead of fighting either. First post in the
+comparison cluster.
+
+**Note on the SERP:** it is dominated by car-buying content — KBB, CarBuzz, owner forums — rather
+than rental pages. The "rental miami" qualifier shifts intent, but this is a harder SERP than the
+keyword's gap status suggests, and it was written knowing that.
 
 ---
 
