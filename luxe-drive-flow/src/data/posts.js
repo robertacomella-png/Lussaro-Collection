@@ -17,7 +17,11 @@
 export const posts = [
   {
     slug: 'well-kept-exotic-car-rental-miami',
-    title: "Why Our Miami Exotic Rentals Don't Smell of Smoke",
+    // Matches the post's own <title> verbatim, by the owner's call on 10 Oct.
+    // The other two entries keep a shorter card-specific headline; this one
+    // leads with the brand on purpose, so the name shows on /blog and in every
+    // RelatedPosts card as well as in the SERP.
+    title: 'Lussaro Collection Keeps its Miami Exotics Smoke-Free',
     excerpt:
       'Every company in this city says the cars are immaculate. Here is what we actually do between rentals, and the three things you can check yourself before handing anyone a deposit.',
     published: '2026-10-07',

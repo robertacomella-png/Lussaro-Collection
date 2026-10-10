@@ -66,9 +66,17 @@ const readingMinutes = 7;
 
 // Two constraints met at once: no apostrophe ("Don't" becomes an HTML entity
 // and blew the 60-character limit), and short enough that the suffix can be the
-// FULL brand rather than "| Lussaro" — this post is meant to hold brand-SERP
-// space, and the exact string is what a brand search matches.
-const TITLE = 'Keeping Our Miami Exotics Smoke-Free';
+// The brand LEADS the title now, rather than trailing after a pipe. Google
+// stripped the "| Lussaro Collection" suffix from the live SERP — it already
+// prints the site name above the blue link, so a trailing brand is redundant
+// and gets cut. A leading brand cannot be cut without mangling the sentence,
+// which is the entire point: this post is meant to hold brand-SERP space.
+//
+// Two constraints fixed this wording. "Collection" is singular — the company
+// name in business.js — and a plural would miss the brand query it exists to
+// match. "Miami" stays because without it the title is 47 characters and fails
+// verify.py's 50-60 range, and it is the geo qualifier for the target term.
+const TITLE = 'Lussaro Collection Keeps its Miami Exotics Smoke-Free';
 const waMessage = 'Hi, I read the piece on how you keep the cars. Which are open for my dates?';
 const wa = whatsappWith(waMessage);
 
@@ -152,7 +160,7 @@ const faqSchema = {
 const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addressLine)}`;
 ---
 <Layout
-  title={`${TITLE} | Lussaro Collection`}
+  title={TITLE}
   description={'A well kept exotic car rental in Miami comes down to three things you can check before you book. What we do between rentals, and why cheap rates wear cars out.'}
   image={OG_IMAGE}
   type="article"
