@@ -2,11 +2,12 @@ import { getImageKitSrc, getImageKitSrcSet, getImageKitSizes } from "@/lib/image
 import { business, whatsappWith } from "@/data/business";
 
 export default function FleetCard({ car, onOpen }) {
-  const message = encodeURIComponent(
-    car.comingSoon
-      ? `Hi, I'd like to reserve the ${car.name} early — I hear it's arriving soon.`
-      : `Hi, I'm interested in booking the ${car.name}.`
-  );
+  // Raw, not encoded: whatsappWith does the encoding. This used to be wrapped
+  // in encodeURIComponent and then encoded again, so the message arrived in
+  // WhatsApp full of %20 and %27.
+  const message = car.comingSoon
+    ? `Hi, I'd like to reserve the ${car.name} early — I hear it's arriving soon.`
+    : `Hi, I'm interested in booking the ${car.name}.`;
 
   const imageSrc = getImageKitSrc(car.images?.[0] || car.image, 700);
   // A car is on sale only when fleet.js gives it an explicit wasPrice. There
@@ -95,7 +96,7 @@ export default function FleetCard({ car, onOpen }) {
         </div>
 
         <a
-          href={whatsappWith(message)}
+          href={whatsappWith(message, { car: car.name })}
           target="_blank"
           rel="noopener noreferrer"
           onClick={(e) => e.stopPropagation()}

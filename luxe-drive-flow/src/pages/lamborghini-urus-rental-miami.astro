@@ -1,0 +1,364 @@
+---
+// /lamborghini-urus-rental-miami — paid-traffic funnel for the Urus ads.
+//
+// Same shape as /maybach-rental-miami: hook, offer, proof, compare, ask,
+// objections, close. Built standalone rather than on LandingLayout, because an
+// ad click needs the price and the form before any prose.
+//
+// Targeting, carefully: this page owns `lamborghini urus rental miami`, which
+// keywords.csv had pointed at the car page. It must NOT compete on
+// `lamborghini rental miami` (owned by /lamborghini-rental-miami, locked) or on
+// `luxury suv rental miami` (owned by /luxury-suv-rental-miami). The marque
+// appears, the category does not.
+import Layout from '@/layouts/Layout.astro';
+import Nav from '@/components/site/Nav.astro';
+import SmartLink from '@/components/site/SmartLink.astro';
+import CtaBand from '@/components/site/CtaBand.astro';
+import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
+import BookingRequestCard from '@/components/booking/BookingRequestCard.jsx';
+import CarGallery from '@/components/fleet/CarGallery.jsx';
+import { cars } from '@/data/cars';
+import { rentalTerms, deliveryEachWaySummary } from '@/data/rental-terms';
+import { reviews, averageRating } from '@/data/reviews';
+import { business, telHref, whatsappWith } from '@/data/business';
+
+const SITE = 'https://www.lussarocollection.com';
+
+const urus = cars.find((c) => c.slug === 'lamborghini-urus');
+const priceDisplay = urus.price.toLocaleString('en-US');
+const onSale = urus.wasPrice > urus.price;
+
+const milesPerDay = urus.miles ?? rentalTerms.mileage.includedPerDay;
+const overage = rentalTerms.mileage.overagePerMile;
+const tiers = urus.discountTiers ?? rentalTerms.discountTiers;
+const weekPct = tiers.reduce((acc, t) => (7 >= t.days ? t.pct : acc), 0);
+const miamiDelivery = rentalTerms.delivery.find((d) => d.area === 'Miami');
+
+// Only reviews naming this marque. One today; a second appears on its own.
+const uruReviews = reviews.filter((r) => (r.car ?? '').includes('Lamborghini'));
+
+// The car's own shots plus the Urus gallery, which already carries written alt
+// text in image-alt.js — gallery-1 is excluded because it is two cars.
+const galleryImages = [
+  ...urus.images.filter((i) => i.startsWith('/cars/')),
+  '/gallery/gallery-2.jpg',
+  '/gallery/gallery-4.jpg',
+  '/gallery/gallery-6.jpg',
+  '/gallery/gallery-9.jpg',
+];
+
+// The rest of the SUV line-up, derived. Never a hardcoded list, and never a
+// count — cars come and go.
+const otherSuvs = cars.filter(
+  (c) => c.slug !== urus.slug && ['mercedes-amg-g63', 'rolls-royce-cullinan', 'mercedes-maybach-gls-600'].includes(c.slug),
+);
+
+const waMessage = `Hi, I'd like to rent the Lamborghini Urus in Miami. Which dates do you have open?`;
+const wa = whatsappWith(waMessage, { car: urus.name, page: '/lamborghini-urus-rental-miami' });
+
+const objections = [
+  {
+    q: 'Is the price negotiable?',
+    a: `Our price is published, and it is the same number for you as for anyone. $${priceDisplay} a day is what you will be quoted on the phone, in a message, or on this page.`,
+  },
+  {
+    q: 'What happens if I go over the included miles?',
+    a: `${milesPerDay} miles a day are included and pooled across the whole booking, so three days is ${milesPerDay * 3} miles in total rather than a daily cap.${overage ? ` Anything past that is $${overage} a mile, and it can come out of your deposit.` : ''} Only the total showing at return is counted.`,
+  },
+  {
+    q: 'What is the deposit, and when do I get it back?',
+    a: `${rentalTerms.deposit.display}, flat on every vehicle. ${rentalTerms.deposit.note}`,
+  },
+  {
+    q: 'Do I need my own insurance?',
+    a: `${rentalTerms.insurance.summary} You also need to be ${rentalTerms.minimumAge} or over with a valid driver's license. If coverage has to be arranged, the rate is confirmed in writing before you book rather than added at handover.`,
+  },
+  {
+    q: 'What condition will the car be in?',
+    a: `Detailed between every rental, with an ozone treatment afterwards to clear the cabin. That only works if the car was cleaned properly first, so we make sure it was.`,
+  },
+  {
+    q: 'Can you deliver it?',
+    a: `Delivery ${deliveryEachWaySummary}. Collection at the end is charged separately, so budget roughly double for a round trip. Hotels, Brickell addresses, South Beach and both airports are routine.`,
+  },
+];
+
+const productSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: `${urus.make} ${urus.name.replace(`${urus.make} `, '')} Rental — Miami`,
+  description: `Rent the Lamborghini Urus in Miami at $${priceDisplay} a day. ${urus.power} hp, ${urus.zeroToSixty} to 60, delivered across Miami.`,
+  image: urus.images.filter((i) => i.startsWith('/cars/')).map((i) => `${SITE}${i}`),
+  brand: { '@type': 'Brand', name: urus.make },
+  sku: `LC-${urus.slug.toUpperCase()}-LP`,
+  offers: {
+    '@type': 'Offer',
+    url: `${SITE}/lamborghini-urus-rental-miami`,
+    price: urus.price.toFixed(2),
+    priceCurrency: 'USD',
+    availability: 'https://schema.org/InStock',
+    seller: { '@id': `${SITE}/#business` },
+    eligibleDuration: { '@type': 'QuantitativeValue', value: 1, unitCode: 'DAY' },
+  },
+  additionalProperty: [
+    { '@type': 'PropertyValue', name: 'Horsepower', value: urus.power, unitText: 'hp' },
+    { '@type': 'PropertyValue', name: '0–60 mph', value: parseFloat(urus.zeroToSixty), unitCode: 'SEC', unitText: 'seconds' },
+    { '@type': 'PropertyValue', name: 'Included mileage', value: milesPerDay, unitCode: 'SMI', unitText: 'miles per day' },
+  ],
+  // Legitimate only because the quote it describes is rendered on this page.
+  ...(uruReviews.length
+    ? {
+        aggregateRating: {
+          '@type': 'AggregateRating',
+          ratingValue: (uruReviews.reduce((a, r) => a + r.rating, 0) / uruReviews.length).toFixed(1),
+          reviewCount: uruReviews.length,
+        },
+        review: uruReviews.map((r) => ({
+          '@type': 'Review',
+          author: { '@type': 'Person', name: r.name },
+          reviewRating: { '@type': 'Rating', ratingValue: r.rating, bestRating: 5 },
+          reviewBody: r.text,
+        })),
+      }
+    : {}),
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: objections.map((o) => ({
+    '@type': 'Question',
+    name: o.q,
+    acceptedAnswer: { '@type': 'Answer', text: o.a },
+  })),
+};
+---
+<Layout
+  title="Lamborghini Urus Rental Miami | Lussaro Collection"
+  description={`Rent the Lamborghini Urus in Miami at $${priceDisplay} a day — ${urus.power} hp and ${urus.zeroToSixty} to 60. ${milesPerDay} miles a day included, ${rentalTerms.deposit.display} refundable deposit, delivered across Miami.`}
+  breadcrumbName="Lamborghini Urus Rental Miami"
+  schema={[productSchema, faqSchema]}
+>
+  <Nav />
+
+  {/* ============ 1. HOOK ============================================ */}
+  <header class="bg-[#0a0a0a] pt-28 md:pt-32 pb-10 md:pb-14">
+    <div class="max-w-[1240px] mx-auto px-5 md:px-8">
+      <h1 class="font-display text-center text-[2rem] leading-[1.08] md:text-5xl lg:text-[3.4rem] font-bold tracking-tight text-white uppercase">
+        Lamborghini Urus Rental Miami
+      </h1>
+
+      <div class="grid lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] gap-8 lg:gap-12 items-start mt-9 md:mt-12">
+        <div>
+          <CarGallery images={galleryImages} name={urus.name} slug="g-urus-landing" client:load />
+        </div>
+
+        <div class="text-center lg:text-left lg:pt-4">
+          <p class="text-white/55 text-sm uppercase tracking-[0.2em]">Starting at</p>
+          <p class="font-display text-white text-6xl md:text-7xl font-bold tracking-tight mt-2">
+            ${priceDisplay}
+            <span class="text-white/45 text-xl font-sans font-normal tracking-normal"> / day</span>
+          </p>
+          {onSale && (
+            <p class="text-white/50 text-sm mt-1.5">
+              <span class="line-through">${urus.wasPrice.toLocaleString('en-US')}</span>
+              <span aria-hidden="true"> · </span>${(urus.wasPrice - urus.price).toLocaleString('en-US')} off the standard rate
+            </p>
+          )}
+
+          <ul class="mt-6 space-y-1.5 text-white/70 text-[15px] leading-relaxed list-none p-0">
+            <li>{milesPerDay} miles per day included</li>
+            {overage && <li>${overage} per additional mile</li>}
+            <li>{rentalTerms.deposit.display} refundable security deposit</li>
+            <li>{rentalTerms.minimumAge}+ with qualifying insurance</li>
+          </ul>
+
+          <div class="mt-8 pt-7 border-t border-white/10 grid grid-cols-2 gap-6">
+            <div>
+              <p class="text-white/55 text-[11px] uppercase tracking-[0.16em]">Power</p>
+              <p class="font-display text-white text-3xl font-bold mt-1.5">{urus.power}<span class="text-lg text-white/55"> hp</span></p>
+              <p class="text-white/55 text-sm mt-0.5">{urus.drivetrain}</p>
+            </div>
+            <div>
+              <p class="text-white/55 text-[11px] uppercase tracking-[0.16em]">0–60</p>
+              <p class="font-display text-white text-3xl font-bold mt-1.5">{urus.zeroToSixty}</p>
+              <p class="text-white/55 text-sm mt-0.5">{urus.seats} seats</p>
+            </div>
+          </div>
+
+          <div class="mt-8 flex flex-col sm:flex-row lg:flex-col gap-3 justify-center lg:justify-start">
+            <a
+              href={wa}
+              data-cta="urus_hero"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center justify-center gap-2 bg-white text-black px-7 py-4 rounded-full font-semibold hover:bg-[#ff1516] hover:text-white transition sm:flex-1 lg:flex-none"
+            >
+              Message us <span class="w-2 h-2 rounded-full bg-[#1f7a3f]"></span>
+            </a>
+            <a
+              href={telHref}
+              data-cta="urus_hero"
+              data-call-inline
+              class="inline-flex items-center justify-center border border-white/25 text-white px-7 py-4 rounded-full font-medium hover:border-[#ff1516] hover:text-[#ff1516] transition sm:flex-1 lg:flex-none"
+            >
+              Call {business.phoneDisplayShort}
+            </a>
+          </div>
+
+          <p class="text-white/50 text-sm mt-5">
+            <span class="text-[#ff1516]" aria-hidden="true">★</span> {averageRating.toFixed(1)} on Google
+            <span aria-hidden="true"> · </span>Owner operated
+            <span aria-hidden="true"> · </span>Replies usually take minutes
+          </p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  {/* ============ 2. THE ASK ========================================== */}
+  <section id="quote" class="bg-[#ffffff] py-16 md:py-24">
+    <div class="max-w-[1240px] mx-auto px-5 md:px-8">
+      <div class="grid lg:grid-cols-[1fr_minmax(0,460px)] gap-10 lg:gap-14 items-center">
+        <div class="text-[#0a0a0a]">
+          <h2 class="font-display text-3xl md:text-[2.75rem] leading-[1.1] font-bold tracking-tight uppercase">
+            Reserve the Urus
+          </h2>
+          <p class="text-[#0a0a0a]/70 text-lg leading-relaxed mt-4 max-w-lg">
+            Send us your name and number and we will come back with what is open, the total, and
+            delivery if you want it brought to you. No deposit to ask.
+          </p>
+          <ul class="mt-7 space-y-2.5 list-none p-0 max-w-lg">
+            {[
+              'The published rate, with any multi-day discount already applied',
+              'Delivery quoted up front, not added at handover',
+              'If the Urus is out on your dates, we say so rather than switch you',
+            ].map((line) => (
+              <li class="flex gap-3 text-[#0a0a0a]/75 text-[15px] leading-relaxed">
+                <span aria-hidden="true" class="text-[#e00e10] font-bold">✓</span>{line}
+              </li>
+            ))}
+          </ul>
+          <p class="mt-7 text-[#0a0a0a]/70 text-sm">
+            Or call <a href={telHref} data-cta="urus_form_band" class="text-[#e00e10] font-semibold underline underline-offset-4">{business.phoneDisplay}</a>
+          </p>
+        </div>
+
+        {/* The card is translucent white over #0a0a0a; it keeps its own dark
+            ground so nothing inside it composites against the white band. */}
+        <div class="rounded-[30px] bg-[#0a0a0a] p-5 md:p-7 shadow-[0_26px_70px_rgba(0,0,0,0.25)]">
+          <BookingRequestCard
+            client:visible
+            pricePerDay={urus.price}
+            carName={urus.name}
+            tiers={tiers}
+            milesPerDay={milesPerDay}
+            allowDates={false}
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ 3. PROOF ============================================ */}
+  {uruReviews.length > 0 && (
+    <section class="bg-[#0a0a0a] py-14 md:py-20">
+      <div class="max-w-[1240px] mx-auto px-5 md:px-8">
+        <h2 class="font-display text-2xl md:text-3xl font-bold tracking-tight text-white">
+          People who booked a Lamborghini
+        </h2>
+        <div class="grid md:grid-cols-2 gap-5 mt-7">
+          {uruReviews.slice(0, 2).map((r) => (
+            <figure class="rounded-[22px] bg-[#0f0f0f] border border-white/10 p-6">
+              <div class="text-[#ff1516]" aria-hidden="true">★★★★★</div>
+              <blockquote class="text-white/70 leading-relaxed mt-3 text-[15px]">{r.text}</blockquote>
+              <figcaption class="text-white/55 text-xs mt-4">
+                {r.name}<span aria-hidden="true"> · </span>{r.car}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+        <p class="text-white/50 text-sm mt-6">
+          <SmartLink href="/reviews" class="text-white underline decoration-white/30 underline-offset-4 hover:decoration-white transition">Read every review we have</SmartLink>
+        </p>
+      </div>
+    </section>
+  )}
+
+  {/* ============ 4. COMPARE ==========================================
+      One car, so there is no "which of the two" decision to resolve. The
+      useful question instead is what else in the fleet sits at this size,
+      which is also the strongest internal link block on the page. */}
+  <section class="bg-[#ffffff] text-[#0a0a0a] py-16 md:py-24">
+    <div class="max-w-[1240px] mx-auto px-5 md:px-8">
+      <h2 class="font-display text-3xl md:text-4xl font-bold tracking-tight">
+        If the Urus is not quite the arrival you want
+      </h2>
+      <p class="text-[#0a0a0a]/60 mt-3 max-w-2xl">
+        It is the loudest way to turn up in an SUV. These are the other three, and they say
+        something different.
+      </p>
+
+      <div class="grid md:grid-cols-3 gap-6 mt-10">
+        {otherSuvs.map((c) => (
+          <article class="rounded-[22px] border border-[#0a0a0a]/12 p-6">
+            <h3 class="font-display text-xl font-bold">{c.make} {c.name.replace(`${c.make} `, '')}</h3>
+            <p class="text-[#0a0a0a]/60 text-sm mt-2">
+              {c.power} hp<span aria-hidden="true"> · </span>{c.zeroToSixty} to 60
+            </p>
+            <p class="text-[#0a0a0a] font-display text-2xl font-bold mt-3">
+              ${c.price.toLocaleString('en-US')}<span class="text-sm font-sans font-normal text-[#0a0a0a]/55"> / day</span>
+            </p>
+            <SmartLink
+              href={`/cars/${c.slug}`}
+              class="mt-4 inline-flex items-center gap-1.5 text-[#e00e10] text-sm font-medium underline underline-offset-4"
+            >
+              See the {c.name.replace(`${c.make} `, '')} →
+            </SmartLink>
+          </article>
+        ))}
+      </div>
+
+      <p class="text-[#0a0a0a]/65 leading-relaxed mt-10 max-w-3xl">
+        The Urus also appears in our{' '}
+        <SmartLink href="/blog/how-much-is-a-lamborghini-rental" class="text-[#e00e10] underline underline-offset-4">Lamborghini pricing guide</SmartLink>, and
+        the other Lamborghini we rent is on the{' '}
+        <SmartLink href="/lamborghini-rental-miami" class="text-[#e00e10] underline underline-offset-4">Lamborghini page</SmartLink>. Full specification and
+        photographs for this car sit on its{' '}
+        <SmartLink href={`/cars/${urus.slug}`} class="text-[#e00e10] underline underline-offset-4">own page</SmartLink>.
+      </p>
+    </div>
+  </section>
+
+  {/* ============ 5. OBJECTIONS ======================================= */}
+  <section class="bg-[#0a0a0a] py-16 md:py-24">
+    <div class="max-w-3xl mx-auto px-5 md:px-8">
+      <h2 class="font-display text-3xl md:text-4xl font-bold tracking-tight text-white">
+        The questions worth asking
+      </h2>
+      <div class="mt-10 divide-y divide-white/10">
+        {objections.map((o) => (
+          <div class="py-6 first:pt-0">
+            <h3 class="font-display text-lg md:text-xl font-semibold text-white">{o.q}</h3>
+            <p class="text-white/65 leading-relaxed mt-2.5">{o.a}</p>
+          </div>
+        ))}
+      </div>
+      <p class="text-white/60 leading-relaxed mt-10">
+        How we keep the cars between rentals is written up{' '}
+        <SmartLink href="/blog/well-kept-exotic-car-rental-miami" class="text-white underline decoration-white/30 underline-offset-4 hover:decoration-white transition">here</SmartLink>, and full terms sit on{' '}
+        <SmartLink href="/pricing" class="text-white underline decoration-white/30 underline-offset-4 hover:decoration-white transition">the pricing page</SmartLink>.
+      </p>
+    </div>
+  </section>
+
+  {/* ============ 6. CLOSE ============================================ */}
+  <CtaBand
+    car={urus.name}
+    page="/lamborghini-urus-rental-miami"
+    message={waMessage}
+    title={'Open the door and check.\nThat is the whole <span class="text-[#ff1516]">argument</span>'}
+    subtitle={`The Urus at $${priceDisplay} a day, delivered across Miami. Replies usually take minutes.`}
+  />
+  <StickyMobileCta message={waMessage} car={urus.name} page="/lamborghini-urus-rental-miami" />
+</Layout>

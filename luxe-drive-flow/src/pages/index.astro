@@ -11,6 +11,9 @@ import WhatsAppIcon from '@/components/site/WhatsAppIcon.astro';
 import { business, telHref, whatsappWith } from '@/data/business';
 import { cars } from '@/data/cars';
 import { rentalTerms, deliveryEachWaySummary, discountSummary } from '@/data/rental-terms';
+// Derived so every WhatsApp link says which page it was tapped from without
+// a path being threaded through each route by hand.
+const waPage = Astro.url.pathname.replace(/(.)\/$/, '$1');
 
 const SITE = 'https://www.lussarocollection.com';
 const usd = (n) => `$${n.toLocaleString('en-US')}`;
@@ -34,7 +37,7 @@ const fleetSchema = {
 
 const heroWa = whatsappWith(
   "Hi, I'd like to book a car with Lussaro Collection. Which dates do you have open?"
-);
+, { page: waPage });
 ---
 <Layout
   title="Luxury & Exotic Car Rental Miami | Lussaro Collection"

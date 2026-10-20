@@ -1,0 +1,384 @@
+---
+// /maybach-rental-miami — paid-traffic funnel for the Maybach ads.
+//
+// Built from the ground up rather than on LandingLayout. The nine SEO landing
+// pages are shaped for organic readers: hero, fleet grid, prose, form at the
+// bottom. An ad click is a different visitor with a different clock. They have
+// three questions and about five seconds — is this a real company, what does it
+// actually cost, and what is the catch — and the page is ordered to answer them
+// in that sequence before asking for anything.
+//
+// Funnel order: hook -> offer -> proof -> choice -> ask -> objections -> close.
+// Every figure reads from fleet.js / rental-terms.js / business.js, so repricing
+// a Maybach updates the headline, the schema and the FAQ in one build.
+import Layout from '@/layouts/Layout.astro';
+import Nav from '@/components/site/Nav.astro';
+import SmartLink from '@/components/site/SmartLink.astro';
+import CtaBand from '@/components/site/CtaBand.astro';
+import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
+import BookingRequestCard from '@/components/booking/BookingRequestCard.jsx';
+import CarGallery from '@/components/fleet/CarGallery.jsx';
+import { cars } from '@/data/cars';
+import { rentalTerms, deliveryEachWaySummary } from '@/data/rental-terms';
+import { reviews, averageRating } from '@/data/reviews';
+import { business, telHref, whatsappWith } from '@/data/business';
+import { getImageKitSrc, getImageKitSrcSet } from '@/lib/imageKit';
+import { altFor } from '@/data/image-alt';
+
+const SITE = 'https://www.lussarocollection.com';
+
+const maybachs = cars.filter((c) => c.name.includes('Maybach'));
+const suv = maybachs.find((c) => c.slug === 'mercedes-maybach-gls-600');
+const sedan = maybachs.find((c) => c.slug === 'mercedes-maybach-s580');
+const maybachFrom = Math.min(...maybachs.map((c) => c.price));
+const fromDisplay = maybachFrom.toLocaleString('en-US');
+
+const milesPerDay = rentalTerms.mileage.includedPerDay;
+const overage = rentalTerms.mileage.overagePerMile;
+const tiers = rentalTerms.discountTiers;
+const weekPct = tiers.reduce((acc, t) => (7 >= t.days ? t.pct : acc), 0);
+const miamiDelivery = rentalTerms.delivery.find((d) => d.area === 'Miami');
+
+// Filtered off the `car` field rather than hand-picked, so a new Maybach review
+// appears on its own and a reordered reviews.js cannot swap in the wrong quote.
+const maybachReviews = reviews.filter((r) => (r.car ?? '').includes('Maybach'));
+
+const heroPhoto = '/cars/mercedes-maybach-gls-600-rental-miami-side-palms.jpg';
+const galleryImages = maybachs.flatMap((c) => c.images.slice(0, 4));
+
+const waMessage = `Hi, I'd like to rent a Maybach in Miami. Which dates do you have open?`;
+const wa = whatsappWith(waMessage, { car: 'Maybach', page: '/maybach-rental-miami' });
+
+// The objection list IS the FAQ schema — written once, rendered on the page and
+// emitted as structured data, so the two can never say different things.
+const objections = [
+  {
+    q: 'Is the price negotiable?',
+    a: `Our price is published, and it is the same number for you as for anyone. $${fromDisplay} a day is what you will be quoted on the phone, in a message, or on this page. We would rather you knew that before you spent an afternoon collecting quotes.`,
+  },
+  {
+    q: 'What happens if I go over the included miles?',
+    a: `${milesPerDay} miles a day are included and pooled across the whole booking, so three days is ${milesPerDay * 3} miles in total rather than a daily cap.${overage ? ` Anything past that is $${overage} a mile, and it can come out of your deposit.` : ''} Only the total showing at return is counted.`,
+  },
+  {
+    q: 'What is the deposit for, and when do I get it back?',
+    a: `${rentalTerms.deposit.display}, flat on every vehicle. ${rentalTerms.deposit.note}`,
+  },
+  {
+    q: 'Do I need my own insurance?',
+    a: `${rentalTerms.insurance.summary} You also need to be ${rentalTerms.minimumAge} or over with a valid driver's license. If coverage has to be arranged, the rate is confirmed in writing before you book rather than added at handover.`,
+  },
+  {
+    q: 'What condition will the car actually be in?',
+    a: `Detailed between every rental, with an ozone treatment afterwards to clear the cabin. That only works if the car was cleaned properly first, so we make sure it was. The three things you can check yourself are written up on our blog.`,
+  },
+  {
+    q: 'Can you deliver it?',
+    a: `Delivery ${deliveryEachWaySummary}. Collection at the end is charged separately, so budget roughly double for a round trip. Hotels, Brickell addresses, South Beach and both airports are routine, and anywhere further is quoted before you commit.`,
+  },
+];
+
+const productSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: 'Mercedes-Maybach Rental — Miami',
+  description: `Rent a Mercedes-Maybach in Miami from $${fromDisplay} a day. The GLS 600 SUV or the S580 executive sedan, delivered across Miami.`,
+  image: maybachs.map((c) => `${SITE}${c.images[0]}`),
+  brand: { '@type': 'Brand', name: 'Mercedes-Maybach' },
+  sku: 'LC-MAYBACH-MIAMI',
+  offers: {
+    '@type': 'AggregateOffer',
+    url: `${SITE}/maybach-rental-miami`,
+    lowPrice: maybachFrom.toFixed(2),
+    highPrice: Math.max(...maybachs.map((c) => c.price)).toFixed(2),
+    priceCurrency: 'USD',
+    offerCount: maybachs.length,
+    availability: 'https://schema.org/InStock',
+    seller: { '@id': `${SITE}/#business` },
+  },
+  // Legitimate here, unlike on the car pages: the quotes these describe are
+  // rendered below, and the count covers only the Maybach reviews shown.
+  ...(maybachReviews.length
+    ? {
+        aggregateRating: {
+          '@type': 'AggregateRating',
+          ratingValue: (
+            maybachReviews.reduce((a, r) => a + r.rating, 0) / maybachReviews.length
+          ).toFixed(1),
+          reviewCount: maybachReviews.length,
+        },
+        review: maybachReviews.map((r) => ({
+          '@type': 'Review',
+          author: { '@type': 'Person', name: r.name },
+          reviewRating: { '@type': 'Rating', ratingValue: r.rating, bestRating: 5 },
+          reviewBody: r.text,
+        })),
+      }
+    : {}),
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: objections.map((o) => ({
+    '@type': 'Question',
+    name: o.q,
+    acceptedAnswer: { '@type': 'Answer', text: o.a },
+  })),
+};
+---
+<Layout
+  title={`Maybach Rental Miami from $${fromDisplay} a Day | Lussaro Collection`}
+  description={`Rent a Mercedes-Maybach in Miami from $${fromDisplay} a day — the GLS 600 SUV or the S580 executive sedan. ${milesPerDay} miles a day included, ${rentalTerms.deposit.display} deposit, delivered in Miami.`}
+  breadcrumbName="Maybach Rental Miami"
+  schema={[productSchema, faqSchema]}
+>
+  <Nav />
+
+  {/* ============ 1. HOOK =============================================
+      Structure taken from the page that already wins this term: centred
+      H1, car gallery on the left, and a spec column on the right that
+      leads with the price and then answers the terms questions in the
+      same breath. Everything a visitor needs to qualify themselves sits
+      in one screen, before any prose. */}
+  <header class="bg-[#0a0a0a] pt-28 md:pt-32 pb-10 md:pb-14">
+    <div class="max-w-[1240px] mx-auto px-5 md:px-8">
+      <h1 class="font-display text-center text-[2rem] leading-[1.08] md:text-5xl lg:text-[3.4rem] font-bold tracking-tight text-white uppercase">
+        Mercedes-Maybach Rental Miami
+      </h1>
+
+      <div class="grid lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] gap-8 lg:gap-12 items-start mt-9 md:mt-12">
+        <div>
+          <CarGallery images={galleryImages} name="Maybach" slug="g-maybach-landing" client:load />
+        </div>
+
+        {/* Spec column. Price first and large, then the four facts that
+            decide whether someone keeps reading, then the numbers people
+            actually look up. */}
+        <div class="text-center lg:text-left lg:pt-4">
+          <p class="text-white/55 text-sm uppercase tracking-[0.2em]">Starting at</p>
+          <p class="font-display text-white text-6xl md:text-7xl font-bold tracking-tight mt-2">
+            ${fromDisplay}
+            <span class="text-white/45 text-xl font-sans font-normal tracking-normal"> / day</span>
+          </p>
+
+          <ul class="mt-6 space-y-1.5 text-white/70 text-[15px] leading-relaxed list-none p-0">
+            <li>{milesPerDay} miles per day included</li>
+            {overage && <li>${overage} per additional mile</li>}
+            <li>{rentalTerms.deposit.display} refundable security deposit</li>
+            <li>{rentalTerms.minimumAge}+ with qualifying insurance</li>
+          </ul>
+
+          <div class="mt-8 pt-7 border-t border-white/10 grid grid-cols-2 gap-6">
+            {maybachs.map((c) => (
+              <div>
+                <p class="text-white/55 text-[11px] uppercase tracking-[0.16em]">{c.name}</p>
+                <p class="font-display text-white text-3xl font-bold mt-1.5">{c.power}<span class="text-lg text-white/55"> hp</span></p>
+                <p class="text-white/55 text-sm mt-0.5">{c.zeroToSixty} to 60</p>
+              </div>
+            ))}
+          </div>
+
+          <div class="mt-8 flex flex-col sm:flex-row lg:flex-col gap-3 justify-center lg:justify-start">
+            <a
+              href={wa}
+              data-cta="maybach_hero"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center justify-center gap-2 bg-white text-black px-7 py-4 rounded-full font-semibold hover:bg-[#ff1516] hover:text-white transition sm:flex-1 lg:flex-none"
+            >
+              Message us <span class="w-2 h-2 rounded-full bg-[#1f7a3f]"></span>
+            </a>
+            <a
+              href={telHref}
+              data-cta="maybach_hero"
+              data-call-inline
+              class="inline-flex items-center justify-center border border-white/25 text-white px-7 py-4 rounded-full font-medium hover:border-[#ff1516] hover:text-[#ff1516] transition sm:flex-1 lg:flex-none"
+            >
+              Call {business.phoneDisplayShort}
+            </a>
+          </div>
+
+          <p class="text-white/50 text-sm mt-5">
+            <span class="text-[#ff1516]" aria-hidden="true">★</span> {averageRating.toFixed(1)} on Google
+            <span aria-hidden="true"> · </span>Owner operated
+            <span aria-hidden="true"> · </span>Replies usually take minutes
+          </p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  {/* ============ 2. THE ASK ==========================================
+      A full-bleed block, the way their amber form band works: the one
+      thing on the page you cannot scroll past. The ground is white, not
+      brand red — index.css defines #ff1516 as an accent (wordmark, one
+      hero word, stars, badges), and a saturated red field reads discount
+      rather than Maybach. Black-to-white is the harder visual break of
+      the two anyway, and red survives here as the tick marks, in #e00e10
+      because #ff1516 on white measures 3.91:1 and fails. */}
+  <section id="quote" class="bg-[#ffffff] py-16 md:py-24">
+    <div class="max-w-[1240px] mx-auto px-5 md:px-8">
+      <div class="grid lg:grid-cols-[1fr_minmax(0,460px)] gap-10 lg:gap-14 items-center">
+        <div class="text-[#0a0a0a]">
+          <h2 class="font-display text-3xl md:text-[2.75rem] leading-[1.1] font-bold tracking-tight uppercase">
+            Reserve your Maybach
+          </h2>
+          <p class="text-[#0a0a0a]/70 text-lg leading-relaxed mt-4 max-w-lg">
+            Send us your name and number and we will come back with what is open, the total,
+            and delivery if you want it brought to you. No deposit to ask.
+          </p>
+          <ul class="mt-7 space-y-2.5 list-none p-0 max-w-lg">
+            {[
+              'The published rate, with any multi-day discount already applied',
+              'Delivery quoted up front, not added at handover',
+              'If both Maybachs are out, we say so rather than switch you',
+            ].map((line) => (
+              <li class="flex gap-3 text-[#0a0a0a]/75 text-[15px] leading-relaxed">
+                <span aria-hidden="true" class="text-[#e00e10] font-bold">✓</span>{line}
+              </li>
+            ))}
+          </ul>
+          <p class="mt-7 text-[#0a0a0a]/70 text-sm">
+            Or call <a href={telHref} data-cta="maybach_form_band" class="text-[#e00e10] font-semibold underline underline-offset-4">{business.phoneDisplay}</a>
+          </p>
+        </div>
+
+        {/* BookingRequestCard is built from translucent white over #0a0a0a.
+            Dropped straight onto the red band its field fills composite to
+            (255,40,41) and the labels on them measure 2.06:1 — unreadable,
+            which is exactly how it looked. The card keeps its own near-black
+            ground here, so every surface inside it composites as designed
+            (6.77:1) and the band stays loud around it. */}
+        <div class="rounded-[30px] bg-[#0a0a0a] p-5 md:p-7 shadow-[0_26px_70px_rgba(0,0,0,0.38)]">
+          <BookingRequestCard
+            client:visible
+            pricePerDay={maybachFrom}
+            carName="Maybach"
+            tiers={tiers}
+            milesPerDay={milesPerDay}
+            allowDates={false}
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ 3. PROOF ============================================
+      Real quotes, high on the page, both naming the Maybach. */}
+  {maybachReviews.length > 0 && (
+    <section class="bg-[#0a0a0a] py-14 md:py-20">
+      <div class="max-w-[1180px] mx-auto px-5 md:px-8">
+        <h2 class="font-display text-2xl md:text-3xl font-bold tracking-tight text-white">
+          People who booked this car
+        </h2>
+        <div class="grid md:grid-cols-2 gap-5 mt-7">
+          {maybachReviews.slice(0, 2).map((r) => (
+            <figure class="rounded-[22px] bg-[#0f0f0f] border border-white/10 p-6">
+              <div class="text-[#ff1516]" aria-hidden="true">★★★★★</div>
+              <blockquote class="text-white/70 leading-relaxed mt-3 text-[15px]">{r.text}</blockquote>
+              <figcaption class="text-white/55 text-xs mt-4">
+                {r.name}<span aria-hidden="true"> · </span>{r.car}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+        <p class="text-white/50 text-sm mt-6">
+          <SmartLink href="/reviews" class="text-white underline decoration-white/30 underline-offset-4 hover:decoration-white transition">Read every review we have</SmartLink>
+        </p>
+      </div>
+    </section>
+  )}
+
+  {/* ============ 4. THE CHOICE =======================================
+      Two cars at one price is a decision, and an undecided visitor
+      leaves. "Pick this if" removes the deliberation. */}
+  <section class="bg-[#ffffff] text-[#0a0a0a] py-16 md:py-24">
+    <div class="max-w-[1180px] mx-auto px-5 md:px-8">
+      <h2 class="font-display text-3xl md:text-4xl font-bold tracking-tight">
+        Two Maybachs, one price. Which one?
+      </h2>
+      <p class="text-[#0a0a0a]/60 mt-3 max-w-2xl">
+        Both are ${fromDisplay} a day, so this is not a budget decision. It is a decision about
+        whether you want to be driving or sitting.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-6 md:gap-8 mt-10">
+        {[
+          { car: suv, when: 'Pick this if people are coming with you', why: 'The SUV. Sits high, carries luggage, and nobody fights for space on the way to dinner.' },
+          { car: sedan, when: 'Pick this if you would rather be driven', why: 'The sedan. The rear is the point — reclining seats behind double-glazed glass that takes most of Miami out of the conversation.' },
+        ].map(({ car, when, why }) => (
+          <article class="rounded-[26px] border border-[#0a0a0a]/12 overflow-hidden flex flex-col">
+            <div class="relative aspect-[16/10] bg-[#f3f3f3]">
+              <img
+                src={getImageKitSrc(car.images[0], 800)}
+                srcset={getImageKitSrcSet(car.images[0])}
+                sizes="(min-width: 768px) 50vw, 100vw"
+                alt={altFor(car.images[0], `${car.make} ${car.name} rental in Miami`)}
+                width="800"
+                height="500"
+                loading="lazy"
+                decoding="async"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="p-6 md:p-7 flex flex-col flex-1">
+              <p class="text-[#e00e10] text-[11px] uppercase tracking-[0.18em] font-medium">{when}</p>
+              <h3 class="font-display text-2xl font-bold mt-2.5">{car.make} {car.name}</h3>
+              <p class="text-[#0a0a0a]/65 leading-relaxed mt-3 flex-1">{why}</p>
+              <p class="text-[#0a0a0a]/60 text-sm mt-5">
+                {car.power} hp<span aria-hidden="true"> · </span>{car.zeroToSixty} to 60
+                <span aria-hidden="true"> · </span><strong class="text-[#0a0a0a]">${car.price.toLocaleString('en-US')} / day</strong>
+              </p>
+              <SmartLink
+                href={`/cars/${car.slug}`}
+                class="mt-5 inline-flex items-center justify-center border border-[#0a0a0a]/20 hover:border-[#e00e10] hover:text-[#e00e10] px-6 py-3 rounded-full text-sm font-medium transition"
+              >
+                See specs and photos
+              </SmartLink>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ============ 7. OBJECTIONS =======================================
+      The questions that actually stop a booking, answered plainly. Same
+      array feeds the FAQPage schema, so the page and the structured data
+      cannot drift apart. */}
+  <section class="bg-[#ffffff] text-[#0a0a0a] py-16 md:py-24">
+    <div class="max-w-3xl mx-auto px-5 md:px-8">
+      <h2 class="font-display text-3xl md:text-4xl font-bold tracking-tight">
+        The questions worth asking
+      </h2>
+      <div class="mt-10 divide-y divide-[#0a0a0a]/10">
+        {objections.map((o) => (
+          <div class="py-6 first:pt-0">
+            <h3 class="font-display text-lg md:text-xl font-semibold">{o.q}</h3>
+            <p class="text-[#0a0a0a]/65 leading-relaxed mt-2.5">{o.a}</p>
+          </div>
+        ))}
+      </div>
+
+      <p class="text-[#0a0a0a]/65 leading-relaxed mt-10">
+        More detail on how the cars are kept is in{' '}
+        <SmartLink href="/blog/well-kept-exotic-car-rental-miami" class="text-[#e00e10] underline underline-offset-4">our write-up on condition</SmartLink>, and if you are weighing
+        the Maybach S580 against the standard Mercedes-Benz S580 we rent both and compared them{' '}
+        <SmartLink href="/blog/mercedes-s580-vs-maybach-s580-rental-miami" class="text-[#e00e10] underline underline-offset-4">side by side</SmartLink>. Full terms sit on{' '}
+        <SmartLink href="/pricing" class="text-[#e00e10] underline underline-offset-4">the pricing page</SmartLink>, and the rest of the cars are on{' '}
+        <SmartLink href="/fleet" class="text-[#e00e10] underline underline-offset-4">the fleet page</SmartLink>.
+      </p>
+    </div>
+  </section>
+
+  {/* ============ 8. CLOSE ============================================ */}
+  <CtaBand
+    car="Maybach"
+    page="/maybach-rental-miami"
+    message={waMessage}
+    title={'Open the door and check.\nThat is the whole <span class="text-[#ff1516]">argument</span>'}
+    subtitle={`Maybach from $${fromDisplay} a day, delivered across Miami. Replies usually take minutes.`}
+  />
+  <StickyMobileCta message={waMessage} car="Maybach" page="/maybach-rental-miami" />
+</Layout>

@@ -5,12 +5,15 @@ import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
 import LeadForm from '@/components/site/LeadForm.jsx';
 import { business, telHref, mailHref, addressLine, hoursSummary, whatsappWith } from '@/data/business';
 import { bookingSteps } from '@/data/booking-steps';
+// Derived so every WhatsApp link says which page it was tapped from without
+// a path being threaded through each route by hand.
+const waPage = Astro.url.pathname.replace(/(.)\/$/, '$1');
 
 const SITE = 'https://www.lussarocollection.com';
 const PAGE_URL = `${SITE}/contact`;
 
 const waMsg = "Hi, I'd like to check availability with Lussaro Collection.";
-const wa = whatsappWith(waMsg);
+const wa = whatsappWith(waMsg, { page: waPage });
 
 // Map embed is built from the same address the NAP and JSON-LD use, so the pin
 // can never point somewhere the rest of the page doesn't claim. The `output=embed`

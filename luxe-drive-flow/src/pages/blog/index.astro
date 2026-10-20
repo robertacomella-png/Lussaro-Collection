@@ -19,9 +19,12 @@ import { getImageKitSrc, getImageKitSrcSet } from '@/lib/imageKit';
 import { altFor } from '@/data/image-alt';
 import { postsByDate, postPath, formatPostDate } from '@/data/posts';
 import { whatsappWith } from '@/data/business';
+// Derived so every WhatsApp link says which page it was tapped from without
+// a path being threaded through each route by hand.
+const waPage = Astro.url.pathname.replace(/(.)\/$/, '$1');
 
 const message = "Hi, I'd like to check availability and rates for my dates with Lussaro Collection.";
-const wa = whatsappWith(message);
+const wa = whatsappWith(message, { page: waPage });
 ---
 <Layout
   title="Miami Exotic Car Rental Guides | Lussaro Collection"

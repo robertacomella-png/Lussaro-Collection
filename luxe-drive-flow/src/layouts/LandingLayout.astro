@@ -36,7 +36,10 @@ const heroSrc = heroImage.includes('ik.imagekit.io')
   : getImageKitSrc(heroImage, 1200);
 
 const waMessage = `Hi, I'm interested in renting a luxury car with Lussaro Collection (${h1}).`;
-const wa = whatsappWith(waMessage);
+// Derived rather than passed: every landing page gets the right path with no
+// per-page prop to forget.
+const waPage = Astro.url.pathname.replace(/(.)\/$/, '$1');
+const wa = whatsappWith(waMessage, { page: waPage });
 ---
 <Layout title={title} description={description} schema={schema}>
   <Nav />
@@ -103,6 +106,6 @@ const wa = whatsappWith(waMessage);
     </div>
   </section>
 
-  <CtaBand message={waMessage} />
-  <StickyMobileCta message={waMessage} />
+  <CtaBand message={waMessage} page={waPage} />
+  <StickyMobileCta message={waMessage} page={waPage} />
 </Layout>

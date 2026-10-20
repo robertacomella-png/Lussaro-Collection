@@ -142,7 +142,7 @@ export default function FleetModal({ car, setCar, activeImage, setActiveImage })
                   </div>
 
                   <a
-                    href={whatsappWith(car.comingSoon ? `Hi, I'd like to reserve the ${car.name} early with Lussaro Collection — I hear it's arriving soon.` : `Hi, I'm interested in booking the ${car.name} with Lussaro Collection.`)}
+                    href={whatsappWith(car.comingSoon ? `Hi, I'd like to reserve the ${car.name} early with Lussaro Collection — I hear it's arriving soon.` : `Hi, I'm interested in booking the ${car.name} with Lussaro Collection.`, { car: car.name })}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center bg-white text-black px-7 py-3.5 rounded-full text-sm font-semibold hover:bg-[#ff1516] transition"

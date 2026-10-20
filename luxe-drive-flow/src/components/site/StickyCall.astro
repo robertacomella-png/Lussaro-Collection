@@ -21,9 +21,8 @@ import { Phone } from 'lucide-react';
 import WhatsAppIcon from '@/components/site/WhatsAppIcon.astro';
 import { business, telHref, whatsappWith } from '@/data/business';
 
-const wa = whatsappWith(
-  "Hi, I'd like to book a car with Lussaro Collection. Which dates do you have open?"
-);
+const here = Astro.url.pathname.replace(/(.)\/$/, '$1');
+const wa = whatsappWith("Hi, I'd like to book a car with Lussaro Collection. Which dates do you have open?", { page: here });
 ---
 <div
   data-sticky-cta

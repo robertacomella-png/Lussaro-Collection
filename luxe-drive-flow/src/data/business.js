@@ -89,8 +89,27 @@ export const hoursSummary = (() => {
     : business.hours.map((h) => `${h.day.slice(0, 3)} ${h.opens}–${h.closes}`).join(', ');
 })();
 
-/** WhatsApp deep link with an optional prefilled message. */
-export const whatsappWith = (message) =>
-  message ? `${business.whatsapp}?text=${encodeURIComponent(message)}` : business.whatsapp;
+/**
+ * WhatsApp deep link with a prefilled, self-identifying message.
+ *
+ * Every message carries a signature line so an inbound WhatsApp says where it
+ * came from without anyone having to ask. Before this, a message reading "is
+ * this available this weekend" arrived with no context at all and the vehicle
+ * had to be established from scratch.
+ *
+ * @param message  the human sentence. Pass it RAW — this function encodes it.
+ *                 Do not encodeURIComponent beforehand or it double-encodes and
+ *                 the customer sees %20 and %27 in their own message.
+ * @param context  { car, page } — `car` names the vehicle when the link sits on
+ *                 a car card, modal or page; omit it for the generic nav,
+ *                 sticky and CTA-band buttons, which then say so explicitly.
+ */
+export const whatsappWith = (message, context = {}) => {
+  const { car, page } = context;
+  const source = `Sent from lussarocollection.com${page ?? ''}`;
+  const subject = car ? `Vehicle: ${car}` : 'General enquiry';
+  const body = [message, `— ${source} · ${subject}`].filter(Boolean).join('\n\n');
+  return `${business.whatsapp}?text=${encodeURIComponent(body)}`;
+};
 
 export default business;

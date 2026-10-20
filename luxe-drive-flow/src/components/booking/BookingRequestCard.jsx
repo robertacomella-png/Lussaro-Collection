@@ -38,8 +38,12 @@ export default function BookingRequestCard({
   tiers = rentalTerms.discountTiers,
   milesPerDay = rentalTerms.mileage.includedPerDay,
   mileageUpgrade = null,
+  // Car pages keep the date picker: someone on a vehicle page is choosing a
+  // booking. Paid traffic is colder, and every extra field is a reason to
+  // leave, so the ads page passes false and sends name/phone/email only.
+  allowDates = true,
 }) {
-  const [mode, setMode] = useState("dates"); // "dates" | "flexible"
+  const [mode, setMode] = useState(allowDates ? "dates" : "flexible"); // "dates" | "flexible"
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
   const [name, setName] = useState("");
@@ -140,28 +144,30 @@ export default function BookingRequestCard({
     <form onSubmit={onSubmit} noValidate>
       {/* Someone who has not settled on dates still converts here rather than
           bouncing — "Flexible" sends the lead with everything else attached. */}
-      <div
-        className="flex gap-1 rounded-xl bg-white/[0.04] border border-white/10 p-1 mb-4"
-        role="group"
-        aria-label="How firm are your dates"
-      >
-        <button
-          type="button"
-          onClick={() => setMode("flexible")}
-          aria-pressed={mode === "flexible"}
-          className={segment(mode === "flexible")}
+      {allowDates && (
+        <div
+          className="flex gap-1 rounded-xl bg-white/[0.04] border border-white/10 p-1 mb-4"
+          role="group"
+          aria-label="How firm are your dates"
         >
-          Flexible
-        </button>
-        <button
-          type="button"
-          onClick={() => setMode("dates")}
-          aria-pressed={mode === "dates"}
-          className={segment(mode === "dates")}
-        >
-          Select dates
-        </button>
-      </div>
+          <button
+            type="button"
+            onClick={() => setMode("flexible")}
+            aria-pressed={mode === "flexible"}
+            className={segment(mode === "flexible")}
+          >
+            Flexible
+          </button>
+          <button
+            type="button"
+            onClick={() => setMode("dates")}
+            aria-pressed={mode === "dates"}
+            className={segment(mode === "dates")}
+          >
+            Select dates
+          </button>
+        </div>
+      )}
 
       {mode === "dates" && (
         <div className="grid grid-cols-2 gap-2.5 mb-4">

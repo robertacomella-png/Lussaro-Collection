@@ -52,6 +52,9 @@ When an agency asks how edits are tracked, this is the answer.
 | /luxury-suv-rental-miami | Lussaro | locked | SEO landing copy. |
 | /exotic-car-rental-brickell | Lussaro | locked | SEO landing copy, neighbourhood targeting. |
 | /exotic-car-rental-south-beach | Lussaro | locked | SEO landing copy, neighbourhood targeting. |
+| /maybach-rental-miami | Lussaro | review | Paid-traffic funnel for the Maybach ads, built 20 Oct 2026. Not on LandingLayout — hook, offer, proof, choice, ask, objections. Owns `maybach rental miami`; deliberately does NOT target "luxury suv rental miami", which /luxury-suv-rental-miami owns. `review` rather than `locked` while the ads are being tuned; lock it once the campaign is stable. |
+| /lamborghini-urus-rental-miami | Lussaro | review | Paid-traffic funnel for the Urus ads, built 20 Oct 2026. Same shape as /maybach-rental-miami. Owns `lamborghini urus rental miami`; deliberately does NOT target "lamborghini rental miami" (/lamborghini-rental-miami) or "luxury suv rental miami" (/luxury-suv-rental-miami). `review` while the ads are being tuned. |
+| /mercedes-s580-rental-miami | Lussaro | review | Paid-traffic funnel for the Mercedes-Benz S580, built 20 Oct 2026. **This is the Benz S580 at $399, not the Maybach S580 at $899** — the page exists partly to resolve that confusion. Owns `mercedes s class rental miami`. Carries NO aggregateRating: no review names this car, and rating markup without matching on-page quotes is a manual-action risk. |
 | /chauffeur-service-miami | Lussaro | locked | SEO landing copy. Carries Service + FAQPage schema. |
 | /about | Lussaro | review | Brand story. Also the author entity target for blog posts. |
 | /reviews | Lussaro | locked | Renders real customer quotes. |

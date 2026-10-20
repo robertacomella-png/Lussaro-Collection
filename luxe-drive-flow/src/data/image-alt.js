@@ -27,6 +27,12 @@ const ALT = {
   '/cars/lamborghini-urus-rental-miami-front-quarter.jpg':
     'Purple Lamborghini Urus rental parked on a palm-lined side street beside a muraled concrete wall, front three-quarter view',
 
+  // --- Maybach landing-page hero (viewed before writing) --------------------
+  // The skyline across the water is named because it is plainly in frame; the
+  // district is not, since downtown and Brickell are not separable from here.
+  '/cars/mercedes-maybach-gls-600-rental-miami-side-palms.jpg':
+    'Black Mercedes-Maybach GLS 600 rental in side profile on a cobblestone promenade, wind-bent palms and the downtown Miami skyline across the water behind',
+
   '/gallery/gallery-1.jpg':
     'Mercedes-Maybach GLS 600 and Lamborghini Urus rentals parked side by side in downtown Miami, Metromover track overhead',
   '/gallery/gallery-2.jpg':

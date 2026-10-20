@@ -3,7 +3,14 @@ import SmartLink from '@/components/site/SmartLink.astro';
 import { Menu, X, Phone } from 'lucide-react';
 import WhatsAppIcon from '@/components/site/WhatsAppIcon.astro';
 import { business, telHref, whatsappWith } from '@/data/business';
-const wa = business.whatsapp;
+// Was the bare wa.me link, which opened an empty compose box: those messages
+// arrived with no text at all. Now it prefills and names the page it was
+// tapped from, derived rather than passed in from every route.
+const here = Astro.url.pathname.replace(/(.)\/$/, '$1');
+const wa = whatsappWith(
+  "Hi, I'd like to check availability and rates with Lussaro Collection.",
+  { page: here },
+);
 ---
 {/* No bar at any width: the pills float free and each carries its own frosted
     fill, so the glass follows the shape instead of a full-width slab. Desktop

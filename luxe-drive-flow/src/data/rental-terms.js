@@ -11,7 +11,11 @@ export const rentalTerms = {
   // Maintained manually — bump when the terms actually change.
   lastUpdated: '2026-08-10',
 
-  minimumAge: 21,
+  // Lowered from 21 to 19 on the owner's instruction, 20 Oct 2026, to apply
+  // site-wide. Every page derives from this; /terms and /about previously
+  // hard-coded "21" in prose and were changed in the same commit so the legal
+  // page cannot contradict the rest of the site.
+  minimumAge: 19,
 
   // Chauffeur service is priced by the hour, not by the day, and is the one
   // rate that does not come from fleet.js.
@@ -44,11 +48,16 @@ export const rentalTerms = {
     pooled: true,
     allowanceNote:
       'Mileage is pooled across the rental rather than capped daily — a three-day rental is 300 miles in total, and you can use them however you like. Only the total at return is counted.',
-    // NOT SET: the per-mile overage rate has never been supplied. While this is
-    // null, /terms states the included allowance and says the overage rate is
-    // disclosed in the rental agreement, rather than publishing a figure nobody
-    // has confirmed. Set `overagePerMile` (a number) and the pages will state it.
-    overagePerMile: null,
+    // Set 20 Oct 2026 on the owner's approval. He supplied $5 in August and
+    // added "for now", so treat it as the current rate rather than a permanent
+    // one — if it moves, it moves here and /terms, /pricing, every car page and
+    // /maybach-rental-miami follow in the same build.
+    //
+    // Publishing it is a conversion decision as much as a legal one: the top
+    // competitor on this term states "$5 per additional mile" above the fold,
+    // and a page that cannot answer "what if I go over?" loses the click that
+    // was paid for.
+    overagePerMile: 5,
   },
 
   cancellation: {

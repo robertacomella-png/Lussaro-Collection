@@ -40,7 +40,7 @@ const offAmount = car.wasPrice - car.price;
 const message = car.comingSoon
   ? `Hi, I'd like to reserve the ${car.name} early with Lussaro Collection — I hear it's arriving soon.`
   : `Hi, I'm interested in booking the ${car.name} with Lussaro Collection.`;
-const wa = whatsappWith(message);
+const wa = whatsappWith(message, { car: car.name, page: `/cars/${car.slug}` });
 const imgs = car.images || [];
 
 // Per-car editorial content. Absent => none of these sections render at all.
@@ -509,8 +509,8 @@ const productSchema = {
     </div>
   </section>
 
-  <CtaBand message={message} />
-  <StickyMobileCta message={message} />
+  <CtaBand message={message}  car={car.name} page={`/cars/${car.slug}`} />
+  <StickyMobileCta message={message}  car={car.name} page={`/cars/${car.slug}`} />
 
   <script>
     // Show the booking fallback only if the calendar island never mounts.

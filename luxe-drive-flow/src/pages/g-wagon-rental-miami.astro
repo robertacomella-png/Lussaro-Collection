@@ -1,6 +1,9 @@
 ---
 import LandingLayout from '@/layouts/LandingLayout.astro';
 import { business, whatsappWith } from '@/data/business';
+// Derived so every WhatsApp link says which page it was tapped from without
+// a path being threaded through each route by hand.
+const waPage = Astro.url.pathname.replace(/(.)\/$/, '$1');
 
 // The G63 IS in the standing fleet again — see fleet.js. This page previously
 // framed every mention as sourced-on-request, because for a spell we did not
@@ -8,7 +11,7 @@ import { business, whatsappWith } from '@/data/business';
 // G-Wagon traffic we get toward other cars, so it has been rewritten around the
 // car we actually have. If the G63 ever leaves the fleet again, this page has to
 // change back — it is the one page that promises this specific car.
-const wa = whatsappWith("Hi, I'd like to check G63 availability and rates for my dates.");
+const wa = whatsappWith("Hi, I'd like to check G63 availability and rates for my dates.", { page: waPage });
 ---
 <LandingLayout
   title="G-Wagon Rental Miami | Lussaro Collection"

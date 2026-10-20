@@ -33,9 +33,16 @@ import { Phone } from 'lucide-react';
 import WhatsAppIcon from '@/components/site/WhatsAppIcon.astro';
 import { business, telHref, whatsappWith } from '@/data/business';
 
-const wa = whatsappWith(
-  "Hi, I'd like to book a car with Lussaro Collection. Which dates do you have open?"
-);
+// This component took a `message` prop from most pages and then ignored it,
+// hardcoding its own line — so a sticky tap from a car page sent a generic
+// message. It now honours what the page passes and falls back to the generic.
+const {
+  message = "Hi, I'd like to book a car with Lussaro Collection. Which dates do you have open?",
+  car = undefined,
+  page = undefined,
+} = Astro.props;
+const here = Astro.url.pathname.replace(/(.)\/$/, '$1');
+const wa = whatsappWith(message, { car, page: page ?? here });
 ---
 <div
   data-sticky-cta

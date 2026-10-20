@@ -6,9 +6,12 @@ import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
 import CtaBand from '@/components/site/CtaBand.astro';
 import { business, whatsappWith } from '@/data/business';
 import { reviews, reviewCount, averageRating, relativeMonth } from '@/data/reviews';
+// Derived so every WhatsApp link says which page it was tapped from without
+// a path being threaded through each route by hand.
+const waPage = Astro.url.pathname.replace(/(.)\/$/, '$1');
 
 const waMsg = "Hi, I'd like to check availability with Lussaro Collection.";
-const wa = whatsappWith(waMsg);
+const wa = whatsappWith(waMsg, { page: waPage });
 
 // Build-time "now", so every card's relative date is measured from one instant.
 const now = new Date();

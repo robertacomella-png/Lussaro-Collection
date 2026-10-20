@@ -41,16 +41,19 @@ const fleetFrom = Math.min(...cars.map((c) => c.price));
 const marques = [...new Set(cars.map((c) => c.make))].map((m) => (m === 'Mercedes-Benz' ? 'Mercedes-Maybach' : m));
 const marqueText = `${marques.slice(0, -1).join(', ')} and ${marques.at(-1)}`;
 import { business, telHref, whatsappWith } from '@/data/business';
+// Derived so every WhatsApp link says which page it was tapped from without
+// a path being threaded through each route by hand.
+const waPage = Astro.url.pathname.replace(/(.)\/$/, '$1');
 
 // Ad traffic lands here, so the prefill names the page's own promise —
 // dates and rates — rather than the homepage's generic booking opener.
 const heroWa = whatsappWith(
   "Hi, I'd like to check availability and rates for my dates with Lussaro Collection."
-);
+, { page: waPage });
 
 const SITE = 'https://www.lussarocollection.com';
 const waMsg = "Hi, I'm interested in renting an exotic car with Lussaro Collection. What's available?";
-const wa = whatsappWith(waMsg);
+const wa = whatsappWith(waMsg, { page: waPage });
 
 const included = [
   { t: 'Door-to-door delivery', d: 'Hotel, home, or airport — South Beach, Brickell & beyond.' },

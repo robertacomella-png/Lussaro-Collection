@@ -6,6 +6,9 @@ import CtaBand from '@/components/site/CtaBand.astro';
 import { fleet } from '@/data/fleet';
 import { postsByDate, postPath } from '@/data/posts';
 import { business, whatsappWith } from '@/data/business';
+// Derived so every WhatsApp link says which page it was tapped from without
+// a path being threaded through each route by hand.
+const waPage = Astro.url.pathname.replace(/(.)\/$/, '$1');
 import {
   rentalTerms,
   deliveryEachWaySummary,
@@ -17,7 +20,7 @@ import {
 const SITE = 'https://www.lussarocollection.com';
 const PAGE_URL = `${SITE}/pricing`;
 const waMsg = "Hi, I'd like a quote from Lussaro Collection.";
-const wa = whatsappWith(waMsg);
+const wa = whatsappWith(waMsg, { page: waPage });
 
 const { deposit, mileage, cancellation, discountTiers, insurance, minimumAge } = rentalTerms;
 const usd = (n) => `$${n.toLocaleString('en-US')}`;

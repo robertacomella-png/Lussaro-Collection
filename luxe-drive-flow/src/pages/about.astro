@@ -1,4 +1,5 @@
 ---
+import { rentalTerms } from '@/data/rental-terms';
 import Layout from '@/layouts/Layout.astro';
 import Nav from '@/components/site/Nav.astro';
 import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
@@ -6,12 +7,15 @@ import CtaBand from '@/components/site/CtaBand.astro';
 import { business, whatsappWith } from '@/data/business';
 import { altFor } from '@/data/image-alt';
 import { fleet } from '@/data/fleet';
+// Derived so every WhatsApp link says which page it was tapped from without
+// a path being threaded through each route by hand.
+const waPage = Astro.url.pathname.replace(/(.)\/$/, '$1');
 
 const SITE = 'https://www.lussarocollection.com';
 const PAGE_URL = `${SITE}/about`;
 
 const waMsg = "Hi, I'd like to check availability with Lussaro Collection.";
-const wa = whatsappWith(waMsg);
+const wa = whatsappWith(waMsg, { page: waPage });
 
 // Price bounds come from the fleet so the copy cannot go stale on a repricing.
 const prices = fleet.map((c) => c.price);
@@ -124,7 +128,7 @@ const aboutSchema = {
       <div class="space-y-4">
         <h2 class="font-display text-2xl md:text-3xl font-bold text-white tracking-tight">The standards</h2>
         <p class="text-white/70 leading-relaxed">
-          To drive with us you need to be 21 or over, hold a valid driver's licence, and carry
+          To drive with us you need to be {rentalTerms.minimumAge} or over, hold a valid driver's licence, and carry
           full-coverage insurance. A refundable security deposit confirms the booking; the amount
           is disclosed before you commit, and it is returned once the car has been inspected on
           its way back.

@@ -4,8 +4,13 @@ const {
   title = 'Ready when you are.',
   subtitle = 'Same-day availability across Miami. Reserve in under a minute.',
   message = "Hi, I'm interested in renting a luxury car with Lussaro Collection.",
+  // Forwarded to the WhatsApp signature so a band sitting on a car page says
+  // which car, instead of reporting itself as a general enquiry.
+  car = undefined,
+  page = undefined,
 } = Astro.props;
-const wa = whatsappWith(message);
+const here = Astro.url.pathname.replace(/(.)\/$/, '$1');
+const wa = whatsappWith(message, { car, page: page ?? here });
 ---
 <section class="relative py-24 text-center bg-gradient-to-r from-[#0a0a0a] via-[#161010] to-[#0a0a0a]">
   <div class="max-w-2xl mx-auto px-5">

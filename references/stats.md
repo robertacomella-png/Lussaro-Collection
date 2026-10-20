@@ -40,7 +40,7 @@ since nothing outside it may appear in copy. Re-transcribe whenever a price move
 ## Rental terms **[code]**
 
 - **Deposit: $1,000.** Flat, every vehicle, refundable after inspection on return.
-- **Minimum age: 21**, valid license, qualifying insurance.
+- **Minimum age: 19**, valid license, qualifying insurance. *Lowered from 21 on the owner's instruction, 20 October 2026. `rental-terms.js` is the source; /terms and /about had hard-coded "21" in prose and now derive it.*
 - **Mileage: 100 miles per day, pooled** across the rental. Three days is 300 miles total; only the total at return counts.
 - **Cancellation: non-refundable within 5 days** of the rental start date.
 

@@ -7,11 +7,14 @@ import LeadForm from '@/components/site/LeadForm.jsx';
 import { getImageKitSrc, getImageKitSrcSet } from '@/lib/imageKit';
 import { business, telHref, whatsappWith } from '@/data/business';
 import { rentalTerms } from '@/data/rental-terms';
+// Derived so every WhatsApp link says which page it was tapped from without
+// a path being threaded through each route by hand.
+const waPage = Astro.url.pathname.replace(/(.)\/$/, '$1');
 
 const SITE = 'https://www.lussarocollection.com';
 const PAGE_URL = `${SITE}/chauffeur-service-miami`;
 const waMsg = "Hi, I'd like to book a chauffeured Maybach with Lussaro Collection.";
-const wa = whatsappWith(waMsg);
+const wa = whatsappWith(waMsg, { page: waPage });
 
 const maybach = 'https://ik.imagekit.io/8i3ae7fac/maybach.jpg';
 const maybach2 = 'https://ik.imagekit.io/8i3ae7fac/cars-18%202.jpg';
