@@ -46,7 +46,13 @@ const wa = whatsappWith(message, { car, page: page ?? here });
 ---
 <div
   data-sticky-cta
-  class="md:hidden fixed right-4 z-50 flex flex-row items-center gap-3 transition-[opacity,transform] duration-300 ease-out"
+  {/* Starts hidden. This used to render visible and rely on the controller in
+      Layout.astro to hide it, but that script is a bundled module running on
+      astro:page-load, and its IntersectionObserver callback is another tick
+      after that — so on every load the pills painted, then jumped away. Hidden
+      first, revealed only when the controller decides, costs nothing: the hero
+      carries its own Call and WhatsApp buttons. */}
+  class="sticky-hidden md:hidden fixed right-4 z-50 flex flex-row items-center gap-3 transition-[opacity,transform] duration-300 ease-out"
   style="bottom: calc(1rem + env(safe-area-inset-bottom));"
 >
   <a

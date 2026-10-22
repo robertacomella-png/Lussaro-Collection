@@ -277,8 +277,13 @@ const breadcrumb = breadcrumbFor(Astro.url.pathname, breadcrumbName);
         const inlines = document.querySelectorAll('[data-call-inline]');
         if (callCtaObserver) { callCtaObserver.disconnect(); callCtaObserver = undefined; }
         if (!stickies.length) return;
-        stickies.forEach((s) => s.classList.remove('sticky-hidden')); // default: visible
-        if (!inlines.length || !('IntersectionObserver' in window)) return;
+        // Default is HIDDEN, not visible. Unhiding here and letting the
+        // observer put it back produced a visible flash on every load, because
+        // the callback lands a tick later.
+        if (!inlines.length || !('IntersectionObserver' in window)) {
+          stickies.forEach((s) => s.classList.remove('sticky-hidden'));
+          return;
+        }
         const visible = new Set();
         callCtaObserver = new IntersectionObserver(
           (entries) => {

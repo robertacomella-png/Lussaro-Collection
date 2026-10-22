@@ -63,8 +63,7 @@ const heroWa = whatsappWith(
           To revert: delete this element and the inline script below it. */}
       <video
         id="hero-video"
-        class="absolute inset-0 w-full h-full object-cover brightness-[0.8] z-10 md:hidden"
-        poster="/hero/hero-mobile-poster.webp"
+        class="absolute inset-0 w-full h-full object-cover brightness-[0.8] z-10 md:hidden opacity-0 transition-opacity duration-500"
         muted
         loop
         playsinline
@@ -94,6 +93,14 @@ const heroWa = whatsappWith(
             // The muted PROPERTY, not only the attribute — Safari and Chrome
             // check the property before permitting autoplay.
             v.muted = true;
+            // Reveal on 'playing', not before. The element used to carry a
+            // poster and sit opaque above the <picture>, which produced a
+            // three-way flicker on every load: the hero photo painted, the
+            // poster covered it, then setting .src reloaded the element and it
+            // went transparent again — showing the photo a second time — before
+            // the first video frame. Invisible until frames are actually
+            // rendering means one transition, and a stall just keeps the photo.
+            v.addEventListener('playing', () => { v.style.opacity = '1'; }, { once: true });
             v.src = '/hero/hero-mobile.mp4';
             v.play().catch((e) => { console.warn('hero autoplay blocked:', e.name); });
           };
