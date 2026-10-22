@@ -56,14 +56,15 @@ const heroWa = whatsappWith(
           top and fades in only once it can actually play, so a slow connection
           simply keeps the photograph.
 
-          Mobile only for now — the landscape file has not been supplied yet, so
-          desktop keeps the still. Gated on matchMedia rather than a <source
-          media> attribute, which WebKit ignores inside <video>.
+          ONE element, two sources. The file is chosen by matchMedia rather
+          than a <source media> attribute, which WebKit ignores inside <video>
+          even though it honours it in <picture>. A second <video> would mean
+          two elements fighting over the same slot.
 
           To revert: delete this element and the inline script below it. */}
       <video
         id="hero-video"
-        class="absolute inset-0 w-full h-full object-cover brightness-[0.8] z-10 md:hidden opacity-0 transition-opacity duration-500"
+        class="absolute inset-0 w-full h-full object-cover brightness-[0.8] md:brightness-[0.95] z-10 opacity-0 transition-opacity duration-500"
         muted
         loop
         playsinline
@@ -80,14 +81,14 @@ const heroWa = whatsappWith(
             const v = document.getElementById('hero-video');
             if (!v || v.dataset.ready) return;
 
-            // ?video=1 forces it on at any width so the hero can be reviewed on
-            // a desktop browser. Preview aid — goes when the test does.
-            const forced = new URLSearchParams(location.search).has('video');
-            if (forced) v.classList.remove('md:hidden');
+            // Reduced motion is the only gate now that both breakpoints have a
+            // file. index.css honours the preference in three other places and
+            // the hero should not be the exception.
+            if (!window.matchMedia('(prefers-reduced-motion: no-preference)').matches) return;
 
-            const wantsMotion = window.matchMedia('(prefers-reduced-motion: no-preference)').matches;
+            // 767px matches the md: breakpoint the <picture> switches on, so the
+            // video and the still it replaces always agree about orientation.
             const isPhone = window.matchMedia('(max-width: 767px)').matches;
-            if (!forced && (!wantsMotion || !isPhone)) return;
 
             v.dataset.ready = '1';
             // The muted PROPERTY, not only the attribute — Safari and Chrome
@@ -101,7 +102,7 @@ const heroWa = whatsappWith(
             // the first video frame. Invisible until frames are actually
             // rendering means one transition, and a stall just keeps the photo.
             v.addEventListener('playing', () => { v.style.opacity = '1'; }, { once: true });
-            v.src = '/hero/hero-mobile.mp4';
+            v.src = isPhone ? '/hero/hero-mobile.mp4' : '/hero/hero-desktop.mp4';
             v.play().catch((e) => { console.warn('hero autoplay blocked:', e.name); });
           };
           // Deferred past load. Attaching the source at parse time put a
@@ -143,9 +144,18 @@ const heroWa = whatsappWith(
         <img src="/hero/hero-vertical-800.webp"
              srcset="/hero/hero-vertical-800.webp 800w, /hero/hero-vertical-1200.webp 1200w, /hero/hero-vertical-1600.webp 1600w"
              sizes="150vw"
-             alt="Exotic car rental in Miami" class="w-full h-full object-cover brightness-[0.8]" fetchpriority="high" />
+             alt="Exotic car rental in Miami" class="w-full h-full object-cover brightness-[0.8] md:brightness-[0.95]" fetchpriority="high" />
       </picture>
-      {/* Scrim confined to the bottom quarter of the hero: 60% black at the
+      {/* The 0.8 darkening is kept on mobile and all but lifted on desktop.
+          Measured on the shipped files: the mobile clip averages 120/255 luma,
+          the desktop clip 88.5 — the desktop footage is dusk with traffic and
+          is already 26% darker before any filter, so the same 0.8 compounds
+          into something murky. White headline over the region it actually sits
+          in measures 7.11:1 at 0.8, 6.01:1 at 0.9 and 5.10:1 unfiltered, so
+          none of this is holding the text up; 0.95 keeps a little headroom for
+          the brightest frames.
+
+          Scrim confined to the bottom quarter of the hero: 60% black at the
           very foot, fading to nothing 25% up. Everything above is the clean
           photo. It exists to hold contrast under the CTA row and to blend the
           hero into the black section beneath — the nav carries its own
@@ -158,18 +168,31 @@ const heroWa = whatsappWith(
       ></div>
     </div>
 
-    <div class="relative z-10 w-full flex-1 flex flex-col max-w-7xl mx-auto px-5 md:px-8 pt-24 md:pt-[24svh] pb-[33px] md:pb-20 text-center">
+    <div class="relative z-10 w-full flex-1 flex flex-col max-w-7xl mx-auto px-5 md:px-8 pt-24 md:pt-[15svh] pb-[33px] md:pb-20 text-center md:text-left">
       <!-- TEXT — top -->
       <div>
+        {/* Headline first, the fleet line under it. Optical alignment: the
+            headline carries tracking-tight and a large left side bearing on the
+            "D", while the line below is 11px uppercase at 0.35em — set flush
+            they read as misaligned even though both box edges sit on the same
+            x. The -0.035em pull on the headline lines the glyphs up rather than
+            the boxes, which is what the eye actually measures. */}
+        <h1 class="font-display text-5xl font-bold leading-[1.02] tracking-tight text-white [text-shadow:0_2px_24px_rgba(0,0,0,0.5)] md:whitespace-nowrap md:text-[clamp(2rem,5.4vw,5.25rem)] md:-ml-[0.035em]">
+          Drive the <span class="text-[#ff1516]">Extraordinary</span>
+        </h1>
         {/* White, not red — this line sits over a photograph, and small red
             letterforms at 11px against mid-tone sky were unreadable even with a
             shadow. White is the logo's other colour, so the hero still reads as
-            brand; the red is carried by "Extraordinary" and the CTA beneath. */}
-        <p class="text-white/90 [text-shadow:0_2px_10px_rgba(0,0,0,0.8)] tracking-[0.35em] uppercase text-[11px] md:text-xs font-semibold mb-4">Miami's Exotic Fleet · From $399/day</p>
-        <h1 class="font-display text-5xl md:text-7xl lg:text-8xl font-bold leading-[0.95] tracking-tight text-white [text-shadow:0_2px_24px_rgba(0,0,0,0.5)]">
-          Drive the <span class="text-[#ff1516]">Extraordinary</span>
-        </h1>
-        <p class="text-white/70 text-base md:text-lg max-w-md mx-auto mt-5 font-light">
+            brand; the red is carried by "Extraordinary" and the CTA beneath.
+
+            Letter-spacing adds a trailing space after the final character, so
+            the text block is wider than the glyphs — harmless on a centred
+            line, visible when it has to align to a left edge. */}
+        <p class="text-white/90 [text-shadow:0_2px_10px_rgba(0,0,0,0.8)] tracking-[0.35em] uppercase text-[10px] md:text-[11px] font-semibold mb-3.5 md:mb-0 md:mt-4">Miami's Exotic Fleet · From $399/day</p>
+        {/* On mobile this stays under the headline. On desktop it moves to the
+            foot with the buttons — layout B keeps a clear band through the
+            middle of frame so the car is never behind type. */}
+        <p class="md:hidden text-white/70 text-base max-w-md mx-auto mt-5 font-light">
           Lamborghini, Rolls-Royce &amp; Ferrari — delivered to your door. Booked in 60 seconds.
         </p>
       </div>
@@ -193,28 +216,46 @@ const heroWa = whatsappWith(
             viewport — the number returns as soon as there is room for it.
             min-h-[48px] keeps the touch target at the accessible floor even
             though the vertical padding drops. */}
-        <div class="flex flex-row gap-2.5 sm:gap-3 max-w-lg mx-auto">
-          <a href={heroWa} data-cta="hero" target="_blank" rel="noopener noreferrer" class="wa-pop flex-1 min-h-[48px] inline-flex items-center justify-center gap-2 bg-[#128f42] text-white px-3 py-3 sm:px-7 sm:py-4 rounded-full font-semibold text-sm sm:text-base whitespace-nowrap shadow-[0_8px_24px_rgba(37,211,102,0.5)] ring-1 ring-white/15 hover:bg-[#0f7536] transition-colors">
+        {/* Desktop only: one line, never two. nowrap so a narrow laptop cannot
+            break it — a marque list that wraps reads as a sentence. */}
+        <p class="hidden md:block text-white/75 text-sm font-light mb-5 whitespace-nowrap">
+          Lamborghini<span class="text-white/35 px-2">·</span>Rolls-Royce<span class="text-white/35 px-2">·</span>Ferrari<span class="text-white/35 px-2">·</span>Mercedes
+        </p>
+        <div class="flex flex-row gap-2.5 sm:gap-3 max-w-sm md:max-w-md mx-auto md:mx-0">
+          <a href={heroWa} data-cta="hero" target="_blank" rel="noopener noreferrer" class="wa-pop flex-1 min-h-[48px] inline-flex items-center justify-center gap-2 bg-[#128f42] text-white px-3 py-3 sm:px-5 sm:py-3 rounded-full font-semibold text-sm sm:text-sm whitespace-nowrap shadow-[0_8px_24px_rgba(37,211,102,0.5)] ring-1 ring-white/15 hover:bg-[#0f7536] transition-colors">
             <WhatsAppIcon class="w-4 h-4 shrink-0" />
-            <span class="sm:hidden">WhatsApp</span>
-            <span class="hidden sm:inline">WhatsApp Message</span>
+            WhatsApp
           </a>
-          <a href={telHref} data-cta="hero" data-call-inline class="call-pop flex-1 min-h-[48px] order-first sm:order-none inline-flex items-center justify-center gap-2 bg-[#e00e10] text-white px-3 py-3 sm:px-7 sm:py-4 rounded-full font-semibold text-sm sm:text-base whitespace-nowrap shadow-[0_8px_24px_rgba(255,21,22,0.45)] ring-1 ring-white/15 hover:bg-[#c40c0e] transition-colors">
+          <a href={telHref} data-cta="hero" data-call-inline class="call-pop flex-1 min-h-[48px] order-first sm:order-none inline-flex items-center justify-center gap-2 bg-[#e00e10] text-white px-3 py-3 sm:px-5 sm:py-3 rounded-full font-semibold text-sm sm:text-sm whitespace-nowrap shadow-[0_8px_24px_rgba(255,21,22,0.45)] ring-1 ring-white/15 hover:bg-[#c40c0e] transition-colors">
             <Phone className="w-4 h-4 shrink-0" />
-            <span class="sm:hidden">Call</span>
-            <span class="hidden sm:inline">Call {business.phoneDisplayShort}</span>
+            Call
           </a>
         </div>
         {/* Matched to the Call/WhatsApp pills above: same vertical rhythm, same
             type scale, same 48px floor. It was the heaviest button in the group
             while being the least urgent of the three. */}
-        <div class="mt-2.5 sm:mt-3 flex justify-center">
-          <a href="#fleet" class="cta-shine inline-flex items-center justify-center min-h-[48px] bg-white text-black px-5 py-3 sm:px-7 sm:py-4 rounded-full font-semibold text-sm sm:text-base whitespace-nowrap hover:bg-[#ff1516] transition-colors">See Cars &amp; Prices ↓</a>
+        {/* "Delivered to your door" replaces "Miami Delivery" here rather than
+            going in the marque line: it is a reassurance, not a product list,
+            so it belongs beside the rating where people look for one. */}
+        <div class="mt-5 flex items-center justify-center md:justify-start gap-3 text-sm text-white/55">
+          <span class="text-[#ff1516]">★★★★★</span> 5.0 Google · Delivered to your door
         </div>
-        <div class="mt-5 flex items-center justify-center gap-3 text-sm text-white/55">
-          <span class="text-[#ff1516]">★★★★★</span> 5.0 Google · Miami Delivery
-        </div>
+
+        {/* The cue replaces the white "See Cars & Prices" pill on mobile too —
+            that pill was the brightest object in the hero and sat on the car.
+            Static in the stack on a phone, where an absolutely positioned cue
+            would land under the sticky CTA; centred at the foot of frame on
+            desktop, which is dead road. */}
+        <a
+          href="#fleet"
+          class="hero-cue mt-6 md:mt-0 self-center md:self-auto flex flex-col items-center gap-1.5 text-white/75 hover:text-white transition-colors md:absolute md:bottom-6 md:left-1/2 md:-translate-x-1/2"
+          aria-label="Scroll to cars and prices"
+        >
+          <span class="text-[11px] tracking-[0.22em] uppercase">See cars &amp; prices</span>
+          <svg class="hero-cue-chev w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </a>
       </div>
+
     </div>
   </header>
 

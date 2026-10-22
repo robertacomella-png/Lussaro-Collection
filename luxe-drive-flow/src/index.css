@@ -183,6 +183,18 @@
 
 /* Slides the floating mobile Call button out of the way when an inline Call CTA
    is on screen (e.g. the car page's "Call to book" under the calendar). */
+/* Hero scroll cue. A short bob that says "there is more below" without
+   animating anything the eye is trying to read. Composited transform only, so
+   it costs nothing on the main thread. */
+.hero-cue-chev { animation: hero-cue-bob 1.9s ease-in-out infinite; }
+@keyframes hero-cue-bob {
+  0%, 100% { transform: translateY(0); opacity: .8; }
+  50%      { transform: translateY(4px); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-cue-chev { animation: none; }
+}
+
 .sticky-hidden {
   opacity: 0;
   transform: translateY(140%);
