@@ -97,7 +97,11 @@ const heroWa = whatsappWith(
             v.src = '/hero/hero-mobile.mp4';
             v.play().catch((e) => { console.warn('hero autoplay blocked:', e.name); });
           };
-          start();
+          // Deferred past load. Attaching the source at parse time put a
+          // 2.4 MB download in direct competition with the LCP image, which on
+          // a throttled connection delays the very paint the video sits behind.
+          if (document.readyState === 'complete') requestAnimationFrame(start);
+          else window.addEventListener('load', () => requestAnimationFrame(start), { once: true });
           document.addEventListener('astro:page-load', start);
         })();
       </script>
@@ -289,5 +293,11 @@ const heroWa = whatsappWith(
   <CtaBand title={'Your Miami arrival,<br><span class="text-[#ff1516]">unforgettable.</span>'} />
 
   <StickyMobileCta />
-  <Car3DViewer client:idle />
+  {/* client:visible, not client:idle. This bundle is 688 KB — three.js plus the
+      viewer — and it sits at the very bottom of the page, yet client:idle
+      fetched and executed it the moment the browser went idle, whether anyone
+      scrolled here or not. Measured on the live site 22 Oct 2026: Total
+      Blocking Time 1,190 ms on a mobile Lighthouse run, nearly all of it this.
+      client:visible defers it until the viewer is actually approached. */}
+  <Car3DViewer client:visible />
 </Layout>
