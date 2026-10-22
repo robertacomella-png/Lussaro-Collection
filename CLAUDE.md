@@ -12,6 +12,7 @@ Marketing and lead-generation site for **Lussaro Collection** — Miami luxury a
 - **Language:** JavaScript, not TypeScript. Do not introduce `.ts`/`.tsx` files.
 - **Styling:** Tailwind CSS via `postcss.config.js` — *not* `@astrojs/tailwind`, to avoid double-processing. shadcn/ui lives in `src/components/ui/`.
 - **Motion:** Framer Motion, GSAP, and a CSS `.reveal` scroll layer defined in `Layout.astro`
+- **Hero video:** mobile only, `public/hero/hero-mobile.mp4`. Encoding, cropping, wiring and verification are all in the **`hero-video` skill** — read it before touching the hero video or the stills beside it. `ffmpeg` is required; macOS `avconvert` cannot target a bitrate or crop and must not be used.
 - **3D/AR:** three.js — GLB for the web viewer, USDZ for iOS Quick Look
 - **Email:** Resend, via the one server endpoint
 - **Deploy:** Vercel (`@astrojs/vercel`). `npm run build` → intermediate `dist/`, deployable `.vercel/output/`
