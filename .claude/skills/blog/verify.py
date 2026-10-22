@@ -141,6 +141,14 @@ def main(slug):
         ('no undefined/NaN leaks', not re.search(r'undefined|NaN|\[object Object\]', h), ''),
         ('primary keyword in first 100 words',
          any(k in first100 for k in ['rental', 'rent']), ''),
+        # A JSX comment containing a closing marker terminates early and the
+        # remainder renders as page text. That shipped on 22 Oct 2026 from the
+        # template's own BODY block. Catch any developer note that escaped.
+        ('no leaked developer comment',
+         not any(t in body for t in [
+             '*/}', 'YOURS TO WRITE', 'ship to the browser',
+             '>>> FILL', 'toc entry', 'never type a literal',
+         ]), ''),
     ]
 
     failed = [c for c in checks if not c[1]]

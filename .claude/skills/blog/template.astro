@@ -310,7 +310,15 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
         {/* ===================== BODY — YOURS TO WRITE =====================
              One H2 per toc entry, ids matching exactly. H3s only under H2s.
              Every number renders from the data files; never type a literal.
-             Keep {/* */} comments — HTML comments ship to the browser.
+
+             Developer notes must be JSX comments, never HTML ones: HTML
+             comments ship to the browser and count against the 4000-character
+             window verify.py uses.
+
+             And never write a closing JSX comment marker INSIDE a comment.
+             These do not nest — the inner marker ends the comment early and
+             everything after it renders as visible page text. That shipped to
+             production once, on 22 Oct 2026, from this very block.
         ===================================================================== */}
 
         <h2 id="section-one">>>> FILL — H2 carrying a supporting keyword</h2>
