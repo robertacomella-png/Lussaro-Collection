@@ -121,9 +121,12 @@ const heroWa = whatsappWith(
             WebP q80, matching the w-1920,q-80,f-webp transform this slot used to
             request from ImageKit. That script only covers /cars and /gallery at
             700/1200, so regenerate this one directly with sharp if it changes.
-            Mobile is the same shoot framed portrait (2478x3764, a 0.66 aspect
-            against the desktop file's 1.50), so a tall phone viewport crops far
-            less of it than a landscape source would.
+            Mobile is NO LONGER the same shoot. It is a still lifted from
+            hero-mobile.mp4 at the 6s mark, cropped identically (1850:3288 at
+            x155 y500 of the 2160x3840 source), so the photograph and the video
+            are the same frame of the same car. Before this they were different
+            shoots entirely, and the handover read as a cut between two
+            unrelated images. Regenerate both together or they drift apart.
 
             Mobile ships a srcset, NOT a lone 800px file. The CDN slot this
             replaced requested w-800, and at 800 the hero was visibly soft: with
