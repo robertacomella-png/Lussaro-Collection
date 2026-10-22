@@ -45,6 +45,11 @@ export const fleet = [
     make: "Mercedes-Benz",
     year: 2023,
     price: 899,
+    // Daily policy we can sell a renter who has no qualifying coverage of their
+    // own. Owner's figures, 20 Oct 2026, for the Maybachs specifically. The
+    // band moves with driver age, which is why it is a range and never a single
+    // number in copy. references/stats.md records the wider fleet range.
+    insurancePerDay: { from: 199, to: 399 },
     wasPrice: 999,
     power: 550,
     miles: 100,
@@ -264,6 +269,11 @@ export const fleet = [
     make: "Mercedes-Benz",
     year: 2023,
     price: 899,
+    // Daily policy we can sell a renter who has no qualifying coverage of their
+    // own. Owner's figures, 20 Oct 2026, for the Maybachs specifically. The
+    // band moves with driver age, which is why it is a range and never a single
+    // number in copy. references/stats.md records the wider fleet range.
+    insurancePerDay: { from: 199, to: 399 },
     wasPrice: 1099,
     power: 496,
     miles: 100,

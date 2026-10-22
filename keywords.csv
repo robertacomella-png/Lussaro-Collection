@@ -1,4 +1,5 @@
 keyword,cluster,intent,priority,target_page,status,monthly_volume,kd,cpc,notes
+no insurance rentals miami,decision,commercial,high,/blog/no-insurance-rentals-miami,covered,,,,"Renter has no policy of their own — not uninsured driving. Maybach cover $199-$399/day. Owner-chosen primary 22 Oct 2026."
 exotic car rental miami,core,commercial,high,/exotic-car-rental-miami,covered,,,,"Head term. SERP is company homepages, not editorial — keep this a service page."
 best exotic car rental miami,core,commercial,high,/best-exotic-car-rental-miami,cannibalization-risk,,,,Overlaps /exotic-car-rental-miami and homepage. Decide which page owns 'best' vs generic.
 luxury car rental miami,core,commercial,high,/,covered,,,,Homepage title already targets this alongside exotic.
@@ -52,11 +53,11 @@ exotic car rental miami prices,decision,commercial,high,/pricing,covered,,,,Rate
 exotic car rental miami cost,decision,commercial,high,/pricing,covered,,,,Variant.
 exotic car rental miami no deposit,decision,commercial,low,,do-not-target,,,,We require $1000. Do not chase a query we can't satisfy.
 cheap exotic car rental miami,decision,commercial,low,,do-not-target,,,,Conflicts with brand position — see opinions.md #1. Cheap buys a worn car.
-exotic car rental miami under 25,decision,commercial,medium,,gap,,,,"We rent at 21+, which beats most competitors requiring 25. Real advantage, unpublicized."
+exotic car rental miami under 25,decision,commercial,medium,/blog/no-insurance-rentals-miami,covered,,,,"We rent at 21+, which beats most competitors requiring 25. Real advantage, unpublicized."
 how much does it cost to rent an exotic car in miami,informational,informational,high,,gap,,,,PAA. No blog exists. Strong fit — we publish real numbers and competitors don't.
 how old do you have to be to rent an exotic car in miami,informational,informational,high,,gap,,,,PAA. Our answer is 21 on every car including the Ferrari. Competitors often require 25.
-what do you need to rent an exotic car in miami,informational,informational,high,,gap,,,,"PAA. License, insurance, 21+."
-do you need insurance to rent an exotic car,informational,informational,high,,gap,,,,PAA. Our biggest unpublished number — $99 to $499/day depending on car and age.
+what do you need to rent an exotic car in miami,informational,informational,high,/blog/no-insurance-rentals-miami,covered,,,,"PAA. License, insurance, 21+."
+do you need insurance to rent an exotic car,informational,informational,high,/blog/no-insurance-rentals-miami,covered,,,,PAA. Our biggest unpublished number — $99 to $499/day depending on car and age.
 exotic car rental deposit miami,informational,informational,medium,,gap,,,,$1000 flat on every car. Competitors publish nothing; Miami range is $1000-$5000.
 exotic car rental mileage limit,informational,informational,medium,,gap,,,,"100/day pooled, $5/mile over. Pooling is a genuine differentiator."
 can you rent an exotic car for one day,informational,informational,medium,,gap,,,,PAA. Yes — most bookings are 1-3 days.

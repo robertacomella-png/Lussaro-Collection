@@ -49,6 +49,7 @@ since nothing outside it may appear in copy. Re-transcribe whenever a price move
 These are confirmed but currently unpublished. **Site to-do: get these into `rental-terms.js`.**
 
 - **Mileage overage: $5 per mile.** `rental-terms.js` has this as `null` and /terms says it's "disclosed in the rental agreement." It can now be stated. Robert added "for now," so treat it as current rather than permanent.
+- **Maybach insurance: $199 to $399 per day** — owner, 20 October 2026, for the GLS 600 and the Maybach S580 specifically. Now in `fleet.js` as `insurancePerDay` and published on `/blog/no-insurance-rentals-miami`. **Reconcile with the line below:** the two have not been confirmed against each other.
 - **Insurance: from $99 per day**, varying by vehicle *and driver age*. The Lamborghini Urus is **$499 per day** at the top of the range. This is a pass-through, not a margin line — full coverage on a supercar for an uninsured driver costs what it costs, and Robert holds firm on it and explains it.
 - **Chauffeur: $250 per hour, three-hour minimum.** That's a **$750 floor** which currently appears nowhere on the site. Someone can presently book expecting a one-hour job.
 - **Response time: five minutes.** Robert's own answer, and it matches the reviews ("quick to respond to me"). Usable in copy.

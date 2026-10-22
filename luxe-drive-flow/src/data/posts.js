@@ -16,6 +16,18 @@
 
 export const posts = [
   {
+    slug: 'no-insurance-rentals-miami',
+    title: 'No Insurance Rentals Miami: What It Costs',
+    excerpt:
+      'You do not need a policy of your own to rent here. What a daily policy actually costs on a Maybach, why your own cover probably will not stretch to one, and the four things we check before anyone drives.',
+    published: '2026-10-22',
+    updated: '2026-10-22',
+    hero: '/cars/mercedes-maybach-gls-600-rental-miami-side-palms.jpg',
+    cluster: 'Before you book',
+    readingMinutes: 7,
+    relatedCars: ['mercedes-maybach-gls-600', 'mercedes-maybach-s580', 'mercedes-s580'],
+  },
+  {
     slug: 'well-kept-exotic-car-rental-miami',
     // Matches the post's own <title> verbatim, by the owner's call on 10 Oct.
     // The other two entries keep a shorter card-specific headline; this one

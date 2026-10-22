@@ -104,3 +104,21 @@ Not retired — never eligible. Recorded here so nobody proposes them twice.
 3. **Secondaries are reusable.** Four or five per post, and they should be genuinely covered in the copy rather than dropped in.
 4. **Check the commercial pages before claiming a primary.** If a landing page already targets the term, the blog takes the informational angle instead.
 5. **Out-of-market geography is never a target**, whatever the volume.
+
+## no insurance rentals miami
+
+Retired 22 October 2026 → `/blog/no-insurance-rentals-miami`
+
+**Secondaries:** do you need insurance to rent an exotic car · what do you need to rent an exotic car in miami · exotic car rental insurance cost miami · rent a maybach without your own insurance · exotic car rental miami under 25 · exotic car rental age requirement miami
+
+**Why this primary:** owner's call, 22 October 2026, before publication — the
+phrase people actually type is "no insurance rentals", and it carries commercial
+intent that the question form does not. "do you need insurance to rent an exotic
+car" is kept as a secondary; keywords.csv carried it as high-priority `gap` with
+the note "our biggest unpublished number". The SERP is thin — the top result is ~520 words
+and quotes no price at all, and the best rental-company page (~1,100 words) never
+addresses the case where the renter has no policy of their own, which is the
+entire question. Publishing the band is the wedge.
+
+**Do not reuse.** The commercial insurance terms stay with the landing pages.
+
