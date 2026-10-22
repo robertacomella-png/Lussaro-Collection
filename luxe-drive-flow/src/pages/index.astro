@@ -49,6 +49,58 @@ const heroWa = whatsappWith(
   <!-- HERO — cinematic photo: text top, CTAs bottom (mobile) / centered (desktop) -->
   <header class="relative min-h-[100svh] flex flex-col overflow-hidden bg-black">
     <div class="absolute inset-0">
+      {/* HERO VIDEO TEST — added 22 Oct 2026.
+          The <picture> below is unchanged and remains the LCP element: a
+          <video> can never be the LCP paint, so removing the image would blank
+          the first frame and cost Core Web Vitals outright. The video sits on
+          top and fades in only once it can actually play, so a slow connection
+          simply keeps the photograph.
+
+          Mobile only for now — the landscape file has not been supplied yet, so
+          desktop keeps the still. Gated on matchMedia rather than a <source
+          media> attribute, which WebKit ignores inside <video>.
+
+          To revert: delete this element and the inline script below it. */}
+      <video
+        id="hero-video"
+        class="absolute inset-0 w-full h-full object-cover brightness-[0.8] z-10 md:hidden"
+        poster="/hero/hero-mobile-poster.webp"
+        muted
+        loop
+        playsinline
+        preload="none"
+        aria-hidden="true"
+        tabindex="-1"
+      ></video>
+      <script is:inline>
+        // Autoplay needs muted + playsinline, both on the element. The source is
+        // attached here rather than in markup so the file is never fetched on
+        // desktop, or by anyone who asked for reduced motion.
+        (() => {
+          const start = () => {
+            const v = document.getElementById('hero-video');
+            if (!v || v.dataset.ready) return;
+
+            // ?video=1 forces it on at any width so the hero can be reviewed on
+            // a desktop browser. Preview aid — goes when the test does.
+            const forced = new URLSearchParams(location.search).has('video');
+            if (forced) v.classList.remove('md:hidden');
+
+            const wantsMotion = window.matchMedia('(prefers-reduced-motion: no-preference)').matches;
+            const isPhone = window.matchMedia('(max-width: 767px)').matches;
+            if (!forced && (!wantsMotion || !isPhone)) return;
+
+            v.dataset.ready = '1';
+            // The muted PROPERTY, not only the attribute — Safari and Chrome
+            // check the property before permitting autoplay.
+            v.muted = true;
+            v.src = '/hero/hero-mobile.mp4';
+            v.play().catch((e) => { console.warn('hero autoplay blocked:', e.name); });
+          };
+          start();
+          document.addEventListener('astro:page-load', start);
+        })();
+      </script>
       <picture>
         {/* Desktop hero is a local WebP, not an ik.imagekit.io URL: this shot
             (the Urus on silver performance rims) was never uploaded to the CDN,
@@ -121,16 +173,29 @@ const heroWa = whatsappWith(
             this file's palette note accepts for white-on-red — no reason to
             hold this button to a stricter bar than the one beside it. The
             halo stays true #25D366, since a glow carries no text. */}
-        <div class="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
-          <a href={heroWa} data-cta="hero" target="_blank" rel="noopener noreferrer" class="wa-pop flex-1 inline-flex items-center justify-center gap-2 bg-[#128f42] text-white px-7 py-4 rounded-full font-semibold whitespace-nowrap shadow-[0_8px_24px_rgba(37,211,102,0.5)] ring-1 ring-white/15 hover:bg-[#0f7536] transition-colors">
-            <WhatsAppIcon class="w-4 h-4 shrink-0" /> WhatsApp Message
+        {/* Side by side from the smallest screen up, so the hero video is not
+            buried under a stack of three full-width pills. The labels shorten
+            below sm because "Call (645) 248-7305" cannot fit in half of a 390px
+            viewport — the number returns as soon as there is room for it.
+            min-h-[48px] keeps the touch target at the accessible floor even
+            though the vertical padding drops. */}
+        <div class="flex flex-row gap-2.5 sm:gap-3 max-w-lg mx-auto">
+          <a href={heroWa} data-cta="hero" target="_blank" rel="noopener noreferrer" class="wa-pop flex-1 min-h-[48px] inline-flex items-center justify-center gap-2 bg-[#128f42] text-white px-3 py-3 sm:px-7 sm:py-4 rounded-full font-semibold text-sm sm:text-base whitespace-nowrap shadow-[0_8px_24px_rgba(37,211,102,0.5)] ring-1 ring-white/15 hover:bg-[#0f7536] transition-colors">
+            <WhatsAppIcon class="w-4 h-4 shrink-0" />
+            <span class="sm:hidden">WhatsApp</span>
+            <span class="hidden sm:inline">WhatsApp Message</span>
           </a>
-          <a href={telHref} data-cta="hero" data-call-inline class="call-pop flex-1 order-first sm:order-none inline-flex items-center justify-center gap-2 bg-[#e00e10] text-white px-7 py-4 rounded-full font-semibold whitespace-nowrap shadow-[0_8px_24px_rgba(255,21,22,0.45)] ring-1 ring-white/15 hover:bg-[#c40c0e] transition-colors">
-            <Phone className="w-4 h-4 shrink-0" /> Call {business.phoneDisplayShort}
+          <a href={telHref} data-cta="hero" data-call-inline class="call-pop flex-1 min-h-[48px] order-first sm:order-none inline-flex items-center justify-center gap-2 bg-[#e00e10] text-white px-3 py-3 sm:px-7 sm:py-4 rounded-full font-semibold text-sm sm:text-base whitespace-nowrap shadow-[0_8px_24px_rgba(255,21,22,0.45)] ring-1 ring-white/15 hover:bg-[#c40c0e] transition-colors">
+            <Phone className="w-4 h-4 shrink-0" />
+            <span class="sm:hidden">Call</span>
+            <span class="hidden sm:inline">Call {business.phoneDisplayShort}</span>
           </a>
         </div>
-        <div class="mt-3 flex justify-center">
-          <a href="#fleet" class="cta-shine inline-flex items-center justify-center bg-white text-black px-7 py-4 rounded-full font-semibold whitespace-nowrap hover:bg-[#ff1516] transition-colors">See Cars &amp; Prices ↓</a>
+        {/* Matched to the Call/WhatsApp pills above: same vertical rhythm, same
+            type scale, same 48px floor. It was the heaviest button in the group
+            while being the least urgent of the three. */}
+        <div class="mt-2.5 sm:mt-3 flex justify-center">
+          <a href="#fleet" class="cta-shine inline-flex items-center justify-center min-h-[48px] bg-white text-black px-5 py-3 sm:px-7 sm:py-4 rounded-full font-semibold text-sm sm:text-base whitespace-nowrap hover:bg-[#ff1516] transition-colors">See Cars &amp; Prices ↓</a>
         </div>
         <div class="mt-5 flex items-center justify-center gap-3 text-sm text-white/55">
           <span class="text-[#ff1516]">★★★★★</span> 5.0 Google · Miami Delivery
