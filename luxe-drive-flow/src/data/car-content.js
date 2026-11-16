@@ -141,6 +141,25 @@ export const carContent = {
     deliveryNotes: '',
   },
 
+  'porsche-911-turbo-s': {
+    useCases: `The 911 Turbo S is the supercar you can actually live with for a week. It has the pace of anything we run — 2.7 seconds to 60 — but it also has adaptive suspension, a roof that folds away in seconds, all-wheel drive for a summer downpour, and two small rear seats that take the bags a Huracan has nowhere to put. Book it for a trip where you will drive every day, roof down from Brickell to South Beach and back. If what you want is theater and a V10 that announces you from a block away, the Huracans do that better.`,
+    goodToKnow: [
+      '2+2 seating: two full seats up front and two small rear seats, best used for bags or a short hop rather than adults on a long drive.',
+      'Electric soft top that opens or closes in seconds and works on the move at low speed, so a passing shower does not mean pulling over.',
+      'All-wheel drive with a 3.7-litre twin-turbo flat-six and an eight-speed dual-clutch automatic. It is quieter at a cruise than the Huracans, and much quicker than it sounds.',
+      'Adaptive dampers as standard, so it rides well over rough Miami streets for a car this fast.',
+      'Luggage goes in the front trunk and on the rear seats, which makes it the most practical of our convertibles for a weekend away.',
+    ],
+    faqQuestion: 'Is the Porsche 911 Turbo S Cabriolet a four-seater?',
+    faqAnswer:
+      'It is a 2+2. There are two full seats up front and two small seats behind them, which work for bags or a short trip across town but are tight for adults on a long drive. Book it as a two-seater with somewhere to put the luggage, and it is the most practical convertible we run.',
+    siblings: ['huracan-evo-spyder', 'huracan-sto'],
+    category: { href: '/exotic-car-rental-miami', label: 'Exotic car rental in Miami' },
+    realMoment: '',
+    operatorNotes: '',
+    deliveryNotes: '',
+  },
+
   'mercedes-maybach-s580': {
     useCases: `The Maybach S580 is the one to book when the back seat is the whole point. It is a stretched S-Class with two reclining executive chairs, their own screens and climate controls, and a fixed console between them — closer to a private cabin than a rear bench. That makes it right for an airport collection where you want to arrive composed, for moving a client through the city, or for an evening where somebody else drives and you would rather be working, resting or not thinking about traffic. Treat it as a four-seater with an exceptional back, not as a car to fill with people.`,
     goodToKnow: [
@@ -173,7 +192,7 @@ export const carContent = {
     faqQuestion: 'Can I put the roof down while driving the Huracan EVO Spyder?',
     faqAnswer:
       'Yes. The soft top takes about 17 seconds and works on the move at speeds up to 31 mph, so a sudden Miami shower does not mean pulling over. There is also an electric rear window that raises and lowers on its own, which is worth knowing on a hot day: roof up for the air conditioning, window down for the V10.',
-    siblings: ['huracan-evo', 'huracan-sto'],
+    siblings: ['porsche-911-turbo-s', 'huracan-sto'],
     category: { href: '/lamborghini-rental-miami', label: 'Lamborghini rental in Miami' },
     realMoment: '',
     operatorNotes: '',

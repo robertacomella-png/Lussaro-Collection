@@ -12,6 +12,7 @@ Numbers marked **[code]** are transcribed from the data files, which remain the 
 |---|---|---|---|---|
 | Ferrari SF90 | 2023 | **$2,499** | 986 hp | 2.5s |
 | Lamborghini Huracán STO | 2023 | **$1,495** | 631 hp | 3.0s |
+| Porsche 911 Turbo S Cabriolet | 2023 | **$1,295** | 640 hp | 2.7s |
 | Rolls-Royce Cullinan | 2023 | **$1,299** (from $1,499) | 563 hp | 4.9s |
 | Lamborghini Huracán EVO Spyder | 2023 | **$1,299** (from $1,499) | 602 hp | 3.5s |
 | Lamborghini Huracán EVO | 2023 | **$1,199** | 602 hp | 3.3s |
@@ -20,6 +21,8 @@ Numbers marked **[code]** are transcribed from the data files, which remain the 
 | Mercedes-Maybach S580 | 2023 | **$899** (from $1,099) | 496 hp | 4.8s |
 | Mercedes-AMG G63 | 2023 | **$799** (from $899) | 577 hp | 4.5s |
 | Mercedes-Benz S580 | 2023 | **$399** (from $499) | 496 hp | 4.4s |
+
+*Porsche 911 Turbo S Cabriolet added 15 November 2026, fleet-standard deposit and age. 2+2 seating.*
 
 *Huracán STO added 15 November 2026 (returned to the fleet; $2,000 deposit and 21+ — see Rental terms). Its 0–60 is Lamborghini's published 0–62 mph figure.*
 

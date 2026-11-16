@@ -11,6 +11,7 @@ const SLUGS = {
   "GLS 600 Maybach": "mercedes-maybach-gls-600",
   "S580": "mercedes-s580",
   "S580 Maybach": "mercedes-maybach-s580",
+  "911 Turbo S Cabriolet": "porsche-911-turbo-s",
 };
 
 // 3D showpieces (by slug): GLB for the web viewer, USDZ for iOS AR, and a poster
