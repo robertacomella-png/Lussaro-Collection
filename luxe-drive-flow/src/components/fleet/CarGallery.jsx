@@ -2,7 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import { getImageKitSrc, getImageKitSrcSet } from "@/lib/imageKit";
 
 // Swipeable photo carousel for a car's images (dots, snap, morph target on first image).
-export default function CarGallery({ images = [], name = "", slug = "" }) {
+// `alts` is optional, one string per image in the same order. Car pages pass
+// the descriptions from image-alt.js so Google Images reads what is in the
+// photo; without it the alt falls back to "<name> — photo N".
+export default function CarGallery({ images = [], name = "", slug = "", alts = [] }) {
   const trackRef = useRef(null);
   const [active, setActive] = useState(0);
   const imgs = images.length ? images : [];
@@ -33,7 +36,7 @@ export default function CarGallery({ images = [], name = "", slug = "" }) {
             src={getImageKitSrc(img, 1200)}
             srcSet={getImageKitSrcSet(img)}
             sizes="(min-width:768px) 1000px, 100vw"
-            alt={`${name} — photo ${i + 1}`}
+            alt={alts[i] || `${name} — photo ${i + 1}`}
             loading={i === 0 ? "eager" : "lazy"}
             fetchPriority={i === 0 ? "high" : "low"}
             decoding={i === 0 ? "sync" : "async"}
