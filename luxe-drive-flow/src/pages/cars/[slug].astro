@@ -15,7 +15,8 @@ import GoogleRatingBadge from '@/components/reviews/GoogleRatingBadge.astro';
 import ReviewCards from '@/components/reviews/ReviewCards.astro';
 import { cars } from '@/data/cars';
 import { postsForCar, postPath } from '@/data/posts';
-import { rentalTerms, deliveryEachWaySummary } from '@/data/rental-terms';
+import { rentalTerms, deliveryEachWaySummary, rateForDays } from '@/data/rental-terms';
+import { altFor } from '@/data/image-alt';
 import { descriptionFor } from '@/data/meta-descriptions';
 import { titleFor } from '@/data/meta-titles';
 import { contentFor } from '@/data/car-content';
@@ -80,7 +81,17 @@ const exDays = 3;
 
 // Four questions, all answered from data that exists: deposit, mileage,
 // delivery, and the car's own first Good-to-know fact.
+const usdFmt = (n) => `$${n.toLocaleString('en-US')}`;
+const firstTier = bookingTiers[0];
+const weekTier = bookingTiers.at(-1);
+const taxPct = Math.round(rentalTerms.taxesAndFeesRate * 100);
 const carFaqs = content ? [
+  {
+    // Added 15 Nov 2026: "<car> rental price" is a common search and nothing
+    // on the page answered it directly. Every figure is derived.
+    q: `How much does it cost to rent the ${named(car)} in Miami?`,
+    a: `${usdFmt(car.price)} a day, with ${milesPerDay} miles included. Book ${firstTier.days} days or more and it drops to ${usdFmt(rateForDays(car.price, firstTier.days, bookingTiers).perDay)} a day, or ${usdFmt(rateForDays(car.price, weekTier.days, bookingTiers).perDay)} a day for ${weekTier.days} days or more. Taxes and fees of ${taxPct}% are added to the rental, and the ${car.deposit.display} deposit is refundable and held separately.`,
+  },
   {
     q: `What is the security deposit on the ${car.name}?`,
     a: `${car.deposit.display}${car.depositDiffers ? ` on the ${car.name}, above the ${rentalTerms.deposit.display} that applies to the rest of the fleet` : ''}, taken when your booking is confirmed. ${rentalTerms.deposit.note} It can also cover excess mileage, a late return, cleaning, or fines picked up during the rental.`,
@@ -144,6 +155,10 @@ const ogImage = firstImg && !firstImg.endsWith('.svg')
 // fleet.js `name` sometimes already carries the make ("Lamborghini Urus") and
 // sometimes does not ("S580"), so only prepend when it is missing.
 const fullName = car.name.startsWith(car.make) ? car.name : `${car.make} ${car.name}`;
+
+// Carousel alt text: the reviewed description from image-alt.js where one
+// exists, otherwise a fallback that still names the car and the city.
+const galleryAlts = imgs.map((src, i) => altFor(src, `${fullName} rental in Miami — photo ${i + 1}`));
 const abs = (u) => (u.startsWith('http') ? u : `${SITE}${u}`);
 
 // One PropertyValue per spec that actually exists on the car.
@@ -241,7 +256,7 @@ const productSchema = {
 
       <!-- 1 · PHOTOS -->
       <div class="relative lg:col-start-1 lg:row-start-1">
-        <CarGallery images={imgs} name={car.name} slug={`g-${car.slug}`} client:visible />
+        <CarGallery images={imgs} name={car.name} slug={`g-${car.slug}`} alts={galleryAlts} client:visible />
         {car.model && (
           <a href="#see-in-3d" class="absolute top-3 left-3 z-10 inline-flex items-center gap-1.5 bg-white text-black text-[11px] font-semibold px-3 py-1.5 rounded-full hover:bg-[#ff1516] transition shadow-lg">
             ◆ View in 3D{car.usdz ? ' & AR' : ''}
