@@ -107,6 +107,45 @@ export const fleet = [
     ],
   },
   {
+    id: 10,
+    name: "Huracan STO",
+    dashboardId: "",
+    make: "Lamborghini",
+    year: 2023,
+    // Regular price, no offer: no wasPrice, so no strike-through or OFF badge.
+    // Owner's rate, 15 Nov 2026. The STO was last listed until June 2026 at
+    // $1,695 under the same slug (huracan-sto), so its URL comes back as-is.
+    price: 1495,
+    // Owner's terms for this car only, 15 Nov 2026: a $2,000 deposit and a
+    // minimum age of 21, against the fleet's $1,000 and 18 in rental-terms.js.
+    // cars.js turns these into the per-car `deposit` and `minimumAge` the car
+    // page reads; a car without them gets the fleet defaults.
+    deposit: 2000,
+    minimumAge: 21,
+    // Lamborghini's published figures: 640 CV (631 hp), 0-62 mph in 3.0s.
+    // Rear-wheel drive only, like the EVO RWD — not the 631 hp AWD EVO, which
+    // shares the horsepower figure but nothing else.
+    power: 631,
+    miles: 100,
+    seats: 2,
+    doors: 2,
+    drivetrain: 'Rear-wheel drive · 5.2L naturally aspirated V10',
+    zeroToSixty: "3.0s",
+    description:
+      "The Lamborghini Huracán STO is the race car Lamborghini made road legal—631 hp from a naturally aspirated V10, rear-wheel drive, and a roof scoop and fixed rear wing taken straight from the Super Trofeo series. In Miami it is the loudest arrival on Ocean Drive and the one Huracán nobody mistakes for another.",
+
+    // Owner's photos, 15 Nov 2026. Exteriors first, then the cabin. After
+    // adding or replacing any, run `npm run optimize:images`.
+    images: [
+      "/cars/lamborghini-huracan-sto-rental-miami-front-quarter.jpg",
+      "/cars/lamborghini-huracan-sto-rental-miami-side-profile.jpg",
+      "/cars/lamborghini-huracan-sto-rental-miami-front.jpg",
+      "/cars/lamborghini-huracan-sto-rental-miami-rear.jpg",
+      "/cars/lamborghini-huracan-sto-rental-miami-steering-wheel.jpg",
+      "/cars/lamborghini-huracan-sto-rental-miami-instrument-cluster.jpg",
+    ],
+  },
+  {
     id: 6,
     name: "Cullinan",
     dashboardId: "",
@@ -259,45 +298,6 @@ export const fleet = [
     ],
   },
   {
-    id: 10,
-    name: "Huracan STO",
-    dashboardId: "",
-    make: "Lamborghini",
-    year: 2023,
-    // Regular price, no offer: no wasPrice, so no strike-through or OFF badge.
-    // Owner's rate, 15 Nov 2026. The STO was last listed until June 2026 at
-    // $1,695 under the same slug (huracan-sto), so its URL comes back as-is.
-    price: 1495,
-    // Owner's terms for this car only, 15 Nov 2026: a $2,000 deposit and a
-    // minimum age of 21, against the fleet's $1,000 and 18 in rental-terms.js.
-    // cars.js turns these into the per-car `deposit` and `minimumAge` the car
-    // page reads; a car without them gets the fleet defaults.
-    deposit: 2000,
-    minimumAge: 21,
-    // Lamborghini's published figures: 640 CV (631 hp), 0-62 mph in 3.0s.
-    // Rear-wheel drive only, like the EVO RWD — not the 631 hp AWD EVO, which
-    // shares the horsepower figure but nothing else.
-    power: 631,
-    miles: 100,
-    seats: 2,
-    doors: 2,
-    drivetrain: 'Rear-wheel drive · 5.2L naturally aspirated V10',
-    zeroToSixty: "3.0s",
-    description:
-      "The Lamborghini Huracán STO is the race car Lamborghini made road legal—631 hp from a naturally aspirated V10, rear-wheel drive, and a roof scoop and fixed rear wing taken straight from the Super Trofeo series. In Miami it is the loudest arrival on Ocean Drive and the one Huracán nobody mistakes for another.",
-
-    // Owner's photos, 15 Nov 2026. Exteriors first, then the cabin. After
-    // adding or replacing any, run `npm run optimize:images`.
-    images: [
-      "/cars/lamborghini-huracan-sto-rental-miami-front-quarter.jpg",
-      "/cars/lamborghini-huracan-sto-rental-miami-side-profile.jpg",
-      "/cars/lamborghini-huracan-sto-rental-miami-front.jpg",
-      "/cars/lamborghini-huracan-sto-rental-miami-rear.jpg",
-      "/cars/lamborghini-huracan-sto-rental-miami-steering-wheel.jpg",
-      "/cars/lamborghini-huracan-sto-rental-miami-instrument-cluster.jpg",
-    ],
-  },
-  {
     id: 4,
     // NOT the S580 above. That is the standard Mercedes-Benz S-Class at $399;
     // this is the Mercedes-Maybach S580 — longer wheelbase, four seats, and its
@@ -336,6 +336,42 @@ export const fleet = [
       "/cars/mercedes-maybach-s580-rental-miami-rear-console.jpg",
       "/cars/mercedes-maybach-s580-rental-miami-front-seats.jpg",
       "/cars/mercedes-maybach-s580-rental-miami-panoramic-roof.jpg",
+    ],
+  },
+  {
+    id: 11,
+    name: "911 Turbo S Cabriolet",
+    dashboardId: "",
+    make: "Porsche",
+    year: 2023,
+    // Regular price, owner's rate, 15 Nov 2026. No wasPrice, so no
+    // strike-through. Fleet-standard deposit and age (no override here).
+    price: 1295,
+    // Porsche's published figures for the 2023 911 Turbo S Cabriolet: 640 hp,
+    // 0-60 mph in 2.7s (the coupe is 2.6s; do not borrow it).
+    power: 640,
+    miles: 100,
+    // 2+2: two full seats and two small rear seats. The note keeps the card
+    // from implying four equal seats.
+    seats: 4,
+    seatsNote: "2+2",
+    doors: 2,
+    drivetrain: 'All-wheel drive · 3.7L twin-turbo flat-six',
+    zeroToSixty: "2.7s",
+    description:
+      "The Porsche 911 Turbo S Cabriolet is the quickest open car we run—640 hp, all-wheel drive and 2.7 seconds to 60, with a roof that folds away in seconds. It is the supercar you can drive every day of the trip, from Brickell to South Beach, without ever wishing for something more comfortable.",
+
+    // Owner's photos, 15 Nov 2026. The last four arrived at 540px wide, so
+    // they are sharp on a phone and soft on a large desktop screen; replace
+    // them with full-size originals when available.
+    images: [
+      "/cars/porsche-911-turbo-s-cabriolet-rental-miami-front-quarter.jpg",
+      "/cars/porsche-911-turbo-s-cabriolet-rental-miami-side-profile.jpg",
+      "/cars/porsche-911-turbo-s-cabriolet-rental-miami-front.jpg",
+      "/cars/porsche-911-turbo-s-cabriolet-rental-miami-rear-quarter.jpg",
+      "/cars/porsche-911-turbo-s-cabriolet-rental-miami-rear.jpg",
+      "/cars/porsche-911-turbo-s-cabriolet-rental-miami-cockpit.jpg",
+      "/cars/porsche-911-turbo-s-cabriolet-rental-miami-interior-overhead.jpg",
     ],
   },
 ];

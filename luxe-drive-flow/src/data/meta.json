@@ -19,6 +19,12 @@
       "note": "fleet.js calls it \"Huracan STO\". Returned to the fleet 15 Nov 2026 at $1,495/day, same slug as the listing removed in June. Leads with the marque, like the other two Huracans. Retuned 15 Nov 2026 to the owner's target keyword, 'Lamborghini Huracán STO rental Miami', which opens both the title and the description. Accented Huracán, which is how the car is written; Google matches the unaccented search as well."
     },
     {
+      "path": "/cars/porsche-911-turbo-s",
+      "title": "Porsche 911 Turbo S Rental Miami | Lussaro Collection",
+      "description": "Porsche 911 Turbo S rental in Miami: 640 hp Cabriolet, 0–60 in 2.7s, all-wheel drive, $1,295/day with 100 miles included. Delivered to your door across Miami.",
+      "note": "fleet.js calls it \"911 Turbo S Cabriolet\"; slug set in cars.js. Added 15 Nov 2026 at $1,295/day. Target keyword 'Porsche 911 Turbo S rental Miami' opens the title and description, the same treatment as the Huracan STO."
+    },
+    {
       "path": "/cars/lamborghini-urus",
       "title": "",
       "description": "Rent the Lamborghini Urus in Miami: 641 hp, 0-60 in 3.3s, $999/day with 100 miles included. Delivered anywhere in Miami, same-day available.",

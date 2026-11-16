@@ -24,6 +24,9 @@ lamborghini urus rental,car,commercial,high,/blog/how-much-is-a-lamborghini-rent
 lamborghini huracan rental,car,commercial,high,/blog/how-much-is-a-lamborghini-rental,covered,,,,Secondary in the Lamborghini cluster. $1295/day.
 lamborghini huracan sto rental miami,car,commercial,high,/cars/huracan-sto,covered,,,,"PRIMARY for the STO car page; owner-chosen 15 Nov 2026. Opens the title and meta description. Do not give a landing page or blog post this primary - the car page owns it."
 huracan sto rental miami,car,commercial,medium,/cars/huracan-sto,covered,,,,"Variant of the STO primary; same page. A future STO vs EVO post may use it only as a secondary."
+porsche 911 turbo s rental miami,car,commercial,high,/cars/porsche-911-turbo-s,covered,,,,"PRIMARY for the 911 Turbo S car page; added 15 Nov 2026. Opens the title and meta description. The car page owns it - no landing page or post takes this primary."
+porsche 911 turbo s convertible rental miami,car,commercial,medium,/cars/porsche-911-turbo-s,covered,,,,"Variant; the car is the Cabriolet. Same page."
+porsche rental miami,car,commercial,high,/cars/porsche-911-turbo-s,needs-work,,,,"Only Porsche in the fleet, so the car page is the target for now. Revisit if a second Porsche arrives or a Porsche landing page is built."
 lamborghini rental las vegas,geo-out-of-market,commercial,low,,do-not-target,,,,Out of market. Miami only - we cannot serve Nevada and should not rank for it.
 lamborghini rental dallas,geo-out-of-market,commercial,low,,do-not-target,,,,Out of market. Miami only.
 lamborghini rental los angeles,geo-out-of-market,commercial,low,,do-not-target,,,,Out of market. Miami only.

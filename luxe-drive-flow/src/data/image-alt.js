@@ -29,6 +29,22 @@ const ALT = {
   '/cars/lamborghini-huracan-sto-rental-miami-instrument-cluster.jpg':
     'Digital instrument cluster of the Lamborghini Huracan STO showing the tachometer and the STO drive-mode badge',
 
+  // --- Porsche 911 Turbo S Cabriolet (viewed before writing, 15 Nov 2026) ---
+  '/cars/porsche-911-turbo-s-cabriolet-rental-miami-front-quarter.jpg':
+    'White Porsche 911 Turbo S Cabriolet rental with the roof down and a red interior, parked by the water with the downtown Miami skyline behind',
+  '/cars/porsche-911-turbo-s-cabriolet-rental-miami-side-profile.jpg':
+    'Side profile of the white Porsche 911 Turbo S Cabriolet rental, roof down, showing the rear wing, yellow brake calipers and red cabin',
+  '/cars/porsche-911-turbo-s-cabriolet-rental-miami-front.jpg':
+    'Head-on view of the white Porsche 911 Turbo S Cabriolet rental with the roof down and red seats, in an empty lot in front of a concrete grandstand',
+  '/cars/porsche-911-turbo-s-cabriolet-rental-miami-rear-quarter.jpg':
+    'Rear three-quarter view of the white Porsche 911 Turbo S Cabriolet rental with its rear wing raised and roof down',
+  '/cars/porsche-911-turbo-s-cabriolet-rental-miami-rear.jpg':
+    'Rear of the Porsche 911 Turbo S Cabriolet rental: full-width light bar, Porsche lettering and twin exhausts',
+  '/cars/porsche-911-turbo-s-cabriolet-rental-miami-cockpit.jpg':
+    'Red leather cockpit of the Porsche 911 Turbo S Cabriolet, with the steering wheel, digital gauges and center console',
+  '/cars/porsche-911-turbo-s-cabriolet-rental-miami-interior-overhead.jpg':
+    'Overhead view into the red interior of the Porsche 911 Turbo S Cabriolet with the roof down, showing both front seats and the dashboard',
+
   // --- Car photos used on /about (viewed before writing) --------------------
   '/cars/ferrari-sf90-rental-miami-front-quarter.jpg':
     'White Ferrari SF90 rental parked on an open deck with the downtown Miami skyline and construction cranes behind',
