@@ -11,6 +11,7 @@ Numbers marked **[code]** are transcribed from the data files, which remain the 
 | Car | Year | Per day | Power | 0–60 |
 |---|---|---|---|---|
 | Ferrari SF90 | 2023 | **$2,499** | 986 hp | 2.5s |
+| Lamborghini Huracán STO | 2023 | **$1,495** | 631 hp | 3.0s |
 | Rolls-Royce Cullinan | 2023 | **$1,299** (from $1,499) | 563 hp | 4.9s |
 | Lamborghini Huracán EVO Spyder | 2023 | **$1,299** (from $1,499) | 602 hp | 3.5s |
 | Lamborghini Huracán EVO | 2023 | **$1,199** | 602 hp | 3.3s |
@@ -19,6 +20,8 @@ Numbers marked **[code]** are transcribed from the data files, which remain the 
 | Mercedes-Maybach S580 | 2023 | **$899** (from $1,099) | 496 hp | 4.8s |
 | Mercedes-AMG G63 | 2023 | **$799** (from $899) | 577 hp | 4.5s |
 | Mercedes-Benz S580 | 2023 | **$399** (from $499) | 496 hp | 4.4s |
+
+*Huracán STO added 15 November 2026 (returned to the fleet; $2,000 deposit and 21+ — see Rental terms). Its 0–60 is Lamborghini's published 0–62 mph figure.*
 
 *Transcribed from `fleet.js` on 6 October 2026. The previous table was six cars at
 the pre-October prices and was missing the Maybach S580, the Huracán EVO Spyder and
@@ -39,8 +42,9 @@ since nothing outside it may appear in copy. Re-transcribe whenever a price move
 
 ## Rental terms **[code]**
 
-- **Deposit: $1,000.** Flat, every vehicle, refundable after inspection on return.
-- **Minimum age: 19**, valid license, qualifying insurance. *Lowered from 21 on the owner's instruction, 20 October 2026. `rental-terms.js` is the source; /terms and /about had hard-coded "21" in prose and now derive it.*
+- **Deposit: $1,000** on every vehicle except the **Lamborghini Huracán STO at $2,000** (owner, 15 November 2026). Refundable after inspection on return. Never write "flat on every car" — derive the exception from `depositException` in `cars.js`.
+- **Minimum age: 18**, valid license, qualifying insurance — **21 for the Huracán STO**. *Lowered from 21 to 19 on 20 October 2026 and from 19 to 18 on 15 November 2026, owner's instruction both times. `rental-terms.js` holds the fleet figure; per-car exceptions live in `fleet.js` and surface as `ageException` in `cars.js`.*
+- **Taxes and fees: 10%** of the rental after any multi-day discount (owner, 15 November 2026). `rental-terms.js` → `taxesAndFeesRate`.
 - **Mileage: 100 miles per day, pooled** across the rental. Three days is 300 miles total; only the total at return counts.
 - **Cancellation: non-refundable within 5 days** of the rental start date.
 

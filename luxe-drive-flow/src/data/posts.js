@@ -16,6 +16,20 @@
 
 export const posts = [
   {
+    slug: 'lamborghini-huracan-sto-vs-evo-rental-miami',
+    title: 'Huracán STO vs EVO Rental Miami: Which to Rent',
+    excerpt:
+      'Three Huracáns, one V10. What the STO adds over the EVO, when the EVO Spyder is the better call, and why the STO is the one we would hand you the keys to.',
+    published: '2026-11-15',
+    updated: '2026-11-15',
+    hero: '/cars/lamborghini-huracan-sto-rental-miami-front-quarter.jpg',
+    cluster: 'Comparison',
+    readingMinutes: 8,
+    // The STO is listed first: the owner wants this post to feed the STO page,
+    // and these car pages link back to it under "Related guide".
+    relatedCars: ['huracan-sto', 'huracan-evo', 'huracan-evo-spyder'],
+  },
+  {
     slug: 'no-insurance-rentals-miami',
     title: 'No Insurance Rentals Miami: What It Costs',
     excerpt:
