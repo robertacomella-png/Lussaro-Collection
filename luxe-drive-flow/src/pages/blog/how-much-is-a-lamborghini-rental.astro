@@ -1,4 +1,5 @@
 ---
+import { depositException, ageException } from '@/data/cars';
 // KEYWORD CLUSTER — see /used-keywords.md
 //   PRIMARY:    how much is a rental lamborghini
 //   SECONDARY:  lamborghini rental · lamborghini urus rental ·
@@ -104,7 +105,7 @@ const faqs = [
   },
   {
     q: 'How old do you have to be to rent a Lamborghini in Miami?',
-    a: `${minimumAge}, with a valid license and qualifying insurance, and that is the minimum on every car we run — the Huracán included. Ask before you plan around it elsewhere, because a number of Miami companies quietly require 25 for anything with a supercar badge and do not state it on the page.`,
+    a: `${minimumAge}, with a valid license and qualifying insurance, ${ageException ? `and that is the minimum on every car we run except ${ageException}` : 'and that is the minimum on every car we run — the Huracán included'}. Ask before you plan around it elsewhere, because a number of Miami companies quietly require 25 for anything with a supercar badge and do not state it on the page.`,
   },
   {
     q: 'Should I rent the Urus or the Huracán EVO?',
@@ -357,7 +358,7 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
         <ul>
           <li><strong>{perDay} miles a day, pooled across the booking.</strong> Three days is {perDay * 3} miles in total, used however you like — only the figure at return counts. A daily cap that resets at midnight is a materially worse deal at the same headline price.</li>
           <li><strong>Delivery and collection across Miami</strong>, to hotels, homes, offices and both airports.</li>
-          <li><strong>A refundable {deposit.display} deposit</strong>, identical on every car we run.</li>
+          <li><strong>A refundable {deposit.display} deposit</strong>{depositException ? `, on every car we run except ${depositException}.` : ', identical on every car we run.'}</li>
         </ul>
 
         <h2 id="extras">The costs that are not the day rate</h2>
@@ -397,7 +398,7 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
         </p>
 
         <ol>
-          <li><strong>A valid driver's license</strong>, and you must be at least {minimumAge}. That is the minimum on every car we run, the Huracán included.</li>
+          <li><strong>A valid driver's license</strong>, and you must be at least {minimumAge}. {ageException ? `That is the minimum on every car we run except ${ageException}.` : 'That is the minimum on every car we run, the Huracán included.'}</li>
           <li><strong>Insurance that covers the rental vehicle.</strong> Florida sets its own minimum coverage requirements for drivers, which the
             {' '}<a href="https://www.flhsmv.gov/insurance/" target="_blank" rel="noopener noreferrer">Florida Department of Highway Safety and Motor Vehicles</a>
             {' '}publishes in full — but a personal policy meeting the state minimum is not automatically a policy that covers a supercar. Check with your insurer before you assume it transfers.</li>

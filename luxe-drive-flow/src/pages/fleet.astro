@@ -1,4 +1,5 @@
 ---
+import { depositException } from '@/data/cars';
 import { altFor } from '@/data/image-alt';
 // /fleet — standalone fleet landing page (the Nav "Fleet" link and the
 // destination for paid ads). Mirrors the homepage's "The Collection" section
@@ -69,7 +70,7 @@ const faqs = [
   { q: 'How fast can I book?', a: 'Often same-day. Message or call — we reply in minutes, and most bookings confirm within the hour.' },
   { q: 'Do you deliver the car to me?', a: `Yes — hotel, home, or airport. Delivery is ${deliveryEachWaySummary}, and collection at the end is charged separately at typically the same fee. Outside those areas we quote before you book.` },
   { q: 'Are there discounts for longer rentals?', a: 'Yes: most cars are 15% off at 3+ days, 20% at 5+, 25% at 7+. Exact pricing shows on each car’s calendar.' },
-  { q: 'How does the security deposit work?', a: `A flat ${rentalTerms.deposit.display} refundable deposit on every car — disclosed before you book, refunded after inspection.` },
+  { q: 'How does the security deposit work?', a: `${depositException ? `A ${rentalTerms.deposit.display} refundable deposit on every car except ${depositException}` : `A flat ${rentalTerms.deposit.display} refundable deposit on every car`} — disclosed before you book, refunded after inspection.` },
   { q: 'Is the car in the photos the car I get?', a: 'Yes. Every listing is the exact car we deliver — most are one-of-one in Miami.' },
   { q: 'Which car should I choose?', a: 'Tell us the occasion on WhatsApp — we’ll match you to the right car in one message.' },
 ];
@@ -205,7 +206,7 @@ const fleetSchema = {
         <p>
           Every rate includes {perDayMiles} miles a day, pooled across the booking rather than
           capped daily — three days is {perDayMiles * 3} miles in total, spent however you like.
-          The deposit is {rentalTerms.deposit.display} flat on every car, returned after the car is
+          The deposit is {rentalTerms.deposit.display} {depositException ? `on every car except ${depositException}` : 'flat on every car'}, returned after the car is
           inspected on its way back. Delivery is {deliveryEachWaySummary}, to a hotel, a residence
           or either airport.
         </p>

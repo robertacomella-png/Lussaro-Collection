@@ -1,4 +1,5 @@
 ---
+import { depositException } from '@/data/cars';
 // /mercedes-s580-rental-miami — paid-traffic funnel for the Mercedes-Benz S580.
 //
 // THIS IS THE MERCEDES-BENZ S580 AT $399, NOT THE MAYBACH S580 AT $899.
@@ -63,7 +64,7 @@ const objections = [
   },
   {
     q: 'What is the deposit, and when do I get it back?',
-    a: `${rentalTerms.deposit.display}, flat on every vehicle — the same on this car as on the Ferrari. ${rentalTerms.deposit.note}`,
+    a: `${rentalTerms.deposit.display}, ${depositException ? `the same on this car as on the Ferrari, and on every car except ${depositException}` : 'flat on every vehicle — the same on this car as on the Ferrari'}. ${rentalTerms.deposit.note}`,
   },
   {
     q: 'Do I need my own insurance?',
@@ -209,7 +210,7 @@ const faqSchema = {
             {[
               'The published rate, with any multi-day discount already applied',
               'Delivery quoted up front, not added at handover',
-              `The same ${rentalTerms.deposit.display} deposit as every other car we rent`,
+              `The same ${rentalTerms.deposit.display} deposit as ${depositException ? 'nearly every' : 'every'} other car we rent`,
             ].map((line) => (
               <li class="flex gap-3 text-[#0a0a0a]/75 text-[15px] leading-relaxed">
                 <span aria-hidden="true" class="text-[#e00e10] font-bold">✓</span>{line}

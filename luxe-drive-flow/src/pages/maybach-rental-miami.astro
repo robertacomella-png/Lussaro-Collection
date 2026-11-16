@@ -1,4 +1,5 @@
 ---
+import { depositException } from '@/data/cars';
 // /maybach-rental-miami — paid-traffic funnel for the Maybach ads.
 //
 // Built from the ground up rather than on LandingLayout. The nine SEO landing
@@ -62,7 +63,7 @@ const objections = [
   },
   {
     q: 'What is the deposit for, and when do I get it back?',
-    a: `${rentalTerms.deposit.display}, flat on every vehicle. ${rentalTerms.deposit.note}`,
+    a: `${rentalTerms.deposit.display}, ${depositException ? `the same on every vehicle except ${depositException}` : 'flat on every vehicle'}. ${rentalTerms.deposit.note}`,
   },
   {
     q: 'Do I need my own insurance?',

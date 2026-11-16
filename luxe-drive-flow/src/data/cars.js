@@ -1,4 +1,5 @@
 import { fleet } from "./fleet";
+import { rentalTerms } from "./rental-terms";
 
 export const slugify = (s) =>
   s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
@@ -40,7 +41,37 @@ export const cars = fleet.map((c) => {
     usdz: m.usdz || null,
     ...(m.poster ? { poster: m.poster } : {}),
     ...(DISCOUNTS[slug] ? { discountTiers: DISCOUNTS[slug] } : {}),
+    // Per-car terms. fleet.js may set a numeric `deposit` or `minimumAge` for a
+    // car that differs from the fleet (the Huracan STO does); everything else
+    // inherits rental-terms.js. Always present, so a page can read
+    // car.deposit.display and car.minimumAge without checking.
+    deposit: c.deposit
+      ? { ...rentalTerms.deposit, amount: c.deposit, display: `$${c.deposit.toLocaleString("en-US")}` }
+      : rentalTerms.deposit,
+    depositDiffers: Boolean(c.deposit && c.deposit !== rentalTerms.deposit.amount),
+    minimumAge: c.minimumAge ?? rentalTerms.minimumAge,
   };
 });
 
 export const getCar = (slug) => cars.find((c) => c.slug === slug);
+
+// --- Cars whose terms differ from the fleet ----------------------------------
+//
+// Pages that say "the same deposit on every car" or "the minimum on every car"
+// append these, so the claim stays true when a car carries its own terms. Both
+// are DERIVED from fleet.js: when no car differs they are '' and every such
+// sentence renders exactly as it did before the exception existed.
+const fullName = (c) => (c.name.startsWith(c.make) ? c.name : `${c.make} ${c.name}`);
+const joinAnd = (xs) => (xs.length < 2 ? xs.join("") : `${xs.slice(0, -1).join(", ")} and ${xs.at(-1)}`);
+
+/** "the Lamborghini Huracan STO at $2,000", or '' */
+export const depositException = joinAnd(
+  cars.filter((c) => c.depositDiffers).map((c) => `the ${fullName(c)} at ${c.deposit.display}`),
+);
+
+/** "the Lamborghini Huracan STO, which requires 21", or '' */
+export const ageException = joinAnd(
+  cars
+    .filter((c) => c.minimumAge !== rentalTerms.minimumAge)
+    .map((c) => `the ${fullName(c)}, which requires ${c.minimumAge}`),
+);
