@@ -47,6 +47,7 @@ When an agency asks how edits are tracked, this is the answer.
 | /blog/no-insurance-rentals-miami | Lussaro | locked | Published 22 Oct 2026, 1,689 words, 54/54. Publishes the daily insurance band, which no competitor on this SERP does. **"No insurance" here means the RENTER has none** — never that the car goes out uninsured, which Florida law forbids and the post says so with a link to the statute. Retargeted to this phrase on the owner's instruction before publication. Edit sections, never regenerate. |
 | /exotic-car-rental-miami | Lussaro | locked | Head-term landing page. Owns "exotic car rental miami". |
 | /best-exotic-car-rental-miami | Lussaro | locked | SEO landing copy. |
+| /blog/lamborghini-huracan-sto-vs-evo-rental-miami | Lussaro | locked | Published 15 Nov 2026, 1,863 words, 54/54 on the verifier. Three-way Huracán comparison that recommends the STO on the owner's instruction while naming where the EVO or Spyder fits better. Prices, deposits and ages render from fleet.js and cars.js. Edit sections, never regenerate. |
 | /lamborghini-rental-miami | Lussaro | locked | SEO landing copy. Owns the Lamborghini commercial cluster. |
 | /rolls-royce-rental-miami | Lussaro | locked | SEO landing copy. |
 | /g-wagon-rental-miami | Lussaro | locked | SEO landing copy. |

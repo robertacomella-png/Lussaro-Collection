@@ -15,6 +15,7 @@ This is what stops the site competing with itself — the failure mode where two
 | how much is a rental lamborghini | [/blog/how-much-is-a-lamborghini-rental](../luxe-drive-flow/src/pages/blog/how-much-is-a-lamborghini-rental.astro) | 2026-08-14 | Lamborghini |
 | mercedes s580 vs maybach s580 rental miami | [/blog/mercedes-s580-vs-maybach-s580-rental-miami](../luxe-drive-flow/src/pages/blog/mercedes-s580-vs-maybach-s580-rental-miami.astro) | 2026-10-06 | Comparison |
 | well kept exotic car rental miami | [/blog/well-kept-exotic-car-rental-miami](../luxe-drive-flow/src/pages/blog/well-kept-exotic-car-rental-miami.astro) | 2026-10-07 | The standard |
+| lamborghini huracan sto vs evo rental miami | [/blog/lamborghini-huracan-sto-vs-evo-rental-miami](../luxe-drive-flow/src/pages/blog/lamborghini-huracan-sto-vs-evo-rental-miami.astro) | 2026-11-15 | Comparison |
 
 ---
 
@@ -78,6 +79,22 @@ second slot on a brand search and push a competitor's comparison page further do
 that it is the line every competitor in Miami already runs. The specifics do the arguing instead:
 detailing between every rental, ozone after the detail, owner-operated. The reader reaches the
 conclusion themselves, which is the version a competitor cannot copy.
+
+---
+
+### lamborghini huracan sto vs evo rental miami
+**Post:** `/blog/lamborghini-huracan-sto-vs-evo-rental-miami`
+**Date:** November 15, 2026
+
+**Secondaries used:**
+- lamborghini huracan evo vs spyder rental miami
+- huracan sto vs evo
+- huracan sto deposit miami
+- which lamborghini huracan to rent miami
+
+**Why this primary and not `lamborghini huracan sto rental miami`:** the commercial STO term belongs to `/cars/huracan-sto` (owner-chosen, 15 November 2026). A blog post on it would split one query across two pages. The comparison is informational, has no page competing for it, and funnels into the STO car page. The owner asked for the post to recommend the STO; it still names the four cases where the EVO or Spyder is the better fit.
+
+**SERP at the time:** no dedicated STO-vs-EVO rental comparison ranked. The results were rental-company listings, spec-comparison tables and owner reviews; the closest rental comparison ran about 600 words and omitted deposit, age and insurance, which this post covers.
 
 ---
 
