@@ -22,6 +22,8 @@ lamborghini rental,car,commercial,high,/lamborghini-rental-miami,needs-work,3600
 how much is a rental lamborghini,informational,informational,high,/blog/how-much-is-a-lamborghini-rental,covered,,,,"PRIMARY for the Lamborghini cluster. Informational, so it does not compete with /lamborghini-rental-miami."
 lamborghini urus rental,car,commercial,high,/blog/how-much-is-a-lamborghini-rental,covered,,,,"Secondary in the Lamborghini cluster. $995/day, the volume car."
 lamborghini huracan rental,car,commercial,high,/blog/how-much-is-a-lamborghini-rental,covered,,,,Secondary in the Lamborghini cluster. $1295/day.
+lamborghini huracan sto rental miami,car,commercial,high,/cars/huracan-sto,covered,,,,"PRIMARY for the STO car page; owner-chosen 15 Nov 2026. Opens the title and meta description. Do not give a landing page or blog post this primary - the car page owns it."
+huracan sto rental miami,car,commercial,medium,/cars/huracan-sto,covered,,,,"Variant of the STO primary; same page. A future STO vs EVO post may use it only as a secondary."
 lamborghini rental las vegas,geo-out-of-market,commercial,low,,do-not-target,,,,Out of market. Miami only - we cannot serve Nevada and should not rank for it.
 lamborghini rental dallas,geo-out-of-market,commercial,low,,do-not-target,,,,Out of market. Miami only.
 lamborghini rental los angeles,geo-out-of-market,commercial,low,,do-not-target,,,,Out of market. Miami only.

@@ -114,7 +114,7 @@ export const carContent = {
     faqQuestion: 'Can I take luggage in the Lamborghini Huracan EVO?',
     faqAnswer:
       'Only a little. There is a small front trunk and no rear cargo area at all, so plan on roughly one carry-on plus a soft bag between two people. If you are heading straight from the airport with full-size cases, book the Urus and we will deliver the Huracan to you afterwards instead.',
-    siblings: ['huracan-evo-spyder', 'sf90'],
+    siblings: ['huracan-sto', 'huracan-evo-spyder'],
     category: { href: '/lamborghini-rental-miami', label: 'Lamborghini rental in Miami' },
     realMoment: '',
     operatorNotes: '',
@@ -173,7 +173,7 @@ export const carContent = {
     faqQuestion: 'Can I put the roof down while driving the Huracan EVO Spyder?',
     faqAnswer:
       'Yes. The soft top takes about 17 seconds and works on the move at speeds up to 31 mph, so a sudden Miami shower does not mean pulling over. There is also an electric rear window that raises and lowers on its own, which is worth knowing on a hot day: roof up for the air conditioning, window down for the V10.',
-    siblings: ['huracan-evo', 'sf90'],
+    siblings: ['huracan-evo', 'huracan-sto'],
     category: { href: '/lamborghini-rental-miami', label: 'Lamborghini rental in Miami' },
     realMoment: '',
     operatorNotes: '',
