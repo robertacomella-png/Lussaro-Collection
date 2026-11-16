@@ -1,0 +1,69 @@
+---
+// Three real Google reviews under the gallery, styled to the booking brief's
+// mockup: name, Google-yellow stars, a short quote.
+//
+// The words come from reviews.js and are never rewritten. Each card shows a
+// short run of the reviewer's own words; the heading says they are excerpts,
+// and the build fails if any excerpt below is not a verbatim part of its
+// review, so an excerpt can never drift into paraphrase.
+//
+// On a phone the cards sit in one swipeable row, each most of the screen wide
+// with the next one peeking in, so three reviews cost one card's height. From
+// `sm` up they are three across.
+//
+// Reviews that name this car come first; the rest fill in from DEFAULT_ORDER.
+import { reviews } from '@/data/reviews';
+import { business } from '@/data/business';
+import { googleCountLabel } from '@/data/google-rating';
+
+const { carName = '', make = '' } = Astro.props;
+
+const EXCERPTS = {
+  'Kiarash Vaezzadeh-Naderi': 'Smooth and easy process from start to finish',
+  'Gregory Capo': 'Car was ready within the hour',
+  'demarcus king': 'Amazing customer service from owner Robert.',
+  'Shaf Irfan': 'the booking process was transparent and efficient',
+  'Tirth shah': 'got me sorted in a beautiful Maybach truck',
+};
+const DEFAULT_ORDER = ['Kiarash Vaezzadeh-Naderi', 'Gregory Capo', 'Shaf Irfan', 'demarcus king', 'Tirth shah'];
+
+for (const [name, excerpt] of Object.entries(EXCERPTS)) {
+  const r = reviews.find((x) => x.name === name);
+  if (!r || !r.text.includes(excerpt)) {
+    throw new Error(`ReviewCards: excerpt for "${name}" is not a verbatim part of their review in reviews.js`);
+  }
+}
+
+const namesCar = (r) => r.car && (r.car === carName || r.car === make || carName.includes(r.car));
+const picks = [
+  ...reviews.filter(namesCar),
+  ...DEFAULT_ORDER.map((n) => reviews.find((r) => r.name === n)),
+]
+  .filter((r, i, arr) => r && EXCERPTS[r.name] && arr.indexOf(r) === i)
+  .slice(0, 3);
+
+const monthLabel = (m) =>
+  new Date(`${m}-01T00:00:00`).toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+---
+<section id="reviews" aria-labelledby="reviews-h" class="scroll-mt-24">
+  <h2 id="reviews-h" class="font-display text-2xl md:text-3xl font-bold text-white tracking-tight">What our customers say</h2>
+  <p class="text-white/60 text-[14px] mt-1 mb-4">Google review excerpts</p>
+
+  <ul class="flex gap-3 overflow-x-auto snap-x snap-mandatory -mx-5 px-5 pb-1 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-3 sm:overflow-visible [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+    {picks.map((r) => (
+      <li class="relative snap-start shrink-0 w-[80%] sm:w-auto rounded-xl border border-white/15 bg-[#0f0f0f] p-4 flex flex-col">
+        <p class="text-white text-[15px] font-semibold leading-snug">{r.name}</p>
+        <p class="text-[#FBBC04] text-[15px] tracking-[0.06em] leading-none mt-1.5" aria-hidden="true">{'★'.repeat(r.rating)}</p>
+        <span class="sr-only">{r.rating} out of 5 stars.</span>
+        <blockquote class="mt-2.5 text-white/85 text-[15px] leading-relaxed flex-1">“{EXCERPTS[r.name]}”</blockquote>
+        <p class="text-white/60 text-[13px] mt-3">
+          <a href={business.googleProfileLink} target="_blank" rel="noopener noreferrer" class="underline decoration-white/30 underline-offset-2 hover:text-white">Google</a> · {monthLabel(r.month)}
+        </p>
+      </li>
+    ))}
+  </ul>
+
+  <p class="mt-4 text-[15px] text-center sm:text-left">
+    <a href={business.googleProfileLink} target="_blank" rel="noopener noreferrer" class="text-white underline decoration-white/40 underline-offset-4 hover:decoration-white transition-colors">Read all {googleCountLabel()} reviews on Google</a>
+  </p>
+</section>

@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "lussaro-dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "luxe-drive-flow", "run", "dev"],
+      "port": 4321
+    }
+  ]
+}

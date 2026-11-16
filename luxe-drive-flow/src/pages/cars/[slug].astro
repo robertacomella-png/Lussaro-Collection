@@ -8,9 +8,11 @@ import UrusHero from '@/components/hero/UrusHero.jsx';
 import ArButton from '@/components/hero/ArButton.jsx';
 import CarGallery from '@/components/fleet/CarGallery.jsx';
 import BookingCalendar from '@/components/booking/BookingCalendar.jsx';
-import BookingRequestCard from '@/components/booking/BookingRequestCard.jsx';
+import VehicleBookingCard from '@/components/booking/VehicleBookingCard.jsx';
 import { Phone } from 'lucide-react';
 import WhatsAppIcon from '@/components/site/WhatsAppIcon.astro';
+import GoogleRatingBadge from '@/components/reviews/GoogleRatingBadge.astro';
+import ReviewCards from '@/components/reviews/ReviewCards.astro';
 import { cars } from '@/data/cars';
 import { postsForCar, postPath } from '@/data/posts';
 import { rentalTerms, termsSummary, deliveryEachWaySummary } from '@/data/rental-terms';
@@ -62,12 +64,9 @@ const milesPerDay = car.miles ?? rentalTerms.mileage.includedPerDay;
 // this the link only runs one way and each post stays an island.
 const guides = postsForCar(car.slug);
 
-// The weekly rate is DERIVED, never typed in: seven days run through the same
-// discount ladder the booking card and /pricing use, so repricing a car in
-// fleet.js moves this line with it and the two can't disagree.
+// The car's discount ladder, falling back to the site-wide one. The booking
+// card applies it to the chosen dates.
 const bookingTiers = car.discountTiers ?? rentalTerms.discountTiers;
-const weekPct = bookingTiers.reduce((acc, t) => (7 >= t.days ? t.pct : acc), 0);
-const weeklyRate = Math.round(car.price * 7 * (1 - weekPct / 100));
 const exDays = 3;
 
 // Four questions, all answered from data that exists: deposit, mileage,
@@ -248,7 +247,7 @@ const productSchema = {
            void under the photos the full height of the form. -->
       <aside class="lg:col-start-2 lg:row-start-1 lg:row-span-2">
         <div class="rounded-2xl border border-white/10 bg-[#0f0f0f] p-4 md:p-6 shadow-[0_20px_60px_rgba(0,0,0,0.4)]">
-          <div class="flex items-end justify-between mb-4 md:mb-5">
+          <div class="mb-4 md:mb-5">
             <div>
               {onSale && (
                 <div class="flex items-center gap-2 mb-1">
@@ -259,12 +258,14 @@ const productSchema = {
               <span class="font-display text-3xl font-bold text-white">${car.price.toLocaleString()}</span>
               <span class="text-white/50 text-sm"> / day</span>
             </div>
-            <span class="inline-flex items-center gap-1 text-sm text-white/70"><span class="text-[#ff1516]">★</span> 5.0</span>
           </div>
 
-          <p class="text-white/50 text-xs -mt-3 mb-4 md:-mt-3.5 md:mb-5">
-            ${weeklyRate.toLocaleString('en-US')} / week at the {weekPct}% seven-day rate
-          </p>
+          {/* Google rating pill, beside the price — brief point 01. The weekly
+              rate line that sat here was cut to shorten the card (owner, 15 Nov
+              2026); the multi-day rates still show in the estimate. */}
+          <div class="-mt-2 mb-5">
+            <GoogleRatingBadge />
+          </div>
 
 
           {/* client:only (not client:visible) so the calendar renders fresh on the client
@@ -314,9 +315,7 @@ const productSchema = {
               crawler, and for anyone whose bundle is slow. It collects dates
               but checks no availability: nothing here can tell a visitor a car
               is free when it is not. */}
-          <BookingRequestCard client:visible pricePerDay={car.price} carName={car.name} tiers={bookingTiers} milesPerDay={milesPerDay} mileageUpgrade={car.mileageUpgrade ?? null} />
-
-          <p class="text-white/50 text-[11px] text-center mt-4 mb-2">Prefer to talk?</p>
+          <VehicleBookingCard client:visible pricePerDay={car.price} carName={car.name} tiers={bookingTiers} milesPerDay={milesPerDay} />
 
           {/* Call was full width here; it gives up half to WhatsApp so both
               channels sit under the calendar. Labels shorten to "Call" and
@@ -328,7 +327,7 @@ const productSchema = {
               the floating sticky pair while this card is on screen, and one
               marked element is enough to trigger that — putting it on both
               would just double-count the same card. */}
-          <div class="flex gap-2.5 mt-2.5">
+          <div class="flex gap-2.5 mt-4">
             <a href={wa} data-cta="car_booking_card_whatsapp" target="_blank" rel="noopener noreferrer"
               class="wa-pop flex-1 inline-flex items-center justify-center gap-1.5 px-3 bg-[#128f42] text-white py-3.5 rounded-full font-semibold text-sm md:text-base whitespace-nowrap shadow-[0_8px_24px_rgba(37,211,102,0.5)] ring-1 ring-white/15 hover:bg-[#0f7536] transition-colors">
               <WhatsAppIcon class="w-4 h-4 shrink-0" /> WhatsApp
@@ -339,19 +338,42 @@ const productSchema = {
             </a>
           </div>
 
-          <div class="flex items-center justify-center gap-x-4 gap-y-1 flex-wrap mt-5 text-[11px] text-white/50">
-            <span>✓ Insurance options</span>
-            <span>✓ Miami Delivery</span>
-            <span>✓ Replies in minutes</span>
-          </div>
         </div>
       </aside>
 
-      {/* 3 · THE READING MATTER — last on a phone, because someone who has
-           already scrolled past the price is browsing rather than booking.
-           On desktop it returns to the left column under the photos, filling
-           the height the booking card occupies beside it. */}
-      <div class="lg:col-start-1 lg:row-start-2 mt-2 lg:mt-0">
+      {/* 3 · REVIEWS, THEN THE QUESTIONS PEOPLE ASK BEFORE BOOKING — brief
+           points 01 and 05. Straight after the booking card on a phone, and
+           under the gallery on desktop, so trust and answers come before the
+           spec sheet and the 3D model. The description and spec grid that used
+           to live here now open the reading section below. */}
+      <div class="lg:col-start-1 lg:row-start-2 mt-2 lg:mt-0 space-y-10 min-w-0">
+        <ReviewCards carName={car.name} make={car.make} />
+        {carFaqs.length > 0 && (
+          <div class="space-y-3">
+            <h2 class="font-display text-xl md:text-2xl font-bold text-white tracking-tight">{car.name} questions</h2>
+            <div class="divide-y divide-white/10 border-y border-white/10">
+              {carFaqs.map((f) => (
+                <details class="group py-5">
+                  <summary class="flex items-center justify-between cursor-pointer list-none">
+                    <span class="font-display text-lg text-white pr-6">{f.q}</span>
+                    <span class="text-[#ff1516] text-xl shrink-0 transition-transform group-open:rotate-45">+</span>
+                  </summary>
+                  <p class="text-white/60 leading-relaxed mt-3">{f.a}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        )}
+
+      </div>
+    </div>
+  </section>
+
+  {/* THE READING MATTER — description, specs and related guides. Moved below
+      reviews and FAQs (brief point 05): someone who has scrolled this far is
+      browsing rather than booking. */}
+  <section class="bg-black border-t border-white/5 py-12 md:py-16">
+    <div class="max-w-3xl mx-auto px-5 md:px-8">
         <p class="text-white/65 leading-relaxed max-w-prose">{car.description}</p>
 
         {/* Three across from `sm` up, two on a phone. */}
@@ -387,7 +409,6 @@ const productSchema = {
             ))}
           </p>
         )}
-      </div>
     </div>
   </section>
 
@@ -428,23 +449,6 @@ const productSchema = {
             <a href="/pricing" class="text-[#ff1516] hover:underline">Full rate card</a> · <a href="/terms" class="text-[#ff1516] hover:underline">Terms of Service</a>
           </p>
         </div>
-
-        {carFaqs.length > 0 && (
-          <div class="space-y-3">
-            <h2 class="reveal font-display text-2xl md:text-3xl font-bold text-white tracking-tight">{car.name} questions</h2>
-            <div class="reveal divide-y divide-white/10 border-y border-white/10">
-              {carFaqs.map((f) => (
-                <details class="group py-5">
-                  <summary class="flex items-center justify-between cursor-pointer list-none">
-                    <span class="font-display text-lg text-white pr-6">{f.q}</span>
-                    <span class="text-[#ff1516] text-xl shrink-0 transition-transform group-open:rotate-45">+</span>
-                  </summary>
-                  <p class="text-white/60 leading-relaxed mt-3">{f.a}</p>
-                </details>
-              ))}
-            </div>
-          </div>
-        )}
 
         {(siblingCars.length > 0 || content.category) && (
           <div class="space-y-4">
@@ -597,5 +601,43 @@ const productSchema = {
     }
 
     document.addEventListener('astro:page-load', () => { lussaroCountup();  });
+  </script>
+
+  <script>
+    // Carry the booking card's choices into WhatsApp — brief point 04.
+    //
+    // BookingRequestCard fires `lussaro:booking-change` whenever the dates or
+    // delivery location change. Every wa.me link on the page (the card's own
+    // button, the contact section, the CTA band, the sticky mobile pill) is
+    // rewritten so the message already names the car, the dates and where it
+    // is going. Clearing the fields puts each link back exactly as the server
+    // rendered it, which is kept in data-wa-original.
+    //
+    // One listener on window, registered once: the event is dispatched on
+    // window and links are looked up when it fires, so it keeps working across
+    // view-transition navigations without re-binding.
+    import { whatsappWith } from '@/data/business';
+
+    if (!window.__lussaroWaPrefill) {
+      window.__lussaroWaPrefill = true;
+      window.addEventListener('lussaro:booking-change', (e) => {
+        const d = e.detail || {};
+        const links = document.querySelectorAll('a[href*="wa.me/"]');
+        const hasDetail = d.startLabel || d.location;
+        const lines = [`Hi, I'd like to check availability for the ${d.car}.`];
+        if (d.startLabel) {
+          const span = d.endLabel ? `${d.startLabel} → ${d.endLabel}` : d.startLabel;
+          lines.push(`Dates: ${span} (${d.days} ${d.days === 1 ? 'day' : 'days'})`);
+        }
+        if (d.miles) lines.push(`Mileage: ${d.miles} miles/day`);
+        if (d.location) lines.push(`Delivery to: ${d.location}`);
+        const href = whatsappWith(lines.join('\n'), { car: d.car, page: location.pathname.replace(/(.)\/$/, '$1') });
+
+        links.forEach((a) => {
+          if (!a.hasAttribute('data-wa-original')) a.setAttribute('data-wa-original', a.getAttribute('href'));
+          a.setAttribute('href', hasDetail ? href : a.getAttribute('data-wa-original'));
+        });
+      });
+    }
   </script>
 </Layout>
