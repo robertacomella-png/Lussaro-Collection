@@ -58,10 +58,10 @@ exotic car rental miami prices,decision,commercial,high,/pricing,covered,,,,Rate
 exotic car rental miami cost,decision,commercial,high,/pricing,covered,,,,Variant.
 exotic car rental miami no deposit,decision,commercial,low,,do-not-target,,,,We require $1000. Do not chase a query we can't satisfy.
 cheap exotic car rental miami,decision,commercial,low,,do-not-target,,,,Conflicts with brand position — see opinions.md #1. Cheap buys a worn car.
-exotic car rental miami under 25,decision,commercial,medium,/blog/no-insurance-rentals-miami,covered,,,,"We rent at 21+, which beats most competitors requiring 25. Real advantage, unpublicized."
+exotic car rental miami under 25,decision,commercial,medium,/blog/how-old-do-you-have-to-be-to-rent-an-exotic-car-in-miami,covered,,,,"We rent at 18+ (21 on the STO), against a common industry floor of 25. Secondary on the rental-age post; also covered on /blog/no-insurance-rentals-miami."
 how much does it cost to rent an exotic car in miami,informational,informational,high,,gap,,,,PAA. No blog exists. Strong fit — we publish real numbers and competitors don't.
-how old do you have to be to rent an exotic car in miami,informational,informational,high,,gap,,,,PAA. Our answer is 21 on every car including the Ferrari. Competitors often require 25.
-what do you need to rent an exotic car in miami,informational,informational,high,/blog/no-insurance-rentals-miami,covered,,,,"PAA. License, insurance, 21+."
+how old do you have to be to rent an exotic car in miami,informational,informational,high,/blog/how-old-do-you-have-to-be-to-rent-an-exotic-car-in-miami,covered,,,,"PAA. Our answer is 18 on every car except the Huracan STO (21). Much of the industry says 25. Post published 15 Nov 2026."
+what do you need to rent an exotic car in miami,informational,informational,high,/blog/no-insurance-rentals-miami,covered,,,,"PAA. License, insurance, 18+ (21 on the STO). Primary home /blog/no-insurance-rentals-miami; secondary on the rental-age post."
 do you need insurance to rent an exotic car,informational,informational,high,/blog/no-insurance-rentals-miami,covered,,,,PAA. Our biggest unpublished number — $99 to $499/day depending on car and age.
 exotic car rental deposit miami,informational,informational,medium,,gap,,,,$1000 flat on every car. Competitors publish nothing; Miami range is $1000-$5000.
 exotic car rental mileage limit,informational,informational,medium,,gap,,,,"100/day pooled, $5/mile over. Pooling is a genuine differentiator."
@@ -74,7 +74,7 @@ exotic car rental miami for wedding,occasion,commercial,medium,,gap,,,,Cullinan 
 exotic car rental miami photoshoot,occasion,commercial,medium,,gap,,,,Common Miami use case. Gallery page supports it.
 exotic car rental miami birthday,occasion,commercial,medium,,gap,,,,One review references a child's special day.
 exotic car rental miami music video,occasion,commercial,low,,gap,,,,Niche but real in Miami.
-exotic car rental miami prom,occasion,commercial,low,,do-not-target,,,,Minimum age is 21. Prom renters are 17-18. Cannot serve.
+exotic car rental miami prom,occasion,commercial,low,,do-not-target,,,,"Most prom renters are 17, under our 18 minimum. Do not target an occasion dominated by minors."
 exotic car rental miami bachelor party,occasion,commercial,low,,gap,,,,Screening position may conflict — evaluate before targeting.
 luxury car rental miami monthly,duration,commercial,low,,gap,,,,Only if we want long-term rentals. Discount ladder tops out at 7+ days.
 weekend exotic car rental miami,duration,commercial,medium,,gap,,,,Matches actual booking pattern — most rentals are 1-3 days.

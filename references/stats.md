@@ -47,6 +47,7 @@ since nothing outside it may appear in copy. Re-transcribe whenever a price move
 
 - **Deposit: $1,000** on every vehicle except the **Lamborghini Huracán STO at $2,000** (owner, 15 November 2026). Refundable after inspection on return. Never write "flat on every car" — derive the exception from `depositException` in `cars.js`.
 - **Minimum age: 18**, valid license, qualifying insurance — **21 for the Huracán STO**. *Lowered from 21 to 19 on 20 October 2026 and from 19 to 18 on 15 November 2026, owner's instruction both times. `rental-terms.js` holds the fleet figure; per-car exceptions live in `fleet.js` and surface as `ageException` in `cars.js`.*
+- **Industry norm for comparison: 25.** The minimum age most Miami exotic rental companies publish, checked against their own policy pages on 15 November 2026; some accept 21. Florida law sets no minimum rental age — s. 322.38 only requires a valid license, inspected before handover. Usable in copy as "much of the industry says 25"; never name the companies.
 - **Taxes and fees: 10%** of the rental after any multi-day discount (owner, 15 November 2026). `rental-terms.js` → `taxesAndFeesRate`.
 - **Mileage: 100 miles per day, pooled** across the rental. Three days is 300 miles total; only the total at return counts.
 - **Cancellation: non-refundable within 5 days** of the rental start date.
