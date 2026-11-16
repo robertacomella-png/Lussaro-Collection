@@ -90,6 +90,10 @@ conclusion themselves, which is the version a competitor cannot copy.
 **Secondaries used:**
 - lamborghini huracan evo vs spyder rental miami
 - huracan sto vs evo
+- huracan sto vs evo spyder *(added 15 Nov 2026 — Google autocomplete retune)*
+- is the huracan sto awd or rwd *(added 15 Nov 2026, FAQ)*
+- is the huracan sto street legal *(added 15 Nov 2026, FAQ)*
+- how much is it to rent a lamborghini huracan for a day *(added 15 Nov 2026, FAQ)*
 - huracan sto deposit miami
 - which lamborghini huracan to rent miami
 
@@ -104,6 +108,12 @@ conclusion themselves, which is the version a competitor cannot copy.
 **Date:** November 15, 2026
 
 **Secondaries used:**
+- miami exotic car rental 18+ *(added 15 Nov 2026, second retune — Google autocomplete)*
+- can you rent a lamborghini at 18 *(added 15 Nov 2026, second retune)*
+- sports car rental 18 year old *(added 15 Nov 2026, second retune)*
+- exotic car rental 18 miami *(added 15 Nov 2026 with the retune below)*
+- car rental for 18 year olds miami *(added 15 Nov 2026)*
+- luxury car rental 18+ miami *(added 15 Nov 2026)*
 - exotic car rental miami under 25
 - rent an exotic car at 18 miami
 - under 21 car rental miami
@@ -111,6 +121,8 @@ conclusion themselves, which is the version a competitor cannot copy.
 - florida minimum age to rent a car
 
 **Why this primary:** it was the highest-priority informational gap in `keywords.csv`, a People Also Ask question, and no page targets rental age. The minimum age was lowered to 18 on 15 November 2026, which makes the answer a real differentiator: the SERP answers it "25, sometimes 21" and no Miami exotic operator in the results rents at 18. The Huracán STO (21+) is the one exception and the post derives it from `ageException`.
+
+**Retuned twice on 15 Nov 2026, owner-approved.** Second pass, from Google autocomplete: title "Miami Exotic Car Rental 18+: Rent at 18 With Us", H1 "Miami exotic car rental 18+: how old do you have to be?", a "Can you rent a Lamborghini at 18 in Miami?" FAQ, and "sports car" once in the body. First pass: title, meta description and H1 led with "rent an exotic car at 18 in Miami" so the post reaches the 18+ searches as well as the age question. URL and body unchanged.
 
 **SERP at the time:** age-requirement guides and FAQ pages, roughly 1,000–1,400 words. All covered the minimum age, license, deposit and insurance; none covered Florida law (s. 322.38 sets no minimum age), which this post adds along with the booking process for a younger renter.
 

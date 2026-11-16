@@ -15,6 +15,9 @@
 // KEYWORD CLUSTER — must match the entry in /used-keywords.md
 //   PRIMARY:    lamborghini huracan sto vs evo rental miami
 //   SECONDARY:  lamborghini huracan evo vs spyder rental miami,
+//               huracan sto vs evo spyder, is the huracan sto awd or rwd,
+//               is the huracan sto street legal,
+//               how much is it to rent a lamborghini huracan for a day,
 //               huracan sto vs evo, huracan sto deposit miami,
 //               which lamborghini huracan to rent miami
 //
@@ -49,6 +52,8 @@ const spyderOverEvo = spyder.price - evo.price;
 const hpGap = sto.power - evo.power;
 const threeDay = (c) => rateForDays(c.price, 3, c.discountTiers).perDay;   // .perDay — it returns an object
 const week = (c) => rateForDays(c.price, 7, c.discountTiers).perDay;
+// "Rear-wheel drive" from fleet.js, so the FAQ cannot drift from the spec.
+const stoDrive = (sto.drivetrain || '').split(' · ')[0] || 'Rear-wheel drive';
 
 const SITE = 'https://www.lussarocollection.com';
 const SLUG = 'lamborghini-huracan-sto-vs-evo-rental-miami';
@@ -107,6 +112,18 @@ const faqs = [
   {
     q: 'Can the EVO Spyder roof open while driving?',
     a: `Yes, at low speed, so a passing shower does not mean pulling over. The rear window also lowers on its own, which lets you keep the roof up for the air conditioning and still hear the V10.`,
+  },
+  {
+    q: 'Is the Huracán STO AWD or RWD?',
+    a: `${stoDrive}, like our Huracán EVO and EVO Spyder. All three send the V10's power to the rear wheels only, which is a large part of why they feel so alive on the road.`,
+  },
+  {
+    q: 'Is the Huracán STO street legal?',
+    a: `Yes. STO stands for Super Trofeo Omologata, and omologata is Italian for homologated: approved for the road. It is the road-legal version of Lamborghini's one-make race car, registered for public roads like every car we rent.`,
+  },
+  {
+    q: 'How much is it to rent a Lamborghini Huracán for a day in Miami?',
+    a: `With us, ${usd(evo.price)} a day for the Huracán EVO, ${usd(spyder.price)} for the EVO Spyder and ${usd(sto.price)} for the Huracán STO, each with ${perDay} miles included. Longer bookings cost less per day: three days or more brings the STO to ${usd(threeDay(sto))} a day. Taxes and fees of ${taxPct}% are added to the rental.`,
   },
   {
     q: 'Which Huracán is best for a photo or video shoot?',
@@ -191,7 +208,7 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
             <div class="text-center lg:text-left lg:col-start-1 lg:row-start-1">
               <p class="text-[#ff1516] tracking-[0.3em] uppercase text-xs mb-4">Comparison</p>
               <h1 class="font-display text-3xl md:text-[2.75rem] xl:text-5xl font-bold tracking-tight text-white leading-[1.08] text-balance">
-                Lamborghini Huracán STO vs EVO rental in Miami: which to book
+                Lamborghini Huracán STO vs EVO vs EVO Spyder: which to rent in Miami
               </h1>
               <p class="text-white/65 text-base md:text-lg leading-relaxed mt-5">
                 Renting a Lamborghini Huracán in Miami? Here are the STO, EVO and EVO Spyder side by side — price, power, deposit and age — and why the STO is the one we recommend.

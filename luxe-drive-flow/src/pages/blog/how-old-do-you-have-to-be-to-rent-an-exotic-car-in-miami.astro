@@ -10,8 +10,9 @@
 
 // KEYWORD CLUSTER — must match the entry in /used-keywords.md
 //   PRIMARY:    how old do you have to be to rent an exotic car in miami
-//   SECONDARY:  exotic car rental miami under 25, rent an exotic car at 18
-//               miami, under 21 car rental miami, what do you need to rent an
+//   SECONDARY:  exotic car rental 18 miami, rent an exotic car at 18 miami,
+//               car rental for 18 year olds miami, luxury car rental 18+ miami,
+//               exotic car rental miami under 25, under 21 car rental miami, what do you need to rent an
 //               exotic car in miami, florida minimum age to rent a car
 //
 // Informational. No service page targets rental age; the commercial terms
@@ -40,6 +41,17 @@ const usd = (n) => `$${n.toLocaleString('en-US')}`;
 const INDUSTRY_AGE = 25;   // references/stats.md — the norm most Miami exotic operators publish
 const yearsEarlier = INDUSTRY_AGE - minimumAge;
 const glsCover = gls.insurancePerDay;
+
+// Lamborghinis open at the fleet minimum, and any that carry their own age —
+// derived, so the FAQ answer follows the fleet.
+const lambo = cars.filter((c) => c.make === 'Lamborghini');
+// The question already says Lamborghini, so the answer drops the marque.
+const lamboName = (c) => c.name.replace(/^Lamborghini /, '');
+const joinAnd = (xs) => (xs.length < 2 ? xs.join('') : `${xs.slice(0, -1).join(', ')} and ${xs.at(-1)}`);
+const lambos18List = lambo.filter((c) => c.minimumAge === minimumAge).map(lamboName);
+const lambos18 = joinAnd(lambos18List);
+const lambos18Count = lambos18List.length;
+const lamboOlder = joinAnd(lambo.filter((c) => c.minimumAge !== minimumAge).map((c) => `${lamboName(c)} is ${c.minimumAge}+`));
 
 // Cars that carry their own minimum age — today the STO. The marques open at
 // the fleet minimum are DERIVED, never listed by hand: voice.md forbids pinning
@@ -71,8 +83,11 @@ const published = 'November 15, 2026';
 const updated = 'November 15, 2026';
 const readingMinutes = 7;
 
-const TITLE = `How Old to Rent an Exotic Car in Miami? ${minimumAge}+`;
-const DESCRIPTION = `How old do you have to be to rent an exotic car in Miami? Much of the industry says ${INDUSTRY_AGE}. We rent from ${minimumAge}, with a valid license and insurance. See what to bring.`;
+// Retuned twice on 15 Nov 2026 (owner-approved). The second pass follows
+// Google autocomplete: people write "18+" with the plus sign, and "miami
+// exotic car rental 18+" is a suggested search in its own right.
+const TITLE = `Miami Exotic Car Rental ${minimumAge}+: Rent at ${minimumAge} With Us`;
+const DESCRIPTION = `Miami exotic car rental ${minimumAge}+: much of the industry says ${INDUSTRY_AGE}. We rent from ${minimumAge} with a valid license and insurance, Lamborghinis included. What you need to book.`;
 const waMessage = `Hi, I'm ${minimumAge}+ and read your guide on renting an exotic car in Miami. Which cars can I book?`;
 const wa = whatsappWith(waMessage, { page: PATH });
 
@@ -93,6 +108,10 @@ const faqs = [
   {
     q: `Can you rent an exotic car at ${minimumAge} in Miami?`,
     a: `With us, yes. Our minimum age is ${minimumAge}${ageException ? `, except ${ageException}` : ' on every car'}. Much of the industry asks for ${INDUSTRY_AGE}, so check the policy before you plan around another company's car.`,
+  },
+  {
+    q: `Can you rent a Lamborghini at ${minimumAge} in Miami?`,
+    a: `Yes. ${lambos18.length ? `The ${lambos18} ${lambos18Count === 1 ? 'is' : 'are'} open to renters from ${minimumAge}` : `Our Lamborghinis are open to renters from ${minimumAge}`}${lamboOlder ? `; the ${lamboOlder}` : ''}. You need a valid license, insurance that covers the car or our daily policy, and the refundable deposit.`,
   },
   {
     q: 'Does Florida law set a minimum age to rent a car?',
@@ -189,7 +208,7 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
             <div class="text-center lg:text-left lg:col-start-1 lg:row-start-1">
               <p class="text-[#ff1516] tracking-[0.3em] uppercase text-xs mb-4">Before you book</p>
               <h1 class="font-display text-3xl md:text-[2.75rem] xl:text-5xl font-bold tracking-tight text-white leading-[1.08] text-balance">
-                How old do you have to be to rent an exotic car in Miami?
+                Miami exotic car rental {minimumAge}+: how old do you have to be?
               </h1>
               <p class="text-white/65 text-base md:text-lg leading-relaxed mt-5">
                 With us, {minimumAge}. Here is what Florida law actually requires, what you need to bring, and which cars make sense for a first exotic rental.
@@ -289,7 +308,7 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
         </p>
 
         <p>
-          So when a rental site says {INDUSTRY_AGE}, that is a business decision rather than a rule.
+          So when a rental site says {INDUSTRY_AGE} for an exotic or a sports car, that is a business decision rather than a rule.
           It usually comes from insurance: younger drivers cost more to cover, and the simplest way to
           avoid the question is not to rent to them at all. It is a reasonable choice. It is also not
           the only one.

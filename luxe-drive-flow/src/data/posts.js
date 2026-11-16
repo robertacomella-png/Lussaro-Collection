@@ -17,7 +17,7 @@
 export const posts = [
   {
     slug: 'how-old-do-you-have-to-be-to-rent-an-exotic-car-in-miami',
-    title: 'How Old to Rent an Exotic Car in Miami? 18+',
+    title: 'Miami Exotic Car Rental 18+: Rent at 18 With Us',
     excerpt:
       'Florida sets no minimum rental age, and much of the industry still says 25. We rent from 18. What the law requires, what to bring, and which car to start with.',
     published: '2026-11-15',
