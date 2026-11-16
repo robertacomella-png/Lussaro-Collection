@@ -58,6 +58,13 @@ exotic car rental miami prices,decision,commercial,high,/pricing,covered,,,,Rate
 exotic car rental miami cost,decision,commercial,high,/pricing,covered,,,,Variant.
 exotic car rental miami no deposit,decision,commercial,low,,do-not-target,,,,We require $1000. Do not chase a query we can't satisfy.
 cheap exotic car rental miami,decision,commercial,low,,do-not-target,,,,Conflicts with brand position — see opinions.md #1. Cheap buys a worn car.
+miami exotic car rental 18+,decision,commercial,high,/blog/how-old-do-you-have-to-be-to-rent-an-exotic-car-in-miami,covered,,,,"Google autocomplete suggestion, 15 Nov 2026. Leads the rental-age post title and H1 since the second retune."
+can you rent a lamborghini at 18,decision,informational,high,/blog/how-old-do-you-have-to-be-to-rent-an-exotic-car-in-miami,covered,,,,"Top autocomplete question. Has its own FAQ on the rental-age post: yes, every Lamborghini except the STO (21+)."
+sports car rental 18 year old,decision,commercial,medium,/blog/how-old-do-you-have-to-be-to-rent-an-exotic-car-in-miami,covered,,,,"Autocomplete variant; the body uses 'sports car' once."
+exotic car rental 18 miami,decision,commercial,high,/blog/how-old-do-you-have-to-be-to-rent-an-exotic-car-in-miami,covered,,,,"Secondary on the rental-age post; leads its title since the 15 Nov 2026 retune. We rent at 18+ (21 on the STO)."
+rent an exotic car at 18 miami,decision,commercial,high,/blog/how-old-do-you-have-to-be-to-rent-an-exotic-car-in-miami,covered,,,,"Title phrase of the rental-age post. Same SERP as the row above."
+car rental for 18 year olds miami,decision,commercial,medium,/blog/how-old-do-you-have-to-be-to-rent-an-exotic-car-in-miami,covered,,,,"Broad term: the SERP is mostly economy rental companies. We rank for the exotic/luxury slice of it, not the whole query."
+luxury car rental 18+ miami,decision,commercial,medium,/blog/how-old-do-you-have-to-be-to-rent-an-exotic-car-in-miami,covered,,,,"Luxury variant of the 18+ cluster. Same post."
 exotic car rental miami under 25,decision,commercial,medium,/blog/how-old-do-you-have-to-be-to-rent-an-exotic-car-in-miami,covered,,,,"We rent at 18+ (21 on the STO), against a common industry floor of 25. Secondary on the rental-age post; also covered on /blog/no-insurance-rentals-miami."
 how much does it cost to rent an exotic car in miami,informational,informational,high,,gap,,,,PAA. No blog exists. Strong fit — we publish real numbers and competitors don't.
 how old do you have to be to rent an exotic car in miami,informational,informational,high,/blog/how-old-do-you-have-to-be-to-rent-an-exotic-car-in-miami,covered,,,,"PAA. Our answer is 18 on every car except the Huracan STO (21). Much of the industry says 25. Post published 15 Nov 2026."
@@ -82,6 +89,10 @@ weekend exotic car rental miami,duration,commercial,medium,,gap,,,,Matches actua
 exotic car rental miami reddit,research,informational,low,,do-not-target,,,,Cannot own. Monitor for brand mentions instead.
 exotic car rental miami reviews,research,commercial,medium,/reviews,covered,,,,"5 reviews, all 5-star."
 lamborghini huracan evo vs spyder rental miami,comparison,informational,high,/blog/lamborghini-huracan-sto-vs-evo-rental-miami,covered,,,,"We rent both - coupe $1199 and Spyder $1299. Same V10, same price band, a genuine agonizing choice. No competitor owns both sides."
+huracan sto vs evo spyder,comparison,informational,medium,/blog/lamborghini-huracan-sto-vs-evo-rental-miami,covered,,,,"Google autocomplete, 15 Nov 2026. Now in the comparison post H1."
+is the huracan sto awd or rwd,informational,informational,medium,/blog/lamborghini-huracan-sto-vs-evo-rental-miami,covered,,,,"Autocomplete question. FAQ on the comparison post (RWD, from fleet.js)."
+is the huracan sto street legal,informational,informational,low,/blog/lamborghini-huracan-sto-vs-evo-rental-miami,covered,,,,"Autocomplete question. FAQ on the comparison post."
+how much is it to rent a lamborghini huracan for a day,informational,informational,high,/blog/lamborghini-huracan-sto-vs-evo-rental-miami,covered,,,,"Autocomplete question. FAQ on the comparison post with all three Huracan day rates. Do not confuse with the price guide primary 'how much is a rental lamborghini'."
 lamborghini huracan sto vs evo rental miami,comparison,informational,high,/blog/lamborghini-huracan-sto-vs-evo-rental-miami,covered,,,,"PRIMARY for the three-Huracan comparison post, 15 Nov 2026. Recommends the STO; funnels to /cars/huracan-sto, which keeps the commercial STO term."
 mercedes s580 vs maybach s580 rental miami,comparison,informational,high,/blog/mercedes-s580-vs-maybach-s580-rental-miami,covered,,,,"First post in the comparison cluster. We run both S-Classes, $399 and $899."
 lamborghini urus vs g63 rental miami,comparison,informational,high,,gap,,,,"The classic Miami performance-SUV decision. $999 vs $799, both in our fleet."
