@@ -18,6 +18,7 @@ import CtaBand from '@/components/site/CtaBand.astro';
 import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
 import BookingRequestCard from '@/components/booking/BookingRequestCard.jsx';
 import CarGallery from '@/components/fleet/CarGallery.jsx';
+import { altFor } from '@/data/image-alt';
 import { cars } from '@/data/cars';
 import { rentalTerms, deliveryEachWaySummary } from '@/data/rental-terms';
 import { reviews, averageRating, reviewCount } from '@/data/reviews';
@@ -128,7 +129,7 @@ const faqSchema = {
 
       <div class="grid lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] gap-8 lg:gap-12 items-start mt-9 md:mt-12">
         <div>
-          <CarGallery images={galleryImages} name={fullName} slug="g-s580-landing" client:load />
+          <CarGallery images={galleryImages} name={fullName} slug="g-s580-landing" alts={galleryImages.map((src) => altFor(src))} client:load />
         </div>
 
         <div class="text-center lg:text-left lg:pt-4">

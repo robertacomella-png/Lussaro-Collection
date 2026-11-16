@@ -1,5 +1,6 @@
 import { getImageKitSrc, getImageKitSrcSet, getImageKitSizes } from "@/lib/imageKit";
 import { business, whatsappWith } from "@/data/business";
+import { altFor, carFullName } from "@/data/image-alt";
 
 export default function FleetCard({ car, onOpen }) {
   // Raw, not encoded: whatsappWith does the encoding. This used to be wrapped
@@ -27,7 +28,7 @@ export default function FleetCard({ car, onOpen }) {
           src={imageSrc}
           srcSet={getImageKitSrcSet(car.images?.[0] || car.image)}
           sizes={getImageKitSizes()}
-          alt={car.name}
+          alt={altFor(car.images?.[0], `${carFullName(car)} rental in Miami`)}
           width="700"
           height="520"
           loading="lazy"

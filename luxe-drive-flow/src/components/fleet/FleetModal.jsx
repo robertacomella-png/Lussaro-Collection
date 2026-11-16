@@ -4,6 +4,7 @@ import { X } from "lucide-react";
 import { getImageKitSrc, getImageKitSrcSet } from "@/lib/imageKit";
 import { business, whatsappWith } from "@/data/business";
 import { termsSummary } from "@/data/rental-terms";
+import { altFor, carFullName } from "@/data/image-alt";
 
 export default function FleetModal({ car, setCar, activeImage, setActiveImage }) {
   useEffect(() => {
@@ -68,7 +69,7 @@ export default function FleetModal({ car, setCar, activeImage, setActiveImage })
                     src={getImageKitSrc(images[activeImage], 1200)}
                     srcSet={getImageKitSrcSet(images[activeImage])}
                     sizes="(min-width: 1024px) 1200px, 100vw"
-                    alt={car.name}
+                    alt={altFor(images[activeImage], `${carFullName(car)} rental in Miami`)}
                     width="1200"
                     height="800"
                     loading="lazy"
@@ -94,7 +95,7 @@ export default function FleetModal({ car, setCar, activeImage, setActiveImage })
                     >
                       <img
                         src={getImageKitSrc(img, 700)}
-                        alt={`${car.name} thumbnail ${index + 1}`}
+                        alt={altFor(img, `${carFullName(car)} rental in Miami — photo ${index + 1}`)}
                         width="240"
                         height="180"
                         loading="lazy"

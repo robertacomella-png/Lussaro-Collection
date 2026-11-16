@@ -5,15 +5,15 @@ import { getRemoteWebpSrc, getRemoteWebpSrcSet } from "@/lib/imageKit";
 import { altFor } from "@/data/image-alt";
 
 const galleryImages = [
-  "/gallery/gallery-1.jpg",
-  "/gallery/gallery-2.jpg",
-  "/gallery/gallery-3.jpg",
-  "/gallery/gallery-4.jpg",
-  "/gallery/gallery-5.jpg",
-  "/gallery/gallery-6.jpg",
-  "/gallery/gallery-7.jpg",
-  "/gallery/gallery-8.jpg",
-  "/gallery/gallery-9.jpg",
+  "/gallery/mercedes-maybach-gls-600-lamborghini-urus-rental-miami-metromover.jpg",
+  "/gallery/lamborghini-urus-rental-miami-brickell-cobblestones.jpg",
+  "/gallery/lamborghini-urus-rental-miami-biscayne-bay-head-on.jpg",
+  "/gallery/lamborghini-urus-rental-miami-brickell-side-profile.jpg",
+  "/gallery/lamborghini-urus-rental-miami-bayfront-rear-quarter.jpg",
+  "/gallery/lamborghini-urus-rental-miami-sunset-waterfront.jpg",
+  "/gallery/lamborghini-urus-rental-miami-badge-grille.jpg",
+  "/gallery/lamborghini-urus-rental-miami-low-front.jpg",
+  "/gallery/lamborghini-urus-rental-miami-quilted-interior.jpg",
 ];
 
 export default function GalleryView() {
