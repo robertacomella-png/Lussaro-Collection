@@ -1,0 +1,497 @@
+---
+// ============================================================================
+// LUSSARO BLOG — BASE TEMPLATE (.claude/skills/blog/template.astro)
+//
+// Rental age guide. Lussaro rents from 18 (rental-terms.js, owner 15 Nov 2026),
+// with per-car exceptions surfaced by `ageException` in cars.js — today the
+// Huracan STO at 21. Every age, price and deposit renders from the data files,
+// so the post stays true when either moves.
+// ============================================================================
+
+// KEYWORD CLUSTER — must match the entry in /used-keywords.md
+//   PRIMARY:    how old do you have to be to rent an exotic car in miami
+//   SECONDARY:  exotic car rental miami under 25, rent an exotic car at 18
+//               miami, under 21 car rental miami, what do you need to rent an
+//               exotic car in miami, florida minimum age to rent a car
+//
+// Informational. No service page targets rental age; the commercial terms
+// stay with /exotic-car-rental-miami and the car pages.
+
+import Layout from '@/layouts/Layout.astro';
+import Nav from '@/components/site/Nav.astro';
+import CtaBand from '@/components/site/CtaBand.astro';
+import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
+import RelatedPosts from '@/components/blog/RelatedPosts.astro';
+import { altFor } from '@/data/image-alt';
+import { cars, ageException, depositException } from '@/data/cars';
+import { reviews } from '@/data/reviews';
+import { business, telHref, whatsappWith, addressLine, hoursSummary } from '@/data/business';
+import { rentalTerms } from '@/data/rental-terms';
+
+const bySlug = (s) => cars.find((c) => c.slug === s);
+const s580 = bySlug('mercedes-s580');
+const g63 = bySlug('mercedes-amg-g63');
+const urus = bySlug('lamborghini-urus');
+const evo = bySlug('huracan-evo');
+const gls = bySlug('mercedes-maybach-gls-600');
+
+const { deposit, minimumAge, mileage, insurance, cancellation } = rentalTerms;
+const usd = (n) => `$${n.toLocaleString('en-US')}`;
+const INDUSTRY_AGE = 25;   // references/stats.md — the norm most Miami exotic operators publish
+const yearsEarlier = INDUSTRY_AGE - minimumAge;
+const glsCover = gls.insurancePerDay;
+
+// Cars that carry their own minimum age — today the STO. The marques open at
+// the fleet minimum are DERIVED, never listed by hand: voice.md forbids pinning
+// copy to a fleet snapshot, and a car count is banned outright.
+const olderOnly = cars.filter((c) => c.minimumAge !== minimumAge);
+const marques = [...new Set(cars.filter((c) => c.minimumAge === minimumAge).map((c) => c.make))];
+const openMarques = marques.length < 2 ? marques.join('') : `${marques.slice(0, -1).join(', ')} and ${marques.at(-1)}`;
+
+const SITE = 'https://www.lussarocollection.com';
+const SLUG = 'how-old-do-you-have-to-be-to-rent-an-exotic-car-in-miami';
+const PATH = `/blog/${SLUG}`;
+const PAGE_URL = `${SITE}${PATH}`;
+
+const HERO_KEY = '/cars/porsche-911-turbo-s-cabriolet-rental-miami-front-quarter.jpg';
+const heroSrc = `/blog/${SLUG}-hero-760.webp`;
+const heroSrcSet = [560, 760, 800, 1120, 1200, 1560].map((w) => `/blog/${SLUG}-hero-${w}.webp ${w}w`).join(', ');
+const heroAlt = altFor(HERO_KEY);
+
+const BODY_KEY = '/cars/lamborghini-huracan-evo-rental-miami-front-quarter.jpg';
+const bodySrc = `/blog/${SLUG}-body-1000.webp`;
+const bodySrcSet = `/blog/${SLUG}-body-700.webp 700w, /blog/${SLUG}-body-1000.webp 1000w`;
+const bodyAlt = altFor(BODY_KEY);
+
+const OG_IMAGE = `${SITE}/og/${SLUG}.jpg`;
+
+const PUBLISHED_ISO = '2026-11-15';
+const UPDATED_ISO = '2026-11-15';
+const published = 'November 15, 2026';
+const updated = 'November 15, 2026';
+const readingMinutes = 7;
+
+const TITLE = `How Old to Rent an Exotic Car in Miami? ${minimumAge}+`;
+const DESCRIPTION = `How old do you have to be to rent an exotic car in Miami? Much of the industry says ${INDUSTRY_AGE}. We rent from ${minimumAge}, with a valid license and insurance. See what to bring.`;
+const waMessage = `Hi, I'm ${minimumAge}+ and read your guide on renting an exotic car in Miami. Which cars can I book?`;
+const wa = whatsappWith(waMessage, { page: PATH });
+
+// Verbatim Google review, no exclamation marks.
+const testimonial = reviews.find((r) => r.name === 'Gregory Capo');
+
+const toc = [
+  { id: 'florida-law', label: 'What Florida law requires' },
+  { id: 'our-minimum', label: `Our minimum is ${minimumAge}` },
+  { id: 'what-you-need', label: `What you need at ${minimumAge}` },
+  { id: 'how-booking-works', label: 'How a booking works' },
+  { id: 'insurance', label: 'Insurance for younger drivers' },
+  { id: 'first-car', label: 'Which car to start with' },
+  { id: 'faq', label: 'Common questions' },
+];
+
+const faqs = [
+  {
+    q: `Can you rent an exotic car at ${minimumAge} in Miami?`,
+    a: `With us, yes. Our minimum age is ${minimumAge}${ageException ? `, except ${ageException}` : ' on every car'}. Much of the industry asks for ${INDUSTRY_AGE}, so check the policy before you plan around another company's car.`,
+  },
+  {
+    q: 'Does Florida law set a minimum age to rent a car?',
+    a: `No. Florida requires the renter to hold a valid driver's license, and the company to inspect it before handing over the car. The age floor you see on a rental site is that company's own policy, usually set by its insurance.`,
+  },
+  {
+    q: 'Do younger drivers pay more to rent?',
+    a: `Not on our daily rate, which is published and the same for every renter. If you need our daily insurance policy because your own does not cover the car, that policy is priced by the car and by the driver's age, so a younger driver pays more for the cover.`,
+  },
+  {
+    q: `What do you need to rent an exotic car in Miami at ${minimumAge}?`,
+    a: `A valid driver's license, insurance that covers the rental or our daily policy, a refundable ${deposit.display} deposit${depositException ? ` (except ${depositException})` : ''}, and a screening we run on every renter. The same list applies at any age.`,
+  },
+  {
+    q: 'Which cars can I rent if I am under 21?',
+    a: `Everything in the fleet${ageException ? ` except ${ageException}` : ''}. That includes the Lamborghini Urus at ${usd(urus.price)} a day, the Huracán EVO at ${usd(evo.price)} and the Mercedes-Benz S580 at ${usd(s580.price)}.`,
+  },
+];
+
+// --- Schema. Do not restructure. ------------------------------------------
+const authorSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': `${SITE}/about#robert`,
+  name: 'Robert Comella',
+  jobTitle: 'Founder',
+  url: `${SITE}/about`,
+  worksFor: { '@type': 'Organization', name: business.brandName, url: `${SITE}/` },
+};
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: TITLE,
+  description: DESCRIPTION,
+  image: OG_IMAGE,
+  datePublished: PUBLISHED_ISO,
+  dateModified: UPDATED_ISO,
+  author: { '@id': `${SITE}/about#robert` },
+  publisher: {
+    '@type': 'Organization',
+    name: business.brandName,
+    logo: { '@type': 'ImageObject', url: `${SITE}/favicon.png` },
+  },
+  mainEntityOfPage: { '@type': 'WebPage', '@id': PAGE_URL },
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+
+const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addressLine)}`;
+---
+<Layout
+  title={`${TITLE} | Lussaro`}
+  description={DESCRIPTION}
+  image={OG_IMAGE}
+  type="article"
+  breadcrumbName="Rental age in Miami"
+  schema={[articleSchema, authorSchema, faqSchema]}
+>
+  {/* Skip link stays on the page, not in Layout: the other routes have no
+       #main target yet, and a skip link that lands nowhere is worse than none. */}
+  <a
+    href="#main"
+    class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-white focus:text-black focus:px-5 focus:py-3 focus:rounded-full focus:font-semibold focus:ring-2 focus:ring-[#ff1516]"
+  >
+    Skip to content
+  </a>
+
+  <Nav />
+
+  <main id="main" tabindex="-1">
+    {/* The header sits OUTSIDE <article> deliberately — see the template. */}
+      <header class="bg-[#0a0a0a] pt-28 md:pt-32 pb-12 md:pb-16">
+        <div class="max-w-[1140px] mx-auto px-5 md:px-8">
+          <nav aria-label="Breadcrumb" class="mb-7">
+            <ol class="flex flex-wrap items-center justify-center lg:justify-start gap-2 text-xs text-white/50">
+              <li><a href="/" class="hover:text-white transition">Home</a></li>
+              <li aria-hidden="true">/</li>
+              <li><a href="/blog" class="hover:text-white transition">Rental Guides</a></li>
+              <li aria-hidden="true">/</li>
+              <li aria-current="page" class="text-white/70">Rental age in Miami</li>
+            </ol>
+          </nav>
+
+          <div class="lg:grid lg:grid-cols-[1.05fr_1fr] lg:gap-12 xl:gap-16">
+            <div class="text-center lg:text-left lg:col-start-1 lg:row-start-1">
+              <p class="text-[#ff1516] tracking-[0.3em] uppercase text-xs mb-4">Before you book</p>
+              <h1 class="font-display text-3xl md:text-[2.75rem] xl:text-5xl font-bold tracking-tight text-white leading-[1.08] text-balance">
+                How old do you have to be to rent an exotic car in Miami?
+              </h1>
+              <p class="text-white/65 text-base md:text-lg leading-relaxed mt-5">
+                With us, {minimumAge}. Here is what Florida law actually requires, what you need to bring, and which cars make sense for a first exotic rental.
+              </p>
+            </div>
+
+            <figure class="mt-8 lg:mt-0 lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:self-center">
+              <img
+                src={heroSrc}
+                srcset={heroSrcSet}
+                sizes="(min-width: 1024px) 520px, 100vw"
+                width="760"
+                height="507"
+                alt={heroAlt}
+                fetchpriority="high"
+                decoding="async"
+                class="w-full h-auto rounded-2xl"
+              />
+              <figcaption class="text-white/45 text-xs mt-3 text-center lg:text-left">
+                Every car we run is open to renters {minimumAge} and over{olderOnly.length ? `, bar ${olderOnly.length === 1 ? 'one' : olderOnly.length}` : ''}.
+              </figcaption>
+            </figure>
+
+            <div class="text-center lg:text-left lg:col-start-1 lg:row-start-2 lg:self-end">
+              <div class="mt-8 lg:mt-7 flex flex-wrap items-center justify-center lg:justify-start gap-x-5 gap-y-2 text-sm text-white/60">
+                <span>By <a href="/about" class="text-white underline decoration-white/30 hover:decoration-white">Robert Comella</a>, founder</span>
+                <span aria-hidden="true" class="text-white/25">|</span>
+                <span><time datetime={PUBLISHED_ISO}>{published}</time> <span aria-hidden="true">·</span> Updated <time datetime={UPDATED_ISO}>{updated}</time></span>
+                <span aria-hidden="true" class="text-white/25">|</span>
+                <span>{readingMinutes} min read</span>
+              </div>
+
+              <div class="mt-6 flex flex-col sm:flex-row gap-3 max-w-md mx-auto lg:mx-0">
+                <a href="/fleet" data-cta="blog_hero"
+                   class="flex-1 inline-flex items-center justify-center gap-2 min-h-[48px] bg-white text-black px-7 py-4 rounded-full font-semibold whitespace-nowrap hover:bg-[#ff1516] transition">
+                  See the cars
+                </a>
+                <a href={telHref} data-cta="blog_hero" data-call-inline
+                   class="flex-1 inline-flex items-center justify-center min-h-[48px] border border-white/25 text-white px-7 py-4 rounded-full font-medium hover:border-[#e00e10] hover:text-[#e00e10] transition">
+                  Call {business.phoneDisplayShort}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+    <article>
+      <div class="bg-white text-[#0a0a0a] py-12 md:py-16">
+        <div class="max-w-[1140px] mx-auto px-5 md:px-8">
+
+          <div class="not-prose mb-10 md:mb-14 rounded-2xl border border-[#e00e10]/20 bg-[#fff7f7] p-6 md:p-8 max-w-3xl">
+            <p class="text-xs uppercase tracking-[0.2em] text-[#e00e10] font-semibold mb-3">Short answer</p>
+            <p class="text-lg md:text-xl leading-relaxed">
+              <strong>
+                To rent an exotic car from us in Miami you need to be {minimumAge}{ageException ? ` — except ${ageException}` : ''} — with a valid driver's license, insurance that covers the car or our daily policy, and a refundable {deposit.display} deposit. Florida law sets no minimum rental age; much of the industry chooses {INDUSTRY_AGE}.
+              </strong>
+            </p>
+          </div>
+
+          <div class="lg:grid lg:grid-cols-[minmax(0,260px)_minmax(0,1fr)] lg:gap-14 xl:gap-20">
+            <aside class="mb-10 lg:mb-0">
+              <nav aria-label="Table of contents" class="not-prose lg:sticky lg:top-28 rounded-2xl border border-black/10 bg-[#fafafa] p-6">
+                <h2 class="font-display text-base font-bold mb-3">On this page</h2>
+                <ol class="grid sm:grid-cols-2 lg:grid-cols-1 gap-x-6 gap-y-2.5 text-sm">
+                  {toc.map((t, i) => (
+                    <li>
+                      <a href={`#${t.id}`} class="text-[#e00e10] hover:underline">
+                        <span class="text-black/60 tabular-nums mr-1">{i + 1}.</span>{t.label}
+                      </a>
+                    </li>
+                  ))}
+                </ol>
+              </nav>
+            </aside>
+
+            <div class="prose prose-neutral max-w-none prose-headings:font-display prose-headings:scroll-mt-28 prose-a:text-[#e00e10] prose-a:underline prose-a:decoration-[#e00e10]/40 prose-a:underline-offset-2 hover:prose-a:decoration-[#e00e10] prose-table:text-sm prose-h2:mt-12 prose-h2:pt-8 prose-h2:border-t prose-h2:border-black/10 first:prose-h2:mt-0 first:prose-h2:pt-0 first:prose-h2:border-0">
+
+        <p>
+          In Florida you can sign a lease, buy a house and vote at {minimumAge}. Much of the exotic rental industry would still like you to wait until {INDUSTRY_AGE}.
+        </p>
+
+        <p>
+          We do not. Renters can book with us from {minimumAge}, which is {yearsEarlier} years
+          earlier than the age many Miami companies publish. This guide covers where that age limit
+          comes from, what you need to bring at {minimumAge}, and how to keep the total sensible on
+          your first rental.
+        </p>
+
+        <h2 id="florida-law">What Florida law actually requires</h2>
+
+        <p>
+          Less than most people assume. Florida does not set a minimum age for renting a car. What the
+          law does require is that the renter holds a valid driver's license, and that the company
+          inspects it and confirms it is unexpired before handing over the keys. That is
+          {' '}<a href="https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0300-0399/0322/Sections/0322.38.html" target="_blank" rel="noopener noreferrer">section 322.38 of the Florida Statutes</a>, and it is the whole of the legal requirement.
+        </p>
+
+        <p>
+          So when a rental site says {INDUSTRY_AGE}, that is a business decision rather than a rule.
+          It usually comes from insurance: younger drivers cost more to cover, and the simplest way to
+          avoid the question is not to rent to them at all. It is a reasonable choice. It is also not
+          the only one.
+        </p>
+
+        <h2 id="our-minimum">Our minimum is {minimumAge}, on every car but {olderOnly.length === 1 ? 'one' : olderOnly.length}</h2>
+
+        <p>
+          Every marque we run is open to renters from {minimumAge}: {openMarques}.{ageException ? ` The one exception is ${ageException}; it is set up for the track and carries its own terms.` : ''}
+        </p>
+
+        <p>
+          Our rate is published, and it is the same number for an {minimumAge}-year-old as for anyone
+          else. Being younger does not move the price of the car.
+        </p>
+
+        <figure class="not-prose my-10">
+          <img
+            src={bodySrc}
+            srcset={bodySrcSet}
+            sizes="(min-width: 1140px) 760px, 100vw"
+            width="1000"
+            height="667"
+            alt={bodyAlt}
+            loading="lazy"
+            decoding="async"
+            class="w-full h-auto rounded-2xl"
+          />
+          <figcaption class="text-black/60 text-sm mt-3">The Huracán EVO, at {usd(evo.price)} a day, is open to renters from {evo.minimumAge}.</figcaption>
+        </figure>
+
+        <h2 id="what-you-need">What you need to rent at {minimumAge}</h2>
+
+        <p>The list is the same at any age. Nothing extra is asked of a younger renter.</p>
+
+        <ul>
+          <li><strong>A valid driver's license</strong>, unexpired, in your name. Florida residents can check the details of theirs with the <a href="https://www.flhsmv.gov/driver-licenses-id-cards/" target="_blank" rel="noopener noreferrer">Florida Highway Safety and Motor Vehicles department</a>.</li>
+          <li><strong>Insurance that covers the rental.</strong> {insurance.summary}</li>
+          <li><strong>A refundable {deposit.display} deposit</strong>{depositException ? `, except ${depositException}` : ''}. It comes back after the car is inspected on return.</li>
+          <li><strong>A screening.</strong> We screen every renter, at every age, before a booking is confirmed.</li>
+        </ul>
+
+        <p>
+          {mileage.includedPerDay} miles a day come with every car, pooled across the rental, and
+          {' '}{cancellation.summary.charAt(0).toLowerCase() + cancellation.summary.slice(1)} The full terms sit on our <a href="/terms">rental terms page</a>.
+        </p>
+
+        <h2 id="how-booking-works">How a booking works when you are under {INDUSTRY_AGE}</h2>
+
+        <p>
+          Exactly as it works for anyone else, which is the point. There is no separate young-renter
+          process and no second set of forms.
+        </p>
+
+        <ol>
+          <li><strong>Message us.</strong> Send the car you want, your dates and your age on WhatsApp, or call. Mentioning your age up front lets us answer the insurance question in the same reply.</li>
+          <li><strong>We confirm the car and run the screening.</strong> If the dates are free and the screening is clear, we send the booking through. If a car is already out, we will offer you the closest alternative rather than a no.</li>
+          <li><strong>The deposit is taken.</strong> {deposit.display}{depositException ? ` (except ${depositException}),` : ','} held when the booking is confirmed and returned after the car is inspected on return.</li>
+          <li><strong>We deliver.</strong> To your hotel, your home or either airport, at a time that suits you.</li>
+          <li><strong>We check your license and hand over the keys.</strong> Florida requires us to inspect it before the car leaves, so bring the physical card. A photo on your phone is not enough.</li>
+        </ol>
+
+        <p>
+          The person who answers your message is the person who hands you the keys. If anything about
+          your age, your license or your cover is unclear, ask before you book; it takes a minute to
+          settle and saves an awkward conversation at the curb.
+        </p>
+
+        <figure class="not-prose my-10 rounded-2xl border border-black/10 bg-[#fafafa] p-6">
+          <blockquote class="text-[#0a0a0a]/80 leading-relaxed">
+            <p>“{testimonial.text}”</p>
+          </blockquote>
+          <figcaption class="mt-4 text-sm text-[#0a0a0a]/60">
+            <span class="text-[#e00e10]" aria-hidden="true">★★★★★</span>
+            <span class="font-semibold text-[#0a0a0a]"> {testimonial.name}</span> — verified Google review
+          </figcaption>
+        </figure>
+
+        <h2 id="insurance">Insurance for younger drivers costs what it costs</h2>
+
+        <p>
+          This is the one part of the rental where age does change the number, and we would rather
+          you hear it here than at handover. If your own policy does not cover the car, we can sell
+          you a daily one, and that policy is priced by the car and by the driver's age. On our
+          Maybachs it runs {usd(glsCover.from)} to {usd(glsCover.to)} a day depending on the driver,
+          and age is one of the things that moves it.
+        </p>
+
+        <p>
+          It is a pass-through, not a margin line, and it is the one figure we do not move on. We
+          will flex on our own rate to close a booking. We will not pretend a supercar is cheaper to
+          insure for a new driver than it is. Our guide to <a href="/blog/no-insurance-rentals-miami">renting in Miami without your own insurance</a> sets out the bands car by car.
+        </p>
+
+        <h2 id="first-car">Which car to start with</h2>
+
+        <p>
+          Our honest advice for a first exotic rental is to start below the top of the fleet. The
+          {' '}{s580.make} {s580.name} is {usd(s580.price)} a day, the {g63.make} {g63.name} {usd(g63.price)}
+          {' '}and the Lamborghini Urus {usd(urus.price)}. Because insurance scales with the value of
+          the car, the gap between a sensible first booking and an expensive one is wider for a
+          younger driver than the day rates alone suggest.
+        </p>
+
+        <p>
+          If the point of the trip is the Lamborghini, book the Lamborghini. The Urus gives you the
+          badge, the V8 and room for four, with a ride that forgives Miami's speed bumps. Every rate
+          is on our <a href="/pricing">rate card</a>, so you can see the whole fleet side by side before
+          you message us.
+        </p>
+
+        <h2 id="faq">Common questions</h2>
+
+        {faqs.map((f) => (
+          <div>
+            <h3>{f.q}</h3>
+            <p>{f.a}</p>
+          </div>
+        ))}
+
+        <p>
+          Tell us your age, your dates and the car you have in mind, and we will tell you straight
+          away whether it works and what the insurance would come to. What are you thinking?
+        </p>
+
+        <div class="not-prose mt-10 flex flex-col sm:flex-row gap-3 max-w-md">
+          <a href={wa} data-cta="blog_body" target="_blank" rel="noopener noreferrer"
+             class="flex-1 inline-flex items-center justify-center min-h-[48px] bg-[#0a0a0a] text-white px-7 py-4 rounded-full font-semibold hover:bg-[#e00e10] transition">
+            Message us on WhatsApp
+          </a>
+          <a href={telHref} data-cta="blog_body" data-call-inline
+             class="flex-1 inline-flex items-center justify-center min-h-[48px] border border-[#0a0a0a]/20 text-[#0a0a0a] px-7 py-4 rounded-full font-medium hover:border-[#e00e10] hover:text-[#e00e10] transition">
+            Call {business.phoneDisplayShort}
+          </a>
+        </div>
+
+        <RelatedPosts currentSlug={SLUG} />
+
+        {/* Author bio — E-E-A-T. Never claims tenure. */}
+        <aside class="not-prose mt-12 rounded-2xl border border-black/10 bg-[#fafafa] p-6 flex flex-col sm:flex-row gap-5">
+          <img src="/favicon-96.png" width="64" height="64" alt="" aria-hidden="true"
+               loading="lazy" decoding="async"
+               class="w-16 h-16 rounded-full shrink-0 object-cover ring-1 ring-black/10" />
+          <div>
+            <p class="font-display font-bold text-lg">
+              <a href="/about" class="hover:text-[#e00e10] transition">Robert Comella</a>
+            </p>
+            <p class="text-sm text-[#0a0a0a]/70 mt-1">Founder, {business.brandName}</p>
+            <p class="text-sm text-[#0a0a0a]/70 mt-3 leading-relaxed">
+              Robert founded Lussaro Collection in Miami and runs it hands-on — he answers the phone,
+              screens the renters and hands over the keys himself. The fleet started with a single
+              Mercedes-Maybach GLS 600 bought with his own savings. Every price, deposit and fee
+              quoted here is one he sets and honors personally.
+              <a href="/about" class="text-[#e00e10] underline decoration-[#e00e10]/40 underline-offset-2 hover:decoration-[#e00e10]"> More about Lussaro Collection</a>.
+            </p>
+          </div>
+        </aside>
+
+        <aside class="not-prose mt-8 rounded-2xl border border-black/10 p-6">
+          <h2 class="font-display text-lg font-bold">Lussaro Collection</h2>
+          <dl class="mt-4 grid sm:grid-cols-2 gap-x-8 gap-y-3 text-sm">
+            <div>
+              <dt class="font-semibold">Address</dt>
+              <dd class="text-[#0a0a0a]/70">{addressLine}</dd>
+            </div>
+            <div>
+              <dt class="font-semibold">Hours</dt>
+              <dd class="text-[#0a0a0a]/70">{hoursSummary}</dd>
+            </div>
+            <div>
+              <dt class="font-semibold">Phone</dt>
+              <dd><a href={telHref} data-cta="blog_nap" class="text-[#e00e10] hover:underline">{business.phoneDisplay}</a></dd>
+            </div>
+            <div>
+              <dt class="font-semibold">Delivery area</dt>
+              <dd class="text-[#0a0a0a]/70">Miami, South Beach, Brickell, both airports. Fort Lauderdale at {usd(rentalTerms.delivery[1].fee)} each way.</dd>
+            </div>
+          </dl>
+          <p class="mt-5">
+            <a href={mapLink} target="_blank" rel="noopener noreferrer"
+               class="inline-flex items-center gap-2 min-h-[48px] text-sm text-[#e00e10] underline decoration-[#e00e10]/40 underline-offset-2 hover:decoration-[#e00e10]">
+              Open {addressLine} in Google Maps
+            </a>
+          </p>
+        </aside>
+
+        <p class="not-prose mt-10 text-center">
+          <a href="#main" class="inline-flex items-center gap-2 min-h-[48px] px-5 py-3 text-sm text-[#0a0a0a]/60 hover:text-[#e00e10] transition">
+            <span aria-hidden="true">↑</span> Back to top
+          </a>
+        </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <CtaBand
+    title={`Old enough to drive.\nOld enough to <span class="text-[#ff1516]">rent with us</span>`}
+    subtitle="Delivered across Miami. Replies usually take minutes."
+    message={waMessage}
+  />
+  <StickyMobileCta message={waMessage} page={PATH} />
+</Layout>

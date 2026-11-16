@@ -15,6 +15,7 @@ This is what stops the site competing with itself — the failure mode where two
 | how much is a rental lamborghini | [/blog/how-much-is-a-lamborghini-rental](../luxe-drive-flow/src/pages/blog/how-much-is-a-lamborghini-rental.astro) | 2026-08-14 | Lamborghini |
 | mercedes s580 vs maybach s580 rental miami | [/blog/mercedes-s580-vs-maybach-s580-rental-miami](../luxe-drive-flow/src/pages/blog/mercedes-s580-vs-maybach-s580-rental-miami.astro) | 2026-10-06 | Comparison |
 | well kept exotic car rental miami | [/blog/well-kept-exotic-car-rental-miami](../luxe-drive-flow/src/pages/blog/well-kept-exotic-car-rental-miami.astro) | 2026-10-07 | The standard |
+| how old do you have to be to rent an exotic car in miami | [/blog/how-old-do-you-have-to-be-to-rent-an-exotic-car-in-miami](../luxe-drive-flow/src/pages/blog/how-old-do-you-have-to-be-to-rent-an-exotic-car-in-miami.astro) | 2026-11-15 | Before you book |
 | lamborghini huracan sto vs evo rental miami | [/blog/lamborghini-huracan-sto-vs-evo-rental-miami](../luxe-drive-flow/src/pages/blog/lamborghini-huracan-sto-vs-evo-rental-miami.astro) | 2026-11-15 | Comparison |
 
 ---
@@ -98,6 +99,23 @@ conclusion themselves, which is the version a competitor cannot copy.
 
 ---
 
+### how old do you have to be to rent an exotic car in miami
+**Post:** `/blog/how-old-do-you-have-to-be-to-rent-an-exotic-car-in-miami`
+**Date:** November 15, 2026
+
+**Secondaries used:**
+- exotic car rental miami under 25
+- rent an exotic car at 18 miami
+- under 21 car rental miami
+- what do you need to rent an exotic car in miami
+- florida minimum age to rent a car
+
+**Why this primary:** it was the highest-priority informational gap in `keywords.csv`, a People Also Ask question, and no page targets rental age. The minimum age was lowered to 18 on 15 November 2026, which makes the answer a real differentiator: the SERP answers it "25, sometimes 21" and no Miami exotic operator in the results rents at 18. The Huracán STO (21+) is the one exception and the post derives it from `ageException`.
+
+**SERP at the time:** age-requirement guides and FAQ pages, roughly 1,000–1,400 words. All covered the minimum age, license, deposit and insurance; none covered Florida law (s. 322.38 sets no minimum age), which this post adds along with the booking process for a younger renter.
+
+---
+
 ## Also permanently off-limits
 
 Not retired — never eligible. Recorded here so nobody proposes them twice.
@@ -109,7 +127,7 @@ Not retired — never eligible. Recorded here so nobody proposes them twice.
 | lamborghini rental los angeles | Out of market. Miami only. |
 | cheap exotic car rental miami | Contradicts the brand position — see `references/opinions.md` #1. |
 | exotic car rental miami no deposit | We require $1,000. Cannot satisfy the query. |
-| exotic car rental miami prom | Minimum age is 21. Prom renters are 17–18. |
+| exotic car rental miami prom | Most prom renters are 17, under our minimum of 18 even after it was lowered on 15 Nov 2026. Do not target an occasion dominated by minors. |
 | exotic car rental miami reddit | Cannot own it. Monitor for brand mentions instead. |
 
 ---

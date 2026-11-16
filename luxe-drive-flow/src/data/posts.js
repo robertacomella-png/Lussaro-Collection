@@ -16,6 +16,19 @@
 
 export const posts = [
   {
+    slug: 'how-old-do-you-have-to-be-to-rent-an-exotic-car-in-miami',
+    title: 'How Old to Rent an Exotic Car in Miami? 18+',
+    excerpt:
+      'Florida sets no minimum rental age, and much of the industry still says 25. We rent from 18. What the law requires, what to bring, and which car to start with.',
+    published: '2026-11-15',
+    updated: '2026-11-15',
+    hero: '/cars/porsche-911-turbo-s-cabriolet-rental-miami-front-quarter.jpg',
+    cluster: 'Before you book',
+    readingMinutes: 7,
+    // The cars the post recommends for a first rental; their pages link back.
+    relatedCars: ['lamborghini-urus', 'huracan-evo', 'mercedes-s580'],
+  },
+  {
     slug: 'lamborghini-huracan-sto-vs-evo-rental-miami',
     title: 'Huracán STO vs EVO Rental Miami: Which to Rent',
     excerpt:
