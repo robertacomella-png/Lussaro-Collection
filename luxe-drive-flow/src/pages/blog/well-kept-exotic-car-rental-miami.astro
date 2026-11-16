@@ -1,4 +1,5 @@
 ---
+import { depositException, ageException } from '@/data/cars';
 // ============================================================================
 // LUSSARO BLOG POST — built from .claude/skills/blog/template.astro
 // Structure, class names, schema shape and ordering are load-bearing.
@@ -115,7 +116,7 @@ const faqs = [
   },
   {
     q: 'What is the deposit and mileage on a Lussaro rental?',
-    a: `${deposit.display} flat on every car, returned after the car is inspected on its way back. Mileage is ${perDay} miles a day, pooled across the rental rather than capped daily, so three days is ${perDay * 3} miles in total, spent however you like.`,
+    a: `${deposit.display} ${depositException ? `on every car except ${depositException}` : 'flat on every car'}, returned after the car is inspected on its way back. Mileage is ${perDay} miles a day, pooled across the rental rather than capped daily, so three days is ${perDay * 3} miles in total, spent however you like.`,
   },
 ];
 
@@ -410,9 +411,9 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
 
         <ul>
           <li><strong>Are the photographs of that exact car?</strong> Most listings show a stock image of the model. Ours are the car that arrives, which is also why we have to keep it looking like that.</li>
-          <li><strong>Is the deposit published?</strong> Ours is {deposit.display}, flat on every car. Miami's range runs far wider, and most companies publish nothing until you are committed.</li>
+          <li><strong>Is the deposit published?</strong> Ours is {deposit.display}, {depositException ? `on every car except ${depositException}` : 'flat on every car'}. Miami's range runs far wider, and most companies publish nothing until you are committed.</li>
           <li><strong>Is mileage pooled or capped daily?</strong> Ours pools — {perDay} a day across the whole booking, so three days is {perDay * 3} miles used however you like. A daily cap that resets at midnight is a materially worse deal at the same headline price.</li>
-          <li><strong>What is the minimum age?</strong> {minimumAge} here, on every car, with a valid licence and qualifying insurance. Florida's requirements are set by the{' '}
+          <li><strong>What is the minimum age?</strong> {minimumAge} here, {ageException ? `on every car except ${ageException},` : 'on every car,'} with a valid licence and qualifying insurance. Florida's requirements are set by the{' '}
             <a href="https://www.flhsmv.gov/driver-licenses-id-cards/" target="_blank" rel="noopener noreferrer">Department of Highway Safety and Motor Vehicles</a>.</li>
           <li><strong>Who hands you the keys?</strong> Ask. The answer tells you more about how the car has been treated than any photograph will.</li>
         </ul>

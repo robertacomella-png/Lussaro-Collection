@@ -1,4 +1,5 @@
 ---
+import { depositException } from '@/data/cars';
 import Layout from '@/layouts/Layout.astro';
 import Nav from '@/components/site/Nav.astro';
 import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
@@ -48,7 +49,7 @@ const faqs = [
   },
   {
     q: 'How much is the security deposit?',
-    a: `${deposit.display} on every car in the fleet, taken at the time of booking. ${deposit.note} It may cover damage, excess mileage, late returns, cleaning or fines.`,
+    a: `${deposit.display} on every car in the fleet${depositException ? ` except ${depositException}` : ''}, taken at the time of booking. ${deposit.note} It may cover damage, excess mileage, late returns, cleaning or fines.`,
   },
   {
     q: 'How many miles are included?',
@@ -152,7 +153,7 @@ const faqSchema = {
       <div class="space-y-4">
         <h2 class="font-display text-2xl md:text-3xl font-bold text-white tracking-tight">Security deposits</h2>
         <p class="text-white/70 leading-relaxed">
-          A refundable {deposit.display} deposit applies to every car in the fleet.
+          A refundable {deposit.display} deposit applies to every car in the fleet{depositException ? ` except ${depositException}` : ''}.
         </p>
         <ol class="list-decimal list-inside space-y-2 text-white/70">
           <li>The deposit is taken when your booking is confirmed.</li>

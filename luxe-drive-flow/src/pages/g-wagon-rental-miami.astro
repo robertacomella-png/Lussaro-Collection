@@ -1,4 +1,5 @@
 ---
+import { depositException } from '@/data/cars';
 import LandingLayout from '@/layouts/LandingLayout.astro';
 import { business, whatsappWith } from '@/data/business';
 // Derived so every WhatsApp link says which page it was tapped from without
@@ -38,5 +39,5 @@ const wa = whatsappWith("Hi, I'd like to check G63 availability and rates for my
   <p>For the full picture, see <a href="/exotic-car-rental-miami">exotic car rental in Miami</a> or the complete <a href="/fleet">fleet</a>.</p>
 
   <h3>What you can rely on</h3>
-  <p>The terms are the ones published on our <a href="/pricing">rate card</a>: the deposit, the mileage allowance and the delivery fees are the same on every car we run. You will have the rate in writing before anything is committed.</p>
+  <p>The terms are the ones published on our <a href="/pricing">rate card</a>: the deposit, the mileage allowance and the delivery fees are the same on every car we run{depositException ? `, except the deposit on ${depositException}` : ''}. You will have the rate in writing before anything is committed.</p>
 </LandingLayout>

@@ -1,4 +1,5 @@
 ---
+import { depositException } from '@/data/cars';
 // ============================================================================
 // LUSSARO BLOG — BASE TEMPLATE
 //
@@ -153,7 +154,7 @@ const faqs = [
   },
   {
     q: 'Is the deposit the same thing as insurance?',
-    a: `No, and they do different jobs. The deposit is ${deposit.display}, flat on every vehicle, and it is refundable after the car is inspected on return. Insurance is what stands behind damage beyond that.`,
+    a: `No, and they do different jobs. The deposit is ${deposit.display}, ${depositException ? `on every vehicle except ${depositException}` : 'flat on every vehicle'}, and it is refundable after the car is inspected on return. Insurance is what stands behind damage beyond that.`,
   },
   {
     q: 'Does everyone driving need to be covered?',
@@ -406,7 +407,7 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
 
         <p>
           It is also worth separating from the deposit, because the two get confused constantly.
-          {` The deposit is ${deposit.display}, flat on every vehicle we rent, and it comes back to you after the car is inspected on return. `}
+          {` The deposit is ${deposit.display}, ${depositException ? `on every vehicle we rent except ${depositException}` : 'flat on every vehicle we rent'}, and it comes back to you after the car is inspected on return. `}
           Insurance is not a deposit and the deposit is not insurance. One is held and returned; the
           other is spent. The full set of terms is on{' '}
           <a href="/pricing">our pricing and policies page</a>.

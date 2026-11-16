@@ -1,4 +1,5 @@
 ---
+import { depositException, ageException } from '@/data/cars';
 import { business } from '@/data/business';
 import { rentalTerms } from '@/data/rental-terms';
 import { fleet } from '@/data/fleet';
@@ -24,7 +25,7 @@ import Nav from '@/components/site/Nav.astro';
           <h2 class="text-2xl font-semibold">1. Eligibility & Requirements</h2>
           <p>To reserve and operate any vehicle, you must meet the following conditions:</p>
           <ul class="list-disc list-inside space-y-2 text-white/70">
-            <li>Be at least {rentalTerms.minimumAge} years of age.</li>
+            <li>Be at least {rentalTerms.minimumAge} years of age{ageException ? `, except for ${ageException}` : ''}.</li>
             <li>Hold a valid, full driver’s license.</li>
             <li>{rentalTerms.insurance.summary}</li>
             <li>Provide accurate personal information and documentation.</li>
@@ -44,7 +45,7 @@ import Nav from '@/components/site/Nav.astro';
 
         <section class="space-y-4">
           <h2 class="text-2xl font-semibold">3. Security Deposit</h2>
-          <p>A refundable security deposit of {rentalTerms.deposit.display} applies to every vehicle in our fleet. It is taken at the time of booking and is the same amount for all vehicles.</p>
+          <p>A refundable security deposit of {rentalTerms.deposit.display} applies to every vehicle in our fleet{depositException ? `, except ${depositException}` : ''}. It is taken at the time of booking{depositException ? '' : ' and is the same amount for all vehicles'}.</p>
           <div class="overflow-x-auto">
             <table class="w-full text-left border border-white/10 rounded-lg">
               <thead class="bg-white/5 text-white/70">

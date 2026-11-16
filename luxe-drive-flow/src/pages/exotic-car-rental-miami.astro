@@ -1,4 +1,5 @@
 ---
+import { depositException } from '@/data/cars';
 import LandingLayout from '@/layouts/LandingLayout.astro';
 import { rentalTerms, deliveryEachWaySummary, discountSummary } from '@/data/rental-terms';
 import { fleet } from '@/data/fleet';
@@ -11,7 +12,7 @@ const { deposit, mileage, minimumAge, insurance } = rentalTerms;
 const faqs = [
   {
     q: 'What does an exotic car rental in Miami cost?',
-    a: `Daily rates start at $${low} and run to $${high}, depending on the car. Every rate carries ${mileage.includedPerDay} miles a day and the same refundable ${deposit.display} deposit. Longer bookings cost less per day: ${discountSummary}.`,
+    a: `Daily rates start at $${low} and run to $${high}, depending on the car. Every rate carries ${mileage.includedPerDay} miles a day and ${depositException ? `a refundable ${deposit.display} deposit, except ${depositException}` : `the same refundable ${deposit.display} deposit`}. Longer bookings cost less per day: ${discountSummary}.`,
   },
   {
     q: 'How quickly can I get a car?',

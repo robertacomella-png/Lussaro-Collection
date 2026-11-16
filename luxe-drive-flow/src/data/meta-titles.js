@@ -5,9 +5,9 @@
 // for a few. Anything listed here wins; everything else keeps the generated
 // title.
 //
-// Only live routes. No huracan-sto — it left the fleet in June, and a title
-// override for a non-existent page is dead weight. The G63 DID return, so it
-// has an entry again.
+// Only live routes. A title override for a non-existent page is dead weight.
+// The G63 and the Huracan STO both left in June and have since returned, so
+// both have entries again.
 //
 // THE DATA NOW LIVES IN `meta.json`, one entry per path carrying title,
 // description and the note explaining the choice. That file is what the CMS

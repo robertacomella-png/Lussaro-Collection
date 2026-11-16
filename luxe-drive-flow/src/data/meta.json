@@ -13,6 +13,12 @@
       "note": "fleet.js calls it \"Huracan EVO Spyder\"; the marque leads, and \"Spyder\" is what separates this title from the coupe's in a results page."
     },
     {
+      "path": "/cars/huracan-sto",
+      "title": "Lamborghini Huracan STO Rental Miami | Lussaro",
+      "description": "Rent the Lamborghini Huracan STO in Miami: race-bred V10, 631 hp, rear-wheel drive, $1,495/day with 100 miles included. Delivered to your door in Miami.",
+      "note": "fleet.js calls it \"Huracan STO\". Returned to the fleet 15 Nov 2026 at $1,495/day, same slug as the listing removed in June. Leads with the marque, like the other two Huracans."
+    },
+    {
       "path": "/cars/lamborghini-urus",
       "title": "",
       "description": "Rent the Lamborghini Urus in Miami: 641 hp, 0-60 in 3.3s, $999/day with 100 miles included. Delivered anywhere in Miami, same-day available.",

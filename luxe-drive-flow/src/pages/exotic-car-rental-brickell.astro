@@ -1,4 +1,5 @@
 ---
+import { depositException, ageException } from '@/data/cars';
 import LandingLayout from '@/layouts/LandingLayout.astro';
 import { rentalTerms, deliveryEachWaySummary } from '@/data/rental-terms';
 import { neighborhoodFor } from '@/data/neighborhood-content';
@@ -45,7 +46,7 @@ const faqSchema = {
   <p>The two low cars are a different question. The <a href="/cars/huracan-evo">Huracan EVO</a> carries a front splitter close to the road, and the <a href="/cars/sf90">Ferrari SF90</a> is similarly low at the nose. Neither enjoys a steep ramp taken straight on. If you are booking one of those into a tower, plan on a street-level handoff and let the building's valet take it from there.</p>
 
   <h2>Rates and requirements</h2>
-  <p>Every car carries the same refundable {deposit.display} deposit and {mileage.includedPerDay} miles per day of the booking. Drivers must be {minimumAge} or over. Full pricing sits on the <a href="/pricing">rate card</a>, and the wider service area is described on our <a href="/exotic-car-rental-miami">Miami hub page</a>. Heading to the beach instead? See <a href="/exotic-car-rental-south-beach">South Beach</a>.</p>
+  <p>Every car carries {depositException ? `a refundable ${deposit.display} deposit, except ${depositException},` : `the same refundable ${deposit.display} deposit`} and {mileage.includedPerDay} miles per day of the booking. Drivers must be {minimumAge} or over{ageException ? `, except on ${ageException}` : ''}. Full pricing sits on the <a href="/pricing">rate card</a>, and the wider service area is described on our <a href="/exotic-car-rental-miami">Miami hub page</a>. Heading to the beach instead? See <a href="/exotic-car-rental-south-beach">South Beach</a>.</p>
 
   <h2>Questions</h2>
   {faqs.map((f) => (

@@ -70,6 +70,9 @@ export default function VehicleBookingCard({
   carName = "",
   tiers = rentalTerms.discountTiers,
   milesPerDay = rentalTerms.mileage.includedPerDay,
+  // Per-car terms from cars.js; the fleet defaults when a car sets none.
+  depositDisplay = rentalTerms.deposit.display,
+  minimumAge = rentalTerms.minimumAge,
 }) {
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
@@ -200,11 +203,11 @@ export default function VehicleBookingCard({
         </li>
         <li className="flex items-center gap-3">
           <Layers className="w-5 h-5 shrink-0 text-white/70" aria-hidden="true" />
-          {rentalTerms.deposit.display} refundable deposit
+          {depositDisplay} refundable deposit
         </li>
         <li className="flex items-center gap-3">
           <BadgeCheck className="w-5 h-5 shrink-0 text-white/70" aria-hidden="true" />
-          {rentalTerms.minimumAge}+ with a valid license
+          {minimumAge}+ with a valid license
         </li>
       </ul>
 
@@ -256,7 +259,7 @@ export default function VehicleBookingCard({
           </div>
           <div className="flex justify-between gap-3 text-[13px]">
             <dt className="text-white/60">Refundable deposit, held separately</dt>
-            <dd className="text-white/70 tabular-nums">{rentalTerms.deposit.display}</dd>
+            <dd className="text-white/70 tabular-nums">{depositDisplay}</dd>
           </div>
         </dl>
       )}

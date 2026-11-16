@@ -1,4 +1,5 @@
 ---
+import { depositException } from '@/data/cars';
 // ============================================================================
 // LUSSARO BLOG POST — built from .claude/skills/blog/template.astro
 // Structure, class names, schema shape and ordering are load-bearing. Do not
@@ -112,7 +113,7 @@ const faqs = [
   },
   {
     q: 'Do both cars have the same deposit and mileage?',
-    a: `Yes. The deposit is ${deposit.display} on every car we run, refundable after inspection on return. Mileage is ${perDay} miles a day on both, pooled across the rental rather than capped daily — three days is ${perDay * 3} miles in total, used however you like.`,
+    a: `Yes. The deposit is ${deposit.display} on every car we run${depositException ? ` except ${depositException}` : ''}, refundable after inspection on return. Mileage is ${perDay} miles a day on both, pooled across the rental rather than capped daily — three days is ${perDay * 3} miles in total, used however you like.`,
   },
   {
     q: 'How many people fit in each one?',
@@ -437,7 +438,7 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
         </p>
 
         <ul>
-          <li><strong>Deposit: {deposit.display}</strong>, flat on every car we run. {deposit.note}</li>
+          <li><strong>Deposit: {deposit.display}</strong>{depositException ? `, on every car we run except ${depositException}.` : ', flat on every car we run.'} {deposit.note}</li>
           <li><strong>Mileage: {perDay} miles a day</strong>, pooled across the rental rather than capped daily. Three days is {perDay * 3} miles in total, spent however you like — only the figure at return counts. A daily cap that resets at midnight is a materially worse deal at the same headline price.</li>
           <li><strong>Minimum age: {minimumAge}</strong>, with a valid license and qualifying insurance. Florida's requirements are set by the{' '}
             <a href="https://www.flhsmv.gov/insurance/" target="_blank" rel="noopener noreferrer">Department of Highway Safety and Motor Vehicles</a>.</li>

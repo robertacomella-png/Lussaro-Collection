@@ -1,4 +1,5 @@
 ---
+import { depositException } from '@/data/cars';
 // "Best exotic car rental Miami" — deliberately NOT a second copy of
 // /exotic-car-rental-miami.
 //
@@ -63,7 +64,7 @@ const seatsOf = (c) => (c.seatsNote ? `${c.seats} (${c.seatsNote})` : `${c.seats
 // The published terms, as one block. Built from rental-terms.js so the page
 // cannot drift out of step with /terms or /pricing.
 const termRows = [
-  ['Security deposit', `${deposit.display}, flat across every car. ${deposit.note}`],
+  ['Security deposit', `${deposit.display}, ${depositException ? `on every car except ${depositException}` : 'flat across every car'}. ${deposit.note}`],
   ['Mileage included', `${mileage.includedPerDay} miles per day, pooled across the booking.`],
   ['Delivery', `${deliveryEachWaySummary}. Beyond those two areas, quoted before you book.`],
   ['Collection', collection.summary],
@@ -94,7 +95,7 @@ const faqs = [
   },
   {
     q: 'How much should an exotic car rental in Miami cost?',
-    a: `Ours run from $${low} a day for the S580 to $${high} for the Ferrari SF90, with ${mileage.includedPerDay} miles a day included on every car and the same refundable ${deposit.display} deposit. Longer bookings cost less per day: ${discountSummary}. Treat any quote that omits the deposit, the mileage allowance or the delivery fee as incomplete rather than cheap.`,
+    a: `Ours run from $${low} a day for the S580 to $${high} for the Ferrari SF90, with ${mileage.includedPerDay} miles a day included on every car and ${depositException ? `a refundable ${deposit.display} deposit, except ${depositException}` : `the same refundable ${deposit.display} deposit`}. Longer bookings cost less per day: ${discountSummary}. Treat any quote that omits the deposit, the mileage allowance or the delivery fee as incomplete rather than cheap.`,
   },
   {
     q: 'What should I check before booking an exotic car in Miami?',
@@ -154,7 +155,7 @@ const listSchema = {
   <p>Six questions. Ask them of us, and ask them of everyone else on your shortlist.</p>
   <ol>
     <li><strong>Are the photographs the actual car?</strong> Every listing on this site shows the specific vehicle we deliver, not a stock image of the model, and most are one-of-one in our Miami fleet. A gallery of press shots tells you nothing about the car turning up.</li>
-    <li><strong>Is the deposit a published figure?</strong> Ours is {deposit.display}, flat across all six cars, refundable after the car is inspected on return. "Varies by vehicle" is a number you will not learn until you are committed.</li>
+    <li><strong>Is the deposit a published figure?</strong> Ours is {deposit.display}, {depositException ? `on every car except ${depositException}` : 'flat across every car'}, refundable after the car is inspected on return. "Varies by vehicle" is a number you will not learn until you are committed.</li>
     <li><strong>Is the mileage pooled or capped daily?</strong> We include {mileage.includedPerDay} miles a day, pooled across the booking — three days is {mileage.includedPerDay * 3} miles to use however you like, and only the total at return is measured. A daily cap that resets at midnight is a materially worse deal at the same headline number.</li>
     <li><strong>Is the delivery fee one way or return?</strong> This is the one that catches people out. Ours is {deliveryEachWaySummary}. Collection at the end of the rental is charged separately and is typically the same, so a booking needing both usually comes to {roundTripSummary}. We would rather you saw both lines here than found the second one on the invoice.</li>
     <li><strong>What insurance are you expected to bring?</strong> {insurance.summary} Ask this early — it is the question that most often changes the real price.</li>
@@ -202,7 +203,7 @@ const listSchema = {
       </tbody>
     </table>
   </div>
-  <p>Rates fall on longer bookings — {discountSummary} — and every car carries the same deposit and the same {mileage.includedPerDay} miles a day, so the only variable between them is the one in the first column.</p>
+  <p>Rates fall on longer bookings — {discountSummary} — and {depositException ? `every car carries the same ${mileage.includedPerDay} miles a day and the same deposit, except ${depositException}, so the main variable between them is the one in the first column` : `every car carries the same deposit and the same ${mileage.includedPerDay} miles a day, so the only variable between them is the one in the first column`}.</p>
 
   <h2>What renters have said</h2>
   <p>{averageRating.toFixed(1)} out of 5 across {reviewCount} reviews on Google, reproduced word for word and never edited by us. Two of them:</p>

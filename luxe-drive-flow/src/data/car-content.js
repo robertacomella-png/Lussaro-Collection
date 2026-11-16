@@ -121,6 +121,26 @@ export const carContent = {
     deliveryNotes: '',
   },
 
+  'huracan-sto': {
+    useCases: `The STO is the Huracan with the comfort taken out and the race car left in. Lamborghini built it from the Super Trofeo one-make series, and it shows: a fixed rear wing, a roof scoop, a firmer ride and a V10 that sends everything to the rear wheels. Book it when the driving is the event — a morning run with the city still quiet, a shoot, a birthday that deserves noise. It is the wrong car for a long cruise with luggage. If you want the same V10 with a softer ride, the EVO is the one.`,
+    goodToKnow: [
+      'Strictly two seats — driver plus one passenger, with no rear bench.',
+      'Rear-wheel drive, with the naturally aspirated 5.2-litre V10 tuned to 631 hp. No hybrid system and no electric mode.',
+      'Track-focused suspension. It rides noticeably firmer than the Huracan EVO, which you will feel on rough Miami streets.',
+      'Very low nose and front splitter. Take steep driveways, ramps and speed bumps slowly and at an angle.',
+      'Fixed roof and conventional front-hinged doors — no Spyder version and no scissor doors.',
+      'Space for luggage is minimal. Plan on a soft bag, not a suitcase.',
+    ],
+    faqQuestion: 'How is the Huracan STO different from the Huracan EVO?',
+    faqAnswer:
+      'Both carry a naturally aspirated V10 and drive the rear wheels, but the STO is the track version. It makes 631 hp against the EVO\u2019s 602, wears a fixed rear wing and roof scoop from the Super Trofeo race car, and rides firmer. Book the STO for the most intense drive we offer in a Huracan, and the EVO if you want the same sound with more comfort around town.',
+    siblings: ['huracan-evo', 'sf90'],
+    category: { href: '/lamborghini-rental-miami', label: 'Lamborghini rental in Miami' },
+    realMoment: '',
+    operatorNotes: '',
+    deliveryNotes: '',
+  },
+
   'mercedes-maybach-s580': {
     useCases: `The Maybach S580 is the one to book when the back seat is the whole point. It is a stretched S-Class with two reclining executive chairs, their own screens and climate controls, and a fixed console between them — closer to a private cabin than a rear bench. That makes it right for an airport collection where you want to arrive composed, for moving a client through the city, or for an evening where somebody else drives and you would rather be working, resting or not thinking about traffic. Treat it as a four-seater with an exceptional back, not as a car to fill with people.`,
     goodToKnow: [
