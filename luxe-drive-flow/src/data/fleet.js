@@ -34,8 +34,8 @@ export const fleet = [
       "/cars/lamborghini-urus-rental-miami-front-garage.jpg",
       "/cars/lamborghini-urus-rental-miami-rooftop-rear.jpg",
       "/cars/lamborghini-urus-rental-miami-downtown-skyline.jpg",
-      "https://ik.imagekit.io/8i3ae7fac/IMG_2643%203.jpg",
-      "https://ik.imagekit.io/8i3ae7fac/IMG_2670%203.jpg",
+      "/cars/lamborghini-urus-rental-miami-front-skyline.jpg",
+      "/cars/lamborghini-urus-rental-miami-rear-palms.jpg",
     ],
   },
   {

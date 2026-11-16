@@ -4,6 +4,7 @@
 // /fleet landing page so the two always stay identical. Pages that render a
 // card with a 3D badge should also mount <Car3DViewer client:idle />.
 import { cars } from '@/data/cars';
+import { altFor, carFullName } from '@/data/image-alt';
 import { getImageKitSrc, getImageKitSrcSet } from '@/lib/imageKit';
 
 const {
@@ -66,7 +67,7 @@ const showFilter = filter && brands.length > 1;
               src={getImageKitSrc(car.images?.[0], 800)}
               srcset={getImageKitSrcSet(car.images?.[0])}
               sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-              alt={car.name}
+              alt={altFor(car.images?.[0], `${carFullName(car)} rental in Miami`)}
               loading="lazy"
               class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             />

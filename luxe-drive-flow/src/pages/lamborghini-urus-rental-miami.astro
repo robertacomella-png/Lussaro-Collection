@@ -18,6 +18,7 @@ import CtaBand from '@/components/site/CtaBand.astro';
 import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
 import BookingRequestCard from '@/components/booking/BookingRequestCard.jsx';
 import CarGallery from '@/components/fleet/CarGallery.jsx';
+import { altFor } from '@/data/image-alt';
 import { cars } from '@/data/cars';
 import { rentalTerms, deliveryEachWaySummary } from '@/data/rental-terms';
 import { reviews, averageRating } from '@/data/reviews';
@@ -39,13 +40,13 @@ const miamiDelivery = rentalTerms.delivery.find((d) => d.area === 'Miami');
 const uruReviews = reviews.filter((r) => (r.car ?? '').includes('Lamborghini'));
 
 // The car's own shots plus the Urus gallery, which already carries written alt
-// text in image-alt.js — gallery-1 is excluded because it is two cars.
+// text in image-alt.js — the Metromover shot is excluded because it is two cars.
 const galleryImages = [
   ...urus.images.filter((i) => i.startsWith('/cars/')),
-  '/gallery/gallery-2.jpg',
-  '/gallery/gallery-4.jpg',
-  '/gallery/gallery-6.jpg',
-  '/gallery/gallery-9.jpg',
+  '/gallery/lamborghini-urus-rental-miami-brickell-cobblestones.jpg',
+  '/gallery/lamborghini-urus-rental-miami-brickell-side-profile.jpg',
+  '/gallery/lamborghini-urus-rental-miami-sunset-waterfront.jpg',
+  '/gallery/lamborghini-urus-rental-miami-quilted-interior.jpg',
 ];
 
 // The rest of the SUV line-up, derived. Never a hardcoded list, and never a
@@ -151,7 +152,7 @@ const faqSchema = {
 
       <div class="grid lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] gap-8 lg:gap-12 items-start mt-9 md:mt-12">
         <div>
-          <CarGallery images={galleryImages} name={urus.name} slug="g-urus-landing" client:load />
+          <CarGallery images={galleryImages} name={urus.name} slug="g-urus-landing" alts={galleryImages.map((src) => altFor(src))} client:load />
         </div>
 
         <div class="text-center lg:text-left lg:pt-4">
