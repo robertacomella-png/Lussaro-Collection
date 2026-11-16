@@ -11,11 +11,16 @@ export const rentalTerms = {
   // Maintained manually — bump when the terms actually change.
   lastUpdated: '2026-08-10',
 
-  // Lowered from 21 to 19 on the owner's instruction, 20 Oct 2026, to apply
-  // site-wide. Every page derives from this; /terms and /about previously
-  // hard-coded "21" in prose and were changed in the same commit so the legal
-  // page cannot contradict the rest of the site.
-  minimumAge: 19,
+  // Lowered from 21 to 19 on the owner's instruction, 20 Oct 2026, and from 19
+  // to 18 on the owner's instruction, 15 Nov 2026, both site-wide. Every page
+  // derives from this, /terms included, so the legal page cannot contradict
+  // the rest of the site.
+  minimumAge: 18,
+
+  // Taxes and fees, as a share of the rental subtotal after any multi-day
+  // discount. Set at 10% on the owner's instruction, 15 Nov 2026. The car-page
+  // estimate reads it from here; deposit is never included in the base.
+  taxesAndFeesRate: 0.1,
 
   // Chauffeur service is priced by the hour, not by the day, and is the one
   // rate that does not come from fleet.js.
