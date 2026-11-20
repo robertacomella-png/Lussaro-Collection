@@ -339,7 +339,7 @@ const productSchema = {
               crawler, and for anyone whose bundle is slow. It collects dates
               but checks no availability: nothing here can tell a visitor a car
               is free when it is not. */}
-          <VehicleBookingCard client:visible pricePerDay={car.price} carName={car.name} tiers={bookingTiers} milesPerDay={milesPerDay} depositDisplay={car.deposit.display} minimumAge={car.minimumAge} />
+          <VehicleBookingCard client:visible pricePerDay={car.price} carName={car.name} tiers={bookingTiers} milesPerDay={milesPerDay} depositDisplay={car.deposit.display} minimumAge={car.minimumAge} vehicleId={car.dashboardId || null} />
 
           {/* Call was full width here; it gives up half to WhatsApp so both
               channels sit under the calendar. Labels shorten to "Call" and

@@ -73,6 +73,8 @@ export default function VehicleBookingCard({
   // Per-car terms from cars.js; the fleet defaults when a car sets none.
   depositDisplay = rentalTerms.deposit.display,
   minimumAge = rentalTerms.minimumAge,
+  // fleet.js dashboardId, when the car is linked in the Rental Dashboard.
+  vehicleId = null,
 }) {
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
@@ -139,8 +141,12 @@ export default function VehicleBookingCard({
           name: name.trim(),
           phone: phone.trim(),
           vehicle: carName,
+          vehicle_id: vehicleId,
+          start_date: start || null,
+          end_date: end || null,
           dates: datesText,
           message: `Website availability check${detail}`,
+          source: "car_booking_card",
         }),
       });
       const data = await res.json();

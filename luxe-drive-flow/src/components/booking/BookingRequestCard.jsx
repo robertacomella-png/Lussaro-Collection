@@ -104,8 +104,11 @@ export default function BookingRequestCard({
           phone: phone.trim(),
           email: email.trim(),
           vehicle: carName,
+          start_date: dated ? start : null,
+          end_date: dated && end ? end : null,
           dates: datesText,
           message: `Website booking request${detail ? ` — ${detail}` : ""}`,
+          source: "ad_landing_card",
         }),
       });
       const data = await res.json();
