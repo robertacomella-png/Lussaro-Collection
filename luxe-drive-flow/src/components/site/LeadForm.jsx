@@ -11,7 +11,7 @@ export default function LeadForm({ defaultVehicle = "" }) {
     setStatus("sending");
     setError("");
     const form = e.currentTarget;
-    const payload = Object.fromEntries(new FormData(form).entries());
+    const payload = { ...Object.fromEntries(new FormData(form).entries()), source: "lead_form" };
 
     try {
       const res = await fetch("/api/lead", {
