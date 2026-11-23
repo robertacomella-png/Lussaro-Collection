@@ -101,6 +101,21 @@ export async function POST({ request }) {
     return json({ ok: false, error: 'Name and phone are required.' }, 400);
   }
 
+  // Server backstop for contact details (23 Nov 2026). Deliberately looser
+  // than QuoteDialog's checks so no existing form loses a real lead: any
+  // phone needs 7–15 digits, any email given must be well-formed, and the
+  // quote form — which asks for email — must send one.
+  const phoneDigits = phone.replace(/\D/g, '');
+  if (phoneDigits.length < 7 || phoneDigits.length > 15 || /^(\d)\1+$/.test(phoneDigits)) {
+    return json({ ok: false, error: 'Please enter a valid phone number.' }, 400);
+  }
+  if (email && !/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(email)) {
+    return json({ ok: false, error: 'Please enter a valid email address.' }, 400);
+  }
+  if (!email && /^(home_hero|quote_dialog)$/.test(source)) {
+    return json({ ok: false, error: 'Please add your email.' }, 400);
+  }
+
   const lines = [
     `Name: ${name}`,
     `Phone: ${phone}`,
