@@ -26,9 +26,9 @@
     },
     {
       "path": "/cars/lamborghini-urus",
-      "title": "",
+      "title": "Lamborghini Urus Specs, Photos & Rates | Lussaro Collection",
       "description": "Rent the Lamborghini Urus in Miami: 641 hp, 0-60 in 3.3s, $999/day with 100 miles included. Delivered anywhere in Miami, same-day available.",
-      "note": ""
+      "note": "\"Lamborghini Urus Rental Miami\" belongs to /lamborghini-urus-rental-miami (the ad funnel). The generated title duplicated it exactly, so the two pages competed. This page takes the model-detail angle instead. Changed 22 Nov 2026 from the SEO audit."
     },
     {
       "path": "/cars/mercedes-amg-g63",
@@ -50,9 +50,9 @@
     },
     {
       "path": "/cars/mercedes-s580",
-      "title": "Mercedes-Benz S580 Rental Miami | Lussaro Collection",
+      "title": "Mercedes-Benz S580 Specs, Photos & Rates | Lussaro Collection",
       "description": "Rent the Mercedes S580 in Miami from $399/day — our most accessible luxury sedan. 496 hp, 100 miles/day included, delivered across Miami.",
-      "note": "fleet.js calls it \"S580\"; spell out the marque for search."
+      "note": "fleet.js calls it \"S580\"; spell out the marque for search. \"Mercedes-Benz S580 Rental Miami\" belongs to /mercedes-s580-rental-miami (the ad funnel, which owns \"mercedes s class rental miami\"); this page used the identical title until 22 Nov 2026, so it now takes the model-detail angle."
     },
     {
       "path": "/cars/rolls-royce-cullinan",
