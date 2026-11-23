@@ -133,21 +133,34 @@ const fleetSchema = {
             setTimeout(() => idle(() => {
               hd.muted = true;
               hd.preload = 'auto';
-              // Fully buffered first, so the HD layer never stalls on screen.
-              hd.addEventListener('canplaythrough', () => {
+              let shown = false;
+              const show = () => {
+                if (shown) return;
+                shown = true;
                 const d = hd.duration || v.duration;
                 // Seek slightly ahead of the light video to cover the seek
                 // itself; the 700ms crossfade hides the rest.
-                hd.currentTime = d ? (v.currentTime + 0.25) % d : v.currentTime;
-                hd.addEventListener('playing', () => {
+                hd.addEventListener('seeked', () => requestAnimationFrame(() => {
                   hd.style.opacity = '1';
                   // Once the fade is done the light copy is hidden underneath;
                   // stop it so the phone is not decoding two videos.
                   setTimeout(() => { v.pause(); v.removeAttribute('src'); v.load(); }, 800);
-                }, { once: true });
-                hd.play().catch(() => {});
-              }, { once: true });
+                }), { once: true });
+                hd.currentTime = d ? (v.currentTime + 0.25) % d : v.currentTime;
+              };
+              // Reveal once it can play through without stalling — or, as a
+              // backstop, once the whole file is buffered.
+              hd.addEventListener('canplaythrough', show, { once: true });
+              hd.addEventListener('progress', () => {
+                const b = hd.buffered;
+                if (b.length && hd.duration && b.end(b.length - 1) >= hd.duration - 0.5) show();
+              });
               hd.src = isPhone ? '/hero/hero-mobile-hd.mp4' : '/hero/hero-desktop-hd.mp4';
+              // Play it now, while still invisible. iOS Safari ignores preload
+              // and fetches media only for an element that is playing, so
+              // waiting for canplaythrough before play() meant it never came —
+              // the HD layer silently never appeared on iPhones (fixed 23 Nov).
+              hd.play().catch(() => {});
             }, { timeout: 4000 }), 2000);
           };
           // Deferred past load. Attaching the source at parse time put a
