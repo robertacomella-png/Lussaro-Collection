@@ -16,11 +16,24 @@ const galleryImages = [
   "/gallery/lamborghini-urus-rental-miami-quilted-interior.jpg",
 ];
 
+// Visible captions, short enough to sit under a thumbnail. Each one only
+// restates what the photo's alt text in image-alt.js already establishes —
+// car and place — so the page gains indexable text without new claims.
+// The alt text stays the full description for screen readers.
+const captions = {
+  "/gallery/mercedes-maybach-gls-600-lamborghini-urus-rental-miami-metromover.jpg": "Maybach GLS 600 and Urus, downtown under the Metromover",
+  "/gallery/lamborghini-urus-rental-miami-brickell-cobblestones.jpg": "Lamborghini Urus on the Brickell waterfront",
+  "/gallery/lamborghini-urus-rental-miami-biscayne-bay-head-on.jpg": "Lamborghini Urus across Biscayne Bay from Brickell",
+  "/gallery/lamborghini-urus-rental-miami-brickell-side-profile.jpg": "Lamborghini Urus in profile, opposite the Brickell skyline",
+  "/gallery/lamborghini-urus-rental-miami-bayfront-rear-quarter.jpg": "Lamborghini Urus on a Miami bayfront promenade",
+  "/gallery/lamborghini-urus-rental-miami-sunset-waterfront.jpg": "Lamborghini Urus at sunset on a waterfront drive",
+  "/gallery/lamborghini-urus-rental-miami-badge-grille.jpg": "Lamborghini Urus badge and grille",
+  "/gallery/lamborghini-urus-rental-miami-low-front.jpg": "Lamborghini Urus, low front on the cobblestones",
+  "/gallery/lamborghini-urus-rental-miami-quilted-interior.jpg": "Lamborghini Urus quilted leather interior",
+};
+
 export default function GalleryView() {
   const [selectedIndex, setSelectedIndex] = useState(null);
-  const [screenWidth, setScreenWidth] = useState(
-    typeof window !== "undefined" ? window.innerWidth : 1440
-  );
   const thumbnailStripRef = useRef(null);
 
   const selectedImage =
@@ -37,12 +50,6 @@ export default function GalleryView() {
 
   const showNext = useCallback(() => {
     setSelectedIndex((prev) => (prev === null ? 0 : (prev + 1) % galleryImages.length));
-  }, []);
-
-  useEffect(() => {
-    const onResize = () => setScreenWidth(window.innerWidth);
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
   }, []);
 
   useEffect(() => {
@@ -79,11 +86,6 @@ export default function GalleryView() {
     return `${selectedIndex + 1} / ${galleryImages.length}`;
   }, [selectedIndex]);
 
-  const columns = useMemo(() => {
-    if (screenWidth >= 1024) return 5;
-    if (screenWidth >= 768) return 3;
-    return 2;
-  }, [screenWidth]);
 
   return (
     <section id="top" className="relative pt-28 md:pt-32 pb-12 md:pb-16">
@@ -103,7 +105,11 @@ export default function GalleryView() {
                 Gallery
               </h1>
               <p className="text-white/55 text-sm md:text-base mt-5 max-w-2xl leading-relaxed">
-                A closer look at the vehicles, moments, and details that define the Lussaro experience.
+                Our cars, photographed where you will drive them. The purple Lamborghini Urus on the
+                Brickell waterfront and across Biscayne Bay, and the Mercedes-Maybach GLS 600 beside it
+                downtown under the Metromover. Both are in the current fleet —{" "}
+                <a href="/fleet" className="text-white/80 underline decoration-white/25 underline-offset-4 hover:text-white hover:decoration-white transition-colors">see every car and its daily rate</a>,
+                or read about <a href="/exotic-car-rental-brickell" className="text-white/80 underline decoration-white/25 underline-offset-4 hover:text-white hover:decoration-white transition-colors">renting in Brickell</a>.
               </p>
             </div>
             <p className="text-white/50 text-xs md:text-sm">{galleryImages.length} images</p>
@@ -114,8 +120,10 @@ export default function GalleryView() {
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.08 }}
-          className="grid gap-4 md:gap-5"
-          style={{ gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` }}
+          // Columns from CSS, not from window.innerWidth. The JS version rendered
+          // 5 columns at build time (no window) and React's hydration keeps the
+          // server's style attribute, so every phone got 5 thumbnails of ~57px.
+          className="grid gap-4 md:gap-5 grid-cols-2 md:grid-cols-3 lg:grid-cols-5"
         >
           {galleryImages.map((src, index) => (
             <button key={src} type="button" onClick={() => openViewer(index)} className="group block w-full text-left">
@@ -133,6 +141,9 @@ export default function GalleryView() {
                   />
                 </picture>
               </div>
+              {captions[src] && (
+                <p className="mt-2.5 px-1 text-white/60 text-xs md:text-sm leading-snug">{captions[src]}</p>
+              )}
             </button>
           ))}
         </motion.div>

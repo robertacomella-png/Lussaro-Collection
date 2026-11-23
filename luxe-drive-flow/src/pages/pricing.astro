@@ -41,7 +41,7 @@ const exOver = exDriven - exIncluded;
 const faqs = [
   {
     q: 'What does it cost to rent from Lussaro Collection?',
-    a: `Daily rates run from ${usd(cheapest.price)} for the ${named(cheapest)} up to ${usd(Math.max(...fleet.map((c) => c.price)))} for the ${named(fleet.reduce((a, c) => (c.price > a.price ? c : a)))}. Every rate includes ${mileage.includedPerDay} miles per day, and a refundable ${deposit.display} security deposit applies to all ${fleet.length} cars.`,
+    a: `Daily rates run from ${usd(cheapest.price)} for the ${named(cheapest)} up to ${usd(Math.max(...fleet.map((c) => c.price)))} for the ${named(fleet.reduce((a, c) => (c.price > a.price ? c : a)))}. Every rate includes ${mileage.includedPerDay} miles per day, and a refundable ${deposit.display} security deposit applies to every car${depositException ? ` except ${depositException}` : ''}.`,
   },
   {
     q: 'Do longer rentals cost less per day?',
@@ -77,7 +77,7 @@ const faqSchema = {
 ---
 <Layout
   title="Exotic Car Rental Prices Miami — Full Rate Card | Lussaro"
-  description="Every Lussaro rate, deposit and policy on one page: 6 cars from $399/day, multi-day discounts, mileage, delivery and cancellation — no surprises."
+  description={`Every Lussaro rate, deposit and policy on one page: ${fleet.length} cars from ${usd(cheapest.price)}/day, multi-day discounts, mileage, delivery and cancellation — no surprises.`}
   schema={[faqSchema]}
 >
   <Nav />
@@ -140,7 +140,7 @@ const faqSchema = {
                     <td class="px-4 py-3">{usd(rateForDays(c.price, t.days, c.discountTiers).perDay)}</td>
                   ))}
                   <td class="px-4 py-3">{c.miles}</td>
-                  <td class="px-4 py-3">{deposit.display}</td>
+                  <td class="px-4 py-3">{c.deposit ? usd(c.deposit) : deposit.display}</td>
                 </tr>
               ))}
             </tbody>
