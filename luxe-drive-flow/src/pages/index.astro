@@ -6,14 +6,11 @@ import CtaBand from '@/components/site/CtaBand.astro';
 import LeadForm from '@/components/site/LeadForm.jsx';
 import Car3DViewer from '@/components/hero/Car3DViewer.jsx';
 import FleetCollection from '@/components/fleet/FleetCollection.astro';
-import { Phone } from 'lucide-react';
-import WhatsAppIcon from '@/components/site/WhatsAppIcon.astro';
-import { business, telHref, whatsappWith } from '@/data/business';
+import QuoteDialog from '@/components/site/QuoteDialog.astro';
+import { Phone, Tag } from 'lucide-react';
+import { business, telHref } from '@/data/business';
 import { cars } from '@/data/cars';
 import { rentalTerms, deliveryEachWaySummary, discountSummary } from '@/data/rental-terms';
-// Derived so every WhatsApp link says which page it was tapped from without
-// a path being threaded through each route by hand.
-const waPage = Astro.url.pathname.replace(/(.)\/$/, '$1');
 
 const SITE = 'https://www.lussarocollection.com';
 const usd = (n) => `$${n.toLocaleString('en-US')}`;
@@ -35,9 +32,6 @@ const fleetSchema = {
   })),
 };
 
-const heroWa = whatsappWith(
-  "Hi, I'd like to book a car with Lussaro Collection. Which dates do you have open?"
-, { page: waPage });
 ---
 <Layout
   title="Luxury & Exotic Car Rental Miami | Lussaro Collection"
@@ -65,6 +59,23 @@ const heroWa = whatsappWith(
       <video
         id="hero-video"
         class="absolute inset-0 w-full h-full object-cover brightness-[0.8] md:brightness-[0.95] z-10 opacity-0 transition-opacity duration-500"
+        muted
+        loop
+        playsinline
+        preload="none"
+        aria-hidden="true"
+        tabindex="-1"
+      ></video>
+      {/* HD upgrade layer (23 Nov 2026). The light file above stays the first
+          video anyone sees; this one loads the same clip at far lower
+          compression only after that is playing and the browser is idle, then
+          crossfades in at the same moment of the clip. A second element is
+          deliberate here: swapping .src on the playing element reloads it and
+          blanks it — the flicker this hero already fought once. Skipped on
+          Save-Data and slow connections. */}
+      <video
+        id="hero-video-hd"
+        class="absolute inset-0 w-full h-full object-cover brightness-[0.8] md:brightness-[0.95] z-10 opacity-0 transition-opacity duration-700"
         muted
         loop
         playsinline
@@ -101,9 +112,43 @@ const heroWa = whatsappWith(
             // went transparent again — showing the photo a second time — before
             // the first video frame. Invisible until frames are actually
             // rendering means one transition, and a stall just keeps the photo.
-            v.addEventListener('playing', () => { v.style.opacity = '1'; }, { once: true });
+            v.addEventListener('playing', () => {
+              v.style.opacity = '1';
+              upgrade(v, isPhone);
+            }, { once: true });
             v.src = isPhone ? '/hero/hero-mobile.mp4' : '/hero/hero-desktop.mp4';
             v.play().catch((e) => { console.warn('hero autoplay blocked:', e.name); });
+          };
+
+          // HD upgrade. Starts only once the light video is on screen, then
+          // waits for idle plus two seconds, so it never competes with the
+          // first paint, the light video, or anything Lighthouse measures.
+          const upgrade = (v, isPhone) => {
+            const hd = document.getElementById('hero-video-hd');
+            if (!hd || hd.dataset.ready) return;
+            const c = navigator.connection;
+            if (c && (c.saveData || /(^|-)(2g|3g)$/.test(c.effectiveType || ''))) return;
+            hd.dataset.ready = '1';
+            const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 1));
+            setTimeout(() => idle(() => {
+              hd.muted = true;
+              hd.preload = 'auto';
+              // Fully buffered first, so the HD layer never stalls on screen.
+              hd.addEventListener('canplaythrough', () => {
+                const d = hd.duration || v.duration;
+                // Seek slightly ahead of the light video to cover the seek
+                // itself; the 700ms crossfade hides the rest.
+                hd.currentTime = d ? (v.currentTime + 0.25) % d : v.currentTime;
+                hd.addEventListener('playing', () => {
+                  hd.style.opacity = '1';
+                  // Once the fade is done the light copy is hidden underneath;
+                  // stop it so the phone is not decoding two videos.
+                  setTimeout(() => { v.pause(); v.removeAttribute('src'); v.load(); }, 800);
+                }, { once: true });
+                hd.play().catch(() => {});
+              }, { once: true });
+              hd.src = isPhone ? '/hero/hero-mobile-hd.mp4' : '/hero/hero-desktop-hd.mp4';
+            }, { timeout: 4000 }), 2000);
           };
           // Deferred past load. Attaching the source at parse time put a
           // 2.4 MB download in direct competition with the LCP image, which on
@@ -178,17 +223,18 @@ const heroWa = whatsappWith(
             x. The -0.035em pull on the headline lines the glyphs up rather than
             the boxes, which is what the eye actually measures. */}
         <h1 class="font-display text-5xl font-bold leading-[1.02] tracking-tight text-white [text-shadow:0_2px_24px_rgba(0,0,0,0.5)] md:whitespace-nowrap md:text-[clamp(2rem,5.4vw,5.25rem)] md:-ml-[0.035em]">
-          Drive the <span class="text-[#ff1516]">Extraordinary</span>
+          Drive the Extraordinary
         </h1>
         {/* White, not red — this line sits over a photograph, and small red
             letterforms at 11px against mid-tone sky were unreadable even with a
             shadow. White is the logo's other colour, so the hero still reads as
-            brand; the red is carried by "Extraordinary" and the CTA beneath.
+            brand; the red is carried by the Get a Quote button beneath. (The
+            headline is all white since 23 Nov 2026, at the owner's request.)
 
             Letter-spacing adds a trailing space after the final character, so
             the text block is wider than the glyphs — harmless on a centred
             line, visible when it has to align to a left edge. */}
-        <p class="text-white/90 [text-shadow:0_2px_10px_rgba(0,0,0,0.8)] tracking-[0.35em] uppercase text-[10px] md:text-[11px] font-semibold mb-3.5 md:mb-0 md:mt-4">Exotic Car Rental Miami · From $399</p>
+        <p class="text-white/90 [text-shadow:0_2px_10px_rgba(0,0,0,0.8)] tracking-[0.35em] uppercase text-[10px] md:text-[11px] font-semibold mb-3.5 md:mb-0 md:mt-4">Exotic Car Rental in Miami, FL<span class="hidden sm:inline"> · </span><br class="sm:hidden" />From $399</p>
         {/* On mobile this stays under the headline. On desktop it moves to the
             foot with the buttons — layout B keeps a clear band through the
             middle of frame so the car is never behind type. */}
@@ -200,16 +246,9 @@ const heroWa = whatsappWith(
       <!-- CTAs + rating — bottom on mobile and desktop -->
       <div class="mt-auto">
         {/* Two contact CTAs, structurally identical — same pill, padding,
-            weight, icon gap, ring, shadow and pulse — so they read as one pair
-            and differ only by channel colour. Browsing the fleet keeps its
-            white treatment but moves beneath them.
-
-            #128f42 is not WhatsApp's #25D366: white type needs 4.5:1 and the
-            brand green gives 1.9:1, so the fill is darkened until the label
-            holds 4.17:1. That is deliberately pitched just above the 3.91:1
-            this file's palette note accepts for white-on-red — no reason to
-            hold this button to a stricter bar than the one beside it. The
-            halo stays true #25D366, since a glow carries no text. */}
+            weight, icon gap and ring — so they read as one pair: Get a Quote in red,
+            Call in white. Browsing the fleet keeps its white treatment
+            but moves beneath them. */}
         {/* Side by side from the smallest screen up, so the hero video is not
             buried under a stack of three full-width pills. The labels shorten
             below sm because "Call (645) 248-7305" cannot fit in half of a 390px
@@ -222,11 +261,17 @@ const heroWa = whatsappWith(
           Lamborghini<span class="text-white/35 px-2">·</span>Rolls-Royce<span class="text-white/35 px-2">·</span>Ferrari<span class="text-white/35 px-2">·</span>Mercedes
         </p>
         <div class="flex flex-row gap-2.5 sm:gap-3 max-w-sm md:max-w-md mx-auto md:mx-0">
-          <a href={heroWa} data-cta="hero" target="_blank" rel="noopener noreferrer" class="wa-pop flex-1 min-h-[48px] inline-flex items-center justify-center gap-2 bg-[#128f42] text-white px-3 py-3 sm:px-5 sm:py-3 rounded-full font-semibold text-sm sm:text-sm whitespace-nowrap shadow-[0_8px_24px_rgba(37,211,102,0.5)] ring-1 ring-white/15 hover:bg-[#0f7536] transition-colors">
-            <WhatsAppIcon class="w-4 h-4 shrink-0" />
-            WhatsApp
-          </a>
-          <a href={telHref} data-cta="hero" data-call-inline class="call-pop flex-1 min-h-[48px] order-first sm:order-none inline-flex items-center justify-center gap-2 bg-[#e00e10] text-white px-3 py-3 sm:px-5 sm:py-3 rounded-full font-semibold text-sm sm:text-sm whitespace-nowrap shadow-[0_8px_24px_rgba(255,21,22,0.45)] ring-1 ring-white/15 hover:bg-[#c40c0e] transition-colors">
+          {/* Get a Quote replaced WhatsApp here (23 Nov 2026): a WhatsApp tap
+              arrives with no name, car or dates and never reaches the Rental
+              Dashboard; this opens QuoteDialog, which creates a dashboard lead.
+              Colours swapped at the owner's request (23 Nov 2026): Quote is the
+              red pill with the pulse, Call is white with ink-red #e00e10 type —
+              the red that clears 4.5:1 on white. */}
+          <button type="button" data-quote-open aria-haspopup="dialog" aria-controls="quote-dialog" class="call-pop flex-1 min-h-[48px] inline-flex items-center justify-center gap-2 bg-[#e00e10] text-white px-3 py-3 sm:px-5 sm:py-3 rounded-full font-semibold text-sm sm:text-sm whitespace-nowrap shadow-[0_8px_24px_rgba(255,21,22,0.45)] ring-1 ring-white/15 hover:bg-[#c40c0e] transition-colors">
+            <Tag className="w-4 h-4 shrink-0" />
+            Get a Quote
+          </button>
+          <a href={telHref} data-cta="hero" data-call-inline class="flex-1 min-h-[48px] order-first sm:order-none inline-flex items-center justify-center gap-2 bg-white text-[#e00e10] px-3 py-3 sm:px-5 sm:py-3 rounded-full font-semibold text-sm sm:text-sm whitespace-nowrap shadow-[0_8px_24px_rgba(0,0,0,0.35)] ring-1 ring-white/15 hover:bg-white/90 transition-colors">
             <Phone className="w-4 h-4 shrink-0" />
             Call
           </a>
@@ -344,6 +389,7 @@ const heroWa = whatsappWith(
   <CtaBand title={'Your Miami arrival,<br><span class="text-[#ff1516]">unforgettable.</span>'} />
 
   <StickyMobileCta />
+  <QuoteDialog source="home_hero" />
   {/* client:visible, not client:idle. This bundle is 688 KB — three.js plus the
       viewer — and it sits at the very bottom of the page, yet client:idle
       fetched and executed it the moment the browser went idle, whether anyone

@@ -3,3 +3,6 @@
 lussaro-bookings/
 .vercel
 .env*
+
+# Original camera files for the hero video encodes. Large; never committed.
+video-sources/
