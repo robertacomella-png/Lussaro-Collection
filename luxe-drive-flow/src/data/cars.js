@@ -1,5 +1,24 @@
 import { fleet } from "./fleet";
 import { rentalTerms } from "./rental-terms";
+import DEALS from "./three-day-deals.json";
+
+// 3-Day Deals (owner-typed, via Keystatic → three-day-deals.json). A deal is
+// the per-day price for a rental of 3+ days. It is folded into the car's
+// discount ladder rather than bolted on beside it, so every place that already
+// prices a multi-day rental — the booking calculator, the car-page estimate,
+// /pricing, the funnels and the car-page FAQ — charges exactly the typed
+// figure with no second code path. The first tier's pct becomes whatever
+// percentage lands on that price (it may be fractional; display rounds it).
+// Longer tiers never cost more per day than the deal: they keep their own
+// discount or the deal's, whichever is deeper, rounded up to a whole percent.
+// A deal at or above the 1-day price is ignored.
+const withDeal = (price, tiers, deal) => {
+  if (!(deal > 0 && deal < price)) return null;
+  const dealPct = (1 - deal / price) * 100;
+  return tiers.map((t, i) =>
+    i === 0 ? { ...t, pct: dealPct } : { ...t, pct: Math.max(t.pct, Math.ceil(dealPct)) },
+  );
+};
 
 export const slugify = (s) =>
   s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
@@ -42,6 +61,12 @@ export const cars = fleet.map((c) => {
     usdz: m.usdz || null,
     ...(m.poster ? { poster: m.poster } : {}),
     ...(DISCOUNTS[slug] ? { discountTiers: DISCOUNTS[slug] } : {}),
+    ...(withDeal(c.price, DISCOUNTS[slug] || rentalTerms.discountTiers, DEALS[slug])
+      ? {
+          discountTiers: withDeal(c.price, DISCOUNTS[slug] || rentalTerms.discountTiers, DEALS[slug]),
+          threeDayDeal: DEALS[slug],
+        }
+      : {}),
     // Per-car terms. fleet.js may set a numeric `deposit` or `minimumAge` for a
     // car that differs from the fleet (the Huracan STO does); everything else
     // inherits rental-terms.js. Always present, so a page can read

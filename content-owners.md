@@ -90,7 +90,8 @@ When an agency asks how edits are tracked, this is the answer.
 | src/data/google-rating.js | Lussaro | review | Google Business Profile rating and review count, read by hand from the listing (4.8 from 24 on 15 Nov 2026). Shown rounded down to the nearest ten ("20+") on the owner's instruction. Update when the listing changes; never derive it from reviews.js. |
 | src/data/image-alt.js | shared | open | Accessibility text. |
 | src/data/booking-steps.js | shared | open | |
-| src/data/cars.js | generated | open | Derived from fleet.js. |
+| src/data/cars.js | generated | open | Derived from fleet.js and three-day-deals.json. |
+| src/data/three-day-deals.json | Lussaro | review | Per-car 3+ day per-day price, typed in Keystatic (3-Day Deals). Empty = standard multi-day discount. Folded into each car's discount ladder in cars.js, so it reaches the car page, booking estimate and /pricing. Added 23 Nov 2026. |
 | keywords.csv | SEO | open | Working file. Edit through `npm run keywords`. |
 | used-keywords.md | SEO | review | The retirement ledger. Append when a primary is used; never delete a row. |
 

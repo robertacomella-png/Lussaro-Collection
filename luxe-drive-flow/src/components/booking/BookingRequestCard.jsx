@@ -89,7 +89,7 @@ export default function BookingRequestCard({
           : "Not specified";
 
     const detail = [
-      dated && `Estimate ${money(total)}${discountPct ? ` (${discountPct}% ${days}-day rate applied)` : ""}`,
+      dated && `Estimate ${money(total)}${discountPct ? ` (${Math.round(discountPct)}% ${days}-day rate applied)` : ""}`,
       mileTier && `Mileage: ${mileTier.milesPerDay} mi/day at ${money(mileTier.pricePerDay)}/day`,
     ]
       .filter(Boolean)
@@ -246,7 +246,7 @@ export default function BookingRequestCard({
         <div className="rounded-xl border border-white/10 bg-white/[0.04] px-3.5 py-3 mb-4 flex items-baseline justify-between gap-3">
           <span className="text-white/60 text-xs">
             {days} {days === 1 ? "day" : "days"}
-            {discountPct > 0 && <span className="text-[#ff1516]"> · {discountPct}% off</span>}
+            {discountPct > 0 && <span className="text-[#ff1516]"> · {Math.round(discountPct)}% off</span>}
           </span>
           <span className="text-white font-semibold">
             {discountPct > 0 && (

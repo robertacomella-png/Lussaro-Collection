@@ -70,7 +70,7 @@ const termRows = [
   ['Collection', collection.summary],
   ['Minimum age', `${minimumAge}, with a valid driver's licence.`],
   ['Insurance', insurance.summary],
-  ['Multi-day rates', `${discountSummary}.`],
+  ['Multi-day rates', `${discountSummary[0].toUpperCase()}${discountSummary.slice(1)}.`],
   ['Cancellation', cancellation.summary],
 ];
 

@@ -16,22 +16,58 @@
 // which turns each save into a commit attributed to the person who made it —
 // the ownership trail content-owners.md depends on.
 //
-// Only `meta` is exposed. fleet.js is deliberately absent: its prices drive
+// `meta` and `threeDayDeals` are exposed. fleet.js is deliberately absent: its prices drive
 // schema Offer values, priceRange and nine copy locations, so it stays behind
 // the owner's own tooling rather than a form. reviews.js, business.js and
 // rental-terms.js are `locked` in content-owners.md for the same reason.
 
 import { config, fields, singleton } from '@keystatic/core';
+import { fleet } from './src/data/fleet.js';
+
+// 3-Day Deals (added 23 Nov 2026, owner's request). One box per car: the
+// per-day price for a rental of 3 days or more. Keyed by the car's URL slug —
+// the same slugs src/data/cars.js builds — so this list must name every car.
+// Empty means "no deal": the car keeps the standard multi-day discount.
+const DEAL_CARS = [
+  ['lamborghini-urus', 'Lamborghini Urus'],
+  ['mercedes-maybach-gls-600', 'GLS 600 Maybach'],
+  ['mercedes-s580', 'S580'],
+  ['huracan-sto', 'Huracan STO'],
+  ['rolls-royce-cullinan', 'Cullinan'],
+  ['huracan-evo-spyder', 'Huracan EVO Spyder'],
+  ['mercedes-amg-g63', 'G63'],
+  ['sf90', 'SF90'],
+  ['huracan-evo', 'Huracan EVO'],
+  ['mercedes-maybach-s580', 'S580 Maybach'],
+  ['porsche-911-turbo-s', '911 Turbo S Cabriolet'],
+];
+const dayRate = (name) => fleet.find((c) => c.name === name)?.price;
 
 export default config({
   storage: { kind: 'local' },
 
   ui: {
     brand: { name: 'Lussaro Collection' },
-    navigation: { SEO: ['meta'] },
+    navigation: { Pricing: ['threeDayDeals'], SEO: ['meta'] },
   },
 
   singletons: {
+    threeDayDeals: singleton({
+      label: '3-Day Deals',
+      path: 'src/data/three-day-deals',
+      format: { data: 'json' },
+      schema: Object.fromEntries(
+        DEAL_CARS.map(([slug, name]) => [
+          slug,
+          fields.integer({
+            label: `${name} — 3+ days, per day`,
+            description: `1-day price is $${(dayRate(name) ?? 0).toLocaleString('en-US')}. Type the per-day price for 3 days or more, in whole dollars. It must be lower than the 1-day price. Leave empty for the standard multi-day discount.`,
+            validation: { min: 1, max: Math.max(1, (dayRate(name) ?? 100000) - 1) },
+          }),
+        ]),
+      ),
+    }),
+
     meta: singleton({
       label: 'Titles & meta descriptions',
       path: 'src/data/meta',

@@ -1,5 +1,5 @@
 ---
-import { depositException } from '@/data/cars';
+import { depositException, cars } from '@/data/cars';
 import Layout from '@/layouts/Layout.astro';
 import Nav from '@/components/site/Nav.astro';
 import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
@@ -26,6 +26,10 @@ const wa = whatsappWith(waMsg, { page: waPage });
 const { deposit, mileage, cancellation, discountTiers, insurance, minimumAge } = rentalTerms;
 const usd = (n) => `$${n.toLocaleString('en-US')}`;
 const named = (c) => (c.name.startsWith(c.make) ? c.name : `${c.make} ${c.name}`);
+// Per-car ladder from cars.js, which folds in the owner's 3-Day Deals and the
+// SF90's own tiers. fleet.js alone has neither, so reading c.discountTiers off a
+// fleet entry quoted the standard 15% for every car (23 Nov 2026).
+const tiersFor = (c) => cars.find((x) => x.id === c.id)?.discountTiers;
 
 const cheapest = fleet.reduce((a, c) => (c.price < a.price ? c : a));
 const longestTier = discountTiers[discountTiers.length - 1];
@@ -124,8 +128,8 @@ const faqSchema = {
               <tr>
                 <th class="px-4 py-3 font-medium">Vehicle</th>
                 <th class="px-4 py-3 font-medium">1–{discountTiers[0].days - 1} days</th>
-                {discountTiers.map((t) => (
-                  <th class="px-4 py-3 font-medium">{t.days}+ days <span class="text-[#ff1516]">−{t.pct}%</span></th>
+                {discountTiers.map((t, i) => (
+                  <th class="px-4 py-3 font-medium">{t.days}+ days {i === 0 ? <span class="text-[#ff1516]">deal</span> : <span class="text-[#ff1516]">−{t.pct}%</span>}</th>
                 ))}
                 <th class="px-4 py-3 font-medium">Miles/day</th>
                 <th class="px-4 py-3 font-medium">Deposit</th>
@@ -137,7 +141,7 @@ const faqSchema = {
                   <td class="px-4 py-3 whitespace-nowrap text-white">{named(c)}</td>
                   <td class="px-4 py-3">{usd(c.price)}</td>
                   {discountTiers.map((t) => (
-                    <td class="px-4 py-3">{usd(rateForDays(c.price, t.days, c.discountTiers).perDay)}</td>
+                    <td class="px-4 py-3">{usd(rateForDays(c.price, t.days, tiersFor(c)).perDay)}</td>
                   ))}
                   <td class="px-4 py-3">{c.miles}</td>
                   <td class="px-4 py-3">{c.deposit ? usd(c.deposit) : deposit.display}</td>

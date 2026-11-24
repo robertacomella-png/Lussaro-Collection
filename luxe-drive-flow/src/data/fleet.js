@@ -12,11 +12,9 @@ export const fleet = [
     // One rate, one allowance (owner's call, Oct 2026). The reduced 50-mile
     // tier is withdrawn, so there is no `mileageUpgrade` and `miles` is 100 —
     // those two always move together, or the page quotes a rate against an
-    // allowance it does not buy. The $100 saving rides on wasPrice, which is
-    // what draws the strike-through and the OFF badge; no offerLabel is needed
-    // now that a real discount is on the card.
-    price: 999,
-    wasPrice: 1099,
+    // allowance it does not buy. No sale price: the
+    // $999 rate is permanent (owner, 23 Nov 2026), so no strike-through or OFF badge.
+    price: 995,
     power: 641,
     miles: 100,
     // Owner-confirmed per car. `seatsNote` is the layout qualifier where the
@@ -44,13 +42,12 @@ export const fleet = [
     dashboardId: "71d29a72-b904-4318-80e5-0c133d2cb665",
     make: "Mercedes-Benz",
     year: 2023,
-    price: 899,
+    price: 895,
     // Daily policy we can sell a renter who has no qualifying coverage of their
     // own. Owner's figures, 20 Oct 2026, for the Maybachs specifically. The
     // band moves with driver age, which is why it is a range and never a single
     // number in copy. references/stats.md records the wider fleet range.
     insurancePerDay: { from: 199, to: 399 },
-    wasPrice: 999,
     power: 550,
     miles: 100,
     seats: 4,
@@ -78,8 +75,7 @@ export const fleet = [
     dashboardId: "",
     make: "Mercedes-Benz",
     year: 2023,
-    price: 399,
-    wasPrice: 499,
+    price: 445,
     power: 496,
     miles: 100,
     seats: 5,
@@ -151,8 +147,7 @@ export const fleet = [
     dashboardId: "",
     make: "Rolls-Royce",
     year: 2023,
-    price: 1299,
-    wasPrice: 1499,
+    price: 1295,
     power: 563,
     miles: 100,
     seats: 5,
@@ -188,8 +183,7 @@ export const fleet = [
     dashboardId: "",
     make: "Lamborghini",
     year: 2023,
-    price: 1299,
-    wasPrice: 1499,
+    price: 1295,
     // The rear-wheel-drive Spyder, same 602 hp V10 as our coupe. The AWD EVO
     // makes 631 hp and 3.1s — do not mix the two sets of figures. Dropping the
     // roof costs about two tenths against the coupe's 3.3s.
@@ -217,8 +211,7 @@ export const fleet = [
     dashboardId: "",
     make: "Mercedes-Benz",
     year: 2023,
-    price: 799,
-    wasPrice: 899,
+    price: 795,
     power: 577,
     miles: 100,
     seats: 5,
@@ -246,7 +239,7 @@ export const fleet = [
     dashboardId: "",
     make: "Ferrari",
     year: 2023,
-    price: 2499,
+    price: 2495,
     power: 986,
     miles: 100,
     seats: 2,
@@ -274,7 +267,7 @@ export const fleet = [
     dashboardId: "",
     make: "Lamborghini",
     year: 2023,
-    price: 1199,
+    price: 1195,
     // Owner-confirmed as the rear-wheel-drive EVO, not the AWD car: 602 hp and
     // 3.3s to 60. The 650 hp / 3.2s previously listed here matched no Huracán
     // EVO variant Lamborghini ever sold.
@@ -307,13 +300,12 @@ export const fleet = [
     dashboardId: "",
     make: "Mercedes-Benz",
     year: 2023,
-    price: 899,
+    price: 895,
     // Daily policy we can sell a renter who has no qualifying coverage of their
     // own. Owner's figures, 20 Oct 2026, for the Maybachs specifically. The
     // band moves with driver age, which is why it is a range and never a single
     // number in copy. references/stats.md records the wider fleet range.
     insurancePerDay: { from: 199, to: 399 },
-    wasPrice: 1099,
     power: 496,
     miles: 100,
     // Four, not five. The rear is a pair of executive seats either side of a

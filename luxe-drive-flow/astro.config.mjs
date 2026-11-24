@@ -64,6 +64,15 @@ export default defineConfig({
     // resolves at build time. Vite's dependency pre-bundler runs esbuild before
     // that resolution exists, so it fails on the import. Excluding the packages
     // from pre-bundling leaves them to Astro, which can resolve it.
-    optimizeDeps: { exclude: ['@keystatic/astro', '@keystatic/core'] },
+    //
+    // Only @keystatic/astro carries that import (dist/keystatic-astro-api.js).
+    // Excluding @keystatic/core as well skipped the CommonJS → ESM conversion
+    // of everything its admin UI pulls in, so /keystatic rendered a blank page
+    // ("lodash/debounce … does not provide an export named 'default'", then
+    // the same for `direction`). Fixed 23 Nov 2026: core is pre-bundled.
+    optimizeDeps: {
+      exclude: ['@keystatic/astro'],
+      include: ['@keystatic/core', '@keystatic/core/ui'],
+    },
   },
 });

@@ -42,13 +42,16 @@ import {
 const bySlug = (s) => cars.find((c) => c.slug === s);
 const urus = bySlug('lamborghini-urus');
 const huracan = bySlug('huracan-evo');
+const s580 = bySlug('mercedes-s580');
 
 const { deposit, mileage, minimumAge, cancellation, insurance } = rentalTerms;
 const perDay = mileage.includedPerDay;
 const usd = (n) => `$${n.toLocaleString('en-US')}`;
 
 // Worked example: three days in the Urus, delivered and collected in Miami.
-const ex = rateForDays(urus.price, 3);
+// The car's own ladder, which carries the owner's 3-Day Deal (approved edit,
+// 23 Nov 2026) — the fleet default would quote a rate the car does not charge.
+const ex = rateForDays(urus.price, 3, urus.discountTiers);
 const exCar = ex.perDay * 3;
 const exDelivery = rentalTerms.delivery[0].fee * 2;
 const exSubtotal = exCar + exDelivery;
@@ -415,7 +418,7 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
         <p>The Urus, Friday to Monday, delivered and collected in Miami:</p>
 
         <ul>
-          <li>{usd(urus.price)} a day, less the {ex.pct}% three-day discount, is {usd(ex.perDay)} a day — <strong>{usd(exCar)}</strong></li>
+          <li>{usd(urus.price)} a day, or {usd(ex.perDay)} a day on the three-day rate — <strong>{usd(exCar)}</strong></li>
           <li>Delivery and collection — <strong>{usd(exDelivery)}</strong></li>
           <li><strong>{usd(exSubtotal)}</strong> if you carry your own qualifying insurance</li>
           <li>Plus a {deposit.display} deposit, returned after inspection</li>
@@ -485,7 +488,7 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
           {' '}<a href="/rolls-royce-rental-miami">Rolls-Royce Cullinan</a> does that job better than
           either Lamborghini, and it does it while carrying four people comfortably. And if you simply
           want something quick and quiet for a work trip, the Mercedes-Benz S580 on our
-          {' '}<a href="/pricing">rate card</a> starts at {usd(399)} a day.
+          {' '}<a href="/pricing">rate card</a> starts at {usd(s580.price)} a day.
         </p>
 
         <p>

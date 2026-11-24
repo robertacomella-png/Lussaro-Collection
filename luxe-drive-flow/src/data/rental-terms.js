@@ -132,10 +132,20 @@ export const termsSummary = [
   `${rentalTerms.mileage.includedPerDay} miles per day included.`,
 ].join(' ');
 
-/** "15% off at 3+ days, 20% at 5+, 25% at 7+" */
-export const discountSummary = rentalTerms.discountTiers
-  .map((t, i) => (i === 0 ? `${t.pct}% off at ${t.days}+ days` : `${t.pct}% at ${t.days}+`))
-  .join(', ');
+/**
+ * "every car has its own 3-day rate, then 20% off at 5+ days and 25% at 7+"
+ *
+ * Reworded 23 Nov 2026 (owner-approved edit to this locked file). Each car now
+ * carries a 3-Day Deal typed in Keystatic (three-day-deals.json), so the 3+ day
+ * saving differs car to car and the old "15% off at 3+ days" was no longer
+ * true. The first tier's pct still applies to any car whose deal box is empty.
+ */
+export const discountSummary = (() => {
+  const [first, ...rest] = rentalTerms.discountTiers;
+  const later = rest.map((t, i) => (i === 0 ? `${t.pct}% off at ${t.days}+ days` : `${t.pct}% at ${t.days}+`));
+  const tail = later.length > 1 ? `${later.slice(0, -1).join(', ')} and ${later.at(-1)}` : later.join('');
+  return `every car has its own ${first.days}-day rate${tail ? `, then ${tail}` : ''}`;
+})();
 
 /** Nightly rate for a given car at a given length of stay. */
 export const rateForDays = (price, days, tiers = rentalTerms.discountTiers) => {

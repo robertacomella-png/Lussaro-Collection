@@ -130,7 +130,7 @@ export default function VehicleBookingCard({
       ? `${fmtShort(start)}${end ? ` → ${fmtShort(end)}` : ""} · ${days} ${days === 1 ? "day" : "days"}`
       : "Not specified";
     const detail = start
-      ? ` — Estimate ${money(total)} incl. ${Math.round(taxRate * 100)}% taxes & fees${discountPct ? ` (${discountPct}% ${days}-day rate applied)` : ""}`
+      ? ` — Estimate ${money(total)} incl. ${Math.round(taxRate * 100)}% taxes & fees${discountPct ? ` (${Math.round(discountPct)}% ${days}-day rate applied)` : ""}`
       : "";
 
     try {
@@ -251,7 +251,7 @@ export default function VehicleBookingCard({
           </div>
           {discountPct > 0 && (
             <div className="flex justify-between gap-3">
-              <dt className="text-white/70">{days}-day rate, {discountPct}% off</dt>
+              <dt className="text-white/70">{days}-day rate, {Math.round(discountPct)}% off</dt>
               <dd className="text-[#ff1516] tabular-nums">−{money(discount)}</dd>
             </div>
           )}

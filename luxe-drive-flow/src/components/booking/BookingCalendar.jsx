@@ -202,7 +202,7 @@ export default function BookingCalendar({ pricePerDay = 0, carName = "", vehicle
   const saved = subtotal - total;
   const datesText = start ? `${fmt(start)}${end ? ` → ${fmt(end)}` : ""} · ${billDays} ${billDays === 1 ? "day" : "days"}` : "";
 
-  const dealLine = discountPct > 0 ? ` with the ${discountPct}% ${billDays}-day discount` : "";
+  const dealLine = discountPct > 0 ? ` with the ${Math.round(discountPct)}% ${billDays}-day discount` : "";
   const msg = !start
     ? ""
     : end
@@ -332,12 +332,12 @@ export default function BookingCalendar({ pricePerDay = 0, carName = "", vehicle
             const active = discountPct === t.pct;
             return (
               <div
-                key={t.pct}
+                key={t.days}
                 className={`rounded-xl border px-2 py-2.5 text-center transition ${active ? "border-[#ff1516] bg-[#ff1516]/10" : "border-white/10 bg-white/[0.02]"}`}
               >
                 {/* text-base on phones: uppercase "20% OFF" paints ~81px, which
                     overruns the 77px chip on a 375px screen at text-lg. */}
-                <p className={`font-display text-base sm:text-lg font-bold leading-none whitespace-nowrap uppercase ${active ? "text-[#ff1516]" : "text-white/80"}`}>{t.pct}% off</p>
+                <p className={`font-display text-base sm:text-lg font-bold leading-none whitespace-nowrap uppercase ${active ? "text-[#ff1516]" : "text-white/80"}`}>{Math.round(t.pct)}% off</p>
                 <p className="text-[10px] text-white/50 mt-1">{t.days}+ days</p>
               </div>
             );
@@ -372,7 +372,7 @@ export default function BookingCalendar({ pricePerDay = 0, carName = "", vehicle
               </span>
             </div>
             {discountPct > 0 && (
-              <p className="text-emerald-300 text-xs mt-2">You save ${saved.toLocaleString()} with the {discountPct}% {billDays}-day rate.</p>
+              <p className="text-emerald-300 text-xs mt-2">You save ${saved.toLocaleString()} with the {Math.round(discountPct)}% {billDays}-day rate.</p>
             )}
           </div>
         ) : (
