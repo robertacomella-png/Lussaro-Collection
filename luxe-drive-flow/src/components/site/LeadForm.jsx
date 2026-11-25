@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { fleet } from "@/data/fleet";
+import { withAttribution } from "@/lib/attribution";
 import { trackLead } from "@/lib/track";
 
 export default function LeadForm({ defaultVehicle = "" }) {
@@ -11,7 +12,10 @@ export default function LeadForm({ defaultVehicle = "" }) {
     setStatus("sending");
     setError("");
     const form = e.currentTarget;
-    const payload = { ...Object.fromEntries(new FormData(form).entries()), source: "lead_form" };
+    const payload = withAttribution(
+      { ...Object.fromEntries(new FormData(form).entries()), source: "lead_form" },
+      "LeadForm",
+    );
 
     try {
       const res = await fetch("/api/lead", {
@@ -21,7 +25,12 @@ export default function LeadForm({ defaultVehicle = "" }) {
       });
       const data = await res.json();
       if (!res.ok || !data.ok) throw new Error(data.error || "Something went wrong.");
-      trackLead({ vehicle: payload.vehicle || "unspecified" });
+      trackLead({
+        vehicle: payload.vehicle || "unspecified",
+        lead_id: data.lead_id,
+        email: payload.email,
+        phone: payload.phone,
+      });
       setStatus("ok");
       form.reset();
     } catch (err) {

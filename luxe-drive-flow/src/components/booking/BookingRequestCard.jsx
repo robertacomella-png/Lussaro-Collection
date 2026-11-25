@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { rentalTerms } from "@/data/rental-terms";
+import { withAttribution } from "@/lib/attribution";
 import { trackLead } from "@/lib/track";
 
 const DAY_MS = 86400000;
@@ -99,7 +100,7 @@ export default function BookingRequestCard({
       const res = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
+        body: JSON.stringify(withAttribution({
           name: name.trim(),
           phone: phone.trim(),
           email: email.trim(),
@@ -109,13 +110,18 @@ export default function BookingRequestCard({
           dates: datesText,
           message: `Website booking request${detail ? ` — ${detail}` : ""}`,
           source: "ad_landing_card",
-        }),
+        }, "BookingRequestCard")),
       });
       const data = await res.json();
       if (!res.ok || !data.ok) throw new Error(data.error || "Something went wrong.");
       // Fires lead_submit into the dataLayer and lead_created to the OpenAI
       // Pixel, so this card reports the same conversion as the contact form.
-      trackLead({ vehicle: carName });
+      trackLead({
+        vehicle: carName,
+        lead_id: data.lead_id,
+        email: email.trim(),
+        phone: phone.trim(),
+      });
       setStatus("ok");
     } catch (err) {
       setError(err.message || "Could not send. Please try WhatsApp.");

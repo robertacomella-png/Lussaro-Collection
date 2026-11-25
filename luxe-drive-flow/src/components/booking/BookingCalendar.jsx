@@ -3,6 +3,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { business } from "@/data/business";
 import { rentalTerms } from "@/data/rental-terms";
+import { withAttribution } from "@/lib/attribution";
+import { trackLead } from "@/lib/track";
 
 const DAY_MS = 86400000;
 const WEEKDAYS = ["S", "M", "T", "W", "T", "F", "S"];
@@ -154,7 +156,7 @@ export default function BookingCalendar({ pricePerDay = 0, carName = "", vehicle
       fetch(`${DASHBOARD}/api/lead`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
+        body: JSON.stringify(withAttribution({
           id: leadId,
           name: fullName,
           email,
@@ -163,7 +165,7 @@ export default function BookingCalendar({ pricePerDay = 0, carName = "", vehicle
           start_date: start ? iso(start) : null,
           end_date: end ? iso(end) : start ? iso(start) : null,
           note: carName ? `Car: ${carName}` : "",
-        }),
+        }, "BookingCalendar")),
       }).catch(() => {});
     }, 700);
     return () => clearTimeout(t);
@@ -249,16 +251,24 @@ export default function BookingCalendar({ pricePerDay = 0, carName = "", vehicle
       fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
+        body: JSON.stringify(withAttribution({
+          id: leadId,
           name: fullName,
           phone: contactPhone.trim(),
           email: email.trim(),
           vehicle: carName,
           dates: summary,
           message: `Website booking request${licenseNumber.trim() ? ` · License ${licenseNumber.trim()}` : ""}${dob ? ` · DOB ${dob}` : ""}`,
-        }),
+        }, "BookingCalendar")),
       }).catch(() => {});
       setSubmitted(true);
+      trackLead({
+        vehicle: carName,
+        lead_source: "booking_calendar",
+        lead_id: leadId,
+        email: email.trim(),
+        phone: contactPhone.trim(),
+      });
     } catch (e) {
       setFormError(e.message || "Something went wrong — please try WhatsApp.");
     } finally {

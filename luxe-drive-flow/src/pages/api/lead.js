@@ -1,4 +1,6 @@
 import { Resend } from 'resend';
+import { clientLeadId, dashboardAttribution, resolveLeadId } from '../../lib/attribution.js';
+import { sendMetaLead } from '../../lib/meta-capi.js';
 
 // Server endpoint — runs as a Vercel serverless function (not prerendered).
 //
@@ -21,9 +23,12 @@ import { Resend } from 'resend';
 // rather than a false success that loses the booking.
 export const prerender = false;
 
-const DASHBOARD_LEAD_URL = 'https://rental-dashboard-nu.vercel.app/api/lead';
-const TO = process.env.LEAD_TO_EMAIL || import.meta.env.LEAD_TO_EMAIL || 'robert.a.comella@gmail.com';
-const KEY = process.env.RESEND_API_KEY || import.meta.env.RESEND_API_KEY;
+// Override only for a non-production preview test. Unset, this stays the live CRM.
+const DASHBOARD_LEAD_URL = process.env.DASHBOARD_LEAD_URL || 'https://rental-dashboard-nu.vercel.app/api/lead';
+const serverEnv = import.meta.env || {};
+const TO = process.env.LEAD_TO_EMAIL || serverEnv.LEAD_TO_EMAIL || 'robert.a.comella@gmail.com';
+const KEY = process.env.RESEND_API_KEY || serverEnv.RESEND_API_KEY;
+const SITE = 'https://www.lussarocollection.com';
 
 function json(body, status = 200) {
   return new Response(JSON.stringify(body), {
@@ -35,6 +40,27 @@ function json(body, status = 200) {
 const clean = (v) => (typeof v === 'string' ? v.trim() : '');
 const isoDate = (v) => (/^\d{4}-\d{2}-\d{2}$/.test(clean(v)) ? clean(v) : null);
 
+const CAMPAIGN_BRIEF = ['gclid', 'gbraid', 'wbraid', 'fbclid', 'msclkid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
+
+function touchBrief(touch, label) {
+  if (!touch) return '';
+  const parts = CAMPAIGN_BRIEF.filter((key) => touch[key]).map((key) => `${key}=${touch[key]}`);
+  return parts.length ? `${label}: ${parts.join(', ')}` : '';
+}
+
+function clientAddress(request) {
+  const xff = request.headers.get('x-forwarded-for') || '';
+  const first = xff.split(',')[0].trim();
+  return first || request.headers.get('x-real-ip') || '';
+}
+
+function eventSourceUrl(landing, request) {
+  if (typeof landing === 'string' && landing.startsWith('/')) return `${SITE}${landing}`.slice(0, 2000);
+  const referer = request.headers.get('referer');
+  if (referer) return referer.slice(0, 2000);
+  return `${SITE}/`;
+}
+
 async function toDashboard(lead) {
   try {
     const res = await fetch(DASHBOARD_LEAD_URL, {
@@ -43,14 +69,21 @@ async function toDashboard(lead) {
       body: JSON.stringify(lead),
       signal: AbortSignal.timeout(8000),
     });
+    const text = await res.text().catch(() => '');
     if (!res.ok) {
-      console.error('[lead] dashboard rejected', res.status, await res.text().catch(() => ''));
-      return false;
+      console.error('[lead] dashboard rejected', res.status, text.slice(0, 200));
+      return { ok: false, body: null };
     }
-    return true;
+    let body = {};
+    try {
+      body = text ? JSON.parse(text) : {};
+    } catch {
+      body = {};
+    }
+    return { ok: true, body };
   } catch (err) {
-    console.error('[lead] dashboard unreachable', err);
-    return false;
+    console.error('[lead] dashboard unreachable', err && err.name);
+    return { ok: false, body: null };
   }
 }
 
@@ -116,6 +149,14 @@ export async function POST({ request }) {
     return json({ ok: false, error: 'Please add your email.' }, 400);
   }
 
+  const forwarded = dashboardAttribution(data);
+  const attrLine = forwarded.attribution
+    ? [
+        touchBrief(forwarded.attribution.first_touch, 'First touch'),
+        touchBrief(forwarded.attribution.last_touch, 'Last touch'),
+      ].filter(Boolean).join(' | ')
+    : '';
+
   const lines = [
     `Name: ${name}`,
     `Phone: ${phone}`,
@@ -124,16 +165,22 @@ export async function POST({ request }) {
     dates && `Dates: ${dates}`,
     message && `Message: ${message}`,
     `Source: ${source}`,
+    forwarded.form_placement && `Form: ${forwarded.form_placement}`,
+    attrLine,
   ].filter(Boolean);
 
   // Always in the function log too, so a lead is recoverable for a while
   // even in the worst case.
   console.log('[lead]\n' + lines.join('\n'));
 
-  // Same shape the availability calendar used to send, so the dashboard reads
-  // it exactly as it read those leads.
-  const dashboardOk = await toDashboard({
-    id: crypto.randomUUID(),
+  // Same shape the availability calendar used to send, plus the attribution
+  // snapshot. The live dashboard ignores fields it does not read; once its
+  // lead API stores them, this is the payload it accepts. A client UUID is
+  // reused when the caller already has one (the dormant calendar), so the
+  // two writes update one row.
+  const sentId = clientLeadId(data.id) || crypto.randomUUID();
+  const dashboard = await toDashboard({
+    id: sentId,
     name,
     email,
     phone,
@@ -143,11 +190,41 @@ export async function POST({ request }) {
     note: [vehicle && `Car: ${vehicle}`, dates && `Dates: ${dates}`, message, `Source: ${source}`]
       .filter(Boolean)
       .join(' · '),
+    ...forwarded,
   });
   const emailOk = await toEmail({ name, email, vehicle, lines });
 
-  if (!dashboardOk && !emailOk) {
+  if (!dashboard.ok && !emailOk) {
     return json({ ok: false, error: 'We could not send your request. Please message us on WhatsApp instead.' }, 502);
   }
-  return json({ ok: true, dashboard: dashboardOk, email: emailOk });
+
+  const leadId = resolveLeadId({ dashboardOk: dashboard.ok, body: dashboard.body, sentId });
+
+  // Meta CAPI is a no-op until META_CAPI_ACCESS_TOKEN is set. It never
+  // changes the response, and it shares leadId with the browser event.
+  if (leadId && dashboard.ok) {
+    const last = forwarded.attribution?.last_touch || {};
+    const first = forwarded.attribution?.first_touch || {};
+    try {
+      await sendMetaLead({
+        eventId: leadId,
+        email,
+        phone,
+        fbc: last.fbc || first.fbc || '',
+        fbp: last.fbp || first.fbp || '',
+        eventSourceUrl: eventSourceUrl(last.landing_page || first.landing_page || '', request),
+        ip: clientAddress(request),
+        userAgent: request.headers.get('user-agent') || '',
+      });
+    } catch {
+      // Already swallowed inside sendMetaLead. Keep the lead response.
+    }
+  }
+
+  return json({
+    ok: true,
+    dashboard: dashboard.ok,
+    email: emailOk,
+    ...(leadId ? { lead_id: leadId } : {}),
+  });
 }

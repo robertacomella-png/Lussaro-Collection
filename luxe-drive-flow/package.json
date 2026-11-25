@@ -13,7 +13,8 @@
     "optimize:images": "node scripts/optimize-images.mjs",
     "make:favicon": "node scripts/make-favicon.mjs",
     "keywords": "node scripts/keyword-admin.mjs",
-    "check:locks": "node scripts/check-locks.mjs"
+    "check:locks": "node scripts/check-locks.mjs",
+    "test": "node --test src/lib/*.test.js tests/*.test.js"
   },
   "dependencies": {
     "@astrojs/react": "^4.4.2",
