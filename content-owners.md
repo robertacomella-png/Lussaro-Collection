@@ -62,7 +62,7 @@ When an agency asks how edits are tracked, this is the answer.
 | /about | Lussaro | review | Brand story. Also the author entity target for blog posts. |
 | /reviews | Lussaro | locked | Renders real customer quotes. |
 | /terms | Lussaro | locked | Commercial terms. A wrong edit here is a contractual problem, not a copy problem. |
-| /privacy | Lussaro | locked | Legal. |
+| /privacy | Lussaro | locked | Legal. Robert approved one sentence on 25 Nov 2026: ad click identifiers and campaign parameters from the visit are stored with the enquiry to measure advertising. That snapshot is listed under Approved locked edits. The page stays locked; a further edit still needs its own approval. |
 | /pricing | Lussaro | review | Rates derive from fleet.js; surrounding copy is editorial. |
 | / | Lussaro | review | Homepage. Hero copy is brand-owned; the fleet grid is generated. |
 | /fleet | Lussaro | review | Mostly the shared grid, plus editorial intro. |
@@ -104,3 +104,13 @@ When an agency asks how edits are tracked, this is the answer.
 3. **Never regenerate a published post.** If a locked post needs work, edit the section that needs it and leave the rest alone.
 4. **Record new content here when it ships**, with an owner and a level, in the same commit.
 5. **When in doubt, treat it as locked.** The cost of asking is a message. The cost of overwriting a ranking page is months.
+
+---
+
+## Approved locked edits
+
+A `locked` file stays locked after an approval. Approval covers one snapshot of the file, not every future edit. `npm run check:locks` reads this table and lets a locked path through only when the file's current git blob is listed here. Any other contents still fail the check.
+
+| Path | Blob | Approved | What |
+|---|---|---|---|
+| luxe-drive-flow/src/pages/privacy.astro | 238227bbcd0eb0d790ce1f2f63e5da0f8ba43b30 | Robert, 25 Nov 2026 | One list item in section 1: ad click identifiers and campaign parameters from the visit are stored with the enquiry to measure advertising. |
