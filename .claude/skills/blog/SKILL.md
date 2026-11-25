@@ -1,6 +1,6 @@
 ---
 name: blog
-description: Generate a complete, publish-ready Lussaro Collection blog post — picks an unused keyword from keywords.csv, builds a cluster, researches the SERP, writes in Robert's voice, applies the locked page template, wires images from the existing photo library, and verifies all 53 on-page SEO checks before declaring done. Use when asked to write, generate, or publish a blog post.
+description: Generate a complete, publish-ready Lussaro Collection blog post — picks an unused keyword from keywords.csv, builds a cluster, researches the SERP, writes in Robert's voice, applies the locked page template, wires images from the existing photo library, and verifies all 54 on-page SEO checks before declaring done. Use when asked to write, generate, or publish a blog post.
 ---
 
 # Blog post generator
@@ -17,6 +17,19 @@ Produces one blog post, start to finish, to the same standard every time.
 | **Anything else** | `template.astro` | The shared base. Also the starting point for a new type. |
 
 To add a type: copy `template.astro` to `templates/<type>.astro`, change only the marked BODY region and whatever frontmatter that body needs, and add a row above. Everything outside the body — hero, rails, schema, author, NAP, CTA — is shared and does not move.
+
+## Hero enquiry
+
+The hero CTA is `BlogBookingCta` (`luxe-drive-flow/src/components/blog/BlogBookingCta.astro`). It is the homepage booking form, limited to car, dates, name and phone, posting to the existing `/api/lead` path. Do not put the WhatsApp "Check your dates" button back.
+
+| Prop | Use |
+|---|---|
+| `car` | Fleet `name` from `fleet.js` (the select's option value), and only when the post is about **one** vehicle. The select opens on that car and the reader can still change it. Omit it for a comparison, an event, or any post with no single car. A sensible default, when you want one, is the fleet name of the first `relatedCars` entry — not a car the post does not discuss. |
+| `source` | The post's canonical URL (`PAGE_URL`). `lead.js` already copies `source` into the CRM note, so the dashboard shows which post produced the lead. Do not add a field for this. |
+| `whatsappHref` | The post's existing `wa` link. It renders as a text link under the form, with Call beside it. |
+| `showFleetLink` | Set when `car` is omitted. Adds "See all cars" to `/fleet`. |
+
+`verify.py` still requires the string `blog_hero` on the page. The component puts it on the WhatsApp and Call links. Leave those links in place.
 
 ## Five things that will bite you
 
@@ -175,7 +188,7 @@ cd luxe-drive-flow && npm run build
 cd .. && python3 .claude/skills/blog/verify.py <slug>
 ```
 
-53 checks against the **built HTML**, not the source. The post is not done until every one passes. If a check fails, fix the post — never loosen the check.
+54 checks against the **built HTML**, not the source. The post is not done until every one passes. If a check fails, fix the post — never loosen the check.
 
 For a real performance number, serve the production build and measure it. The dev server is not a valid target: it ships `@vite/client` and unminified modules, which makes Performance look ~30 points worse than reality.
 
@@ -190,6 +203,13 @@ For a real performance number, serve the production build and measure it. The de
 **`content-owners.md`** — add the post as `locked`. Once published it carries ranking history, and nothing automated should rewrite it afterwards.
 
 The sitemap needs no action; `@astrojs/sitemap` picks the post up automatically, and `public/robots.txt` already points at it.
+
+## Post-publish checklist
+
+Do these after the deploy is live and the new URL returns the post, not before:
+
+- [ ] Message Jarvis the live URL so he can request indexing in Search Console.
+- [ ] Resubmit https://www.lussarocollection.com/sitemap-index.xml in Search Console.
 
 ## 10. Report
 

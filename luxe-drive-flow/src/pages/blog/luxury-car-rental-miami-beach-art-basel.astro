@@ -17,6 +17,8 @@ import Nav from '@/components/site/Nav.astro';
 import CtaBand from '@/components/site/CtaBand.astro';
 import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
 import RelatedPosts from '@/components/blog/RelatedPosts.astro';
+import BlogBookingCta from '@/components/blog/BlogBookingCta.astro';
+import BlogPhoto from '@/components/blog/BlogPhoto.astro';
 import { altFor } from '@/data/image-alt';
 import { cars } from '@/data/cars';
 import { reviews } from '@/data/reviews';
@@ -224,16 +226,7 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
               <span>{readingMinutes} min read</span>
             </div>
 
-            <div class="mt-6 flex flex-col sm:flex-row gap-3 max-w-md mx-auto lg:mx-0">
-              <a href={wa} data-cta="blog_hero" target="_blank" rel="noopener noreferrer"
-                 class="flex-1 inline-flex items-center justify-center gap-2 min-h-[48px] bg-white text-black px-7 py-4 rounded-full font-semibold hover:bg-[#ff1516] transition">
-                Check your dates <span class="w-2 h-2 rounded-full bg-[#1f7a3f]" aria-hidden="true"></span>
-              </a>
-              <a href={telHref} data-cta="blog_hero" data-call-inline
-                 class="flex-1 inline-flex items-center justify-center min-h-[48px] border border-white/25 text-white px-7 py-4 rounded-full font-medium hover:border-[#e00e10] hover:text-[#e00e10] transition">
-                Call {business.phoneDisplayShort}
-              </a>
-            </div>
+            <BlogBookingCta source={PAGE_URL} whatsappHref={wa} showFleetLink />
           </div>
         </div>
       </div>
@@ -296,6 +289,13 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
           That wider week is why a car on the Beach is useful rather than decorative. The Convention Center is the anchor, not the whole map. Wynwood, the Design District, and Brickell are across the water. A dinner in one of those neighborhoods is a causeway crossing, not a stroll. An exotic car rental in Miami Beach that never leaves Collins Avenue will still do the valet job; it will not do the week.
         </p>
 
+        <BlogPhoto
+          srcKey="/cars/lamborghini-urus-rental-miami-downtown-skyline.jpg"
+          width={1200}
+          height={800}
+          caption="Lamborghini Urus on an open deck, with the downtown Miami skyline across the bay."
+        />
+
         <p>A few practical notes, all of them ordinary and all of them easy to miss:</p>
 
         <ul>
@@ -307,6 +307,13 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
         <p>
           We deliver throughout Miami Beach and South Beach, including hotels, residences, and the usual valet stands. Collection at the end is a separate trip, confirmed in the quote. The fees, mileage allowance, and deposit are published on the <a href="/pricing">pricing</a> and terms pages, not held back for the call.
         </p>
+
+        <BlogPhoto
+          srcKey="/cars/mercedes-maybach-gls-600-rental-miami-front-quarter.jpg"
+          width={1092}
+          height={698}
+          caption="Mercedes-Maybach GLS 600 on a palm-lined paver driveway beside the water."
+        />
 
         <h2 id="which-car">Which car fits your plans: Urus vs Maybach GLS 600 vs S580</h2>
 
@@ -323,6 +330,13 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
         <p>
           The <a href="/cars/mercedes-s580">Mercedes-Benz S580</a> is a {s580.year} S-Class with a {s580.power} hp {engineProse(s580)}, {drive(s580)}, and a published {toSixty(s580)} to 60. It seats {numWord(s580.seats)}, in a {s580.seatsNote} layout: four proper places and a middle rear position that is a seat, not a suggestion. Current daily and multi-day rates are on the <a href="/cars/mercedes-s580">S580 rental page</a>.
         </p>
+
+        <BlogPhoto
+          srcKey="/cars/mercedes-s580-rental-miami-front-quarter.jpg"
+          width={1200}
+          height={776}
+          caption="Mercedes-Benz S580 on a paver lot beside the water."
+        />
 
         <p>
           If you are going to the fair, changing, and driving to dinner, this is the car that disappears into the day in the useful sense. It still reads as an S-Class at a valet stand. It does not ask you to manage a wide body through a tight Collins Avenue forecourt at 7 p.m. And unlike the Maybachs, you are not paying for a rear cabin you will never sit in.
@@ -384,6 +398,13 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
         <p>
           Urus rental in Miami is the right call when the car is part of the week, not merely the shuttle. Collins Avenue, the short runs between Mid-Beach and South Beach, a later crossing to the mainland — the Urus is the one of these three that makes those drives feel like the point. It is also the widest argument in a tight valet lane, so the same forecourt caution applies as with the Maybach.
         </p>
+
+        <BlogPhoto
+          srcKey="/cars/lamborghini-urus-rental-miami-rear-palms.jpg"
+          width={1200}
+          height={1200}
+          caption="Rear of the Lamborghini Urus on a cobblestone street lined with palm trees."
+        />
 
         <p>
           It is not automatically the better SUV. The Maybach GLS 600 is the more comfortable rear-seat car. The Urus is the faster, more extroverted one, and it keeps the fifth seat. If you are choosing between those two on budget as well as character, both sit on our luxury SUV rental page with live rates. We will recommend the cheaper of the two when it is the better fit, including when that is the Maybach.
@@ -452,6 +473,13 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
           Live rates for the Urus, the Maybach GLS 600, and the Mercedes-Benz S580 are on each car page and collected on the <a href="/pricing">pricing page</a>. Multi-day stays follow the ladder published there: each car has its own {numWord(discountTiers[0].days)}-day rate, with deeper reductions as the booking gets longer. Read the number on the page for the dates you actually want rather than carrying a one-day figure through a five-day stay.
         </p>
 
+        <BlogPhoto
+          srcKey="/gallery/mercedes-maybach-gls-600-lamborghini-urus-rental-miami-metromover.jpg"
+          width={1200}
+          height={800}
+          caption="Mercedes-Maybach GLS 600 and Lamborghini Urus parked under the Metromover track in downtown Miami."
+        />
+
         <p>What you will need is ordinary, and we would rather list it than surprise anyone at the valet stand:</p>
 
         <ul>
@@ -463,13 +491,50 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
           <li>Cancellations made within {numWord(cancellation.noRefundWithinDays)} days of the rental start date are non-refundable.</li>
         </ul>
 
+        <BlogPhoto
+          srcKey="/gallery/lamborghini-urus-rental-miami-quilted-interior.jpg"
+          width={960}
+          height={1280}
+          caption="Quilted leather front seats and panoramic roof of the Lamborghini Urus."
+          imgClass="w-full max-w-md mx-auto h-auto rounded-2xl"
+          sizes="(min-width: 768px) 448px, 100vw"
+        />
+
         <p>
           If you are still deciding, send the itinerary rather than a car name. A preview-day schedule that is mostly the Convention Center and a Mid-Beach hotel is a different car from a week that also includes Wynwood openings and a Saturday night on Ocean Drive. We will tell you which of the three we would put you in, including when that is the Mercedes-Benz S580.
         </p>
 
         <h2 id="faq">Common questions</h2>
 
-        {faqs.map((f) => (
+        {faqs.slice(0, 3).map((f) => (
+          <div>
+            <h3>{f.q}</h3>
+            <p>{f.a}</p>
+          </div>
+        ))}
+
+        <BlogPhoto
+          srcKey="/cars/mercedes-s580-rental-miami-rear-cabin.jpg"
+          width={1200}
+          height={800}
+          caption="Rear seats of the Mercedes-Benz S580, black quilted leather with pillow headrests."
+        />
+
+        {faqs.slice(3, 6).map((f) => (
+          <div>
+            <h3>{f.q}</h3>
+            <p>{f.a}</p>
+          </div>
+        ))}
+
+        <BlogPhoto
+          srcKey="/cars/mercedes-maybach-gls-600-rental-miami-side-skyline.jpg"
+          width={1200}
+          height={800}
+          caption="Mercedes-Maybach GLS 600 in side profile on pavers, downtown Miami skyline across the water."
+        />
+
+        {faqs.slice(6).map((f) => (
           <div>
             <h3>{f.q}</h3>
             <p>{f.a}</p>

@@ -3,9 +3,14 @@ import { fleet } from "@/data/fleet";
 import { withAttribution } from "@/lib/attribution";
 import { trackLead } from "@/lib/track";
 
-export default function LeadForm({ defaultVehicle = "" }) {
+// `variant="booking"` is the blog hero: car, dates, name, phone. The full
+// form (homepage, fleet, contact, car pages) is the default and stays as it
+// was. `source` is the lead source lead.js already forwards into the CRM note.
+// Blog posts pass the post URL; everything else keeps "lead_form".
+export default function LeadForm({ defaultVehicle = "", source = "lead_form", variant = "full" }) {
   const [status, setStatus] = useState("idle"); // idle | sending | ok | error
   const [error, setError] = useState("");
+  const booking = variant === "booking";
 
   async function onSubmit(e) {
     e.preventDefault();
@@ -13,7 +18,7 @@ export default function LeadForm({ defaultVehicle = "" }) {
     setError("");
     const form = e.currentTarget;
     const payload = withAttribution(
-      { ...Object.fromEntries(new FormData(form).entries()), source: "lead_form" },
+      { ...Object.fromEntries(new FormData(form).entries()), source: source || "lead_form" },
       "LeadForm",
     );
 
@@ -59,34 +64,56 @@ export default function LeadForm({ defaultVehicle = "" }) {
   // inputs are labelled for the same reason rather than leaning on their
   // placeholder, which is only a fallback accessible name and disappears the
   // moment someone types.
+  const vehicleSelect = (
+    <select name="vehicle" aria-label="Choose a car" className={field} defaultValue={defaultVehicle}>
+      <option value="" disabled>Choose a car</option>
+      {fleet.map((c) => (
+        <option key={c.id} value={c.name} className="bg-[#111]">{c.name}</option>
+      ))}
+    </select>
+  );
+
   return (
-    <form onSubmit={onSubmit} className="max-w-xl mx-auto grid gap-3">
-      <div className="grid sm:grid-cols-2 gap-3">
-        <input name="name" required placeholder="Name*" aria-label="Your name" className={field} />
-        <input name="phone" required placeholder="Phone*" inputMode="tel" aria-label="Your phone number" className={field} />
-      </div>
-      <input name="email" type="email" placeholder="Email" aria-label="Your email address" className={field} />
-      <div className="grid sm:grid-cols-2 gap-3">
-        <select name="vehicle" aria-label="Choose a car" className={field} defaultValue={defaultVehicle}>
-          <option value="" disabled>Choose a car</option>
-          {fleet.map((c) => (
-            <option key={c.id} value={c.name} className="bg-[#111]">{c.name}</option>
-          ))}
-        </select>
-        <input name="dates" placeholder="Dates (e.g. Jun 20–22)" aria-label="Rental dates" className={field} />
-      </div>
-      <textarea name="message" rows="3" placeholder="Anything else?" aria-label="Anything else we should know?" className={field}></textarea>
+    <form onSubmit={onSubmit} className={booking ? "grid gap-3" : "max-w-xl mx-auto grid gap-3"}>
+      {booking ? (
+        <>
+          {vehicleSelect}
+          <input name="dates" placeholder="Dates (e.g. Jun 20–22)" aria-label="Rental dates" className={field} />
+          <div className="grid sm:grid-cols-2 gap-3">
+            <input name="name" required placeholder="Name*" aria-label="Your name" className={field} />
+            <input name="phone" required placeholder="Phone*" inputMode="tel" aria-label="Your phone number" className={field} />
+          </div>
+          {/* Backstop so the post URL is in the form body even before the
+              submit handler copies `source`. lead.js already stores this. */}
+          <input type="hidden" name="source" value={source} />
+        </>
+      ) : (
+        <>
+          <div className="grid sm:grid-cols-2 gap-3">
+            <input name="name" required placeholder="Name*" aria-label="Your name" className={field} />
+            <input name="phone" required placeholder="Phone*" inputMode="tel" aria-label="Your phone number" className={field} />
+          </div>
+          <input name="email" type="email" placeholder="Email" aria-label="Your email address" className={field} />
+          <div className="grid sm:grid-cols-2 gap-3">
+            {vehicleSelect}
+            <input name="dates" placeholder="Dates (e.g. Jun 20–22)" aria-label="Rental dates" className={field} />
+          </div>
+          <textarea name="message" rows="3" placeholder="Anything else?" aria-label="Anything else we should know?" className={field}></textarea>
+        </>
+      )}
 
       {status === "error" && <p className="text-red-400 text-sm">{error}</p>}
 
       <button
         type="submit"
         disabled={status === "sending"}
-        className="w-full bg-white text-black py-4 rounded-full font-semibold hover:bg-[#ff1516] transition disabled:opacity-60"
+        className={`w-full bg-white text-black py-4 rounded-full font-semibold hover:bg-[#ff1516] transition disabled:opacity-60${booking ? " min-h-[48px]" : ""}`}
       >
         {status === "sending" ? "Sending…" : "Request Availability"}
       </button>
-      <p className="text-white/50 text-xs text-center">Prefer to talk now? Call or WhatsApp us — we reply in minutes.</p>
+      {!booking && (
+        <p className="text-white/50 text-xs text-center">Prefer to talk now? Call or WhatsApp us — we reply in minutes.</p>
+      )}
     </form>
   );
 }

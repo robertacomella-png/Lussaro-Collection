@@ -26,6 +26,7 @@ import Layout from '@/layouts/Layout.astro';
 import Nav from '@/components/site/Nav.astro';
 import CtaBand from '@/components/site/CtaBand.astro';
 import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
+import BlogBookingCta from '@/components/blog/BlogBookingCta.astro';
 import { getImageKitSrc, getImageKitSrcSet } from '@/lib/imageKit';
 import { altFor } from '@/data/image-alt';
 import { cars } from '@/data/cars';
@@ -221,25 +222,12 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
         <span aria-hidden="true">·</span> Updated <time datetime={UPDATED_ISO}>{updated}</time>
       </p>
 
-      <div class="mt-7 flex flex-col sm:flex-row gap-3 max-w-md">
-        <a
-          href={wa}
-          data-cta="blog_hero"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="flex-1 inline-flex items-center justify-center gap-2 min-h-[48px] bg-white text-black px-7 py-4 rounded-full font-semibold hover:bg-[#ff1516] transition"
-        >
-          Check your dates <span class="w-2 h-2 rounded-full bg-[#1f7a3f]" aria-hidden="true"></span>
-        </a>
-        <a
-          href={telHref}
-          data-cta="blog_hero"
-          data-call-inline
-          class="flex-1 inline-flex items-center justify-center min-h-[48px] border border-white/25 text-white px-7 py-4 rounded-full font-medium hover:border-[#e00e10] hover:text-[#e00e10] transition"
-        >
-          Call {business.phoneDisplayShort}
-        </a>
-      </div>
+      <BlogBookingCta
+        source={PAGE_URL}
+        whatsappHref={wa}
+        showFleetLink
+        className="mt-7 w-full max-w-md text-left"
+      />
 
       <p class="mt-5 flex items-center gap-3 text-sm text-white/60">
         <span class="text-[#ff1516]" aria-hidden="true">★★★★★</span>

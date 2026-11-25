@@ -1,0 +1,64 @@
+---
+// Blog hero enquiry. Replaces the "Check your dates" WhatsApp button.
+//
+// The form is the homepage LeadForm on its existing POST /api/lead path, cut
+// down to car, dates, name and phone. `source` is the post URL. lead.js already
+// copies `source` into the CRM note, so the dashboard shows which post sent
+// the lead without a new field.
+//
+// `car` is the fleet name (fleet.js `name`, the select's option value), used
+// when the post is about one vehicle. Leave it empty for a comparison, an
+// event, or any post with no single car, and set `showFleetLink` so the
+// reader can open the fleet. The car stays changeable either way.
+//
+// WhatsApp and Call are real links in this file, not inside the island, so
+// they work with scripting off. The form itself submits the same way the
+// homepage form does, which needs JavaScript.
+import LeadForm from '@/components/site/LeadForm.jsx';
+import { business, telHref } from '@/data/business';
+
+const {
+  car = '',
+  source = '',
+  whatsappHref = '',
+  showFleetLink = false,
+  cta = 'blog_hero',
+  className = 'mt-6 w-full max-w-md mx-auto lg:mx-0 text-left',
+} = Astro.props;
+
+const vehicle = typeof car === 'string' ? car.trim() : '';
+---
+<div class={className}>
+  <LeadForm client:load defaultVehicle={vehicle} source={source} variant="booking" />
+  <p class="mt-3 flex flex-wrap items-center gap-x-5 gap-y-1 text-sm">
+    {whatsappHref && (
+      <a
+        href={whatsappHref}
+        data-cta={cta}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center min-h-[48px] text-white underline decoration-white/40 underline-offset-2 hover:decoration-white"
+      >
+        Message us on WhatsApp
+      </a>
+    )}
+    <a
+      href={telHref}
+      data-cta={cta}
+      data-call-inline
+      class="inline-flex items-center min-h-[48px] text-white underline decoration-white/40 underline-offset-2 hover:decoration-white"
+    >
+      Call {business.phoneDisplayShort}
+    </a>
+  </p>
+  {showFleetLink && (
+    <p class="text-sm">
+      <a
+        href="/fleet"
+        class="inline-flex items-center min-h-[48px] text-white underline decoration-white/40 underline-offset-2 hover:decoration-white"
+      >
+        See all cars
+      </a>
+    </p>
+  )}
+</div>

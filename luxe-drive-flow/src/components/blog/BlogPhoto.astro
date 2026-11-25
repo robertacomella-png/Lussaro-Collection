@@ -1,0 +1,31 @@
+---
+// Inline blog photo. Uses the existing opt/ WebP ladder and the alt already
+// written for that file in image-alt.js. Width and height are the intrinsic
+// size of the 1200w variant so the ratio is reserved before the file loads.
+import { altFor } from '@/data/image-alt';
+import { getImageKitSrc, getImageKitSrcSet } from '@/lib/imageKit';
+
+const {
+  srcKey,
+  width,
+  height,
+  caption,
+  imgClass = 'w-full h-auto rounded-2xl',
+  sizes = '(min-width: 1140px) 760px, 100vw',
+} = Astro.props;
+const alt = altFor(srcKey);
+---
+<figure class="not-prose my-10">
+  <img
+    src={getImageKitSrc(srcKey, 1200)}
+    srcset={getImageKitSrcSet(srcKey)}
+    sizes={sizes}
+    width={width}
+    height={height}
+    alt={alt}
+    loading="lazy"
+    decoding="async"
+    class={imgClass}
+  />
+  <figcaption class="text-black/60 text-sm mt-3">{caption}</figcaption>
+</figure>
