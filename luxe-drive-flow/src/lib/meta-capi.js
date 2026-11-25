@@ -11,6 +11,8 @@ import { toE164 } from './attribution.js';
 
 export const META_PIXEL_ID = '1310954347642915';
 export const META_GRAPH_VERSION = 'v21.0';
+// The lead response must not wait on Meta. Three seconds is the ceiling.
+export const META_CAPI_TIMEOUT_MS = 3000;
 
 function tokenFrom(env) {
   const token = env && env.META_CAPI_ACCESS_TOKEN;
@@ -76,14 +78,16 @@ export async function sendMetaLead(args, env = process.env, fetchImpl = fetch) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
-      signal: AbortSignal.timeout(4000),
+      signal: AbortSignal.timeout(META_CAPI_TIMEOUT_MS),
     });
     if (!res.ok) {
+      // Status only. The URL carries the token, and the body carries hashes.
       console.error('[lead] meta capi rejected', res.status);
       return { ok: false };
     }
     return { ok: true };
   } catch (err) {
+    // err.message can include the request URL, which holds the token.
     console.error('[lead] meta capi failed', err && err.name ? err.name : 'error');
     return { ok: false };
   }

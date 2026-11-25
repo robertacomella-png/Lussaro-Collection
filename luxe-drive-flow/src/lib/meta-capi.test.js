@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { buildMetaLeadPayload, sendMetaLead, sha256 } from './meta-capi.js';
+import { META_CAPI_TIMEOUT_MS, buildMetaLeadPayload, sendMetaLead, sha256 } from './meta-capi.js';
 
 test('the Lead payload shares event_id and hashes email and phone', async () => {
   const payload = await buildMetaLeadPayload({
@@ -66,4 +66,32 @@ test('a configured token posts one Lead and a test event code stays out of the b
   );
   assert.equal(seen[0].body.test_event_code, 'TEST123');
   assert.equal(seen[0].body.data[0].event_id, eventId);
+});
+
+test('the Graph call aborts within 3 seconds and a failure does not log the token', async () => {
+  const limits = [];
+  const originalTimeout = AbortSignal.timeout;
+  AbortSignal.timeout = (ms) => {
+    limits.push(ms);
+    return originalTimeout.call(AbortSignal, ms);
+  };
+  const errors = [];
+  const originalError = console.error;
+  console.error = (...args) => { errors.push(args.map(String).join(' ')); };
+  try {
+    const result = await sendMetaLead(
+      { eventId: 'ffffffff-ffff-4fff-8fff-ffffffffffff', email: 'ada@example.com', phone: '+13055550199' },
+      { META_CAPI_ACCESS_TOKEN: 'test-token-not-real' },
+      async () => {
+        throw new Error('network https://graph.facebook.com/events?access_token=test-token-not-real ada@example.com');
+      },
+    );
+    assert.deepEqual(result, { ok: false });
+  } finally {
+    AbortSignal.timeout = originalTimeout;
+    console.error = originalError;
+  }
+  assert.deepEqual(limits, [META_CAPI_TIMEOUT_MS]);
+  assert.ok(META_CAPI_TIMEOUT_MS <= 3000);
+  assert.equal(errors.some((line) => line.includes('test-token-not-real') || line.includes('ada@example.com')), false);
 });

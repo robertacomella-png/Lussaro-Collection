@@ -128,6 +128,18 @@ test('a rejected dashboard returns 502 and does not invent a lead id', async () 
   assert.equal(json.lead_id, undefined);
 });
 
+function until(predicate, ms = 1500) {
+  const start = Date.now();
+  return new Promise((resolve) => {
+    const tick = () => {
+      const value = predicate();
+      if (value || Date.now() - start >= ms) resolve(value);
+      else setTimeout(tick, 15);
+    };
+    tick();
+  });
+}
+
 test('Meta CAPI stays silent without a token and shares event_id when one is set', async () => {
   delete process.env.META_CAPI_ACCESS_TOKEN;
   const silent = [];
@@ -146,7 +158,7 @@ test('Meta CAPI stays silent without a token and shares event_id when one is set
       return new Response(JSON.stringify({ ok: true }), { status: 200 });
     }, () => POST({ request: request(leadBody) }));
     const json = await res.json();
-    const graph = calls.find((call) => call.url.includes('graph.facebook.com'));
+    const graph = await until(() => calls.find((call) => call.url.includes('graph.facebook.com')));
     const dashboard = calls.find((call) => call.url.includes('dashboard.test'));
     assert.ok(graph);
     assert.equal(graph.body.data[0].event_name, 'Lead');
@@ -156,6 +168,31 @@ test('Meta CAPI stays silent without a token and shares event_id when one is set
     assert.equal(JSON.stringify(graph.body).includes('ada@example.com'), false);
     assert.equal(JSON.stringify(graph.body).includes('test-token-not-real'), false);
   } finally {
+    delete process.env.META_CAPI_ACCESS_TOKEN;
+  }
+});
+
+test('a slow Meta call does not hold the lead response', async () => {
+  process.env.META_CAPI_ACCESS_TOKEN = 'test-token-not-real';
+  let release = () => {};
+  const gate = new Promise((resolve) => { release = resolve; });
+  try {
+    const started = Date.now();
+    const res = await withFetch(async (url) => {
+      if (String(url).includes('graph.facebook.com')) {
+        await gate;
+        return new Response('{}', { status: 200 });
+      }
+      return new Response(JSON.stringify({ ok: true }), { status: 200 });
+    }, () => POST({ request: request({ name: 'Grace', phone: '3055550199', email: 'grace@example.com' }) }));
+    const elapsed = Date.now() - started;
+    const json = await res.json();
+    assert.equal(res.status, 200);
+    assert.equal(json.ok, true);
+    assert.equal(json.lead_id.length, 36);
+    assert.ok(elapsed < 500, `lead response waited ${elapsed}ms on Meta`);
+  } finally {
+    release();
     delete process.env.META_CAPI_ACCESS_TOKEN;
   }
 });
