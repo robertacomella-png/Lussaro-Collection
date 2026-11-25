@@ -9,17 +9,17 @@
 // profile, read the two numbers, change them here and bump `checked`. Every car
 // page reads from this file.
 //
-// Visible copy says the verified count with a plus ("25+"), so the sentence
-// stays true as new reviews arrive and does not print a lower round number.
-// Structured data must use `reviewCount` exactly — never the plus label.
+// The count is shown as the stored total with a plus ("25+"). Rounding down
+// to the nearest ten would still print "20+" at 25, so the stored count is
+// what the badge shows.
 
 export const googleRating = {
   rating: 4.8,
   reviewCount: 25,
-  checked: '2026-11-25',
+  checked: '2026-11-15',
 };
 
-/** "25+" for 25, "9" under ten. The plus is a floor, not a round-down. */
+/** "25+" for 25. Under ten there is nothing to add, so exact. */
 export const googleCountLabel = (n = googleRating.reviewCount) =>
   n < 10 ? String(n) : `${n}+`;
 

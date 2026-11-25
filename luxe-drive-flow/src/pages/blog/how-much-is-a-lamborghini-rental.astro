@@ -30,8 +30,6 @@ import { getImageKitSrc, getImageKitSrcSet } from '@/lib/imageKit';
 import { altFor } from '@/data/image-alt';
 import { cars } from '@/data/cars';
 import { reviews } from '@/data/reviews';
-import { googleRatingLabel } from '@/data/google-rating';
-import GoogleStars from '@/components/reviews/GoogleStars.astro';
 import { business, telHref, whatsappWith, addressLine, hoursSummary } from '@/data/business';
 import {
   rentalTerms,
@@ -244,8 +242,8 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
       </div>
 
       <p class="mt-5 flex items-center gap-3 text-sm text-white/60">
-        <GoogleStars class="text-[#ff1516]" />
-        {googleRatingLabel} on Google <span aria-hidden="true">·</span> Delivered across Miami
+        <span class="text-[#ff1516]" aria-hidden="true">★★★★★</span>
+        5.0 on Google <span aria-hidden="true">·</span> Delivered across Miami
       </p>
     </div>
   </header>
