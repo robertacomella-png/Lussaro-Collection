@@ -9,19 +9,19 @@
 // profile, read the two numbers, change them here and bump `checked`. Every car
 // page reads from this file.
 //
-// The count is shown rounded DOWN to the nearest ten ("20+"), on the owner's
-// instruction (15 Nov 2026), so the badge does not go stale each time a new
-// review lands. Rounding down keeps "20+" true until the real count passes 30.
+// The count is shown as the stored total with a plus ("25+"). Rounding down
+// to the nearest ten would still print "20+" at 25, so the stored count is
+// what the badge shows.
 
 export const googleRating = {
   rating: 4.8,
-  reviewCount: 24,
+  reviewCount: 25,
   checked: '2026-11-15',
 };
 
-/** "20+" for 24, "10+" for 17. Under ten there is nothing to round, so exact. */
+/** "25+" for 25. Under ten there is nothing to add, so exact. */
 export const googleCountLabel = (n = googleRating.reviewCount) =>
-  n < 10 ? String(n) : `${Math.floor(n / 10) * 10}+`;
+  n < 10 ? String(n) : `${n}+`;
 
 /** "4.8" */
 export const googleRatingLabel = googleRating.rating.toFixed(1);

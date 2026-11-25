@@ -87,7 +87,7 @@ When an agency asks how edits are tracked, this is the answer.
 | src/data/neighborhood-content.js | SEO | review | |
 | src/data/posts.js | SEO | review | The blog registry. A post missing from here is invisible — never remove an entry for a post that is still published. |
 | src/data/meta.json | SEO | review | Titles and meta descriptions, edited through the CMS. The two modules that read it are thin wrappers. |
-| src/data/google-rating.js | Lussaro | review | Google Business Profile rating and review count, read by hand from the listing (4.8 from 24 on 15 Nov 2026). Shown rounded down to the nearest ten ("20+") on the owner's instruction. Update when the listing changes; never derive it from reviews.js. |
+| src/data/google-rating.js | Lussaro | review | Google Business Profile rating and review count, read by hand from the listing (4.8 from 25). The visible count is the stored total with a plus ("25+"). Update when the listing changes; never derive it from reviews.js. |
 | src/data/image-alt.js | shared | open | Accessibility text. |
 | src/data/booking-steps.js | shared | open | |
 | src/data/cars.js | generated | open | Derived from fleet.js and three-day-deals.json. |
