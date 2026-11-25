@@ -115,3 +115,4 @@ A `locked` file stays locked after an approval. Approval covers one snapshot of 
 | Path | Blob | Approved | What |
 |---|---|---|---|
 | luxe-drive-flow/src/pages/privacy.astro | 238227bbcd0eb0d790ce1f2f63e5da0f8ba43b30 | Robert, 25 Nov 2026 | One list item in section 1: ad click identifiers and campaign parameters from the visit are stored with the enquiry to measure advertising. |
+| luxe-drive-flow/src/pages/blog/luxury-car-rental-miami-beach-art-basel.astro | c96a9b96302b8cb7231186d73d589f9e4bcfc505 | Reviewer, 25 Nov 2026 | First publication. Title tag uses the short Lussaro suffix. CTA subtitle asks for the car, the dates, and the hotel. |
