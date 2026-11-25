@@ -12,6 +12,7 @@ This is what stops the site competing with itself — the failure mode where two
 
 | Primary keyword | Used on | Date | Cluster |
 |---|---|---|---|
+| luxury car rental miami beach | [/blog/luxury-car-rental-miami-beach-art-basel](../luxe-drive-flow/src/pages/blog/luxury-car-rental-miami-beach-art-basel.astro) | 2026-11-25 | Art Basel |
 | how much is a rental lamborghini | [/blog/how-much-is-a-lamborghini-rental](../luxe-drive-flow/src/pages/blog/how-much-is-a-lamborghini-rental.astro) | 2026-08-14 | Lamborghini |
 | mercedes s580 vs maybach s580 rental miami | [/blog/mercedes-s580-vs-maybach-s580-rental-miami](../luxe-drive-flow/src/pages/blog/mercedes-s580-vs-maybach-s580-rental-miami.astro) | 2026-10-06 | Comparison |
 | well kept exotic car rental miami | [/blog/well-kept-exotic-car-rental-miami](../luxe-drive-flow/src/pages/blog/well-kept-exotic-car-rental-miami.astro) | 2026-10-07 | The standard |
@@ -125,6 +126,25 @@ conclusion themselves, which is the version a competitor cannot copy.
 **Retuned twice on 15 Nov 2026, owner-approved.** Second pass, from Google autocomplete: title "Miami Exotic Car Rental 18+: Rent at 18 With Us", H1 "Miami exotic car rental 18+: how old do you have to be?", a "Can you rent a Lamborghini at 18 in Miami?" FAQ, and "sports car" once in the body. First pass: title, meta description and H1 led with "rent an exotic car at 18 in Miami" so the post reaches the 18+ searches as well as the age question. URL and body unchanged.
 
 **SERP at the time:** age-requirement guides and FAQ pages, roughly 1,000–1,400 words. All covered the minimum age, license, deposit and insurance; none covered Florida law (s. 322.38 sets no minimum age), which this post adds along with the booking process for a younger renter.
+
+---
+
+### luxury car rental miami beach
+**Post:** `/blog/luxury-car-rental-miami-beach-art-basel`
+**Date:** November 25, 2026
+
+**Secondaries used:**
+- exotic car rental miami beach
+- maybach rental miami
+- lamborghini urus rental miami
+- urus rental miami
+- exotic car rental south beach
+
+**Why this primary:** no page owned "luxury car rental miami beach". The homepage owns "luxury car rental miami", and `/exotic-car-rental-south-beach` owns the South Beach term. The fair makes Miami Beach its own question for one week in December, so the post takes that informational angle and funnels into the Urus, Maybach GLS 600, and Mercedes-Benz S580 pages.
+
+**Left on their commercial pages:** `maybach rental miami`, `lamborghini urus rental miami`, and `exotic car rental south beach` stay targeted at `/maybach-rental-miami`, `/lamborghini-urus-rental-miami`, and `/exotic-car-rental-south-beach`. The post uses them as secondaries and links through. The Lamborghini verb phrase stays on `/lamborghini-rental-miami` and is not used here.
+
+**Do not reuse.**
 
 ---
 

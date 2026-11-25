@@ -115,8 +115,10 @@ const ALT = {
     'Maybach script above the tail light of the black Mercedes-Maybach GLS 600 rental',
   '/cars/mercedes-maybach-gls-600-rental-miami-rear-cabin-tray-tables.jpg':
     'Rear cabin of the Mercedes-Maybach GLS 600 rental with fold-out tray tables and the dashboard beyond',
+  // Re-checked 25 Nov 2026 for the Art Basel post. Palms are in the rear
+  // window; nothing in the frame names a neighborhood, so the city stays out.
   '/cars/mercedes-maybach-gls-600-rental-miami-rear-executive-seats.jpg':
-    'Rear executive seats of the Mercedes-Maybach GLS 600 rental with tray tables and center console',
+    'Black leather rear executive seats of the Mercedes-Maybach GLS 600 rental, white stitching and purple ambient light, fold-out tray tables, and the Maybach emblem on the center console, with palm trees through the rear window',
   '/cars/mercedes-maybach-gls-600-rental-miami-rear-quarter.jpg':
     'Black Mercedes-Maybach GLS 600 rental from a low rear three-quarter angle, palms and clouds behind',
   '/cars/mercedes-maybach-gls-600-rental-miami-side-skyline.jpg':
@@ -193,8 +195,11 @@ const ALT = {
   // --- Blog hero (viewed before writing) ------------------------------------
   // No identifiable Miami landmark in frame, so the location is left out per
   // the rule at the top of this file.
+  // Re-checked 25 Nov 2026 against the 3:2 hero crop. Palms sit at the left
+  // edge with other trees; the wall graphic is a pink oval, not a landmark,
+  // so no Miami Beach claim.
   '/cars/lamborghini-urus-rental-miami-front-quarter.jpg':
-    'Purple Lamborghini Urus rental parked on a palm-lined side street beside a muraled concrete wall, front three-quarter view',
+    'Purple Lamborghini Urus rental in a front three-quarter view, parked on concrete beside a beige wall with a pink oval graphic, trees, a utility pole, and a traffic cone to the left',
 
   // --- Maybach landing-page hero (viewed before writing) --------------------
   // The skyline across the water is named because it is plainly in frame; the
