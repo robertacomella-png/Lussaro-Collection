@@ -49,6 +49,7 @@ When an agency asks how edits are tracked, this is the answer.
 | /best-exotic-car-rental-miami | Lussaro | locked | SEO landing copy. |
 | /blog/lamborghini-huracan-sto-vs-evo-rental-miami | Lussaro | locked | Published 15 Nov 2026, 1,863 words, 54/54 on the verifier. Three-way Huracán comparison that recommends the STO on the owner's instruction while naming where the EVO or Spyder fits better. Prices, deposits and ages render from fleet.js and cars.js. Edit sections, never regenerate. |
 | /blog/how-old-do-you-have-to-be-to-rent-an-exotic-car-in-miami | Lussaro | locked | Published 15 Nov 2026, 1,569 words, 54/54 on the verifier. Rental-age guide: 18+ on every car except the STO (21), both derived from rental-terms.js and cars.js. Cites Florida s. 322.38. Edit sections, never regenerate. |
+| /blog/luxury-car-rental-miami-beach-art-basel | Lussaro | locked | Published 25 Nov 2026, 2,841 words. Art Basel week on Miami Beach: Urus, Maybach GLS 600, and Mercedes-Benz S580. Specs, age, and the cancellation window render from fleet.js and rental-terms.js. Edit sections, never regenerate. |
 | /lamborghini-rental-miami | Lussaro | locked | SEO landing copy. Owns the Lamborghini commercial cluster. |
 | /rolls-royce-rental-miami | Lussaro | locked | SEO landing copy. |
 | /g-wagon-rental-miami | Lussaro | locked | SEO landing copy. |
@@ -114,3 +115,4 @@ A `locked` file stays locked after an approval. Approval covers one snapshot of 
 | Path | Blob | Approved | What |
 |---|---|---|---|
 | luxe-drive-flow/src/pages/privacy.astro | 238227bbcd0eb0d790ce1f2f63e5da0f8ba43b30 | Robert, 25 Nov 2026 | One list item in section 1: ad click identifiers and campaign parameters from the visit are stored with the enquiry to measure advertising. |
+| luxe-drive-flow/src/pages/blog/luxury-car-rental-miami-beach-art-basel.astro | c96a9b96302b8cb7231186d73d589f9e4bcfc505 | Reviewer, 25 Nov 2026 | First publication. Title tag uses the short Lussaro suffix. CTA subtitle asks for the car, the dates, and the hotel. |

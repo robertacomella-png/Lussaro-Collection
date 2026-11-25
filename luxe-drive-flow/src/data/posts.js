@@ -16,6 +16,18 @@
 
 export const posts = [
   {
+    slug: 'luxury-car-rental-miami-beach-art-basel',
+    title: 'Luxury Car Rental Miami Beach for Art Basel',
+    excerpt:
+      'For Art Basel week we deliver a Lamborghini Urus, a Mercedes-Maybach GLS 600, or a Mercedes-Benz S580 to Miami Beach. Which one fits depends on who is driving.',
+    published: '2026-11-25',
+    updated: '2026-11-25',
+    hero: '/cars/lamborghini-urus-rental-miami-front-quarter.jpg',
+    cluster: 'Art Basel',
+    readingMinutes: 11,
+    relatedCars: ['lamborghini-urus', 'mercedes-maybach-gls-600', 'mercedes-s580'],
+  },
+  {
     slug: 'how-old-do-you-have-to-be-to-rent-an-exotic-car-in-miami',
     title: 'Miami Exotic Car Rental 18+: Rent at 18 With Us',
     excerpt:
