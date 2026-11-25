@@ -22,7 +22,8 @@ import {
   roundTripSummary,
   discountSummary,
 } from '@/data/rental-terms';
-import { reviews, reviewCount, averageRating } from '@/data/reviews';
+import { reviews } from '@/data/reviews';
+import { googleCountLabel, googleRatingLabel } from '@/data/google-rating';
 import { business } from '@/data/business';
 
 const { deposit, mileage, minimumAge, insurance, cancellation, collection } = rentalTerms;
@@ -206,7 +207,7 @@ const listSchema = {
   <p>Rates fall on longer bookings — {discountSummary} — and {depositException ? `every car carries the same ${mileage.includedPerDay} miles a day and the same deposit, except ${depositException}, so the main variable between them is the one in the first column` : `every car carries the same deposit and the same ${mileage.includedPerDay} miles a day, so the only variable between them is the one in the first column`}.</p>
 
   <h2>What renters have said</h2>
-  <p>{averageRating.toFixed(1)} out of 5 across {reviewCount} reviews on Google, reproduced word for word and never edited by us. Two of them:</p>
+  <p>{googleRatingLabel} out of 5 across {googleCountLabel()} reviews on Google. The ones quoted here are reproduced word for word and never edited by us. Two of them:</p>
   {/* figure/blockquote/figcaption rather than two <p> inside one <blockquote>:
       Tailwind Typography hangs open-quote on a blockquote's first paragraph and
       close-quote on its last, so an attribution paragraph inside the quote took

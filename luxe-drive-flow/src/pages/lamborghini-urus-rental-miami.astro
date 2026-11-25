@@ -21,7 +21,8 @@ import CarGallery from '@/components/fleet/CarGallery.jsx';
 import { altFor } from '@/data/image-alt';
 import { cars } from '@/data/cars';
 import { rentalTerms, deliveryEachWaySummary } from '@/data/rental-terms';
-import { reviews, averageRating } from '@/data/reviews';
+import { reviews } from '@/data/reviews';
+import { googleRatingLabel } from '@/data/google-rating';
 import { business, telHref, whatsappWith } from '@/data/business';
 
 const SITE = 'https://www.lussarocollection.com';
@@ -209,7 +210,7 @@ const faqSchema = {
           </div>
 
           <p class="text-white/50 text-sm mt-5">
-            <span class="text-[#ff1516]" aria-hidden="true">★</span> {averageRating.toFixed(1)} on Google
+            <span class="text-[#ff1516]" aria-hidden="true">★</span> {googleRatingLabel} on Google
             <span aria-hidden="true"> · </span>Owner operated
             <span aria-hidden="true"> · </span>Replies usually take minutes
           </p>

@@ -9,6 +9,8 @@ import FleetCollection from '@/components/fleet/FleetCollection.astro';
 import QuoteDialog from '@/components/site/QuoteDialog.astro';
 import { Phone, Tag } from 'lucide-react';
 import { business, telHref } from '@/data/business';
+import { googleRatingLabel } from '@/data/google-rating';
+import GoogleStars from '@/components/reviews/GoogleStars.astro';
 import { cars } from '@/data/cars';
 import { rentalTerms, deliveryEachWaySummary, discountSummary } from '@/data/rental-terms';
 
@@ -290,7 +292,7 @@ const fleetSchema = {
             going in the marque line: it is a reassurance, not a product list,
             so it belongs beside the rating where people look for one. */}
         <div class="mt-5 flex items-center justify-center md:justify-start gap-3 text-sm text-white/55">
-          <span class="text-[#ff1516]">★★★★★</span> 5.0 Google · Delivered to your door
+          <GoogleStars class="text-[#ff1516]" /> {googleRatingLabel} Google · Delivered to your door
         </div>
 
         {/* The cue replaces the white "See Cars & Prices" pill on mobile too —
@@ -374,8 +376,8 @@ const fleetSchema = {
     <!-- TODO: add 2–3 real customer testimonials when available -->
     <div class="reveal max-w-3xl mx-auto px-5 md:px-8 text-center">
       <p class="text-[#e00e10] tracking-[0.3em] uppercase text-xs mb-4">Trusted in Miami</p>
-      <p class="text-[#e00e10] text-3xl mb-5">★★★★★</p>
-      <p class="font-display text-2xl md:text-3xl font-semibold leading-snug">Rated 5.0 on Google</p>
+      <p class="text-[#e00e10] text-3xl mb-5"><GoogleStars /></p>
+      <p class="font-display text-2xl md:text-3xl font-semibold leading-snug">Rated {googleRatingLabel} on Google</p>
       <p class="text-[#0a0a0a]/60 mt-4 max-w-md mx-auto">White-glove delivery, immaculate vehicles, and concierge service across South Beach and Brickell.</p>
       <a href={business.googleMaps} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 mt-6 text-[#0a0a0a] border-b border-[#0a0a0a]/30 hover:border-[#e00e10] pb-1 transition">Read our Google reviews →</a>
     </div>

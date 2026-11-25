@@ -21,7 +21,8 @@ import CarGallery from '@/components/fleet/CarGallery.jsx';
 import { altFor } from '@/data/image-alt';
 import { cars } from '@/data/cars';
 import { rentalTerms, deliveryEachWaySummary } from '@/data/rental-terms';
-import { reviews, averageRating, reviewCount } from '@/data/reviews';
+import { reviews, reviewCount } from '@/data/reviews';
+import { googleCountLabel, googleRatingLabel } from '@/data/google-rating';
 import { business, telHref, whatsappWith } from '@/data/business';
 
 const SITE = 'https://www.lussarocollection.com';
@@ -186,7 +187,7 @@ const faqSchema = {
           </div>
 
           <p class="text-white/50 text-sm mt-5">
-            <span class="text-[#ff1516]" aria-hidden="true">★</span> {averageRating.toFixed(1)} on Google
+            <span class="text-[#ff1516]" aria-hidden="true">★</span> {googleRatingLabel} on Google
             <span aria-hidden="true"> · </span>Owner operated
             <span aria-hidden="true"> · </span>Replies usually take minutes
           </p>
@@ -291,7 +292,7 @@ const faqSchema = {
           What people say about the service
         </h2>
         <p class="text-[#0a0a0a]/60 mt-3">
-          {averageRating.toFixed(1)} across every review we have.
+          {googleRatingLabel} on Google, across {googleCountLabel()} reviews.
         </p>
         <div class="grid md:grid-cols-2 gap-6 mt-9">
           {serviceReviews.slice(0, 2).map((r) => (

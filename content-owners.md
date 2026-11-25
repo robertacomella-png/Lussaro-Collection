@@ -87,7 +87,7 @@ When an agency asks how edits are tracked, this is the answer.
 | src/data/neighborhood-content.js | SEO | review | |
 | src/data/posts.js | SEO | review | The blog registry. A post missing from here is invisible — never remove an entry for a post that is still published. |
 | src/data/meta.json | SEO | review | Titles and meta descriptions, edited through the CMS. The two modules that read it are thin wrappers. |
-| src/data/google-rating.js | Lussaro | review | Google Business Profile rating and review count, read by hand from the listing (4.8 from 24 on 15 Nov 2026). Shown rounded down to the nearest ten ("20+") on the owner's instruction. Update when the listing changes; never derive it from reviews.js. |
+| src/data/google-rating.js | Lussaro | review | Google Business Profile rating and review count, read by hand from the listing (4.8 from 25 on 25 Nov 2026). Visible copy says the verified count with a plus ("25+"). Structured data uses the exact count. Update when the listing changes; never derive it from reviews.js. |
 | src/data/image-alt.js | shared | open | Accessibility text. |
 | src/data/booking-steps.js | shared | open | |
 | src/data/cars.js | generated | open | Derived from fleet.js and three-day-deals.json. |
@@ -114,3 +114,7 @@ A `locked` file stays locked after an approval. Approval covers one snapshot of 
 | Path | Blob | Approved | What |
 |---|---|---|---|
 | luxe-drive-flow/src/pages/privacy.astro | 238227bbcd0eb0d790ce1f2f63e5da0f8ba43b30 | Robert, 25 Nov 2026 | One list item in section 1: ad click identifiers and campaign parameters from the visit are stored with the enquiry to measure advertising. |
+| luxe-drive-flow/src/pages/reviews.astro | b0262fceeded7b67b9dbe9adca285395dac9359e | Task, 25 Nov 2026 | Header and meta only: Google rating 4.8 with a partial fifth star, and 25+ reviews. Quotes unchanged. |
+| luxe-drive-flow/src/pages/best-exotic-car-rental-miami.astro | a1ae355db25fb6f0f46b1a3e5e3fe4a25c106f2f | Task, 25 Nov 2026 | One sentence under “What renters have said”: 4.8 out of 5 across 25+ Google reviews. Quoted reviews unchanged. |
+| luxe-drive-flow/src/pages/chauffeur-service-miami.astro | 091064cf258f0d3a457dab706cab8c32635cde73 | Task, 25 Nov 2026 | Hero trust line and the trust-strip figure: 5.0 replaced with 4.8. Partial fifth star on the hero line. |
+| luxe-drive-flow/src/pages/blog/how-much-is-a-lamborghini-rental.astro | fe3d9f9d1e66cca88d9dd9b73b7019b658940e2a | Task, 25 Nov 2026 | Hero trust line only: 5.0 on Google replaced with 4.8 and a partial fifth star. The quoted review is unchanged. |

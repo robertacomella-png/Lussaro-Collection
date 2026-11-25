@@ -8,6 +8,8 @@ import CtaBand from '@/components/site/CtaBand.astro';
 import FleetGrid from '@/components/fleet/FleetGrid.jsx';
 import LeadForm from '@/components/site/LeadForm.jsx';
 import { business, telHref, whatsappWith } from '@/data/business';
+import { googleRatingLabel } from '@/data/google-rating';
+import GoogleStars from '@/components/reviews/GoogleStars.astro';
 
 const {
   title,
@@ -65,7 +67,7 @@ const wa = whatsappWith(waMessage, { page: waPage });
       </div>
 
       <div class="mt-5 flex items-center gap-3 text-sm text-white/55">
-        <span class="text-[#ff1516]">★★★★★</span> 5.0 Google · Miami Delivery
+        <GoogleStars class="text-[#ff1516]" /> {googleRatingLabel} Google · Miami Delivery
       </div>
     </div>
   </header>

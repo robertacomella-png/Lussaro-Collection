@@ -5,7 +5,9 @@ import SmartLink from '@/components/site/SmartLink.astro';
 import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
 import CtaBand from '@/components/site/CtaBand.astro';
 import { business, whatsappWith } from '@/data/business';
-import { reviews, reviewCount, averageRating, relativeMonth } from '@/data/reviews';
+import { reviews, relativeMonth } from '@/data/reviews';
+import { googleCountLabel, googleRatingLabel } from '@/data/google-rating';
+import GoogleStars from '@/components/reviews/GoogleStars.astro';
 // Derived so every WhatsApp link says which page it was tapped from without
 // a path being threaded through each route by hand.
 const waPage = Astro.url.pathname.replace(/(.)\/$/, '$1');
@@ -34,7 +36,7 @@ const now = new Date();
 ---
 <Layout
   title="Lussaro Collection Reviews — Miami Exotic Car Rental"
-  description="What renters say about Lussaro Collection — real five-star Google reviews of our Lamborghini, Maybach and Rolls-Royce rentals in Miami."
+  description={`What renters say about Lussaro Collection — Google reviews of our Lamborghini, Maybach and Rolls-Royce rentals in Miami, rated ${googleRatingLabel} from ${googleCountLabel()} reviews.`}
 >
   <Nav />
 
@@ -45,10 +47,10 @@ const now = new Date();
         {business.brandName} Reviews
       </h1>
       <p class="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2 text-white/60 text-sm">
-        <span class="text-[#ff1516] text-base tracking-[0.15em]" aria-hidden="true">★★★★★</span>
-        <span class="text-white font-medium">{averageRating.toFixed(1)} out of 5</span>
+        <GoogleStars class="text-[#ff1516] text-base tracking-[0.15em]" />
+        <span class="text-white font-medium">{googleRatingLabel} out of 5</span>
         <span class="text-white/50">·</span>
-        <span>{reviewCount} reviews on Google</span>
+        <span>{googleCountLabel()} reviews on Google</span>
       </p>
       <p class="mt-4 text-white/60 leading-relaxed">
         Every review below was left on our Google Business Profile and is reproduced word for

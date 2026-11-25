@@ -42,6 +42,8 @@ const fleetFrom = Math.min(...cars.map((c) => c.price));
 const marques = [...new Set(cars.map((c) => c.make))].map((m) => (m === 'Mercedes-Benz' ? 'Mercedes-Maybach' : m));
 const marqueText = `${marques.slice(0, -1).join(', ')} and ${marques.at(-1)}`;
 import { business, telHref, whatsappWith } from '@/data/business';
+import { googleRatingLabel } from '@/data/google-rating';
+import GoogleStars from '@/components/reviews/GoogleStars.astro';
 // Derived so every WhatsApp link says which page it was tapped from without
 // a path being threaded through each route by hand.
 const waPage = Astro.url.pathname.replace(/(.)\/$/, '$1');
@@ -124,7 +126,7 @@ const fleetSchema = {
 
       <!-- Trust chips — the whole pitch, scannable in one second -->
       <div class="mt-6 flex flex-wrap items-center justify-center gap-2">
-        <span class="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 backdrop-blur px-4 py-1.5 text-[13px] text-white/85"><span class="text-[#ff1516]">★</span> 5.0 on Google</span>
+        <span class="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 backdrop-blur px-4 py-1.5 text-[13px] text-white/85"><span class="text-[#ff1516]">★</span> {googleRatingLabel} on Google</span>
         <span class="inline-flex items-center rounded-full border border-white/15 bg-white/5 backdrop-blur px-4 py-1.5 text-[13px] text-white/85">Door-to-door delivery</span>
         <span class="inline-flex items-center rounded-full border border-white/15 bg-white/5 backdrop-blur px-4 py-1.5 text-[13px] text-white/85">Same-day booking</span>
       </div>
@@ -285,7 +287,7 @@ const fleetSchema = {
         <p class="text-[#ff1516] tracking-[0.3em] uppercase text-xs mb-3">Reserve</p>
         <h2 class="font-display text-3xl md:text-5xl font-bold text-white tracking-tight text-balance">Lock in your dates</h2>
         <p class="text-white/55 mt-4">Fastest on WhatsApp — or send your details and we'll confirm in minutes.</p>
-        <a href={business.googleMaps} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 mt-4 text-sm text-white/55 hover:text-white transition"><span class="text-[#ff1516]">★★★★★</span> 5.0 on Google — read reviews →</a>
+        <a href={business.googleMaps} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 mt-4 text-sm text-white/55 hover:text-white transition"><GoogleStars class="text-[#ff1516]" /> {googleRatingLabel} on Google — read reviews →</a>
       </div>
       <div class="reveal flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-10">
         <a href={wa} data-cta="fleet_reserve" target="_blank" rel="noopener noreferrer" class="flex-1 inline-flex items-center justify-center gap-2 bg-white text-black px-7 py-4 rounded-full font-semibold hover:bg-[#ff1516] transition">
