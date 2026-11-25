@@ -1,6 +1,6 @@
 import { Resend } from 'resend';
 import { clientLeadId, dashboardAttribution, resolveLeadId } from '../../lib/attribution.js';
-import { sendMetaLead } from '../../lib/meta-capi.js';
+import { metaCapiConfigured, sendMetaLead } from '../../lib/meta-capi.js';
 
 // Server endpoint — runs as a Vercel serverless function (not prerendered).
 //
@@ -52,6 +52,18 @@ function clientAddress(request) {
   const xff = request.headers.get('x-forwarded-for') || '';
   const first = xff.split(',')[0].trim();
   return first || request.headers.get('x-real-ip') || '';
+}
+
+// Keep the Meta call alive after the response without making the visitor wait.
+// A missing @vercel/functions must not take the lead endpoint down with it.
+function handOff(promise) {
+  const guarded = Promise.resolve(promise).catch(() => {});
+  import('@vercel/functions')
+    .then((mod) => {
+      if (mod && typeof mod.waitUntil === 'function') mod.waitUntil(guarded);
+    })
+    .catch(() => {});
+  return guarded;
 }
 
 function eventSourceUrl(landing, request) {
@@ -200,25 +212,21 @@ export async function POST({ request }) {
 
   const leadId = resolveLeadId({ dashboardOk: dashboard.ok, body: dashboard.body, sentId });
 
-  // Meta CAPI is a no-op until META_CAPI_ACCESS_TOKEN is set. It never
-  // changes the response, and it shares leadId with the browser event.
-  if (leadId && dashboard.ok) {
+  // No token: skip. With a token, send after the response. eventId is the
+  // same lead id the browser puts on generate_lead. A Meta failure stays here.
+  if (leadId && dashboard.ok && metaCapiConfigured()) {
     const last = forwarded.attribution?.last_touch || {};
     const first = forwarded.attribution?.first_touch || {};
-    try {
-      await sendMetaLead({
-        eventId: leadId,
-        email,
-        phone,
-        fbc: last.fbc || first.fbc || '',
-        fbp: last.fbp || first.fbp || '',
-        eventSourceUrl: eventSourceUrl(last.landing_page || first.landing_page || '', request),
-        ip: clientAddress(request),
-        userAgent: request.headers.get('user-agent') || '',
-      });
-    } catch {
-      // Already swallowed inside sendMetaLead. Keep the lead response.
-    }
+    handOff(sendMetaLead({
+      eventId: leadId,
+      email,
+      phone,
+      fbc: last.fbc || first.fbc || '',
+      fbp: last.fbp || first.fbp || '',
+      eventSourceUrl: eventSourceUrl(last.landing_page || first.landing_page || '', request),
+      ip: clientAddress(request),
+      userAgent: request.headers.get('user-agent') || '',
+    }));
   }
 
   return json({
