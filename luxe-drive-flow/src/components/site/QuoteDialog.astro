@@ -120,6 +120,7 @@ const label = 'block text-white/60 text-xs mb-1.5';
   }</style>
 
 <script>
+  import { withAttribution } from '@/lib/attribution';
   import { trackLead } from '@/lib/track';
 
   // Delegated from document, so it keeps working across view-transition swaps
@@ -236,14 +237,14 @@ const label = 'block text-white/60 text-xs mb-1.5';
       return;
     }
     const opt = form.querySelector('#q-car').selectedOptions[0];
-    const payload = {
+    const payload = withAttribution({
       name,
       phone: phone.value,
       email: email.value,
       vehicle: fd.get('vehicle'),
       vehicle_id: opt?.dataset.dashboardId || '',
       source: form.dataset.source || 'quote_dialog',
-    };
+    }, 'QuoteDialog');
 
     btn.disabled = true;
     btn.textContent = 'Sending…';
@@ -255,7 +256,13 @@ const label = 'block text-white/60 text-xs mb-1.5';
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok || !data.ok) throw new Error(data.error || 'Something went wrong. Please call or WhatsApp us.');
-      trackLead({ vehicle: payload.vehicle || 'unspecified', lead_source: payload.source });
+      trackLead({
+        vehicle: payload.vehicle || 'unspecified',
+        lead_source: payload.source,
+        lead_id: data.lead_id,
+        email: payload.email,
+        phone: payload.phone,
+      });
       form.reset();
       d.querySelector('[data-quote-form-wrap]').classList.add('hidden');
       const done = d.querySelector('[data-quote-done]');

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Gauge, Layers, BadgeCheck, CalendarDays } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { rentalTerms } from "@/data/rental-terms";
+import { withAttribution } from "@/lib/attribution";
 import { trackLead } from "@/lib/track";
 
 // The booking card on /cars/[slug], built to the Nov 2026 booking brief.
@@ -137,7 +138,7 @@ export default function VehicleBookingCard({
       const res = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
+        body: JSON.stringify(withAttribution({
           name: name.trim(),
           phone: phone.trim(),
           vehicle: carName,
@@ -147,7 +148,7 @@ export default function VehicleBookingCard({
           dates: datesText,
           message: `Website availability check${detail}`,
           source: "car_booking_card",
-        }),
+        }, "VehicleBookingCard")),
       });
       const data = await res.json();
       if (!res.ok || !data.ok) throw new Error(data.error || "Something went wrong.");
@@ -159,6 +160,8 @@ export default function VehicleBookingCard({
         has_dates: Boolean(start),
         rental_days: start ? days : undefined,
         estimate_value: start ? total : undefined,
+        lead_id: data.lead_id,
+        phone: phone.trim(),
       });
       setStatus("ok");
     } catch (err) {

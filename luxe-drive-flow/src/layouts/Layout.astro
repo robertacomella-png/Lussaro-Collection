@@ -337,8 +337,30 @@ const breadcrumb = breadcrumbFor(Astro.url.pathname, breadcrumbName);
       }, true);
     </script>
 
-    <!-- Auto-fire conversion events for every WhatsApp / Call CTA (mapped to Meta Pixel in GTM) -->
+    <!-- Ad click ids and UTMs. Runs on the first view and again after every
+         view transition (astro:page-load). The module guards its own errors. -->
+    <script>
+      import { campaignFields, captureAttribution } from '@/lib/attribution';
+
+      function captureAdSource() {
+        captureAttribution();
+      }
+
+      if (!window.__lcAttrBound) {
+        window.__lcAttrBound = true;
+        document.addEventListener('astro:page-load', captureAdSource);
+        window.lcCampaignFields = function () {
+          try { return campaignFields(); }
+          catch (e) { return {}; }
+        };
+      }
+      captureAdSource();
+    </script>
+
+    <!-- Auto-fire conversion events for every WhatsApp / Call CTA (mapped to Meta Pixel in GTM).
+         Campaign fields come from the stored touch. Email and phone never do. -->
     <script is:inline>
+      var LC_CAMPAIGN_KEYS = ['gclid', 'gbraid', 'wbraid', 'fbclid', 'msclkid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
       document.addEventListener('click', function (e) {
         var a = e.target.closest && e.target.closest('a[href]');
         if (!a) return;
@@ -346,10 +368,22 @@ const breadcrumb = breadcrumbFor(Astro.url.pathname, breadcrumbName);
         // breadcrumb: opening a car page from within the site means "back" is safe
         if (href.indexOf('/cars/') === 0) { try { sessionStorage.setItem('lussaroInSiteBack', '1'); } catch (e) {} }
         window.dataLayer = window.dataLayer || [];
+        var campaign = {};
+        try {
+          if (typeof window.lcCampaignFields === 'function') campaign = window.lcCampaignFields() || {};
+        } catch (err) {}
+        function pushClick(eventName) {
+          var payload = { event: eventName, cta_location: a.dataset.cta || 'unknown' };
+          for (var i = 0; i < LC_CAMPAIGN_KEYS.length; i++) {
+            var key = LC_CAMPAIGN_KEYS[i];
+            if (campaign[key]) payload[key] = campaign[key];
+          }
+          window.dataLayer.push(payload);
+        }
         if (href.indexOf('wa.me') !== -1 || href.indexOf('api.whatsapp.com') !== -1) {
-          window.dataLayer.push({ event: 'whatsapp_click', cta_location: a.dataset.cta || 'unknown' });
+          pushClick('whatsapp_click');
         } else if (href.indexOf('tel:') === 0) {
-          window.dataLayer.push({ event: 'call_click', cta_location: a.dataset.cta || 'unknown' });
+          pushClick('call_click');
         }
       });
     </script>
