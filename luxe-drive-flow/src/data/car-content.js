@@ -56,7 +56,7 @@ export const carContent = {
     ],
     faqQuestion: 'Does the Mercedes-Benz S580 need charging?',
     faqAnswer:
-      'No. It is a 48-volt mild hybrid, not a plug-in. The electrical system assists the 4.0-litre V8 and recovers energy under braking, but it never runs on electricity alone and there is nothing to plug in. Fill it with premium unleaded, 91 octane or higher, and treat it exactly like any petrol car.',
+      'No. It is a 48-volt mild hybrid, not a plug-in. The electrical system assists the 4.0-litre V8 and recovers energy under braking, but it never runs on electricity alone and there is nothing to plug in. Fill it with premium unleaded, 91 octane or higher, and treat it exactly like any gasoline car.',
     siblings: ['mercedes-maybach-gls-600', 'mercedes-maybach-s580', 'rolls-royce-cullinan'],
     category: { href: '/exotic-car-rental-miami', label: 'Exotic car rental in Miami' },
     realMoment: '',

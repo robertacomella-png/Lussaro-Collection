@@ -358,7 +358,7 @@ const faqSchema = {
               href={`/cars/${c.slug}`}
               class="mt-4 inline-flex items-center gap-1.5 text-[#e00e10] text-sm font-medium underline underline-offset-4"
             >
-              See the {c.name.replace(`${c.make} `, '')} →
+              See the {c.slug === 'mercedes-maybach-gls-600' ? cardName(c) : c.name.replace(`${c.make} `, '')} →
             </SmartLink>
           </article>
         ))}
