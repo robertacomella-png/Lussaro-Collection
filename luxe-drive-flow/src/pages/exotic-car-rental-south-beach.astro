@@ -21,7 +21,7 @@ const faqs = [
   },
   {
     q: 'What does the daily rate cover?',
-    a: `${mileage.includedPerDay} miles for every day booked, counted as one pooled allowance across the rental instead of resetting each morning. A refundable ${deposit.display} deposit is held against the car${depositException ? `, except ${depositException}` : ''} and released once it has been checked over on return.${ageException ? ` Drivers must be ${minimumAge} or over, except ${ageException}.` : ''}`,
+    a: `${mileage.includedPerDay} miles for every day booked, counted as one pooled allowance across the rental instead of resetting each morning. A refundable ${deposit.display} deposit is held against the car${depositException ? `, except ${depositException}` : ''} and released once it has been checked over on return.${ageException ? ` Drivers must be ${minimumAge} or over, except ${ageException}.` : ''}`.replaceAll('Huracan', 'Huracán'),
   },
 ];
 
