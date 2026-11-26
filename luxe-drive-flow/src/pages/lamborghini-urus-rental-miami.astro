@@ -20,9 +20,10 @@ import BookingRequestCard from '@/components/booking/BookingRequestCard.jsx';
 import CarGallery from '@/components/fleet/CarGallery.jsx';
 import { altFor } from '@/data/image-alt';
 import { cars } from '@/data/cars';
-import { rentalTerms, deliveryEachWaySummary } from '@/data/rental-terms';
-import { reviews, averageRating } from '@/data/reviews';
+import { rentalTerms, deliverySummary, rateForDays } from '@/data/rental-terms';
+import { contentFor } from '@/data/car-content';
 import { business, telHref, whatsappWith } from '@/data/business';
+import { getImageKitSrc, getImageKitSrcSet } from '@/lib/imageKit';
 
 const SITE = 'https://www.lussarocollection.com';
 
@@ -33,11 +34,15 @@ const onSale = urus.wasPrice > urus.price;
 const milesPerDay = urus.miles ?? rentalTerms.mileage.includedPerDay;
 const overage = rentalTerms.mileage.overagePerMile;
 const tiers = urus.discountTiers ?? rentalTerms.discountTiers;
-const weekPct = tiers.reduce((acc, t) => (7 >= t.days ? t.pct : acc), 0);
-const miamiDelivery = rentalTerms.delivery.find((d) => d.area === 'Miami');
-
-// Only reviews naming this marque. One today; a second appears on its own.
-const uruReviews = reviews.filter((r) => (r.car ?? '').includes('Lamborghini'));
+const taxPct = Math.round(rentalTerms.taxesAndFeesRate * 100);
+const usd = (n) => n.toLocaleString('en-US');
+const perDay = (days) => rateForDays(urus.price, days, tiers).perDay;
+const rateRows = [
+  { label: `1–${tiers[0].days - 1} days`, days: 1 },
+  ...tiers.map((t) => ({ label: `${t.days}+ days`, days: t.days })),
+];
+const threeDay = perDay(tiers[0].days);
+const urusFacts = contentFor(urus.slug);
 
 // The car's own shots plus the Urus gallery, which already carries written alt
 // text in image-alt.js — the Metromover shot is excluded because it is two cars.
@@ -81,15 +86,33 @@ const objections = [
   },
   {
     q: 'Can you deliver it?',
-    a: `Delivery ${deliveryEachWaySummary}. Collection at the end is charged separately, so budget roughly double for a round trip. Hotels, Brickell addresses, South Beach and both airports are routine.`,
+    a: `Delivery is ${deliverySummary}, each way. Collection is typically the same fee, confirmed in the quote. Hotels, Brickell addresses, South Beach and both airports are routine.`,
+  },
+  {
+    q: 'How much does it cost to rent the Urus in Miami?',
+    a: `$${usd(perDay(1))} a day, with ${milesPerDay} miles included. Book ${tiers[0].days} days or more and it is $${usd(perDay(tiers[0].days))} a day, $${usd(perDay(tiers[1].days))} a day at ${tiers[1].days} days, or $${usd(perDay(tiers[2].days))} a day at ${tiers[2].days} days. Taxes and fees of ${taxPct}% are added. The ${rentalTerms.deposit.display} deposit is refundable and held separately.`,
+  },
+  ...(urusFacts?.faqAnswer
+    ? [{ q: urusFacts.faqQuestion, a: urusFacts.faqAnswer }]
+    : []),
+  {
+    q: 'Do you rent other Lamborghinis besides the Urus?',
+    parts: [
+      'Yes. The full Lamborghini list, including the Huracan, is on ',
+      { href: '/lamborghini-rental-miami/', label: 'Lamborghini rental Miami' },
+      '. This page is only for the Urus.',
+    ],
   },
 ];
+
+const faqText = (o) => (o.parts ? o.parts.map((p) => (typeof p === 'string' ? p : p.label)).join('') : o.a);
+for (const o of objections) if (!o.a) o.a = faqText(o);
 
 const productSchema = {
   '@context': 'https://schema.org',
   '@type': 'Product',
   name: `${urus.make} ${urus.name.replace(`${urus.make} `, '')} Rental — Miami`,
-  description: `Rent the Lamborghini Urus in Miami at $${priceDisplay} a day. ${urus.power} hp, ${urus.zeroToSixty} to 60, delivered across Miami.`,
+  description: `Rent the Lamborghini Urus in Miami at $${priceDisplay} a day, or $${usd(threeDay)} a day for ${tiers[0].days} days or more. ${urus.power} hp, ${urus.zeroToSixty} to 60, delivered across Miami.`,
   image: urus.images.filter((i) => i.startsWith('/cars/')).map((i) => `${SITE}${i}`),
   brand: { '@type': 'Brand', name: urus.make },
   sku: `LC-${urus.slug.toUpperCase()}-LP`,
@@ -107,22 +130,6 @@ const productSchema = {
     { '@type': 'PropertyValue', name: '0–60 mph', value: parseFloat(urus.zeroToSixty), unitCode: 'SEC', unitText: 'seconds' },
     { '@type': 'PropertyValue', name: 'Included mileage', value: milesPerDay, unitCode: 'SMI', unitText: 'miles per day' },
   ],
-  // Legitimate only because the quote it describes is rendered on this page.
-  ...(uruReviews.length
-    ? {
-        aggregateRating: {
-          '@type': 'AggregateRating',
-          ratingValue: (uruReviews.reduce((a, r) => a + r.rating, 0) / uruReviews.length).toFixed(1),
-          reviewCount: uruReviews.length,
-        },
-        review: uruReviews.map((r) => ({
-          '@type': 'Review',
-          author: { '@type': 'Person', name: r.name },
-          reviewRating: { '@type': 'Rating', ratingValue: r.rating, bestRating: 5 },
-          reviewBody: r.text,
-        })),
-      }
-    : {}),
 };
 
 const faqSchema = {
@@ -131,13 +138,13 @@ const faqSchema = {
   mainEntity: objections.map((o) => ({
     '@type': 'Question',
     name: o.q,
-    acceptedAnswer: { '@type': 'Answer', text: o.a },
+    acceptedAnswer: { '@type': 'Answer', text: faqText(o) },
   })),
 };
 ---
 <Layout
-  title="Lamborghini Urus Rental Miami | Lussaro Collection"
-  description={`Rent the Lamborghini Urus in Miami at $${priceDisplay} a day — ${urus.power} hp and ${urus.zeroToSixty} to 60. ${milesPerDay} miles a day included, ${rentalTerms.deposit.display} refundable deposit, delivered across Miami.`}
+  title={`Lamborghini Urus Rental Miami from $${priceDisplay} a Day | Lussaro Collection`}
+  description={`Rent the Lamborghini Urus in Miami at $${priceDisplay} a day, or $${usd(threeDay)} a day for ${tiers[0].days} days or more. ${urus.power} hp, ${urus.zeroToSixty} to 60, ${milesPerDay} miles included, ${rentalTerms.deposit.display} deposit, delivered across Miami.`}
   breadcrumbName="Lamborghini Urus Rental Miami"
   schema={[productSchema, faqSchema]}
 >
@@ -149,6 +156,9 @@ const faqSchema = {
       <h1 class="font-display text-center text-[2rem] leading-[1.08] md:text-5xl lg:text-[3.4rem] font-bold tracking-tight text-white uppercase">
         Lamborghini Urus Rental Miami
       </h1>
+      <p class="text-white/70 text-center text-base md:text-lg leading-relaxed mt-4 max-w-2xl mx-auto">
+        Rent the Lamborghini Urus in Miami for ${priceDisplay} a day, or ${usd(threeDay)} a day for {tiers[0].days} days or more. The other Lamborghinis we rent are on the <SmartLink href="/lamborghini-rental-miami/" class="text-white underline decoration-white/40 underline-offset-4 hover:decoration-white">Lamborghini rental Miami</SmartLink> page.
+      </p>
 
       <div class="grid lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] gap-8 lg:gap-12 items-start mt-9 md:mt-12">
         <div>
@@ -161,6 +171,7 @@ const faqSchema = {
             ${priceDisplay}
             <span class="text-white/45 text-xl font-sans font-normal tracking-normal"> / day</span>
           </p>
+          <p class="text-white/70 text-sm mt-2">${usd(threeDay)} a day for {tiers[0].days} days or more</p>
           {onSale && (
             <p class="text-white/50 text-sm mt-1.5">
               <span class="line-through">${urus.wasPrice.toLocaleString('en-US')}</span>
@@ -184,33 +195,33 @@ const faqSchema = {
             <div>
               <p class="text-white/55 text-[11px] uppercase tracking-[0.16em]">0–60</p>
               <p class="font-display text-white text-3xl font-bold mt-1.5">{urus.zeroToSixty}</p>
-              <p class="text-white/55 text-sm mt-0.5">{urus.seats} seats</p>
+              <p class="text-white/55 text-sm mt-0.5">Seat layout confirmed before you book</p>
             </div>
           </div>
 
           <div class="mt-8 flex flex-col sm:flex-row lg:flex-col gap-3 justify-center lg:justify-start">
             <a
+              href="#quote"
+              class="inline-flex items-center justify-center bg-white text-black px-7 py-4 rounded-full font-semibold hover:bg-[#ff1516] hover:text-white transition sm:flex-1 lg:flex-none"
+            >
+              Reserve the Urus
+            </a>
+            <a
               href={wa}
               data-cta="urus_hero"
               target="_blank"
               rel="noopener noreferrer"
-              class="inline-flex items-center justify-center gap-2 bg-white text-black px-7 py-4 rounded-full font-semibold hover:bg-[#ff1516] hover:text-white transition sm:flex-1 lg:flex-none"
-            >
-              Message us <span class="w-2 h-2 rounded-full bg-[#1f7a3f]"></span>
-            </a>
-            <a
-              href={telHref}
-              data-cta="urus_hero"
-              data-call-inline
               class="inline-flex items-center justify-center border border-white/25 text-white px-7 py-4 rounded-full font-medium hover:border-[#ff1516] hover:text-[#ff1516] transition sm:flex-1 lg:flex-none"
             >
-              Call {business.phoneDisplayShort}
+              WhatsApp
             </a>
           </div>
+          <p class="text-white/70 text-sm mt-4">
+            Or call <a href={telHref} data-cta="urus_hero" data-call-inline class="text-white underline decoration-white/40 underline-offset-4 hover:decoration-white">{business.phoneDisplay}</a>
+          </p>
 
           <p class="text-white/50 text-sm mt-5">
-            <span class="text-[#ff1516]" aria-hidden="true">★</span> {averageRating.toFixed(1)} on Google
-            <span aria-hidden="true"> · </span>Owner operated
+            Owner operated
             <span aria-hidden="true"> · </span>Replies usually take minutes
           </p>
         </div>
@@ -219,7 +230,7 @@ const faqSchema = {
   </header>
 
   {/* ============ 2. THE ASK ========================================== */}
-  <section id="quote" class="bg-[#ffffff] py-16 md:py-24">
+  <section id="quote" class="bg-[#ffffff] py-16 md:py-24 scroll-mt-28">
     <div class="max-w-[1240px] mx-auto px-5 md:px-8">
       <div class="grid lg:grid-cols-[1fr_minmax(0,460px)] gap-10 lg:gap-14 items-center">
         <div class="text-[#0a0a0a]">
@@ -253,39 +264,68 @@ const faqSchema = {
             client:visible
             pricePerDay={urus.price}
             carName={urus.name}
+            vehicleId={urus.dashboardId || null}
             tiers={tiers}
             milesPerDay={milesPerDay}
+            source="/lamborghini-urus-rental-miami"
             allowDates={false}
           />
+          <p class="text-center mt-4">
+            <a href={wa} data-cta="urus_form" target="_blank" rel="noopener noreferrer" class="inline-flex items-center min-h-[48px] text-white text-sm underline decoration-white/40 underline-offset-4 hover:decoration-white">WhatsApp</a>
+          </p>
         </div>
       </div>
     </div>
   </section>
 
-  {/* ============ 3. PROOF ============================================ */}
-  {uruReviews.length > 0 && (
-    <section class="bg-[#0a0a0a] py-14 md:py-20">
-      <div class="max-w-[1240px] mx-auto px-5 md:px-8">
-        <h2 class="font-display text-2xl md:text-3xl font-bold tracking-tight text-white">
-          People who booked a Lamborghini
+  <section id="rates" class="bg-[#0a0a0a] py-16 md:py-20">
+    <div class="max-w-[1180px] mx-auto px-5 md:px-8 grid lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] gap-10 lg:gap-14 items-center">
+      <div>
+        <h2 class="font-display text-3xl md:text-4xl font-bold tracking-tight text-white">
+          What it costs to rent the Urus in Miami
         </h2>
-        <div class="grid md:grid-cols-2 gap-5 mt-7">
-          {uruReviews.slice(0, 2).map((r) => (
-            <figure class="rounded-[22px] bg-[#0f0f0f] border border-white/10 p-6">
-              <div class="text-[#ff1516]" aria-hidden="true">★★★★★</div>
-              <blockquote class="text-white/70 leading-relaxed mt-3 text-[15px]">{r.text}</blockquote>
-              <figcaption class="text-white/55 text-xs mt-4">
-                {r.name}<span aria-hidden="true"> · </span>{r.car}
-              </figcaption>
-            </figure>
-          ))}
-        </div>
-        <p class="text-white/50 text-sm mt-6">
-          <SmartLink href="/reviews" class="text-white underline decoration-white/30 underline-offset-4 hover:decoration-white transition">Read every review we have</SmartLink>
+        <p class="text-white/70 leading-relaxed mt-4">
+          ${usd(urus.price)} a day, or ${usd(threeDay)} a day for {tiers[0].days} days or more. The {rentalTerms.deposit.display} deposit is refundable and held separately. Taxes and fees of {taxPct}% are added to the rental.
+        </p>
+        <table class="w-full text-left text-[15px] mt-6">
+          <thead>
+            <tr class="text-white/60 text-xs uppercase tracking-[0.14em]">
+              <th scope="col" class="py-2 pr-3 font-medium">Length</th>
+              <th scope="col" class="py-2 pl-3 font-medium text-right">Urus, per day</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rateRows.map((row) => (
+              <tr class="border-t border-white/10">
+                <th scope="row" class="py-3 pr-3 text-white/80 font-medium">{row.label}</th>
+                <td class="py-3 pl-3 text-right text-white">${usd(perDay(row.days))}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <p class="text-white/70 leading-relaxed mt-5 text-[15px]">
+          {milesPerDay} miles a day, pooled. Additional miles are ${overage}. Delivery is {deliverySummary}, each way. Collection is typically the same fee.
+        </p>
+        <p class="text-white/70 leading-relaxed mt-4 text-[15px]">
+          Rates for the other Lamborghinis we rent are on{' '}
+          <SmartLink href="/lamborghini-rental-miami/" class="text-white underline decoration-white/40 underline-offset-4 hover:decoration-white">Lamborghini rental Miami</SmartLink>
+          {' '}and in{' '}
+          <SmartLink href="/blog/how-much-is-a-lamborghini-rental/" class="text-white underline decoration-white/40 underline-offset-4 hover:decoration-white">How Much Is a Lamborghini Rental?</SmartLink>
         </p>
       </div>
-    </section>
-  )}
+      <img
+        src={getImageKitSrc('/cars/lamborghini-urus-rental-miami-front-quarter.jpg', 900)}
+        srcset={getImageKitSrcSet('/cars/lamborghini-urus-rental-miami-front-quarter.jpg')}
+        sizes="(min-width: 1024px) 40vw, 100vw"
+        alt={altFor('/cars/lamborghini-urus-rental-miami-front-quarter.jpg', 'Lamborghini Urus in Miami')}
+        width="900"
+        height="600"
+        loading="lazy"
+        decoding="async"
+        class="w-full aspect-[3/2] object-cover rounded-[24px]"
+      />
+    </div>
+  </section>
 
   {/* ============ 4. COMPARE ==========================================
       One car, so there is no "which of the two" decision to resolve. The
@@ -324,7 +364,7 @@ const faqSchema = {
       <p class="text-[#0a0a0a]/65 leading-relaxed mt-10 max-w-3xl">
         The Urus also appears in our{' '}
         <SmartLink href="/blog/how-much-is-a-lamborghini-rental" class="text-[#e00e10] underline underline-offset-4">Lamborghini pricing guide</SmartLink>, and
-        the other Lamborghini we rent is on the{' '}
+        the other Lamborghinis we rent, including the Huracan, are on the{' '}
         <SmartLink href="/lamborghini-rental-miami" class="text-[#e00e10] underline underline-offset-4">Lamborghini page</SmartLink>. Full specification and
         photographs for this car sit on its{' '}
         <SmartLink href={`/cars/${urus.slug}`} class="text-[#e00e10] underline underline-offset-4">own page</SmartLink>.
@@ -342,7 +382,9 @@ const faqSchema = {
         {objections.map((o) => (
           <div class="py-6 first:pt-0">
             <h3 class="font-display text-lg md:text-xl font-semibold text-white">{o.q}</h3>
-            <p class="text-white/65 leading-relaxed mt-2.5">{o.a}</p>
+            <p class="text-white/65 leading-relaxed mt-2.5">
+              {(o.parts ?? [o.a]).map((part) => typeof part === 'string' ? part : <SmartLink href={part.href} class="text-white underline decoration-white/40 underline-offset-4 hover:decoration-white">{part.label}</SmartLink>)}
+            </p>
           </div>
         ))}
       </div>
@@ -360,7 +402,9 @@ const faqSchema = {
     page="/lamborghini-urus-rental-miami"
     message={waMessage}
     title={'Open the door and check.\nThat is the whole <span class="text-[#ff1516]">argument</span>'}
-    subtitle={`The Urus at $${priceDisplay} a day, delivered across Miami. Replies usually take minutes.`}
+    quoteHref="#quote"
+    quoteLabel="Reserve the Urus"
+    subtitle={`The Urus at $${priceDisplay} a day, or $${usd(threeDay)} a day for ${tiers[0].days} days or more, delivered across Miami.`}
   />
   <StickyMobileCta message={waMessage} car={urus.name} page="/lamborghini-urus-rental-miami" />
 </Layout>

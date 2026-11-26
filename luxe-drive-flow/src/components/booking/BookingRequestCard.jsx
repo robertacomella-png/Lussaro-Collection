@@ -36,6 +36,13 @@ const fmtDate = (s) =>
 export default function BookingRequestCard({
   pricePerDay = 0,
   carName = "",
+  // fleet.js dashboardId when this card is for one linked car. Empty string
+  // and null both mean the lead books by name.
+  vehicleId = null,
+  // When a page offers more than one bookable car (the two Maybachs), pass
+  // them here. The first entry is the default. Each item:
+  // { name, label, pricePerDay, tiers, vehicleId, milesPerDay }.
+  vehicles = null,
   tiers = rentalTerms.discountTiers,
   milesPerDay = rentalTerms.mileage.includedPerDay,
   mileageUpgrade = null,
@@ -43,7 +50,17 @@ export default function BookingRequestCard({
   // booking. Paid traffic is colder, and every extra field is a reason to
   // leave, so the ads page passes false and sends name/phone/email only.
   allowDates = true,
+  source = "ad_landing_card",
 }) {
+  const choices = Array.isArray(vehicles) && vehicles.length > 0 ? vehicles : null;
+  const [choiceIdx, setChoiceIdx] = useState(0);
+  const chosen = choices ? choices[Math.min(choiceIdx, choices.length - 1)] : null;
+  const activeName = chosen?.name || carName;
+  const activePrice = chosen?.pricePerDay ?? pricePerDay;
+  const activeTiers = chosen?.tiers ?? tiers;
+  const activeMiles = chosen?.milesPerDay ?? milesPerDay;
+  const activeVehicleId = (chosen ? chosen.vehicleId : vehicleId) || null;
+
   const [mode, setMode] = useState(allowDates ? "dates" : "flexible"); // "dates" | "flexible"
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
@@ -58,17 +75,17 @@ export default function BookingRequestCard({
   // stored a second time, so the pair cannot drift when a car is repriced.
   // Without that field the card states the one allowance instead of presenting
   // a choice the fleet does not sell.
-  const mileTiers = mileageUpgrade ? [{ milesPerDay, pricePerDay }, mileageUpgrade] : [];
+  const mileTiers = mileageUpgrade ? [{ milesPerDay: activeMiles, pricePerDay: activePrice }, mileageUpgrade] : [];
   const hasMileChoice = mileTiers.length > 1;
   // Defaults to the base tier — first in the list — so the selected rate agrees
   // with the headline price sitting directly above the card.
   const [mileIdx, setMileIdx] = useState(0);
   const mileTier = hasMileChoice ? mileTiers[mileIdx] : null;
 
-  const dayRate = mileTier ? mileTier.pricePerDay : pricePerDay;
+  const dayRate = mileTier ? mileTier.pricePerDay : activePrice;
   const dated = mode === "dates" && start;
   const days = dated ? billableDays(start, end) : 0;
-  const discountPct = dated ? pctFor(tiers, days) : 0;
+  const discountPct = dated ? pctFor(activeTiers, days) : 0;
   const subtotal = dayRate * Math.max(1, days);
   const total = Math.round(subtotal * (1 - discountPct / 100));
 
@@ -104,12 +121,13 @@ export default function BookingRequestCard({
           name: name.trim(),
           phone: phone.trim(),
           email: email.trim(),
-          vehicle: carName,
+          vehicle: activeName,
+          vehicle_id: activeVehicleId,
           start_date: dated ? start : null,
           end_date: dated && end ? end : null,
           dates: datesText,
           message: `Website booking request${detail ? ` — ${detail}` : ""}`,
-          source: "ad_landing_card",
+          source: source || "ad_landing_card",
         }, "BookingRequestCard")),
       });
       const data = await res.json();
@@ -117,7 +135,7 @@ export default function BookingRequestCard({
       // Fires lead_submit into the dataLayer and lead_created to the OpenAI
       // Pixel, so this card reports the same conversion as the contact form.
       trackLead({
-        vehicle: carName,
+        vehicle: activeName,
         lead_id: data.lead_id,
         email: email.trim(),
         phone: phone.trim(),
@@ -137,7 +155,7 @@ export default function BookingRequestCard({
         </p>
         <h3 className="font-display text-xl font-semibold text-white mb-2">Request received</h3>
         <p className="text-white/60 text-sm leading-relaxed">
-          We will confirm the {carName} for your dates shortly — usually within the hour. For the
+          We will confirm the {activeName} for your dates shortly — usually within the hour. For the
           fastest reply, message us on WhatsApp.
         </p>
       </div>
@@ -266,6 +284,27 @@ export default function BookingRequestCard({
         </div>
       )}
 
+      {choices && choices.length > 1 && (
+        <div className="mb-4">
+          <label htmlFor="lc-vehicle" className="block text-white/50 text-[11px] mb-1.5">
+            Which car
+          </label>
+          <select
+            id="lc-vehicle"
+            aria-label="Which car"
+            value={String(choiceIdx)}
+            onChange={(e) => setChoiceIdx(Number(e.target.value))}
+            className={FIELD}
+          >
+            {choices.map((c, i) => (
+              <option key={c.name} value={String(i)} className="bg-[#111]">
+                {c.label || c.name}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
+
       <p className="text-white/50 text-[11px] mb-1.5">Your details</p>
       <div className="grid grid-cols-2 gap-2.5 mb-2.5">
         <input
@@ -336,7 +375,7 @@ export default function BookingRequestCard({
       </p>
 
       <p className="text-white/50 text-[11px] text-center mt-1.5">
-        {mileTier ? mileTier.milesPerDay : milesPerDay} miles/day included
+        {mileTier ? mileTier.milesPerDay : activeMiles} miles/day included
         {rentalTerms.mileage.pooled ? ", pooled across the rental" : ""} ·{" "}
         {rentalTerms.deposit.display} deposit
       </p>

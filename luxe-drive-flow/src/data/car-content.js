@@ -22,6 +22,7 @@
 
 export const carContent = {
   'lamborghini-urus': {
+    headline: 'Lamborghini Urus: Specs, Photos and Rates',
     useCases: `The Urus is the one to take when you want the Lamborghini without giving anything up. It is an SUV, so the hotel ramps and speed bumps that make a low supercar a liability are simply not the problem they would otherwise be, and the boot swallows several large cases — around 616 litres behind the rear seats. That covers the airport run, the group heading out to dinner, and the week where you only want to hire one car. Underneath it is still a twin-turbo V8 driving all four wheels, so none of that practicality costs you the drama.`,
     goodToKnow: [
       'Adaptive air suspension with adjustable ride height — worth raising for steep driveways and ramps, since at its lowest setting ground clearance is only about 6.2 inches.',
@@ -43,7 +44,8 @@ export const carContent = {
   },
 
   'mercedes-s580': {
-    useCases: `The S580 is the quiet one, and that is precisely its job. It is the most affordable car we run at $445 a day, and the one to take when the occasion rewards arriving well rather than arriving loudly — a client meeting in Brickell, a wedding where you are not the couple, an airport run where a calm cabin beats a loud exhaust. The 4.0-litre V8 and air suspension mean it is quick and unruffled rather than theatrical. If you want the car to make an impression without making a scene, this is it.`,
+    headline: 'Mercedes-Benz S580: Specs, Photos and Rates',
+    useCases: `The S580 is the quiet one, and that is precisely its job. It is the most affordable car we run, and the one to take when the occasion rewards arriving well rather than arriving loudly — a client meeting in Brickell, a wedding where you are not the couple, an airport run where a calm cabin beats a loud exhaust. The 4.0-litre V8 and air suspension mean it is quick and unruffled rather than theatrical. If you want the car to make an impression without making a scene, this is it.`,
     goodToKnow: [
       'Standard AIRMATIC air suspension with adjustable ride height — the smoothest car in the fleet over Miami road joints.',
       'The V8 has 48-volt mild-hybrid assist, which never needs charging and cannot drive on electricity alone.',
@@ -54,7 +56,7 @@ export const carContent = {
     faqQuestion: 'Does the Mercedes-Benz S580 need charging?',
     faqAnswer:
       'No. It is a 48-volt mild hybrid, not a plug-in. The electrical system assists the 4.0-litre V8 and recovers energy under braking, but it never runs on electricity alone and there is nothing to plug in. Fill it with premium unleaded, 91 octane or higher, and treat it exactly like any petrol car.',
-    siblings: ['mercedes-maybach-gls-600', 'rolls-royce-cullinan'],
+    siblings: ['mercedes-maybach-gls-600', 'mercedes-maybach-s580', 'rolls-royce-cullinan'],
     category: { href: '/exotic-car-rental-miami', label: 'Exotic car rental in Miami' },
     realMoment: '',
     operatorNotes: '',
@@ -62,6 +64,7 @@ export const carContent = {
   },
 
   'mercedes-maybach-gls-600': {
+    headline: 'Mercedes-Maybach GLS 600: Specs, Photos and Rates',
     useCases: `The Maybach GLS 600 is the one to book when the passengers matter more than the driver. The back is the point: two reclining executive seats with powered leg and foot rests, and running boards that slide out as the door opens so nobody has to climb. That makes it the right call for airport collections, moving a client or a family in genuine comfort, or an evening where somebody else takes the wheel. It is a two-row car, so treat it as a four-seater with an exceptional back seat rather than a people carrier.`,
     goodToKnow: [
       'Two rows only — unlike the standard GLS there is no third row, so plan for four or five people, never seven.',
