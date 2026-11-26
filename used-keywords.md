@@ -12,6 +12,7 @@ This is what stops the site competing with itself — the failure mode where two
 
 | Primary keyword | Used on | Date | Cluster |
 |---|---|---|---|
+| how much to rent a maybach | [/blog/how-much-to-rent-a-maybach-miami](../luxe-drive-flow/src/pages/blog/how-much-to-rent-a-maybach-miami.astro) | 2026-11-26 | Maybach |
 | luxury car rental miami beach | [/blog/luxury-car-rental-miami-beach-art-basel](../luxe-drive-flow/src/pages/blog/luxury-car-rental-miami-beach-art-basel.astro) | 2026-11-25 | Art Basel |
 | how much is a rental lamborghini | [/blog/how-much-is-a-lamborghini-rental](../luxe-drive-flow/src/pages/blog/how-much-is-a-lamborghini-rental.astro) | 2026-08-14 | Lamborghini |
 | mercedes s580 vs maybach s580 rental miami | [/blog/mercedes-s580-vs-maybach-s580-rental-miami](../luxe-drive-flow/src/pages/blog/mercedes-s580-vs-maybach-s580-rental-miami.astro) | 2026-10-06 | Comparison |
@@ -145,6 +146,23 @@ conclusion themselves, which is the version a competitor cannot copy.
 **Left on their commercial pages:** `maybach rental miami`, `lamborghini urus rental miami`, and `exotic car rental south beach` stay targeted at `/maybach-rental-miami`, `/lamborghini-urus-rental-miami`, and `/exotic-car-rental-south-beach`. The post uses them as secondaries and links through. The Lamborghini verb phrase stays on `/lamborghini-rental-miami` and is not used here.
 
 **Do not reuse.**
+
+---
+
+### how much to rent a maybach
+**Post:** `/blog/how-much-to-rent-a-maybach-miami`
+**Date:** November 26, 2026
+
+**Secondaries used:**
+- how much is it to rent a maybach
+- how much does it cost to rent a maybach
+- how much to rent a maybach for a day
+- maybach rental price
+- maybach suv rental
+
+**Why this primary:** informational price question, 320/mo, KD 3. No page targeted it. `/maybach-rental-miami` keeps the commercial term `maybach rental miami`. This post answers the price and links through to the GLS 600, the Maybach S580, and the Mercedes-Benz S580.
+
+**Do not reuse.** Close variants that return the same SERP — "how much is it to rent a maybach", "how much does it cost to rent a maybach", and "how much to rent a maybach for a day" — stay secondaries on this post. They are not a second primary.
 
 ---
 

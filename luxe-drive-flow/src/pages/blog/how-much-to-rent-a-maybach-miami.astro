@@ -1,0 +1,636 @@
+---
+// How much to rent a Maybach in Miami. Rates, miles, deposit, delivery,
+// insurance and the chauffeur hour render from fleet.js, cars.js and
+// rental-terms.js. The draft copy is the body; do not pad it.
+
+// KEYWORD CLUSTER — must match the entry in /used-keywords.md
+//   PRIMARY:    how much to rent a maybach
+//   SECONDARY:  how much is it to rent a maybach,
+//               how much does it cost to rent a maybach,
+//               how much to rent a maybach for a day,
+//               maybach rental price, maybach suv rental
+//   /maybach-rental-miami keeps the commercial "maybach rental miami".
+
+import Layout from '@/layouts/Layout.astro';
+import Nav from '@/components/site/Nav.astro';
+import CtaBand from '@/components/site/CtaBand.astro';
+import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
+import RelatedPosts from '@/components/blog/RelatedPosts.astro';
+import BlogBookingCta from '@/components/blog/BlogBookingCta.astro';
+import { altFor } from '@/data/image-alt';
+import { cars } from '@/data/cars';
+import { reviews } from '@/data/reviews';
+import { googleRating, googleRatingLabel } from '@/data/google-rating';
+import { business, telHref, whatsappWith, addressLine, hoursSummary } from '@/data/business';
+import { rentalTerms, rateForDays } from '@/data/rental-terms';
+
+const bySlug = (s) => cars.find((c) => c.slug === s);
+const gls = bySlug('mercedes-maybach-gls-600');
+const maybachS = bySlug('mercedes-maybach-s580');
+const s580 = bySlug('mercedes-s580');
+
+const { deposit, mileage, minimumAge, cancellation, taxesAndFeesRate, chauffeurHourly, delivery } = rentalTerms;
+const perDay = mileage.includedPerDay;
+const taxPct = Math.round(taxesAndFeesRate * 100);
+const WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
+const numWord = (n) => WORDS[n] ?? String(n);
+const cap = (n) => numWord(n).replace(/^./, (c) => c.toUpperCase());
+const usd = (n) => {
+  const cents = Math.round(Number(n) * 100);
+  const hasCents = cents % 100 !== 0;
+  return (cents / 100).toLocaleString('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: hasCents ? 2 : 0,
+    maximumFractionDigits: 2,
+  });
+};
+const liters = (c) => c.drivetrain.match(/(\d+(?:\.\d+)?)L/)[1];
+const toSixty = (c) => c.zeroToSixty.replace(/s$/, ' seconds');
+const seatsCell = (c) => (c.seatsNote ? c.seatsNote : String(c.seats));
+const tier = (car, i) => car.discountTiers[i];
+const rateAt = (car, i) =>
+  i === 0 ? car.threeDayDeal : rateForDays(car.price, tier(car, i).days, car.discountTiers).perDay;
+
+const stayDays = tier(gls, 0).days;
+const stayRate = gls.threeDayDeal;
+const stayRental = stayRate * stayDays;
+const stayTax = stayRental * taxesAndFeesRate;
+const stayDelivery = delivery[0].fee * 2;
+const stayTotal = stayRental + stayTax + stayDelivery;
+const stayMiles = perDay * stayDays;
+const weekMiles = perDay * tier(gls, 2).days;
+const chauffeurExampleHours = 4;
+const chauffeurExample = chauffeurHourly.amount * chauffeurExampleHours;
+const shortStay = `${tier(gls, 0).days - 2} to ${tier(gls, 0).days - 1}`;
+
+const SITE = 'https://www.lussarocollection.com';
+const SLUG = 'how-much-to-rent-a-maybach-miami';
+const PATH = `/blog/${SLUG}`;
+const PAGE_URL = `${SITE}${PATH}`;
+
+const HERO_KEY = '/cars/mercedes-maybach-gls-600-rental-miami-front-quarter.jpg';
+const heroSrc = `/blog/${SLUG}-hero-760.webp`;
+const heroSrcSet = [560, 760, 800, 1120, 1200, 1560].map((w) => `/blog/${SLUG}-hero-${w}.webp ${w}w`).join(', ');
+const heroAlt = altFor(HERO_KEY);
+
+const fig = (name, key, height) => ({
+  src: `/blog/${SLUG}-${name}-1000.webp`,
+  srcSet: `/blog/${SLUG}-${name}-700.webp 700w, /blog/${SLUG}-${name}-1000.webp 1000w`,
+  width: 1000,
+  height,
+  alt: altFor(key),
+});
+const skyline = fig('body', '/cars/mercedes-maybach-gls-600-rental-miami-side-skyline.jpg', 666);
+const cabin = fig('cabin', '/cars/mercedes-maybach-gls-600-rental-miami-rear-cabin-tray-tables.jpg', 666);
+const seats = fig('seats', '/cars/mercedes-maybach-gls-600-rental-miami-rear-executive-seats.jpg', 666);
+const s580Photo = fig('s580', '/cars/mercedes-maybach-s580-rental-miami-executive-rear-seats.jpg', 667);
+const palms = fig('palms', '/cars/mercedes-maybach-gls-600-rental-miami-side-palms.jpg', 666);
+const rear = fig('rear', '/cars/mercedes-maybach-gls-600-rental-miami-rear-quarter.jpg', 666);
+
+const OG_IMAGE = `${SITE}/og/${SLUG}.jpg`;
+
+const PUBLISHED_ISO = '2026-11-26';
+const UPDATED_ISO = '2026-11-26';
+const published = 'November 26, 2026';
+const updated = 'November 26, 2026';
+const readingMinutes = 7;
+
+const TITLE = 'How Much to Rent a Maybach in Miami | Lussaro Collection';
+const DESCRIPTION = `How much to rent a Maybach in Miami: ${usd(gls.price)} a day, or ${usd(gls.threeDayDeal)} a day for ${tier(gls, 0).days}+ days. The GLS 600 or the S580, chauffeur from ${chauffeurHourly.display}/hour, and the fees before you book.`;
+const waMessage = 'Hi, I read your Maybach rates guide and want a GLS 600 Maybach.';
+const wa = whatsappWith(waMessage, { car: gls.name, page: PATH });
+
+const testimonial = reviews.find((r) => r.name === 'Gregory Capo');
+
+const toc = [
+  { id: 'the-maybach-rate-card', label: 'The rate card' },
+  { id: 'what-the-daily-rate-includes', label: 'What the rate includes' },
+  { id: 'gls-600-vs-s580-maybach', label: 'GLS 600 vs S580 Maybach' },
+  { id: 'chauffeur-or-self-drive', label: 'Chauffeur or self-drive' },
+  { id: 'what-a-real-booking-costs', label: 'What a booking costs' },
+  { id: 'frequently-asked-questions', label: 'FAQ' },
+];
+
+const sameMaybachRate = gls.price === maybachS.price && gls.threeDayDeal === maybachS.threeDayDeal;
+const eitherMaybach = sameMaybachRate ? 'either the Mercedes-Maybach GLS 600 or the Mercedes-Maybach S580' : 'the Mercedes-Maybach GLS 600';
+
+const faqs = [
+  {
+    q: 'How much does it cost to rent a Maybach for a day?',
+    a: `${usd(gls.price)} for one day in ${eitherMaybach}, with ${perDay} miles included. Taxes and fees of ${taxPct}% are added to the rental, and the ${deposit.display} deposit is held separately and returned after inspection.`,
+  },
+  {
+    q: 'Is it cheaper to rent a Maybach for a week?',
+    a: `Yes. The rate drops to ${usd(rateAt(gls, 0))} a day at ${tier(gls, 0).days}+ days, ${usd(rateAt(gls, 1))} a day at ${tier(gls, 1).days}+ days and ${usd(rateAt(gls, 2))} a day at ${tier(gls, 2).days}+ days. A week also includes ${weekMiles} pooled miles.`,
+  },
+  {
+    q: 'How much is a Maybach with a chauffeur in Miami?',
+    a: `From ${usd(chauffeurHourly.amount)} an hour in the Mercedes-Maybach GLS 600, including the chauffeur and fuel. Share your itinerary and we confirm an all-in rate before you book.`,
+  },
+  {
+    q: 'Do I need my own insurance to rent a Maybach?',
+    a: `You need a policy that covers the rental. If you don't have one, we can sell you a daily policy for either Maybach, from ${usd(gls.insurancePerDay.from)} to ${usd(gls.insurancePerDay.to)} a day depending on the driver.`,
+  },
+  {
+    q: 'What is the deposit on a Maybach rental?',
+    a: `${deposit.display}, refundable, taken when the booking is confirmed. It is returned after the car is inspected, less any applicable deductions for damage, extra miles, late return, cleaning or fines.`,
+  },
+];
+
+const authorSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': `${SITE}/about#robert`,
+  name: 'Robert Comella',
+  jobTitle: 'Founder',
+  url: `${SITE}/about`,
+  worksFor: { '@type': 'Organization', name: business.brandName, url: `${SITE}/` },
+};
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'How Much to Rent a Maybach in Miami',
+  description: DESCRIPTION,
+  image: OG_IMAGE,
+  datePublished: PUBLISHED_ISO,
+  dateModified: UPDATED_ISO,
+  author: { '@id': `${SITE}/about#robert` },
+  publisher: {
+    '@type': 'Organization',
+    name: business.brandName,
+    logo: { '@type': 'ImageObject', url: `${SITE}/favicon.png` },
+  },
+  mainEntityOfPage: { '@type': 'WebPage', '@id': PAGE_URL },
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+
+const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addressLine)}`;
+const jumps = [
+  ['the-maybach-rate-card', 'The rate card'],
+  ['what-the-daily-rate-includes', 'What the rate includes'],
+  ['gls-600-vs-s580-maybach', 'GLS 600 vs S580 Maybach'],
+  ['chauffeur-or-self-drive', 'Chauffeur or self-drive'],
+  ['what-a-real-booking-costs', 'What a booking costs'],
+  ['frequently-asked-questions', 'FAQ'],
+];
+---
+<Layout
+  title={TITLE}
+  description={DESCRIPTION}
+  image={OG_IMAGE}
+  type="article"
+  breadcrumbName="Maybach rates"
+  schema={[articleSchema, authorSchema, faqSchema]}
+>
+  <a
+    href="#main"
+    class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-white focus:text-black focus:px-5 focus:py-3 focus:rounded-full focus:font-semibold focus:ring-2 focus:ring-[#ff1516]"
+  >
+    Skip to content
+  </a>
+
+  <Nav />
+
+  <main id="main" tabindex="-1">
+    <header class="bg-[#0a0a0a] pt-28 md:pt-32 pb-12 md:pb-16">
+      <div class="max-w-[1140px] mx-auto px-5 md:px-8">
+        <nav aria-label="Breadcrumb" class="mb-7">
+          <ol class="flex flex-wrap items-center justify-center lg:justify-start gap-2 text-xs text-white/50">
+            <li><a href="/" class="hover:text-white transition">Home</a></li>
+            <li aria-hidden="true">/</li>
+            <li><a href="/blog" class="hover:text-white transition">Rental Guides</a></li>
+            <li aria-hidden="true">/</li>
+            <li aria-current="page" class="text-white/70">Maybach rates</li>
+          </ol>
+        </nav>
+
+        <div class="lg:grid lg:grid-cols-[1.05fr_1fr] lg:gap-12 xl:gap-16">
+          <div class="text-center lg:text-left lg:col-start-1 lg:row-start-1">
+            <p class="text-[#ff1516] tracking-[0.3em] uppercase text-xs mb-4">Maybach rates</p>
+            <h1 class="font-display text-3xl md:text-[2.75rem] xl:text-5xl font-bold tracking-tight text-white leading-[1.08] text-balance">
+              How Much to Rent a Maybach in Miami
+            </h1>
+            <p class="text-white/65 text-base md:text-lg leading-relaxed mt-5">
+              The Mercedes-Maybach GLS 600 is the car to start with. The Mercedes-Maybach S580 is the sedan at the same rate.
+            </p>
+            <p class="mt-4 text-sm">
+              <a href="/maybach-rental-miami" class="text-white underline decoration-white/40 underline-offset-2 hover:decoration-white">Maybach rental Miami</a>
+            </p>
+          </div>
+
+          <figure class="mt-8 lg:mt-0 lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:self-center">
+            <img
+              src={heroSrc}
+              srcset={heroSrcSet}
+              sizes="(min-width: 1024px) 520px, 100vw"
+              width="760"
+              height="507"
+              alt={heroAlt}
+              fetchpriority="high"
+              decoding="async"
+              class="w-full h-auto rounded-2xl"
+            />
+            <figcaption class="text-white/45 text-xs mt-3 text-center lg:text-left">
+              Mercedes-Maybach GLS 600, {usd(gls.price)} a day.
+            </figcaption>
+          </figure>
+
+          <div class="text-center lg:text-left lg:col-start-1 lg:row-start-2 lg:self-end">
+            <div class="mt-8 lg:mt-7 flex flex-wrap items-center justify-center lg:justify-start gap-x-5 gap-y-2 text-sm text-white/60">
+              <span>By <a href="/about" class="text-white underline decoration-white/30 hover:decoration-white">Robert Comella</a>, founder</span>
+              <span aria-hidden="true" class="text-white/25">|</span>
+              <span><time datetime={PUBLISHED_ISO}>{published}</time> <span aria-hidden="true">·</span> Updated <time datetime={UPDATED_ISO}>{updated}</time></span>
+              <span aria-hidden="true" class="text-white/25">|</span>
+              <span>{readingMinutes} min read</span>
+            </div>
+
+            <BlogBookingCta car={gls.name} source={PAGE_URL} whatsappHref={wa} />
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <article>
+      <div class="bg-white text-[#0a0a0a] py-12 md:py-16">
+        <div class="max-w-[1140px] mx-auto px-5 md:px-8">
+
+          <div class="not-prose mb-10 md:mb-14 rounded-2xl border border-[#e00e10]/20 bg-[#fff7f7] p-6 md:p-8 max-w-3xl">
+            <p class="text-xs uppercase tracking-[0.2em] text-[#e00e10] font-semibold mb-3">Short answer</p>
+            <p class="text-lg md:text-xl leading-relaxed">
+              <strong>
+                How much to rent a Maybach in Miami: {usd(gls.price)} a day for either car, or {usd(gls.threeDayDeal)} a day when you book {tier(gls, 0).days} days or more. Every day includes {perDay} miles. A {deposit.display} refundable deposit is held separately. If you would rather be driven, chauffeur service in the GLS 600 is from {usd(chauffeurHourly.amount)} an hour.
+              </strong>
+            </p>
+            <p class="mt-6">
+              <a href={`/cars/${gls.slug}`} class="inline-flex items-center justify-center min-h-[48px] bg-[#0a0a0a] text-white px-7 py-4 rounded-full font-semibold hover:bg-[#e00e10] transition">
+                Book now
+              </a>
+            </p>
+            <p class="mt-5 text-sm leading-relaxed">
+              <span class="font-semibold">Jump to:</span>
+              {jumps.map((j, i) => (
+                <>
+                  {i > 0 && <span aria-hidden="true"> · </span>}
+                  <a href={`#${j[0]}`} class="text-[#e00e10] underline decoration-[#e00e10]/40 underline-offset-2 hover:decoration-[#e00e10]">{j[1]}</a>
+                </>
+              ))}
+            </p>
+          </div>
+
+          <div class="lg:grid lg:grid-cols-[minmax(0,260px)_minmax(0,1fr)] lg:gap-14 xl:gap-20">
+            <aside class="mb-10 lg:mb-0">
+              <nav aria-label="Table of contents" class="not-prose lg:sticky lg:top-28 rounded-2xl border border-black/10 bg-[#fafafa] p-6">
+                <h2 class="font-display text-base font-bold mb-3">On this page</h2>
+                <ol class="grid sm:grid-cols-2 lg:grid-cols-1 gap-x-6 gap-y-2.5 text-sm">
+                  {toc.map((t, i) => (
+                    <li>
+                      <a href={`#${t.id}`} class="text-[#e00e10] hover:underline">
+                        <span class="text-black/60 tabular-nums mr-1">{i + 1}.</span>{t.label}
+                      </a>
+                    </li>
+                  ))}
+                </ol>
+              </nav>
+            </aside>
+
+            <div class="prose prose-neutral max-w-none prose-headings:font-display prose-headings:scroll-mt-28 prose-a:text-[#e00e10] prose-a:underline prose-a:decoration-[#e00e10]/40 prose-a:underline-offset-2 hover:prose-a:decoration-[#e00e10] prose-table:text-sm prose-h2:mt-12 prose-h2:pt-8 prose-h2:border-t prose-h2:border-black/10 first:prose-h2:mt-0 first:prose-h2:pt-0 first:prose-h2:border-0">
+
+        <h2 id="the-maybach-rate-card">The Maybach rate card</h2>
+
+        <p>
+          The daily rate falls automatically as the booking gets longer. Nobody has to ask for it.
+        </p>
+
+        <table>
+          <caption class="sr-only">Maybach and S580 rental rates in Miami, per day</caption>
+          <thead>
+            <tr>
+              <th scope="col">Rental length</th>
+              <th scope="col">Mercedes-Maybach GLS 600</th>
+              <th scope="col">Mercedes-Maybach S580</th>
+              <th scope="col">Mercedes-Benz S580</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row" class="font-normal">{shortStay} days</th>
+              <td>{usd(gls.price)} a day</td>
+              <td>{usd(maybachS.price)} a day</td>
+              <td>{usd(s580.price)} a day</td>
+            </tr>
+            <tr>
+              <th scope="row" class="font-normal">{tier(gls, 0).days}+ days</th>
+              <td>{usd(rateAt(gls, 0))} a day</td>
+              <td>{usd(rateAt(maybachS, 0))} a day</td>
+              <td>{usd(rateAt(s580, 0))} a day</td>
+            </tr>
+            <tr>
+              <th scope="row" class="font-normal">{tier(gls, 1).days}+ days</th>
+              <td>{usd(rateAt(gls, 1))} a day</td>
+              <td>{usd(rateAt(maybachS, 1))} a day</td>
+              <td>{usd(rateAt(s580, 1))} a day</td>
+            </tr>
+            <tr>
+              <th scope="row" class="font-normal">{tier(gls, 2).days}+ days</th>
+              <td>{usd(rateAt(gls, 2))} a day</td>
+              <td>{usd(rateAt(maybachS, 2))} a day</td>
+              <td>{usd(rateAt(s580, 2))} a day</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>
+          Rates are in USD, per day, before delivery. The full fleet sits on our <a href="/pricing">pricing and policies page</a>, and every car page shows the same numbers on its booking calendar.
+        </p>
+
+        <figure class="not-prose my-10">
+          <img src={skyline.src} srcset={skyline.srcSet} sizes="(min-width: 1140px) 760px, 100vw" width={skyline.width} height={skyline.height} alt={skyline.alt} loading="lazy" decoding="async" class="w-full h-auto rounded-2xl" />
+          <figcaption class="text-black/60 text-sm mt-3">The GLS 600 on the bay, downtown Miami across the water. This is the car the day rate is for.</figcaption>
+        </figure>
+
+        <h2 id="what-the-daily-rate-includes">What the daily rate includes</h2>
+
+        <p>The headline number is the car for 24 hours with {perDay} miles. Here is everything around it.</p>
+
+        <ul>
+          <li><strong>Miles:</strong> {perDay} a day, pooled across the booking. {cap(stayDays)} days is {stayMiles} miles to spend however you like; only the total at return counts. Past that, extra miles are {usd(mileage.overagePerMile)} each.</li>
+          <li><strong>Deposit:</strong> {deposit.display}, refundable, taken when the booking is confirmed and returned after the car is inspected.</li>
+          <li><strong>Taxes and fees:</strong> {taxPct}% of the rental subtotal, after any multi-day discount. The deposit is never part of that base.</li>
+          <li><strong>Delivery:</strong> {usd(delivery[0].fee)} in {delivery[0].area} and {usd(delivery[1].fee)} in {delivery[1].area}, each way. Collection is charged separately and is typically the same, so a Miami round trip is usually about {usd(stayDelivery)}. We deliver to hotels, residences, offices and both airports.</li>
+          <li><strong>Insurance:</strong> you need your own policy that covers the rental. If you don't have one, we can sell you a daily policy for either Maybach, from {usd(gls.insurancePerDay.from)} to {usd(gls.insurancePerDay.to)} a day. Our <a href="/blog/no-insurance-rentals-miami">guide to renting without your own insurance</a> explains how that works.</li>
+          <li><strong>Age:</strong> {minimumAge}+ with a valid driver's license.</li>
+          <li><strong>Not included:</strong> fuel, tolls and fines.</li>
+        </ul>
+
+        <p>We'd rather you read the delivery line now than find it on the invoice. One way is one way.</p>
+
+        <figure class="not-prose my-10">
+          <img src={cabin.src} srcset={cabin.srcSet} sizes="(min-width: 1140px) 760px, 100vw" width={cabin.width} height={cabin.height} alt={cabin.alt} loading="lazy" decoding="async" class="w-full h-auto rounded-2xl" />
+          <figcaption class="text-black/60 text-sm mt-3">Tray tables in the rear cabin. They come with the car, not as a line on the invoice.</figcaption>
+        </figure>
+
+        <h2 id="gls-600-vs-s580-maybach">GLS 600 vs S580 Maybach</h2>
+
+        <p>
+          All three are {numWord(gls.doors)}-door Mercedes with a {liters(gls)}-liter twin-turbo V8 and all-wheel drive. They are not the same booking. Mercedes publishes the GLS 600 as the <a href="https://www.mbusa.com/en/vehicles/class/maybach-gls/suv" target="_blank" rel="noopener noreferrer">Maybach GLS SUV</a>.
+        </p>
+
+        <table>
+          <caption class="sr-only">GLS 600, Maybach S580 and Mercedes-Benz S580 compared</caption>
+          <thead>
+            <tr>
+              <th scope="col">&nbsp;</th>
+              <th scope="col">Mercedes-Maybach GLS 600</th>
+              <th scope="col">Mercedes-Maybach S580</th>
+              <th scope="col">Mercedes-Benz S580</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row" class="font-normal">Day rate</th>
+              <td>{usd(gls.price)}</td>
+              <td>{usd(maybachS.price)}</td>
+              <td>{usd(s580.price)}</td>
+            </tr>
+            <tr>
+              <th scope="row" class="font-normal">{tier(gls, 0).days}+ day rate</th>
+              <td>{usd(rateAt(gls, 0))}</td>
+              <td>{usd(rateAt(maybachS, 0))}</td>
+              <td>{usd(rateAt(s580, 0))}</td>
+            </tr>
+            <tr>
+              <th scope="row" class="font-normal">Horsepower</th>
+              <td>{gls.power} hp</td>
+              <td>{maybachS.power} hp</td>
+              <td>{s580.power} hp</td>
+            </tr>
+            <tr>
+              <th scope="row" class="font-normal">0-60 mph</th>
+              <td>{gls.zeroToSixty}</td>
+              <td>{maybachS.zeroToSixty}</td>
+              <td>{s580.zeroToSixty}</td>
+            </tr>
+            <tr>
+              <th scope="row" class="font-normal">Seats</th>
+              <td>{seatsCell(gls)}</td>
+              <td>{seatsCell(maybachS)}</td>
+              <td>{seatsCell(s580)}</td>
+            </tr>
+            <tr>
+              <th scope="row" class="font-normal">Best for</th>
+              <td>Airport runs with luggage, a group of {numWord(gls.seats)}, being driven</td>
+              <td>The rear seat, sedan-first trips</td>
+              <td>Driving yourself to dinner</td>
+            </tr>
+            <tr>
+              <th scope="row" class="font-normal">Chauffeur</th>
+              <td>Yes, from {usd(chauffeurHourly.amount)} an hour</td>
+              <td>On request</td>
+              <td>Self-drive</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>
+          <strong>The <a href={`/cars/${gls.slug}`}>Mercedes-Maybach GLS 600</a></strong> is the one most Miami trips should start with. It is a two-row SUV built around its back seat: two reclining executive chairs with powered leg rests. It carries {numWord(gls.seats)} in comfort, and it is the car the chauffeur service uses. The rear seats do not fold and the trunk is modest, so bulky loads are out.
+        </p>
+
+        <figure class="not-prose my-10">
+          <img src={seats.src} srcset={seats.srcSet} sizes="(min-width: 1140px) 760px, 100vw" width={seats.width} height={seats.height} alt={seats.alt} loading="lazy" decoding="async" class="w-full h-auto rounded-2xl" />
+          <figcaption class="text-black/60 text-sm mt-3">Two executive chairs, not a bench. This rear seat is why the GLS 600 is the Maybach to start with.</figcaption>
+        </figure>
+
+        <p>
+          <strong>The <a href={`/cars/${maybachS.slug}`}>Mercedes-Maybach S580</a></strong> is the sedan answer. Longer than a regular S-Class, with a rear cabin split by a fixed console between two executive seats. Book it when the trip is about the back seat: dinner in Brickell, a hotel transfer on Ocean Drive.
+        </p>
+
+        <figure class="not-prose my-10">
+          <img src={s580Photo.src} srcset={s580Photo.srcSet} sizes="(min-width: 1140px) 760px, 100vw" width={s580Photo.width} height={s580Photo.height} alt={s580Photo.alt} loading="lazy" decoding="async" class="w-full h-auto rounded-2xl" />
+          <figcaption class="text-black/60 text-sm mt-3">The Maybach S580 puts the same daily rate into a sedan's back seat.</figcaption>
+        </figure>
+
+        <p>
+          <strong>The <a href={`/cars/${s580.slug}`}>Mercedes-Benz S580</a></strong> isn't a Maybach, and that is the point. Same {s580.power} hp V8, quicker to 60 than the Maybach S580 at {toSixty(s580)}, and half the price at {usd(s580.price)} a day. If you are driving yourself and the badge on the rear pillar isn't the reason for the trip, this is the better buy.
+        </p>
+
+        <p>
+          The first car Robert bought for this business was a Mercedes-Maybach GLS 600, paid for with his own savings. He chose it because it was, in his words, “an affordable exotic, so to speak,” bought on yield, not passion. That is why we will point you at the S580 when it fits. The full <a href="/blog/mercedes-s580-vs-maybach-s580-rental-miami">S580 vs Maybach S580 comparison</a> is here if you are deciding between the two sedans.
+        </p>
+
+        <h2 id="chauffeur-or-self-drive">Chauffeur or self-drive</h2>
+
+        <p>
+          A self-drive Maybach day is {usd(gls.price)}. Chauffeur service in the Mercedes-Maybach GLS 600 is from {usd(chauffeurHourly.amount)} an hour, and that rate covers the car, a professional chauffeur and fuel. We confirm an all-in rate from your itinerary before you book.
+        </p>
+
+        <p>
+          {cap(chauffeurExampleHours)} hours with a chauffeur is {usd(chauffeurExample)}, which is more than a self-drive day. The chauffeur is the right call for a night out in South Beach, when nobody in the group has to stay sober or find parking, or for an airport or private-jet pickup. We cover MIA, FLL and FBO terminals, track the flight and wait curbside.
+        </p>
+
+        <p>
+          Self-drive wins when the car is yours for the whole day or the whole trip. {cap(stayDays)} days at {usd(stayRate)} a day is cheaper than one long evening with a driver, and you get {stayMiles} miles to spend however you like.
+        </p>
+
+        <p>
+          Details on routes, airports and the Rolls-Royce Cullinan upgrade are on our <a href="/chauffeur-service-miami">Miami chauffeur service page</a>.
+        </p>
+
+        <figure class="not-prose my-10">
+          <img src={palms.src} srcset={palms.srcSet} sizes="(min-width: 1140px) 760px, 100vw" width={palms.width} height={palms.height} alt={palms.alt} loading="lazy" decoding="async" class="w-full h-auto rounded-2xl" />
+          <figcaption class="text-black/60 text-sm mt-3">The GLS 600 the chauffeur service uses. The hourly rate includes the car and the fuel.</figcaption>
+        </figure>
+
+        <h2 id="what-a-real-booking-costs">What a real booking costs</h2>
+
+        <p>Two examples, using only the published numbers.</p>
+
+        <p><strong>{cap(stayDays)} days in the GLS 600, delivered to a Miami hotel:</strong></p>
+
+        <ul>
+          <li>Rental: {stayDays} days at {usd(stayRate)} = {usd(stayRental)}</li>
+          <li>Taxes and fees at {taxPct}%: {usd(stayTax)}</li>
+          <li>Delivery and collection in Miami: typically about {usd(stayDelivery)}</li>
+          <li>Total before fuel and tolls: about {usd(stayTotal)}</li>
+          <li>Deposit: {deposit.display}, held and returned after inspection</li>
+          <li>Miles included: {stayMiles}</li>
+        </ul>
+
+        <p><strong>One evening, chauffeured, {numWord(chauffeurExampleHours)} hours:</strong></p>
+
+        <ul>
+          <li>{chauffeurExampleHours} hours at {usd(chauffeurHourly.amount)} = {usd(chauffeurExample)}, with the car, chauffeur and fuel included</li>
+          <li>We confirm the all-in rate against your itinerary before you book</li>
+        </ul>
+
+        <p>
+          If you don't have insurance that covers a rental, add the daily Maybach policy at {usd(gls.insurancePerDay.from)} to {usd(gls.insurancePerDay.to)} a day to the first example. The chauffeured booking doesn't need your policy, because you aren't driving.
+        </p>
+
+        <p>
+          Today is Thanksgiving, and the long weekend runs into Art Week. <a href="https://www.artbasel.com/miami-beach" target="_blank" rel="noopener noreferrer">Art Basel Miami Beach</a> is open to the public December 4 to 6, 2026. A Thursday-to-Sunday rental at {usd(stayRate)} a day costs less per day than two single days at {usd(gls.price)}. Cancellations within {cancellation.noRefundWithinDays} days of the start date are non-refundable, and changing dates inside that window counts as cancelling and rebooking.
+        </p>
+
+        <p>
+          For a fuller plan of that week, read our <a href="/blog/luxury-car-rental-miami-beach-art-basel">Art Basel guide to luxury car rental in Miami Beach</a>. For every Maybach in one place, see our Maybach rental Miami page.
+        </p>
+
+        <figure class="not-prose my-10">
+          <img src={rear.src} srcset={rear.srcSet} sizes="(min-width: 1140px) 760px, 100vw" width={rear.width} height={rear.height} alt={rear.alt} loading="lazy" decoding="async" class="w-full h-auto rounded-2xl" />
+          <figcaption class="text-black/60 text-sm mt-3">A Thursday-to-Sunday stay takes the {tier(gls, 0).days}-day rate, not the one-day price twice.</figcaption>
+        </figure>
+
+        <p>
+          Our published rate is the same starting number for everyone who asks. It sits on the car page, the pricing page and this post, and it comes from one file. Every car is detailed between rentals, then an ozone treatment runs through the cabin. You can check that at handover. We're rated {googleRatingLabel} on Google across {googleRating.reviewCount} reviews, and the reviews are on our car pages verbatim.
+        </p>
+
+        <figure class="not-prose my-10 rounded-2xl border border-black/10 bg-[#fafafa] p-6">
+          <blockquote class="text-[#0a0a0a]/80 leading-relaxed">
+            <p>“{testimonial.text}”</p>
+          </blockquote>
+          <figcaption class="mt-4 text-sm text-[#0a0a0a]/60">
+            <span class="text-[#e00e10]" aria-hidden="true">★★★★★</span>
+            <span class="font-semibold text-[#0a0a0a]"> {testimonial.name}</span> — verified Google review
+          </figcaption>
+        </figure>
+
+        <h2 id="frequently-asked-questions">Frequently asked questions</h2>
+
+        {faqs.map((f) => (
+          <div>
+            <h3>{f.q}</h3>
+            <p>{f.a}</p>
+          </div>
+        ))}
+
+        <p>
+          Tell us the car and the dates. If the Mercedes-Benz S580 is the better buy, that is the one we will say.
+        </p>
+
+        <div class="not-prose mt-10 flex flex-col sm:flex-row gap-3 max-w-md">
+          <a href={wa} data-cta="blog_body" target="_blank" rel="noopener noreferrer"
+             class="flex-1 inline-flex items-center justify-center min-h-[48px] bg-[#0a0a0a] text-white px-7 py-4 rounded-full font-semibold hover:bg-[#e00e10] transition">
+            Message us on WhatsApp
+          </a>
+          <a href={telHref} data-cta="blog_body" data-call-inline
+             class="flex-1 inline-flex items-center justify-center min-h-[48px] border border-[#0a0a0a]/20 text-[#0a0a0a] px-7 py-4 rounded-full font-medium hover:border-[#e00e10] hover:text-[#e00e10] transition">
+            Call {business.phoneDisplayShort}
+          </a>
+        </div>
+
+        <RelatedPosts currentSlug={SLUG} limit={1} />
+
+        <aside class="not-prose mt-12 rounded-2xl border border-black/10 bg-[#fafafa] p-6 flex flex-col sm:flex-row gap-5">
+          <img src="/favicon-96.png" width="64" height="64" alt="" aria-hidden="true"
+               loading="lazy" decoding="async"
+               class="w-16 h-16 rounded-full shrink-0 object-cover ring-1 ring-black/10" />
+          <div>
+            <p class="font-display font-bold text-lg">Robert Comella</p>
+            <p class="text-sm text-[#0a0a0a]/70 mt-1">Founder, {business.brandName}</p>
+            <p class="text-sm text-[#0a0a0a]/70 mt-3 leading-relaxed">
+              Robert founded Lussaro Collection in Miami and runs it hands-on — he answers the phone,
+              screens the renters and hands over the keys himself. The fleet started with a single
+              Mercedes-Maybach GLS 600 bought with his own savings. Every price, deposit and fee
+              quoted here is one he sets and honors personally.
+            </p>
+          </div>
+        </aside>
+
+        <aside class="not-prose mt-8 rounded-2xl border border-black/10 p-6">
+          <h2 class="font-display text-lg font-bold">Lussaro Collection</h2>
+          <dl class="mt-4 grid sm:grid-cols-2 gap-x-8 gap-y-3 text-sm">
+            <div>
+              <dt class="font-semibold">Address</dt>
+              <dd class="text-[#0a0a0a]/70">{addressLine}</dd>
+            </div>
+            <div>
+              <dt class="font-semibold">Hours</dt>
+              <dd class="text-[#0a0a0a]/70">{hoursSummary}</dd>
+            </div>
+            <div>
+              <dt class="font-semibold">Phone</dt>
+              <dd><a href={telHref} data-cta="blog_nap" class="text-[#e00e10] hover:underline">{business.phoneDisplay}</a></dd>
+            </div>
+            <div>
+              <dt class="font-semibold">Delivery area</dt>
+              <dd class="text-[#0a0a0a]/70">Miami, South Beach, Brickell, both airports. Fort Lauderdale at {usd(delivery[1].fee)} each way.</dd>
+            </div>
+          </dl>
+          <p class="mt-5">
+            <a href={mapLink} target="_blank" rel="noopener noreferrer"
+               class="inline-flex items-center gap-2 min-h-[48px] text-sm text-[#e00e10] underline decoration-[#e00e10]/40 underline-offset-2 hover:decoration-[#e00e10]">
+              Open {addressLine} in Google Maps
+            </a>
+          </p>
+        </aside>
+
+        <p class="not-prose mt-10 text-center">
+          <a href="#main" class="inline-flex items-center gap-2 min-h-[48px] px-5 py-3 text-sm text-[#0a0a0a]/60 hover:text-[#e00e10] transition">
+            <span aria-hidden="true">↑</span> Back to top
+          </a>
+        </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <CtaBand
+    title={'Published rates, both Maybachs. <span class="text-[#ff1516]">Book the GLS 600</span>'}
+    subtitle="Delivered across Miami. Send the car and the dates."
+    message={waMessage}
+    car={gls.name}
+  />
+  <StickyMobileCta message={waMessage} car={gls.name} />
+</Layout>

@@ -16,6 +16,18 @@
 
 export const posts = [
   {
+    slug: 'how-much-to-rent-a-maybach-miami',
+    title: 'How Much to Rent a Maybach in Miami',
+    excerpt:
+      'What a Mercedes-Maybach costs per day in Miami for the GLS 600 and the S580, what that rate includes, and when a chauffeur is the better call.',
+    published: '2026-11-26',
+    updated: '2026-11-26',
+    hero: '/cars/mercedes-maybach-gls-600-rental-miami-front-quarter.jpg',
+    cluster: 'Maybach',
+    readingMinutes: 7,
+    relatedCars: ['mercedes-maybach-gls-600', 'mercedes-maybach-s580', 'mercedes-s580'],
+  },
+  {
     slug: 'luxury-car-rental-miami-beach-art-basel',
     title: 'Luxury Car Rental Miami Beach for Art Basel',
     excerpt:
