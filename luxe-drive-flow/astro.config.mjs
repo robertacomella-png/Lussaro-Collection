@@ -20,7 +20,13 @@ export default defineConfig({
   server: { host: true, port: 4321 },
   // Crawlers and SEO tools probe /sitemap.xml first, but @astrojs/sitemap only
   // emits sitemap-index.xml — point one at the other rather than duplicating.
-  redirects: { '/home': '/', '/sitemap.xml': '/sitemap-index.xml' },
+  // /cars is not a page. The fleet hub is /fleet; /cars and /cars/ 404.
+  // 301 so a guessed or legacy fleet URL resolves to the hub.
+  redirects: {
+    '/home': '/',
+    '/sitemap.xml': '/sitemap-index.xml',
+    '/cars': { status: 301, destination: '/fleet' },
+  },
   // Keystatic's API route imports `getSecret` from `astro:env/server`, and that
   // virtual module only exists once an env schema is declared — without this
   // the admin shell renders but every save fails on an unresolved import.
