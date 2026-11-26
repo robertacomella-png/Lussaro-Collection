@@ -50,6 +50,7 @@ When an agency asks how edits are tracked, this is the answer.
 | /blog/lamborghini-huracan-sto-vs-evo-rental-miami | Lussaro | locked | Published 15 Nov 2026, 1,863 words, 54/54 on the verifier. Three-way Huracán comparison that recommends the STO on the owner's instruction while naming where the EVO or Spyder fits better. Prices, deposits and ages render from fleet.js and cars.js. Edit sections, never regenerate. |
 | /blog/how-old-do-you-have-to-be-to-rent-an-exotic-car-in-miami | Lussaro | locked | Published 15 Nov 2026, 1,569 words, 54/54 on the verifier. Rental-age guide: 18+ on every car except the STO (21), both derived from rental-terms.js and cars.js. Cites Florida s. 322.38. Edit sections, never regenerate. |
 | /blog/luxury-car-rental-miami-beach-art-basel | Lussaro | locked | Published 25 Nov 2026, 2,841 words. Art Basel week on Miami Beach: Urus, Maybach GLS 600, and Mercedes-Benz S580. Specs, age, and the cancellation window render from fleet.js and rental-terms.js. Edit sections, never regenerate. |
+| /blog/how-much-to-rent-a-maybach-miami | Lussaro | locked | Published 26 Nov 2026, 1,718 words, 54/54 on the verifier. Pricing guide for how much to rent a Maybach: GLS 600 and S580 Maybach rates from fleet.js and cars.js, with the Mercedes-Benz S580 as the self-drive alternative. Edit sections, never regenerate. |
 | /lamborghini-rental-miami | Lussaro | locked | SEO landing copy. Owns the Lamborghini commercial cluster. |
 | /rolls-royce-rental-miami | Lussaro | locked | SEO landing copy. |
 | /g-wagon-rental-miami | Lussaro | locked | SEO landing copy. |
@@ -121,3 +122,4 @@ A `locked` file stays locked after an approval. Approval covers one snapshot of 
 | luxe-drive-flow/src/pages/blog/no-insurance-rentals-miami.astro | 6e199c69f8d0f4f4c9b68075e324d0cde5dc2f33 | Public Relations, 25 Nov 2026 | Blog CTA change. Same hero form, no car pre-selected, See all cars. Copy unchanged. |
 | luxe-drive-flow/src/pages/blog/well-kept-exotic-car-rental-miami.astro | 85cda92d73a51ea114822c8b3058263eef55aa91 | Public Relations, 25 Nov 2026 | Blog CTA change. Same hero form, no car pre-selected, See all cars. Copy unchanged. |
 | luxe-drive-flow/src/pages/blog/how-much-is-a-lamborghini-rental.astro | b963610c05289294c0f5043cc619cf06fe4ddbc8 | Public Relations, 25 Nov 2026 | Blog CTA change. Same hero form, no car pre-selected, See all cars. Copy unchanged. |
+| luxe-drive-flow/src/pages/blog/how-much-to-rent-a-maybach-miami.astro | 513cd44c4f764332f756488006600ec1da7aa23e | Public Relations, 26 Nov 2026 | First publication. |
