@@ -14,20 +14,21 @@ const ALT = {
     'Mercedes-Maybach GLS 600 and Lamborghini Urus rentals parked under the Metromover track in downtown Miami',
 
   // --- Huracan STO (viewed before writing, 15 Nov 2026) ---------------------
-  // Waterfront with palms, but nothing in frame identifies the city, so no
-  // Miami location term.
+  // Each alt leads with the money-page phrase and the colour. The frame is a
+  // waterfront with palms; nothing in it identifies the city, so "Miami" here
+  // is the rental, not a landmark claim. The rest describes what is in the photo.
   '/cars/lamborghini-huracan-sto-rental-miami-front-quarter.jpg':
-    'Matte black Lamborghini Huracan STO rental with red trim, STO livery and a fixed rear wing, parked on pavers beside the water between two palm trees',
+    'Lamborghini Huracán STO rental Miami – matte black with red trim, STO livery and a fixed rear wing, parked on pavers beside the water between two palm trees',
   '/cars/lamborghini-huracan-sto-rental-miami-side-profile.jpg':
-    'Side profile of the matte black Lamborghini Huracan STO rental, showing the roof scoop, rear wing, red side skirts and STO door graphic, with the water behind',
+    'Lamborghini Huracán STO rental Miami – matte black side profile with the roof scoop, rear wing, red side skirts and STO door graphic, water behind',
   '/cars/lamborghini-huracan-sto-rental-miami-front.jpg':
-    'Head-on view of the Lamborghini Huracan STO rental, matte black with a red front splitter, parked facing the camera with the water behind',
+    'Lamborghini Huracán STO rental Miami – matte black head-on, red front splitter, parked facing the camera with the water behind',
   '/cars/lamborghini-huracan-sto-rental-miami-rear.jpg':
-    'Rear of the Lamborghini Huracan STO rental: twin exhausts, red diffuser and STO lettering under a wide rear wing with red endplates',
+    'Lamborghini Huracán STO rental Miami – matte black rear, twin exhausts, red diffuser and STO lettering under a wide rear wing with red endplates',
   '/cars/lamborghini-huracan-sto-rental-miami-steering-wheel.jpg':
-    'Alcantara steering wheel of the Lamborghini Huracan STO with red stitching, a red centre stripe and the drive-mode switch below the hub',
+    'Lamborghini Huracán STO rental Miami – matte black car, Alcantara steering wheel with red stitching, a red centre stripe and the drive-mode switch',
   '/cars/lamborghini-huracan-sto-rental-miami-instrument-cluster.jpg':
-    'Digital instrument cluster of the Lamborghini Huracan STO showing the tachometer and the STO drive-mode badge',
+    'Lamborghini Huracán STO rental Miami – matte black car, digital instrument cluster with the tachometer and the STO drive-mode badge',
 
   // --- Porsche 911 Turbo S Cabriolet (viewed before writing, 15 Nov 2026) ---
   '/cars/porsche-911-turbo-s-cabriolet-rental-miami-front-quarter.jpg':
