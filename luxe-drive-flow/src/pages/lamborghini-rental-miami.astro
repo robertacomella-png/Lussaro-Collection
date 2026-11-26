@@ -37,7 +37,7 @@ const faqs = [
   },
   {
     q: 'What does a Lamborghini rental include?',
-    a: `Each booking includes ${mileage.includedPerDay} miles for every day, pooled across the rental rather than capped daily. The refundable deposit is ${deposit.display}${sto?.depositDiffers ? `, except ${sto.deposit.display} on the Huracán STO` : ''}. Drivers must be ${minimumAge} or over${sto && sto.minimumAge !== minimumAge ? `, except the Huracán STO, which requires ${sto.minimumAge}` : ''}, with a valid licence and insurance that covers the car.`,
+    a: `Each booking includes ${mileage.includedPerDay} miles for every day, pooled across the rental rather than capped daily. The refundable deposit is ${deposit.display}${sto?.depositDiffers ? `, except ${sto.deposit.display} on the Huracán STO` : ''}. Drivers must be ${minimumAge} or over${sto && sto.minimumAge !== minimumAge ? `, except the Huracán STO, which requires ${sto.minimumAge}` : ''}, with a valid license and insurance that covers the car.`,
   },
 ];
 
@@ -85,7 +85,7 @@ const faqSchema = {
   {urus && (
     <>
       <h3><a href={`/cars/${urus.slug}`}>Lamborghini Urus</a> — {usd(urus.price)}/day</h3>
-      <p>Four doors, a boot of around 616 litres, and the ride height to clear a speed bump or a hotel ramp. A twin-turbo V8 drives all four wheels: {urus.power} hp, {urus.zeroToSixty} to 60. It is the Lamborghini that carries people and cases.</p>
+      <p>Four doors, a trunk, and the ride height to clear a speed bump or a hotel ramp. A twin-turbo V8 drives all four wheels: {urus.power} hp, {urus.zeroToSixty} to 60. It is the Lamborghini that carries people and cases.</p>
     </>
   )}
 
@@ -100,7 +100,7 @@ const faqSchema = {
   </ul>
 
   <h2>Terms, briefly</h2>
-  <p>To rent a Lamborghini for a day, the booking includes {mileage.includedPerDay} miles, added up across the rental rather than reset every morning. The refundable deposit is {deposit.display}{sto?.depositDiffers ? `, and ${sto.deposit.display} on the Huracán STO` : ''}, taken when the booking is confirmed and returned after the car is checked on the way back. Drivers must be {minimumAge} or over{sto && sto.minimumAge !== minimumAge ? `, or ${sto.minimumAge} for the Huracán STO` : ''}, hold a valid licence, and carry insurance covering the vehicle — or buy a daily policy from us. Lamborghini rental Miami FL delivery is {deliveryEachWaySummary}. The worked figures for a Lamborghini day rate sit in the <a href="/blog/how-much-is-a-lamborghini-rental">Lamborghini rental Miami price</a> guide, and every other number is on the <a href="/pricing">rate card</a>. For the rest of what we run, start at <a href="/exotic-car-rental-miami">exotic car rental in Miami</a>.</p>
+  <p>To rent a Lamborghini for a day, the booking includes {mileage.includedPerDay} miles, added up across the rental rather than reset every morning. The refundable deposit is {deposit.display}{sto?.depositDiffers ? `, and ${sto.deposit.display} on the Huracán STO` : ''}, taken when the booking is confirmed and returned after the car is checked on the way back. Drivers must be {minimumAge} or over{sto && sto.minimumAge !== minimumAge ? `, or ${sto.minimumAge} for the Huracán STO` : ''}, hold a valid license, and carry insurance covering the vehicle — or buy a daily policy from us. Delivery is {deliveryEachWaySummary}. The worked figures for a Lamborghini day rate sit in the <a href="/blog/how-much-is-a-lamborghini-rental">Lamborghini rental Miami price</a> guide, and every other number is on the <a href="/pricing">rate card</a>. For the rest of what we run, start at <a href="/exotic-car-rental-miami">exotic car rental in Miami</a>.</p>
 
   <h2>Questions</h2>
   {faqs.map((f) => (

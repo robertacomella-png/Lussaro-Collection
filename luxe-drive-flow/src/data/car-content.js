@@ -138,14 +138,14 @@ export const carContent = {
         paragraphs: [
           'A Huracán STO rental is {{price}} a day, with {{miles}} miles included. Book {{threeDays}} days or more and it is {{threeDay}} a day, {{fiveDays}} days or more is {{fiveRate}} a day, and {{weekDays}} days or more is {{weekRate}} a day. Taxes and fees of {{tax}}% are added to the rental. The {{deposit}} deposit is refundable and held separately.',
           'Delivery is {{miamiDelivery}} each way across Miami, Miami Beach, South Beach and Brickell, and {{ftlDelivery}} each way to Fort Lauderdale. Collection is charged separately, typically the same fee. Hotels, homes and both airports are covered. The same figures are on the [rate card](/pricing).',
-          'You need to be {{age}} or over, with a valid licence and insurance that covers the car. That age is this car only. The rest of the fleet starts at 18, with a {{fleetDeposit}} deposit. The STO deposit is {{deposit}}.',
+          'You need to be {{age}} or over, with a valid license and insurance that covers the car. That age is this car only. The rest of the fleet starts at 18, with a {{fleetDeposit}} deposit. The STO deposit is {{deposit}}.',
         ],
       },
       {
         id: 'car',
         heading: 'What the Huracán STO is',
         paragraphs: [
-          'Lamborghini built the STO from the Super Trofeo one-make car and homologated it for the street. The fixed rear wing and the roof scoop are the parts you can see. Under them is a naturally aspirated 5.2-litre V10, {{power}} hp, sending everything to the rear wheels. The quoted sprint is {{zero}} to 60. It is a fixed-roof coupe, with conventional doors.',
+          'Lamborghini built the STO from the Super Trofeo one-make car and homologated it for the street. The fixed rear wing and the roof scoop are the parts you can see. Under them is a naturally aspirated 5.2-liter V10, {{power}} hp, sending everything to the rear wheels. The quoted sprint is {{zero}} to 60. It is a fixed-roof coupe, with conventional doors.',
           'The limits are specific: two seats, a firmer ride than the Huracán EVO, a low nose, and room for a soft bag rather than a suitcase. They are listed under Good to know. Read them if the booking is anything other than two people and a short drive.',
         ],
       },
@@ -168,14 +168,14 @@ export const carContent = {
         id: 'lineup',
         heading: 'Where the STO fits a Lamborghini rental in Miami',
         paragraphs: [
-          'This page is the Huracán STO. [Lamborghini rental in Miami](/lamborghini-rental-miami) is the wider choice: the Urus when the booking needs doors and a boot, the EVO when you want the V10 without the track setup. What the day rate does not include is in the [Lamborghini rental Miami price](/blog/how-much-is-a-lamborghini-rental) guide. If the STO is the car, the rate, the photos and the form on this page are the ones that apply.',
+          'This page is the Huracán STO. [Lamborghini rental in Miami](/lamborghini-rental-miami) is the wider choice: the Urus when the booking needs doors and a trunk, the EVO when you want the V10 without the track setup. What the day rate does not include is in the [Lamborghini rental Miami price](/blog/how-much-is-a-lamborghini-rental) guide. If the STO is the car, the rate, the photos and the form on this page are the ones that apply.',
         ],
       },
     ],
     extraFaqs: [
       {
         q: 'How old do you have to be to rent a Huracán STO in Miami?',
-        a: '{{age}}, with a valid licence and insurance that covers the car, or a daily policy from us at booking. The rest of the fleet starts at 18. The higher age is specific to this car.',
+        a: '{{age}}, with a valid license and insurance that covers the car, or a daily policy from us at booking. The rest of the fleet starts at 18. The higher age is specific to this car.',
       },
       {
         q: 'Can I rent the Huracán STO for one day?',
@@ -185,7 +185,7 @@ export const carContent = {
     useCases: `The STO is the Huracan with the comfort taken out and the race car left in. Lamborghini built it from the Super Trofeo one-make series, and it shows: a fixed rear wing, a roof scoop, a firmer ride and a V10 that sends everything to the rear wheels. Book it when the driving is the event — a morning run with the city still quiet, a shoot, a birthday that deserves noise. It is the wrong car for a long cruise with luggage. If you want the same V10 with a softer ride, the EVO is the one.`,
     goodToKnow: [
       'Strictly two seats — driver plus one passenger, with no rear bench.',
-      'Rear-wheel drive, with the naturally aspirated 5.2-litre V10 tuned to 631 hp. No hybrid system and no electric mode.',
+      'Rear-wheel drive, with the naturally aspirated 5.2-liter V10 tuned to 631 hp. No hybrid system and no electric mode.',
       'Track-focused suspension. It rides noticeably firmer than the Huracan EVO, which you will feel on rough Miami streets.',
       'Very low nose and front splitter. Take steep driveways, ramps and speed bumps slowly and at an angle.',
       'Fixed roof and conventional front-hinged doors — no Spyder version and no scissor doors.',

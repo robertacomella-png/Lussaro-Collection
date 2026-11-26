@@ -1,13 +1,13 @@
 ---
 import LandingLayout from '@/layouts/LandingLayout.astro';
-import { cars, depositException } from '@/data/cars';
+import { cars, ageException, depositException } from '@/data/cars';
 import { rentalTerms } from '@/data/rental-terms';
 import { neighborhoodFor } from '@/data/neighborhood-content';
 
 const usd = (n) => `$${n.toLocaleString('en-US')}`;
 const sto = cars.find((c) => c.slug === 'huracan-sto');
 
-const { deposit, mileage, cancellation } = rentalTerms;
+const { deposit, mileage, cancellation, minimumAge } = rentalTerms;
 const local = neighborhoodFor('south-beach');
 
 const faqs = [
@@ -17,11 +17,11 @@ const faqs = [
   },
   {
     q: 'How far ahead should I book for a big event week?',
-    a: `As early as you can settle your dates. Art Basel, the Grand Prix, Ultra, the Boat Show and spring break all compress supply across the city at once, and a six-car fleet has no slack in it. ${cancellation.summary}`,
+    a: `As early as you can settle your dates. Art Basel, the Grand Prix, Ultra, the Boat Show and spring break all compress supply across the city at once, and the fleet has no slack in those weeks. ${cancellation.summary}`,
   },
   {
     q: 'What does the daily rate cover?',
-    a: `${mileage.includedPerDay} miles for every day booked, counted as one pooled allowance across the rental instead of resetting each morning. A refundable ${deposit.display} deposit is held against the car${depositException ? `, except ${depositException}` : ''} and released once it has been checked over on return.`,
+    a: `${mileage.includedPerDay} miles for every day booked, counted as one pooled allowance across the rental instead of resetting each morning. A refundable ${deposit.display} deposit is held against the car${depositException ? `, except ${depositException}` : ''} and released once it has been checked over on return.${ageException ? ` Drivers must be ${minimumAge} or over, except ${ageException}.` : ''}`,
   },
 ];
 
@@ -57,7 +57,7 @@ const faqSchema = {
   </p>
 
   <h2>Booking around the calendar</h2>
-  <p>A handful of weeks tighten availability across Miami, not just the beach. Art Basel lands in early December, the Grand Prix in May, Ultra in March, the Boat Show in February, and spring break runs from late February into April. With six cars, those dates go first — if your trip overlaps one, fix the dates early.</p>
+  <p>A handful of weeks tighten availability across Miami, not just the beach. Art Basel lands in early December, the Grand Prix in May, Ultra in March, the Boat Show in February, and spring break runs from late February into April. Those dates go first. If your trip overlaps one, fix the dates early.</p>
 
   <h2>Questions</h2>
   {faqs.map((f) => (

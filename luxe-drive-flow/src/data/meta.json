@@ -15,8 +15,8 @@
     {
       "path": "/cars/huracan-sto",
       "title": "Lamborghini Huracán STO Rental Miami – $1,495/Day | Lussaro",
-      "description": "Rent the Lamborghini Huracán STO in Miami from $1,495/day, $1,395/day for 3+ days. 631 hp, 100 miles/day, delivered to your hotel or home. Book on WhatsApp",
-      "note": "fleet.js price is 1495 and three-day-deals.json is 1395, both confirmed 26 Nov 2026 against the marketing cluster. Title is 59 characters and drops 'Collection' so the price fits. This page is the only STO money page. Accented Huracán; Google matches the unaccented search."
+      "description": "Rent the Lamborghini Huracán STO in Miami, FL from $1,495/day, $1,395/day for 3+ days. 631 hp, 100 miles/day, delivery from $125 each way. Book on WhatsApp.",
+      "note": "fleet.js price is 1495 and three-day-deals.json is 1395. Delivery from $125 is the Miami each-way fee in rental-terms.js, so the line does not read as free delivery. 156 characters. This page is the only STO money page."
     },
     {
       "path": "/cars/porsche-911-turbo-s",
