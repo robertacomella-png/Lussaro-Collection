@@ -1,0 +1,194 @@
+---
+// /wedding-car-rental-miami
+//
+// Owns "luxury car rental for wedding", geo-qualified to Miami in the title
+// and H1. It does not take "maybach rental miami", "rolls royce cullinan
+// rental miami", or "wedding limousine miami". Those stay with the Maybach
+// page, the Cullinan car page, and off the site — we do not rent limousines.
+//
+// No decoration policy, hourly minimum, or multi-car package is published.
+// This page does not invent them.
+import LandingLayout from '@/layouts/LandingLayout.astro';
+import ContentPhoto from '@/components/site/ContentPhoto.astro';
+import { cars } from '@/data/cars';
+import { rentalTerms, rateForDays } from '@/data/rental-terms';
+import { business, whatsappWith } from '@/data/business';
+
+const PAGE = '/wedding-car-rental-miami';
+const SITE = 'https://www.lussarocollection.com';
+
+const bySlug = (slug) => cars.find((c) => c.slug === slug);
+const usd = (n) => `$${Number(n).toLocaleString('en-US')}`;
+const multiDay = (c) => c.threeDayDeal ?? rateForDays(c.price, 3, c.discountTiers ?? rentalTerms.discountTiers).perDay;
+
+const cullinan = bySlug('rolls-royce-cullinan');
+const gls = bySlug('mercedes-maybach-gls-600');
+const maybachS = bySlug('mercedes-maybach-s580');
+const s580 = bySlug('mercedes-s580');
+const g63 = bySlug('mercedes-amg-g63');
+const urus = bySlug('lamborghini-urus');
+const policy = gls.insurancePerDay;
+const miami = rentalTerms.delivery.find((d) => d.area === 'Miami');
+const fll = rentalTerms.delivery.find((d) => d.area === 'Fort Lauderdale');
+const miles = rentalTerms.mileage.includedPerDay;
+const hour = rentalTerms.chauffeurHourly.display;
+
+const engine = cullinan.drivetrain.split(' · ')[1];
+
+const rows = [
+  { slug: 'rolls-royce-cullinan', car: cullinan, label: 'Rolls-Royce Cullinan', fit: "The couple's arrival" },
+  { slug: 'mercedes-maybach-gls-600', car: gls, label: 'Maybach GLS 600', fit: 'The couple, or a chauffeured day' },
+  { slug: 'mercedes-maybach-s580', car: maybachS, label: 'Maybach S580', fit: 'The couple, sedan, executive rear cabin' },
+  { slug: 'mercedes-s580', car: s580, label: 'Mercedes-Benz S580', fit: 'A second car for the party' },
+  { slug: 'mercedes-amg-g63', car: g63, label: 'Mercedes-AMG G63', fit: 'A second SUV' },
+].map((row) => ({ ...row, href: `/cars/${row.slug}`, multi: multiDay(row.car) }));
+
+const description = `Luxury car rental for a wedding in Miami: Cullinan from ${usd(cullinan.price)} a day, Maybach from ${usd(gls.price)}, or a chauffeured GLS 600 from ${hour} an hour. Check your dates.`;
+
+const wa = whatsappWith(
+  "Hi, I'd like the Rolls-Royce Cullinan for a wedding in Miami. The date is set — can you check it?",
+  { car: cullinan.name, page: PAGE },
+);
+
+const faqs = [
+  {
+    q: 'Do you rent luxury cars for weddings in Miami?',
+    a: 'Yes. The wedding cars on this page are the Rolls-Royce Cullinan, the Maybach GLS 600, the Maybach S580, and the Mercedes-Benz S580. We deliver to the hotel, the residence, or the venue, and the handover point is confirmed in the quote.',
+  },
+  {
+    q: 'How much is a Rolls-Royce for a wedding?',
+    a: `The Cullinan is ${usd(cullinan.price)} a day, or ${usd(multiDay(cullinan))} a day for 3 days or more, plus ${rentalTerms.taxesAndFeesRate * 100}% taxes and fees, delivery, and a ${rentalTerms.deposit.display} refundable deposit.`,
+  },
+  {
+    q: 'Can we have a chauffeur?',
+    a: `Yes. Chauffeur service in the Mercedes-Maybach GLS 600 is from ${hour} an hour, and the rate includes the chauffeur, the car and fuel. Tell us you want a driver when you send the date.`,
+  },
+  {
+    q: 'Can we book more than one car?',
+    a: `Yes. Each car is reserved at its published daily rate. There is no separate wedding package. The S580 is ${usd(s580.price)} a day. The G63 and the Urus are the SUV alternatives, at ${usd(g63.price)} and ${usd(urus.price)} a day.`,
+  },
+  {
+    q: 'Do you rent limousines?',
+    a: 'No. We rent the cars on this page, and we chauffeur the Maybach GLS 600. We do not have a stretch limousine.',
+  },
+  {
+    q: 'How early should we book?',
+    a: `As soon as the ceremony date is fixed. The fleet lists one Cullinan, so the date is worth checking as soon as it is set. ${rentalTerms.cancellation.summary}`,
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+<LandingLayout
+  title="Luxury Car Rental for a Wedding in Miami | Lussaro Collection"
+  description={description}
+  h1="Luxury Car Rental for a Wedding in Miami"
+  intro="Luxury car rental for a wedding in Miami starts with the car the couple arrives in. The form opens on the Rolls-Royce Cullinan. You can change the car before you send it."
+  heroImage="/cars/rolls-royce-cullinan-rental-miami-coach-door-open.jpg"
+  image={`${SITE}/og/wedding-car-rental-miami.jpg`}
+  showRating={false}
+  bookingCar={cullinan.name}
+  bookingSource={`${SITE}${PAGE}`}
+  bookingCta="wedding_hero"
+  waMessage="Hi, I'd like the Rolls-Royce Cullinan for a wedding in Miami."
+  only={['rolls-royce-cullinan', 'mercedes-maybach-gls-600', 'mercedes-maybach-s580', 'mercedes-s580', 'mercedes-amg-g63', 'lamborghini-urus']}
+  fleetHeading="Cars for the day"
+  fullFleetLink
+  ctaTitle="Reserve the Cullinan"
+  schema={[faqSchema]}
+>
+  <p>The Rolls-Royce Cullinan is {usd(cullinan.price)} a day, or {usd(multiDay(cullinan))} a day for 3 days or more. The Mercedes-Maybach GLS 600 is {usd(gls.price)} a day, or {usd(multiDay(gls))} a day for 3 days or more. The Mercedes-Maybach S580 is {usd(maybachS.price)} a day, or {usd(multiDay(maybachS))} a day for 3 days or more. The Mercedes-Benz S580 is {usd(s580.price)} a day, or {usd(multiDay(s580))} a day for 3 days or more.</p>
+  <p>If you would rather be driven, chauffeur service in the Maybach GLS 600 is from {hour} an hour.</p>
+
+  <nav aria-label="On this page" class="not-prose flex flex-wrap gap-x-4 gap-y-2 text-sm my-6">
+    <a class="text-[#e00e10] underline underline-offset-4" href="#the-rolls-royce-cullinan">The Cullinan</a>
+    <a class="text-[#e00e10] underline underline-offset-4" href="#the-maybach-gls-600-and-maybach-s580">The Maybachs</a>
+    <a class="text-[#e00e10] underline underline-offset-4" href="#a-second-car-for-the-wedding-party">A second car</a>
+    <a class="text-[#e00e10] underline underline-offset-4" href="#chauffeur-or-self-drive">Chauffeur or self-drive</a>
+    <a class="text-[#e00e10] underline underline-offset-4" href="#what-the-rate-includes">What the rate includes</a>
+    <a class="text-[#e00e10] underline underline-offset-4" href="#questions">Questions</a>
+  </nav>
+
+  <h2 id="the-rolls-royce-cullinan" class="scroll-mt-28">The Rolls-Royce Cullinan</h2>
+  <p>The Cullinan is the arrival car. The rear doors are rear-hinged coach doors, so you step out facing forward rather than turning out of a conventional door. All four doors then close at the touch of a button. Under the hood is a {engine} with {cullinan.power} hp, quieter at speed than most cars are parked.</p>
+
+  <ContentPhoto src="/cars/rolls-royce-cullinan-rental-miami-front-quarter.jpg" width={1024} height={683} />
+
+  <p>Our Cullinan is finished in orange leather, with a starlight headliner. There is also a real boot — about 21 cubic feet behind the rear seats — so the day's bags do not have to travel in a second vehicle. An umbrella sits in the door and is dried by blowers in the frame when you put it back.</p>
+  <p>The fleet lists one Cullinan. Send the ceremony date and we will tell you whether it is open.</p>
+
+  <ContentPhoto src="/cars/rolls-royce-cullinan-rental-miami-starlight-headliner.jpg" width={1024} height={683} />
+
+  <h2 id="the-maybach-gls-600-and-maybach-s580" class="scroll-mt-28">The Maybach GLS 600 and Maybach S580</h2>
+  <p>The GLS 600 is {usd(gls.price)} a day, or {usd(multiDay(gls))} a day for 3 days or more. The Maybach S580 is {usd(maybachS.price)} a day, or {usd(multiDay(maybachS))} a day for 3 days or more. The difference is the body.</p>
+  <p>The <a href="/cars/mercedes-maybach-gls-600">GLS 600</a> is the SUV: four doors, executive rear seats, fold-out tray tables, and running boards that extend when a door opens, which makes getting in and out easier in a dress or a suit. It is also the car we chauffeur, from {hour} an hour, when the couple does not want to drive on the day.</p>
+
+  <ContentPhoto src="/cars/mercedes-maybach-gls-600-rental-miami-rear-executive-seats.jpg" width={1600} height={1066} />
+
+  <p>The <a href="/cars/mercedes-maybach-s580">Maybach S580</a> is the sedan. The back seat is the point of this car: two reclining executive chairs, their own screens and climate controls, and a fixed console between them. Treat it as a car for the couple, not as a vehicle to fill with the wedding party.</p>
+  <p>If you do not have insurance that covers the rental, we can sell a daily policy on either Maybach for {usd(policy.from)} to {usd(policy.to)} a day, depending on the driver's age. There is no published daily policy price for the other cars.</p>
+
+  <ContentPhoto src="/cars/mercedes-maybach-s580-rental-miami-executive-rear-seats.jpg" width={2000} height={1333} />
+
+  <h2 id="a-second-car-for-the-wedding-party" class="scroll-mt-28">A second car for the wedding party</h2>
+  <p>Each car is booked at its published rate. There is no separate wedding package on the site.</p>
+  <p>The <a href="/cars/mercedes-s580">Mercedes-Benz S580</a> is {usd(s580.price)} a day, or {usd(multiDay(s580))} a day for 3 days or more, and is a quiet sedan for parents, the wedding party, or a rehearsal dinner. The <a href="/cars/mercedes-amg-g63">G63</a> at {usd(g63.price)} a day, or {usd(multiDay(g63))} a day for 3 days or more, and the <a href="/cars/lamborghini-urus">Urus</a> at {usd(urus.price)} a day, or {usd(multiDay(urus))} a day for 3 days or more, are the louder SUV options if that is the brief.</p>
+
+  <ContentPhoto src="/cars/mercedes-s580-rental-miami-side-palms.jpg" width={2000} height={1333} />
+
+  <div class="not-prose my-8 overflow-x-auto">
+    <table class="w-full text-sm text-left border-collapse">
+      <thead>
+        <tr class="border-b border-[#0a0a0a]/15">
+          <th class="py-2 pr-4 font-semibold">Car</th>
+          <th class="py-2 pr-4 font-semibold">Suited to</th>
+          <th class="py-2 pr-4 font-semibold text-right">Daily rate</th>
+          <th class="py-2 font-semibold text-right">3+ day rate</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((row) => (
+          <tr class="border-b border-[#0a0a0a]/10">
+            <td class="py-2.5 pr-4"><a href={row.href} class="text-[#e00e10] underline underline-offset-4">{row.label}</a></td>
+            <td class="py-2.5 pr-4">{row.fit}</td>
+            <td class="py-2.5 pr-4 text-right tabular-nums">{usd(row.car.price)}</td>
+            <td class="py-2.5 text-right tabular-nums">{usd(row.multi)}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <p>We do not rent limousines. If you want a driver, that is the Maybach chauffeur service below, not a stretch car.</p>
+
+  <h2 id="chauffeur-or-self-drive" class="scroll-mt-28">Chauffeur or self-drive</h2>
+  <p>Self-drive is a standard rental: you collect the car, or we deliver it, and a licensed driver on the booking drives it. Delivery is {miami.display} each way in Miami and {fll.display} each way in Fort Lauderdale, with collection typically the same fee, confirmed in the quote. That matters if the ceremony is in Fort Lauderdale and the hotel is in Miami, or the other way around.</p>
+  <p>Chauffeur service is priced by the hour, from {hour} an hour, and uses the Maybach GLS 600. The chauffeur, the car and fuel are included. Share the venue, the ceremony time, and the rest of the day's stops when you enquire, and we will confirm an all-in figure before you book. No hourly minimum is published. The Cullinan can be discussed as a chauffeured car on request. There is no published hourly rate for it, so that quote is separate. Book the Maybach on the <a href="/chauffeur-service-miami">chauffeur service</a> page, or say you want a driver in the form.</p>
+
+  <ContentPhoto src="/cars/mercedes-maybach-gls-600-rental-miami-side-palms.jpg" width={1600} height={1066} />
+
+  <p>Tell us the venue when you enquire so the handover point can be agreed in advance. Loading zones and driveway rules vary by property, and we confirm them against the address you give us rather than assuming access.</p>
+
+  <h2 id="what-the-rate-includes" class="scroll-mt-28">What the rate includes</h2>
+  <p>Every self-drive rental includes {miles} miles per day, pooled across the booking. Additional miles are {usd(rentalTerms.mileage.overagePerMile)} each. Taxes and fees are {rentalTerms.taxesAndFeesRate * 100}% of the rental subtotal after any multi-day rate. Drivers must be {rentalTerms.minimumAge} or older with a valid license. A refundable {rentalTerms.deposit.display} deposit is held on these cars and released after the return inspection. {rentalTerms.cancellation.summary}</p>
+  <p>Full figures are on the <a href="/pricing">rate card</a> and in the <a href="/terms">terms</a>.</p>
+  <p>Or write on WhatsApp at <a href={wa} data-cta="wedding_body" target="_blank" rel="noopener noreferrer">{business.phoneDisplay}</a> with the date, the venue, and whether you want a driver.</p>
+
+  <h2 id="questions" class="scroll-mt-28">Questions</h2>
+  {faqs.map((f) => (
+    <>
+      <h3>{f.q}</h3>
+      <p>{f.a}</p>
+    </>
+  ))}
+  <p>The Cullinan in more detail is on <a href="/rolls-royce-rental-miami">Rolls-Royce rental in Miami</a>. Maybach rates sit on <a href="/maybach-rental-miami">Maybach rental in Miami</a>.</p>
+  <p>For the wider fleet, see <a href="/exotic-car-rental-miami">exotic car rental in Miami</a> or <a href="/luxury-suv-rental-miami">luxury SUV rental</a>.</p>
+</LandingLayout>

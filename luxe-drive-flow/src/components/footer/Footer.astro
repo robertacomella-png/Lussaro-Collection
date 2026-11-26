@@ -18,6 +18,7 @@ const FOOTER_OVERRIDES = {
   'mercedes-maybach-gls-600': { href: '/maybach-rental-miami', label: 'Maybach Rental Miami' },
   'lamborghini-urus': { href: '/lamborghini-urus-rental-miami', label: 'Lamborghini Urus Rental Miami' },
   'mercedes-s580': { href: '/mercedes-s580-rental-miami', label: 'Mercedes-Benz S580 Rental Miami' },
+  'porsche-911-turbo-s': { href: '/porsche-911-turbo-s-rental-miami', label: 'Porsche Rental Miami' },
 };
 const footerHref = (car) => FOOTER_OVERRIDES[car.slug]?.href ?? `/cars/${car.slug}`;
 const footerLabel = (car) => FOOTER_OVERRIDES[car.slug]?.label ?? car.name;
@@ -71,6 +72,8 @@ const year = new Date().getFullYear();
         <li><SmartLink href="/luxury-suv-rental-miami" class="hover:text-white transition-colors">Luxury SUV rental</SmartLink></li>
         <li><SmartLink href="/exotic-car-rental-brickell" class="hover:text-white transition-colors">Exotic cars in Brickell</SmartLink></li>
         <li><SmartLink href="/exotic-car-rental-south-beach" class="hover:text-white transition-colors">Exotic cars in South Beach</SmartLink></li>
+        <li><SmartLink href="/exotic-car-rental-fort-lauderdale" class="hover:text-white transition-colors">Exotic cars in Fort Lauderdale</SmartLink></li>
+        <li><SmartLink href="/wedding-car-rental-miami" class="hover:text-white transition-colors">Wedding car rental</SmartLink></li>
       </ul>
     </div>
 

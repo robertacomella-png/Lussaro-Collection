@@ -1,0 +1,191 @@
+---
+// /porsche-911-turbo-s-rental-miami
+//
+// Owns "porsche rental miami". The car page at /cars/porsche-911-turbo-s
+// stays the spec and booking record, with a title and H1 that do not repeat
+// this query. "porsche 911 turbo s rental miami" has no measured volume; the
+// model name is used here as the product, and the car page keeps that row.
+import LandingLayout from '@/layouts/LandingLayout.astro';
+import ContentPhoto from '@/components/site/ContentPhoto.astro';
+import { cars } from '@/data/cars';
+import { rentalTerms, rateForDays } from '@/data/rental-terms';
+import { business, whatsappWith } from '@/data/business';
+
+const PAGE = '/porsche-911-turbo-s-rental-miami';
+const SITE = 'https://www.lussarocollection.com';
+
+const bySlug = (slug) => cars.find((c) => c.slug === slug);
+const usd = (n) => `$${Number(n).toLocaleString('en-US')}`;
+const multiDay = (c) => c.threeDayDeal ?? rateForDays(c.price, 3, c.discountTiers ?? rentalTerms.discountTiers).perDay;
+const engineOf = (c) => c.drivetrain.split(' · ')[1];
+const driveOf = (c) => c.drivetrain.split(' · ')[0];
+
+const porsche = bySlug('porsche-911-turbo-s');
+const spyder = bySlug('huracan-evo-spyder');
+const evo = bySlug('huracan-evo');
+const sto = bySlug('huracan-sto');
+const sf90 = bySlug('sf90');
+const maybach = bySlug('mercedes-maybach-gls-600');
+const policy = maybach.insurancePerDay;
+const miami = rentalTerms.delivery.find((d) => d.area === 'Miami');
+const fll = rentalTerms.delivery.find((d) => d.area === 'Fort Lauderdale');
+const miles = rentalTerms.mileage.includedPerDay;
+
+const compare = [
+  { car: porsche, href: '/cars/porsche-911-turbo-s', label: '911 Turbo S Cabriolet', body: 'Convertible, 2+2' },
+  { car: spyder, href: '/cars/huracan-evo-spyder', label: 'Huracan EVO Spyder', body: 'Convertible, 2 seats' },
+  { car: evo, href: '/cars/huracan-evo', label: 'Huracan EVO', body: 'Coupe, 2 seats' },
+  { car: sto, href: '/cars/huracan-sto', label: 'Huracan STO', body: 'Coupe, 2 seats' },
+  { car: sf90, href: '/cars/sf90', label: 'Ferrari SF90', body: 'Coupe, 2 seats' },
+].map((row) => ({ ...row, multi: multiDay(row.car) }));
+
+const description = `Porsche rental in Miami: the 911 Turbo S Cabriolet is ${usd(porsche.price)} a day, or ${usd(multiDay(porsche))} a day for 3+ days. ${porsche.power} hp, ${porsche.zeroToSixty.replace('s', '')} seconds to 60, ${miles} miles and a ${rentalTerms.deposit.display} deposit.`;
+
+const wa = whatsappWith(
+  "Hi, I'd like to rent the Porsche 911 Turbo S Cabriolet in Miami. Which dates do you have open?",
+  { car: porsche.name, page: PAGE },
+);
+
+const faqs = [
+  {
+    q: 'How much is it to rent a Porsche 911 in Miami?',
+    a: `${usd(porsche.price)} a day, or ${usd(multiDay(porsche))} a day for 3 days or more, plus ${rentalTerms.taxesAndFeesRate * 100}% taxes and fees, delivery, and a ${rentalTerms.deposit.display} refundable deposit. ${miles} miles a day are included.`,
+  },
+  {
+    q: 'Is the 911 Turbo S Cabriolet a four-seater?',
+    a: 'It is a 2+2. There are two full seats up front and two small seats behind them, which work for bags or a short trip across town but are tight for adults on a long drive.',
+  },
+  {
+    q: 'Is this a convertible?',
+    a: 'Yes. It is the Cabriolet, with an electric soft top that opens or closes in seconds and works on the move at low speed.',
+  },
+  {
+    q: 'Can I take it to Fort Lauderdale?',
+    a: `Yes, within the mileage allowance. Delivery to Fort Lauderdale is ${fll.display} each way, and collection is typically the same fee, confirmed in the quote. For anywhere else in the area, including Key Biscayne, ask for the delivery fee in the quote rather than assuming a published rate.`,
+  },
+  {
+    q: 'What do I need to book?',
+    a: `A driver aged ${rentalTerms.minimumAge} or over, a valid license, and insurance that covers the car. A daily policy price is published only for the Maybachs, at ${usd(policy.from)} to ${usd(policy.to)} a day. There is no published figure for the 911, so qualifying cover has to come with you or be confirmed in the quote. The deposit is ${rentalTerms.deposit.display}.`,
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+<LandingLayout
+  title="Porsche 911 Turbo S Rental Miami | Lussaro Collection"
+  description={description}
+  h1="Porsche 911 Turbo S Rental Miami"
+  intro={`The Porsche we rent in Miami is a ${porsche.year} 911 Turbo S Cabriolet. It is ${usd(porsche.price)} a day, or ${usd(multiDay(porsche))} a day when you book 3 days or more. Every day includes ${miles} miles. A ${rentalTerms.deposit.display} refundable deposit is held separately.`}
+  heroImage="/cars/porsche-911-turbo-s-cabriolet-rental-miami-front-quarter.jpg"
+  image={`${SITE}/og/porsche-911-turbo-s-rental-miami.jpg`}
+  showRating={false}
+  bookingCar={porsche.name}
+  bookingSource={`${SITE}${PAGE}`}
+  bookingCta="porsche_lp_hero"
+  waMessage="Hi, I'd like to rent the Porsche 911 Turbo S Cabriolet in Miami. Which dates do you have open?"
+  only={['porsche-911-turbo-s', 'huracan-evo-spyder', 'huracan-evo', 'huracan-sto', 'sf90']}
+  fleetHeading="The 911 and the other fast cars"
+  fullFleetLink
+  ctaTitle="Reserve the 911 Turbo S"
+  schema={[faqSchema]}
+>
+  <p>It makes {porsche.power} hp from a {engineOf(porsche)}, reaches 60 mph in {porsche.zeroToSixty.replace('s', '')} seconds, and has {driveOf(porsche).toLowerCase()}. The roof folds away in seconds. Specs, photos and the booking form for this exact car are on the <a href="/cars/porsche-911-turbo-s">911 Turbo S car page</a>.</p>
+
+  <nav aria-label="On this page" class="not-prose flex flex-wrap gap-x-4 gap-y-2 text-sm my-6">
+    <a class="text-[#e00e10] underline underline-offset-4" href="#the-911-turbo-s-cabriolet">The car</a>
+    <a class="text-[#e00e10] underline underline-offset-4" href="#how-much-to-rent-a-porsche-911-in-miami">Daily rate</a>
+    <a class="text-[#e00e10] underline underline-offset-4" href="#compared-with-the-huracan-and-the-sf90">Compared with the other fast cars</a>
+    <a class="text-[#e00e10] underline underline-offset-4" href="#driving-it-in-miami">Driving it in Miami</a>
+    <a class="text-[#e00e10] underline underline-offset-4" href="#questions">Questions</a>
+  </nav>
+
+  <ContentPhoto src="/cars/porsche-911-turbo-s-cabriolet-rental-miami-side-profile.jpg" width={2000} height={1333} />
+
+  <h2 id="the-911-turbo-s-cabriolet" class="scroll-mt-28">The 911 Turbo S Cabriolet</h2>
+  <p>This is a convertible, not a coupe. We quote {porsche.zeroToSixty} to 60, which is this car's figure. The engine is a {engineOf(porsche)}, sending {porsche.power} hp through an eight-speed dual-clutch automatic and {driveOf(porsche).toLowerCase()}.</p>
+  <p>The roof is an electric soft top. It opens or closes in seconds and can be used on the move at low speed, so a short shower does not end the drive. Adaptive dampers are standard, which is what makes the car usable on ordinary Miami streets rather than only on a smooth road.</p>
+  <p>It is a {porsche.seatsNote}: two full seats in front and two small seats behind. The rear pair work for bags or a short trip across town. They are tight for adults on a long drive. Book it as a two-seater with somewhere to put luggage. Bags also go in the front trunk.</p>
+
+  <ContentPhoto src="/cars/porsche-911-turbo-s-cabriolet-rental-miami-front.jpg" width={2000} height={1333} />
+
+  <h2 id="how-much-to-rent-a-porsche-911-in-miami" class="scroll-mt-28">How much to rent a Porsche 911 in Miami</h2>
+  <div class="not-prose my-8 overflow-x-auto">
+    <table class="w-full text-sm text-left border-collapse max-w-md">
+      <thead>
+        <tr class="border-b border-[#0a0a0a]/15">
+          <th class="py-2 pr-4 font-semibold">Length of rental</th>
+          <th class="py-2 font-semibold text-right">Rate per day</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="border-b border-[#0a0a0a]/10">
+          <td class="py-2.5 pr-4">1–2 days</td>
+          <td class="py-2.5 text-right tabular-nums">{usd(porsche.price)}</td>
+        </tr>
+        <tr class="border-b border-[#0a0a0a]/10">
+          <td class="py-2.5 pr-4">3 days or more</td>
+          <td class="py-2.5 text-right tabular-nums">{usd(multiDay(porsche))}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p>The rate includes {miles} miles for each day booked, pooled across the rental. A three-day booking is {miles * 3} miles in total. Additional miles are {usd(rentalTerms.mileage.overagePerMile)} each. Taxes and fees are {rentalTerms.taxesAndFeesRate * 100}% of the rental subtotal after the multi-day rate. The {rentalTerms.deposit.display} deposit is separate and is returned after the car is inspected on return.</p>
+  <p>Drivers must be {rentalTerms.minimumAge} or older with a valid license and insurance that covers the rental. We publish a daily policy price only for the Maybachs, at {usd(policy.from)} to {usd(policy.to)} a day. There is no published figure for the 911, so qualifying cover has to come with you or be confirmed in the quote.</p>
+  <p>Delivery is {miami.display} each way in Miami and {fll.display} each way in Fort Lauderdale. Collection is typically the same fee and is confirmed in the quote. {rentalTerms.cancellation.summary}</p>
+  <p>Or request dates on WhatsApp at <a href={wa} data-cta="porsche_lp_body" target="_blank" rel="noopener noreferrer">{business.phoneDisplay}</a>.</p>
+
+  <h2 id="compared-with-the-huracan-and-the-sf90" class="scroll-mt-28">Compared with the Huracan and the SF90</h2>
+  <p>The 911 is the fast car you can drive every day of a trip. It is quieter at a cruise than the Huracans, it has a usable roof, and it has somewhere to put bags. The Lamborghinis and the Ferrari are louder, lower, and more of an event.</p>
+
+  <div class="not-prose my-8 overflow-x-auto">
+    <table class="w-full text-sm text-left border-collapse">
+      <thead>
+        <tr class="border-b border-[#0a0a0a]/15">
+          <th class="py-2 pr-3 font-semibold">Car</th>
+          <th class="py-2 pr-3 font-semibold">Body</th>
+          <th class="py-2 pr-3 font-semibold text-right">Power</th>
+          <th class="py-2 pr-3 font-semibold text-right">0–60</th>
+          <th class="py-2 pr-3 font-semibold text-right">Daily rate</th>
+          <th class="py-2 font-semibold text-right">3+ day rate</th>
+        </tr>
+      </thead>
+      <tbody>
+        {compare.map((row) => (
+          <tr class="border-b border-[#0a0a0a]/10">
+            <td class="py-2.5 pr-3"><a href={row.href} class="text-[#e00e10] underline underline-offset-4">{row.label}</a></td>
+            <td class="py-2.5 pr-3">{row.body}</td>
+            <td class="py-2.5 pr-3 text-right tabular-nums">{row.car.power} hp</td>
+            <td class="py-2.5 pr-3 text-right tabular-nums">{row.car.zeroToSixty}</td>
+            <td class="py-2.5 pr-3 text-right tabular-nums">{usd(row.car.price)}</td>
+            <td class="py-2.5 text-right tabular-nums">{usd(row.multi)}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <p>The Spyder is the other convertible, at the same daily rate. It is {driveOf(spyder).toLowerCase()}, with a {engineOf(spyder)}, and it seats two with a small front trunk. The STO is the track-leaning Huracan: {usd(sto.price)} a day, a {sto.deposit.display} deposit, and a minimum age of {sto.minimumAge}. The SF90 is the quickest car we rent, at {usd(sf90.price)} a day, or {usd(multiDay(sf90))} a day for 3 days or more, and it sits low at the nose the same way the Huracans do.</p>
+  <p>If the brief is a week of roof-down driving from Brickell to South Beach, the 911 is the one to start with. If the brief is the sound of a V10 for a day, look at the <a href="/lamborghini-rental-miami">Lamborghini page</a>.</p>
+
+  <h2 id="driving-it-in-miami" class="scroll-mt-28">Driving it in Miami</h2>
+  <p>The 911 is the right shape for this city: {driveOf(porsche).toLowerCase()} when the summer rain arrives, a roof you can put down on Ocean Drive or along A1A, and adaptive dampers for ordinary streets. It is still a low sports car. A street-level handover is easier than a tight underground garage. The Huracan EVO and the SF90 sit lower at the nose, which is the difference to weigh if the hotel ramp is steep.</p>
+  <p>It is also the convertible to take when you have more than a backpack. The front trunk plus the two small rear seats will cover a weekend for two. Full-size airport luggage for a group is a job for the <a href="/cars/lamborghini-urus">Urus</a> or another SUV on the <a href="/luxury-suv-rental-miami">luxury SUV page</a>.</p>
+  <p>We deliver across Miami, including Brickell, South Beach, and Miami International Airport, at the Miami fee of {miami.display} each way, and to Fort Lauderdale — including FLL — at {fll.display} each way. See <a href="/exotic-car-rental-miami">exotic car rental in Miami</a> or <a href="/exotic-car-rental-fort-lauderdale">exotic car rental in Fort Lauderdale</a> if the pickup is a location question rather than a car question.</p>
+
+  <h2 id="questions" class="scroll-mt-28">Questions</h2>
+  {faqs.map((f) => (
+    <>
+      <h3>{f.q}</h3>
+      <p>{f.a}</p>
+    </>
+  ))}
+  <p>Dates for this car are on the <a href="/cars/porsche-911-turbo-s">911 Turbo S car page</a>, where the booking form is also set to this car. The rest of the fleet is on <a href="/fleet">the fleet page</a>. Rates for every car are on the <a href="/pricing">pricing</a> page.</p>
+</LandingLayout>
