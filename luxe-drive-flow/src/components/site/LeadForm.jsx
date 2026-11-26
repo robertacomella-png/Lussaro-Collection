@@ -7,7 +7,7 @@ import { trackLead } from "@/lib/track";
 // form (homepage, fleet, contact, car pages) is the default and stays as it
 // was. `source` is the lead source lead.js already forwards into the CRM note.
 // Blog posts pass the post URL; everything else keeps "lead_form".
-export default function LeadForm({ defaultVehicle = "", source = "lead_form", variant = "full" }) {
+export default function LeadForm({ defaultVehicle = "", source = "lead_form", variant = "full", note }) {
   const [status, setStatus] = useState("idle"); // idle | sending | ok | error
   const [error, setError] = useState("");
   const booking = variant === "booking";
@@ -112,7 +112,7 @@ export default function LeadForm({ defaultVehicle = "", source = "lead_form", va
         {status === "sending" ? "Sending…" : "Request Availability"}
       </button>
       {!booking && (
-        <p className="text-white/50 text-xs text-center">Prefer to talk now? Call or WhatsApp us — we reply in minutes.</p>
+        <p className="text-white/50 text-xs text-center">{note ?? "Prefer to talk now? Call or WhatsApp us — we reply in minutes."}</p>
       )}
     </form>
   );

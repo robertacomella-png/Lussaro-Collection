@@ -59,7 +59,13 @@ const hourly = rentalTerms.chauffeurHourly.display;
 const maybachReviews = reviews.filter((r) => (r.car ?? '').includes('Maybach'));
 
 const heroPhoto = '/cars/mercedes-maybach-gls-600-rental-miami-side-palms.jpg';
-const galleryImages = maybachs.flatMap((c) => c.images.slice(0, 4));
+const cardName = (c) =>
+  c.slug === 'mercedes-maybach-gls-600' ? 'Mercedes-Maybach GLS 600'
+  : c.slug === 'mercedes-maybach-s580' ? 'Mercedes-Maybach S580'
+  : (c.name.startsWith(c.make) ? c.name : `${c.make} ${c.name}`);
+const galleryImages = maybachs
+  .flatMap((c) => c.images.slice(0, 4))
+  .filter((src) => src !== '/cars/mercedes-maybach-s580-rental-miami-rear-quarter.jpg');
 
 const waMessage = `Hi, I'd like to rent a Maybach in Miami. Which dates do you have open?`;
 const wa = whatsappWith(waMessage, { car: 'Maybach', page: '/maybach-rental-miami' });
@@ -162,7 +168,7 @@ const faqSchema = {
 ---
 <Layout
   title={`Rent a Maybach in Miami from $${fromDisplay} a Day | Lussaro Collection`}
-  description={`Rent a Maybach in Miami from $${fromDisplay} a day, or $${usd(threeDay)} a day for ${ladder[0].days} days or more. Mercedes-Maybach GLS 600 or Maybach S580. ${milesPerDay} miles a day, ${rentalTerms.deposit.display} deposit, delivered across Miami.`}
+  description="Rent a Maybach in Miami from $895 a day, or $745 a day for 3+ days. The GLS 600 or Maybach S580, 100 miles a day, $1,000 deposit, delivered across Miami."
   breadcrumbName="Maybach Rental Miami"
   schema={[productSchema, faqSchema]}
 >
@@ -239,7 +245,6 @@ const faqSchema = {
 
           <p class="text-white/50 text-sm mt-5">
             Owner operated
-            <span aria-hidden="true"> · </span>Replies usually take minutes
           </p>
         </div>
       </div>
@@ -263,7 +268,7 @@ const faqSchema = {
           </h2>
           <p class="text-[#0a0a0a]/70 text-lg leading-relaxed mt-4 max-w-lg">
             Tell us your dates and which Maybach you want. We will come back with what is open, the total,
-            and delivery if you want it brought to you. No deposit to ask.
+            and delivery if you want it brought to you. No deposit is needed just to ask.
           </p>
           <ul class="mt-7 space-y-2.5 list-none p-0 max-w-lg">
             {[
@@ -416,7 +421,7 @@ const faqSchema = {
             </div>
             <div class="p-6 md:p-7 flex flex-col flex-1">
               <p class="text-[#e00e10] text-[11px] uppercase tracking-[0.18em] font-medium">{when}</p>
-              <h3 class="font-display text-2xl font-bold mt-2.5">{car.make} {car.name}</h3>
+              <h3 class="font-display text-2xl font-bold mt-2.5">{cardName(car)}</h3>
               <p class="text-[#0a0a0a]/65 leading-relaxed mt-3 flex-1">{why}</p>
               <p class="text-[#0a0a0a]/60 text-sm mt-5">
                 {car.power} hp<span aria-hidden="true"> · </span>{car.zeroToSixty} to 60

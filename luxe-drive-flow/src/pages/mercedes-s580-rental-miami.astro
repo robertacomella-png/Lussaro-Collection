@@ -55,6 +55,10 @@ if (quicker) s580CardBits.push('the quickest of the two');
 if (aloneAtFloor) s580CardBits.push('the lowest daily rate in the fleet');
 const s580CardNote = `The S-Class you drive yourself. ${joinBits(s580CardBits)}.`;
 const s580Facts = contentFor(s580.slug);
+const cardName = (c) =>
+  c.slug === 'mercedes-maybach-gls-600' ? 'Mercedes-Maybach GLS 600'
+  : c.slug === 'mercedes-maybach-s580' ? 'Mercedes-Maybach S580'
+  : (c.name.startsWith(c.make) ? c.name : `${c.make} ${c.name}`);
 
 // No review names this car. The two below carry no vehicle attribution at all,
 // so they are shown as what they are — comments on the service — and the
@@ -71,7 +75,7 @@ const wa = whatsappWith(waMessage, { car: fullName, page: '/mercedes-s580-rental
 const objections = [
   {
     q: 'Is this the Maybach S580?',
-    a: `No. This is the ${fullName} at $${priceDisplay} a day. The Mercedes-Maybach S580 is a different car, with ${maybachS580.seats} seats instead of ${seatLabel}, and $${usd(maybachS580.price)} a day. We rent both, and they are easy to confuse because the badge reads the same.`,
+    a: `No. This is the ${fullName} at $${priceDisplay} a day. The Mercedes-Maybach S580 is a different car, with ${maybachS580.seats} seats instead of ${seatLabel}, and $${usd(maybachS580.price)} a day. We rent both. What the two cars share is the S580 designation.`,
   },
   {
     q: 'Is the price negotiable?',
@@ -152,8 +156,8 @@ const faqSchema = {
 };
 ---
 <Layout
-  title={`Mercedes-Benz S580 Rental Miami from $${priceDisplay} a Day | Lussaro Collection`}
-  description={`Rent the Mercedes-Benz S580, the S-Class we have in Miami, at $${priceDisplay} a day or $${usd(threeDay)} a day for ${tiers[0].days} days or more. ${s580.power} hp, ${milesPerDay} miles included, ${rentalTerms.deposit.display} deposit, delivered across Miami. Not the Maybach S580.`}
+  title="Mercedes-Benz S580 Rental Miami | Lussaro Collection"
+  description="Rent the Mercedes-Benz S580 in Miami: $445 a day, or $395 a day for 3+ days. 496 hp, 100 miles included, $1,000 deposit. This is not the Maybach S580."
   breadcrumbName="Mercedes-Benz S580 Rental Miami"
   schema={[productSchema, faqSchema]}
 >
@@ -231,7 +235,6 @@ const faqSchema = {
 
           <p class="text-white/50 text-sm mt-5">
             Owner operated
-            <span aria-hidden="true"> · </span>Replies usually take minutes
           </p>
         </div>
       </div>
@@ -248,7 +251,7 @@ const faqSchema = {
           </h2>
           <p class="text-[#0a0a0a]/70 text-lg leading-relaxed mt-4 max-w-lg">
             Send us your name and number and we will come back with what is open, the total, and
-            delivery if you want it brought to you. No deposit to ask.
+            delivery if you want it brought to you. No deposit is needed just to ask.
           </p>
           <ul class="mt-7 space-y-2.5 list-none p-0 max-w-lg">
             {[
@@ -311,7 +314,7 @@ const faqSchema = {
           </tbody>
         </table>
         <p class="text-white/70 leading-relaxed mt-5 text-[15px]">
-          {milesPerDay} miles a day, pooled. Additional miles are ${overage}. Delivery is {deliverySummary}, each way. Collection is typically the same fee.
+          {milesPerDay} miles a day, pooled. Additional miles are ${overage} a mile. Delivery is {deliverySummary}, each way. Collection is typically the same fee.
         </p>
       </div>
       <img
@@ -338,7 +341,7 @@ const faqSchema = {
         There are two S580s. This is the {s580.make}.
       </h2>
       <p class="text-white/60 mt-3 max-w-2xl leading-relaxed">
-        The badge reads the same on both and the engine is the same V8. Everything else is
+        What the two cars share is the S580 designation, and the engine is the same V8. Everything else is
         different, including $
         {(maybachS580.price - s580.price).toLocaleString('en-US')} a day.
       </p>
@@ -350,7 +353,7 @@ const faqSchema = {
         ].map(({ car, tag, note }) => (
           <article class="rounded-[22px] bg-[#0f0f0f] border border-white/10 p-6 md:p-7">
             <p class="text-[#ff1516] text-[11px] uppercase tracking-[0.18em] font-medium">{tag}</p>
-            <h3 class="font-display text-2xl font-bold text-white mt-2">{car.make} {car.name}</h3>
+            <h3 class="font-display text-2xl font-bold text-white mt-2">{cardName(car)}</h3>
             <p class="text-white/60 leading-relaxed mt-3 text-[15px]">{note}</p>
             <p class="text-white/55 text-sm mt-5">
               {car.power} hp<span aria-hidden="true"> · </span>{car.zeroToSixty} to 60

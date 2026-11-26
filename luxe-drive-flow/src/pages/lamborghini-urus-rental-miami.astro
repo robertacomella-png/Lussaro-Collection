@@ -43,6 +43,10 @@ const rateRows = [
 ];
 const threeDay = perDay(tiers[0].days);
 const urusFacts = contentFor(urus.slug);
+const cardName = (c) =>
+  c.slug === 'mercedes-maybach-gls-600' ? 'Mercedes-Maybach GLS 600'
+  : c.slug === 'mercedes-maybach-s580' ? 'Mercedes-Maybach S580'
+  : `${c.make} ${c.name.replace(`${c.make} `, '')}`;
 
 // The car's own shots plus the Urus gallery, which already carries written alt
 // text in image-alt.js — the Metromover shot is excluded because it is two cars.
@@ -143,8 +147,8 @@ const faqSchema = {
 };
 ---
 <Layout
-  title={`Lamborghini Urus Rental Miami from $${priceDisplay} a Day | Lussaro Collection`}
-  description={`Rent the Lamborghini Urus in Miami at $${priceDisplay} a day, or $${usd(threeDay)} a day for ${tiers[0].days} days or more. ${urus.power} hp, ${urus.zeroToSixty} to 60, ${milesPerDay} miles included, ${rentalTerms.deposit.display} deposit, delivered across Miami.`}
+  title="Lamborghini Urus Rental Miami from $995 | Lussaro Collection"
+  description="Rent the Lamborghini Urus in Miami at $995 a day, or $845 a day for 3+ days. 641 hp, 3.3s to 60, 100 miles included, $1,000 deposit, delivered in Miami."
   breadcrumbName="Lamborghini Urus Rental Miami"
   schema={[productSchema, faqSchema]}
 >
@@ -222,7 +226,6 @@ const faqSchema = {
 
           <p class="text-white/50 text-sm mt-5">
             Owner operated
-            <span aria-hidden="true"> · </span>Replies usually take minutes
           </p>
         </div>
       </div>
@@ -239,7 +242,7 @@ const faqSchema = {
           </h2>
           <p class="text-[#0a0a0a]/70 text-lg leading-relaxed mt-4 max-w-lg">
             Send us your name and number and we will come back with what is open, the total, and
-            delivery if you want it brought to you. No deposit to ask.
+            delivery if you want it brought to you. No deposit is needed just to ask.
           </p>
           <ul class="mt-7 space-y-2.5 list-none p-0 max-w-lg">
             {[
@@ -304,7 +307,7 @@ const faqSchema = {
           </tbody>
         </table>
         <p class="text-white/70 leading-relaxed mt-5 text-[15px]">
-          {milesPerDay} miles a day, pooled. Additional miles are ${overage}. Delivery is {deliverySummary}, each way. Collection is typically the same fee.
+          {milesPerDay} miles a day, pooled. Additional miles are ${overage} a mile. Delivery is {deliverySummary}, each way. Collection is typically the same fee.
         </p>
         <p class="text-white/70 leading-relaxed mt-4 text-[15px]">
           Rates for the other Lamborghinis we rent are on{' '}
@@ -344,7 +347,7 @@ const faqSchema = {
       <div class="grid md:grid-cols-3 gap-6 mt-10">
         {otherSuvs.map((c) => (
           <article class="rounded-[22px] border border-[#0a0a0a]/12 p-6">
-            <h3 class="font-display text-xl font-bold">{c.make} {c.name.replace(`${c.make} `, '')}</h3>
+            <h3 class="font-display text-xl font-bold">{cardName(c)}</h3>
             <p class="text-[#0a0a0a]/60 text-sm mt-2">
               {c.power} hp<span aria-hidden="true"> · </span>{c.zeroToSixty} to 60
             </p>

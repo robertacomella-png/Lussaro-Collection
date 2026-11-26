@@ -38,8 +38,8 @@
     },
     {
       "path": "/cars/mercedes-maybach-gls-600",
-      "title": "Mercedes-Maybach GLS 600 Specs, Photos & Rates | Lussaro Collection",
-      "description": "Mercedes-Maybach GLS 600 we rent in Miami: 550 hp, reclining executive rear seats, $895 a day or $745 a day for 3 days or more. 100 miles included. See photos, specs, and book.",
+      "title": "Mercedes-Maybach GLS 600 Specs & Rates | Lussaro Collection",
+      "description": "Mercedes-Maybach GLS 600 we rent in Miami: 550 hp, reclining executive seats, $895 a day or $745 for 3+ days. 100 miles included. Photos, specs, book.",
       "note": "Commercial \"Maybach Rental Miami\" belongs to /maybach-rental-miami. This page takes the model-detail angle, matching the Urus and S580 cars pages. \"GLS 600 Maybach Rental Miami\" reads backwards; the marque leads."
     },
     {
@@ -50,8 +50,8 @@
     },
     {
       "path": "/cars/mercedes-s580",
-      "title": "Mercedes-Benz S580 Specs, Photos & Rates | Lussaro Collection",
-      "description": "Mercedes-Benz S580 we rent in Miami: 496 hp, $445 a day or $395 a day for 3 days or more. 100 miles included. Specs, photos, and the difference from the Maybach S580.",
+      "title": "Mercedes-Benz S580 Specs & Rates | Lussaro Collection",
+      "description": "Mercedes-Benz S580 we rent in Miami: 496 hp, $445 a day or $395 a day for 3+ days. 100 miles included. Specs, photos, and how it differs from the Maybach.",
       "note": "fleet.js calls it \"S580\"; spell out the marque for search. \"Mercedes-Benz S580 Rental Miami\" belongs to /mercedes-s580-rental-miami (the ad funnel, which owns \"mercedes s class rental miami\"); this page used the identical title until 22 Nov 2026, so it now takes the model-detail angle."
     },
     {

@@ -28,6 +28,10 @@ export function getStaticPaths() {
 
 const { car } = Astro.props;
 
+// These three model pages do not show a Google score or a same-day promise.
+// The other car pages keep the shared badge, stars, and default close.
+const isDetailPage = ['mercedes-maybach-gls-600', 'mercedes-s580', 'lamborghini-urus'].includes(car.slug);
+
 // TEMPORARY — owner's call, Oct 2026. Hides the availability calendar on every
 // car page. Nothing is deleted: the island, its no-JS fallback and the
 // fallback-watcher script all stay wired, so flipping this back to true
@@ -149,7 +153,7 @@ const pageCopy = (() => {
           '.',
         ],
         [
-          `The Maybach S580 is a different car at ${usdFmt(maybachSedan.price)} a day, with a reclining rear bench. We rent both. The difference is written up in `,
+          `The Maybach S580 is a different car at ${usdFmt(maybachSedan.price)} a day, with a pair of reclining executive rear seats. We rent both. The difference is written up in `,
           linkTo('/blog/mercedes-s580-vs-maybach-s580-rental-miami/', 'Mercedes S580 vs Maybach S580'),
           ', and the Maybach has its own page at ',
           linkTo('/maybach-rental-miami/', 'Maybach rental Miami'),
@@ -160,7 +164,7 @@ const pageCopy = (() => {
         {
           q: 'Is this the Maybach S580?',
           a: [
-            `No. This is the Mercedes-Benz S580 at ${usdFmt(car.price)} a day. The Mercedes-Maybach S580 is a different car, ${usdFmt(maybachSedan.price)} a day, with a reclining rear bench. We rent both. See `,
+            `No. This is the Mercedes-Benz S580 at ${usdFmt(car.price)} a day. The Mercedes-Maybach S580 is a different car, ${usdFmt(maybachSedan.price)} a day, with a pair of reclining executive rear seats. We rent both. See `,
             linkTo('/mercedes-s580-rental-miami/', 'Mercedes-Benz S580 rental Miami'),
             ' and ',
             linkTo('/blog/mercedes-s580-vs-maybach-s580-rental-miami/', 'Mercedes S580 vs Maybach S580'),
@@ -192,7 +196,7 @@ const pageCopy = (() => {
       faqs: [
         {
           q: 'How many people does the Urus seat?',
-          a: 'It depends on the rear layout of the car we will deliver. The standard factory layout is a three-place folding bench. A four-seat rear was a factory option. We confirm the exact layout before you book.',
+          a: 'Five seats, with a three-place rear bench.',
         },
       ],
     };
@@ -425,9 +429,11 @@ const productSchema = {
           {/* Google rating pill, beside the price — brief point 01. The weekly
               rate line that sat here was cut to shorten the card (owner, 15 Nov
               2026); the multi-day rates still show in the estimate. */}
-          <div class="-mt-2 mb-5">
-            <GoogleRatingBadge />
-          </div>
+          {!isDetailPage && (
+            <div class="-mt-2 mb-5">
+              <GoogleRatingBadge />
+            </div>
+          )}
 
 
           {/* client:only (not client:visible) so the calendar renders fresh on the client
@@ -509,7 +515,7 @@ const productSchema = {
            spec sheet and the 3D model. The description and spec grid that used
            to live here now open the reading section below. */}
       <div class="lg:col-start-1 lg:row-start-2 mt-2 lg:mt-0 space-y-10 min-w-0">
-        <ReviewCards carName={car.name} make={car.make} />
+        <ReviewCards carName={car.name} make={car.make} showRating={!isDetailPage} />
         {carFaqs.length > 0 && (
           <div class="space-y-3">
             <h2 class="font-display text-xl md:text-2xl font-bold text-white tracking-tight">{car.name} questions</h2>
@@ -682,12 +688,17 @@ const productSchema = {
         </a>
       </div>
 
-      <LeadForm client:visible defaultVehicle={car.name} />
+      <LeadForm client:visible defaultVehicle={car.name} note={isDetailPage ? 'Prefer to talk now? Call or WhatsApp us.' : undefined} />
       <p class="text-white/50 text-xs mt-8 text-center max-w-md mx-auto">{carTermsSummary} {rentalTerms.cancellation.summary} <a href="/pricing" class="underline hover:text-white/60">Pricing &amp; policies</a> · <a href="/terms" class="underline hover:text-white/60">Full terms</a>.</p>
     </div>
   </section>
 
-  <CtaBand message={message}  car={car.name} page={`/cars/${car.slug}`} />
+  <CtaBand
+    message={message}
+    car={car.name}
+    page={`/cars/${car.slug}`}
+    {...(isDetailPage ? { subtitle: 'Tell us your dates and we will confirm what is open.' } : {})}
+  />
   <StickyMobileCta message={message}  car={car.name} page={`/cars/${car.slug}`} />
 
   <script>
