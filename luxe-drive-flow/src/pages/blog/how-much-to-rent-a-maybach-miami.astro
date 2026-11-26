@@ -20,7 +20,6 @@ import BlogBookingCta from '@/components/blog/BlogBookingCta.astro';
 import { altFor } from '@/data/image-alt';
 import { cars } from '@/data/cars';
 import { reviews } from '@/data/reviews';
-import { googleRating, googleRatingLabel } from '@/data/google-rating';
 import { business, telHref, whatsappWith, addressLine, hoursSummary } from '@/data/business';
 import { rentalTerms, rateForDays } from '@/data/rental-terms';
 
@@ -97,7 +96,7 @@ const updated = 'November 26, 2026';
 const readingMinutes = 7;
 
 const TITLE = 'How Much to Rent a Maybach in Miami | Lussaro Collection';
-const DESCRIPTION = `How much to rent a Maybach in Miami: ${usd(gls.price)} a day, or ${usd(gls.threeDayDeal)} a day for ${tier(gls, 0).days}+ days. The GLS 600 or the S580, chauffeur from ${chauffeurHourly.display}/hour, and the fees before you book.`;
+const DESCRIPTION = `How much to rent a Maybach in Miami: ${usd(gls.price)} a day, or ${usd(gls.threeDayDeal)} a day for ${tier(gls, 0).days}+ days. The GLS 600 or Maybach S580, chauffeur from ${chauffeurHourly.display}/hour, and the fees before you book.`;
 const waMessage = 'Hi, I read your Maybach rates guide and want a GLS 600 Maybach.';
 const wa = whatsappWith(waMessage, { car: gls.name, page: PATH });
 
@@ -531,7 +530,7 @@ const jumps = [
         </figure>
 
         <p>
-          Our published rate is the same starting number for everyone who asks. It sits on the car page, the pricing page and this post, and it comes from one file. Every car is detailed between rentals, then an ozone treatment runs through the cabin. You can check that at handover. We're rated {googleRatingLabel} on Google across {googleRating.reviewCount} reviews, and the reviews are on our car pages verbatim.
+          Our published rate is the same starting number for everyone who asks. It sits on the car page, the pricing page and this post, and it comes from one file. Every car is detailed between rentals, then an ozone treatment runs through the cabin. You can check that at handover.
         </p>
 
         <figure class="not-prose my-10 rounded-2xl border border-black/10 bg-[#fafafa] p-6">
@@ -539,8 +538,7 @@ const jumps = [
             <p>“{testimonial.text}”</p>
           </blockquote>
           <figcaption class="mt-4 text-sm text-[#0a0a0a]/60">
-            <span class="text-[#e00e10]" aria-hidden="true">★★★★★</span>
-            <span class="font-semibold text-[#0a0a0a]"> {testimonial.name}</span> — verified Google review
+            <span class="font-semibold text-[#0a0a0a]">{testimonial.name}</span> — verified Google review
           </figcaption>
         </figure>
 
