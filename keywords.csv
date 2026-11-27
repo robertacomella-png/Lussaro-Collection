@@ -21,7 +21,7 @@ rent a ferrari in miami,car,commercial,high,,gap,,,,Same gap. Verb form.
 ferrari sf90 rental miami,car,commercial,medium,/cars/sf90,needs-work,,,,Car page exists but no landing page feeding it.
 lamborghini rental,car,commercial,high,/lamborghini-rental-miami,needs-work,3600,24,0.50,"National term, no city. KD 24 is very winnable at this volume. Low CPC ($0.50) suggests diffuse research intent rather than booking intent - treat as traffic/awareness, not conversions. Miami page can rank but will convert below local variants. SECONDARY in the cluster on /blog/how-much-is-a-lamborghini-rental; primary target stays /lamborghini-rental-miami."
 how much is a rental lamborghini,informational,informational,high,/blog/how-much-is-a-lamborghini-rental,covered,,,,"PRIMARY for the Lamborghini cluster. Informational, so it does not compete with /lamborghini-rental-miami."
-lamborghini urus rental,car,commercial,high,/blog/how-much-is-a-lamborghini-rental,covered,,,,"Secondary in the Lamborghini cluster. $999/day, the volume car."
+lamborghini urus rental,car,commercial,high,/blog/how-much-is-a-lamborghini-rental,covered,,,,"Secondary in the Lamborghini cluster. $995/day, the volume car."
 lamborghini huracan rental,car,commercial,high,/blog/how-much-is-a-lamborghini-rental,covered,,,,Secondary in the Lamborghini cluster. EVO $1199/day.
 lamborghini huracan sto rental miami,car,commercial,high,/cars/huracan-sto,covered,,,,"PRIMARY for the STO car page; owner-chosen 15 Nov 2026. Opens the title and meta description. Do not give a landing page or blog post this primary - the car page owns it."
 huracan sto rental miami,car,commercial,medium,/cars/huracan-sto,covered,,,,"Variant of the STO primary; same page. A future STO vs EVO post may use it only as a secondary."
@@ -33,14 +33,14 @@ lamborghini rental dallas,geo-out-of-market,commercial,low,,do-not-target,,,,Out
 lamborghini rental los angeles,geo-out-of-market,commercial,low,,do-not-target,,,,Out of market. Miami only.
 lamborghini rental miami,car,commercial,high,/lamborghini-rental-miami,covered,,,,Two Lamborghinis in fleet — Urus and Huracan EVO.
 rent a lamborghini in miami,car,commercial,high,/lamborghini-rental-miami,covered,,,,Verb form.
-lamborghini urus rental miami,car,commercial,medium,/lamborghini-urus-rental-miami,covered,,,,$999/day. The volume car.
+lamborghini urus rental miami,car,commercial,medium,/lamborghini-urus-rental-miami,covered,,,,$995/day. The volume car.
 lamborghini huracan rental miami,car,commercial,medium,/cars/huracan-evo,covered,,,,$1199/day.
 rolls royce rental miami,car,commercial,high,/rolls-royce-rental-miami,covered,,,,
 rolls royce cullinan rental miami,car,commercial,medium,/cars/rolls-royce-cullinan,covered,,,,$1299/day.
 maybach rental miami,car,commercial,high,/maybach-rental-miami,covered,,,,No page. The GLS 600 is the founding car and also the chauffeur vehicle.
 mercedes maybach gls 600 rental miami,car,commercial,medium,/maybach-rental-miami,covered,,,,Car page only. No landing page.
 mercedes rental miami,car,commercial,medium,,gap,,,,"Three Mercedes in fleet — S580, GLS 600, plus G63 on request."
-mercedes s class rental miami,car,commercial,medium,/mercedes-s580-rental-miami,covered,,,,S580 at $399 is the entry car and the downsell target.
+mercedes s class rental miami,car,commercial,medium,/mercedes-s580-rental-miami,covered,,,,S580 at $445 is the entry car and the downsell target.
 g wagon rental miami,car,commercial,medium,/g-wagon-rental-miami,needs-work,,,,"Page exists but G63 is sourced on request, not held. Copy must stay honest about that."
 mercedes g63 rental miami,car,commercial,low,/g-wagon-rental-miami,needs-work,,,,Same caveat as g wagon.
 exotic car rental south beach,location,commercial,high,/exotic-car-rental-south-beach,covered,,,,
@@ -95,12 +95,12 @@ is the huracan sto awd or rwd,informational,informational,medium,/blog/lamborghi
 is the huracan sto street legal,informational,informational,low,/blog/lamborghini-huracan-sto-vs-evo-rental-miami,covered,,,,"Autocomplete question. FAQ on the comparison post."
 how much is it to rent a lamborghini huracan for a day,informational,informational,high,/blog/lamborghini-huracan-sto-vs-evo-rental-miami,covered,,,,"Autocomplete question. FAQ on the comparison post with all three Huracan day rates. Do not confuse with the price guide primary 'how much is a rental lamborghini'."
 lamborghini huracan sto vs evo rental miami,comparison,informational,high,/blog/lamborghini-huracan-sto-vs-evo-rental-miami,covered,,,,"PRIMARY for the three-Huracan comparison post, 15 Nov 2026. Recommends the STO; funnels to /cars/huracan-sto, which keeps the commercial STO term."
-mercedes s580 vs maybach s580 rental miami,comparison,informational,high,/blog/mercedes-s580-vs-maybach-s580-rental-miami,covered,,,,"First post in the comparison cluster. We run both S-Classes, $399 and $899."
-lamborghini urus vs g63 rental miami,comparison,informational,high,,gap,,,,"The classic Miami performance-SUV decision. $999 vs $799, both in our fleet."
-lamborghini urus vs rolls royce cullinan rental miami,comparison,informational,medium,,gap,,,,"Performance against presence. $999 vs $1299, both ours."
-maybach gls 600 vs rolls royce cullinan rental miami,comparison,informational,medium,,gap,,,,"Luxury SUV head to head, Maybach against Rolls. $899 vs $1299."
+mercedes s580 vs maybach s580 rental miami,comparison,informational,high,/blog/mercedes-s580-vs-maybach-s580-rental-miami,covered,,,,"First post in the comparison cluster. We run both S-Classes, $445 and $895."
+lamborghini urus vs g63 rental miami,comparison,informational,high,,gap,,,,"The classic Miami performance-SUV decision. $995 vs $799, both in our fleet."
+lamborghini urus vs rolls royce cullinan rental miami,comparison,informational,medium,,gap,,,,"Performance against presence. $995 vs $1299, both ours."
+maybach gls 600 vs rolls royce cullinan rental miami,comparison,informational,medium,,gap,,,,"Luxury SUV head to head, Maybach against Rolls. $895 vs $1299."
 ferrari sf90 vs lamborghini huracan rental miami,comparison,informational,medium,,gap,,,,Supercar choice at the top of the fleet. $2499 vs $1199.
-lamborghini urus vs maybach gls 600 rental miami,comparison,informational,medium,,gap,,,,Performance against comfort in the same SUV budget. $999 vs $899. BEY covers this pairing; we rent both.
+lamborghini urus vs maybach gls 600 rental miami,comparison,informational,medium,,gap,,,,Performance against comfort in the same SUV budget. $995 vs $895. BEY covers this pairing; we rent both.
 how much to rent a maybach,informational,informational,high,/blog/how-much-to-rent-a-maybach-miami,covered,320,3,0.33,"PRIMARY of the 26 Nov 2026 pricing post. Informational. /maybach-rental-miami keeps the commercial maybach rental miami term."
 how much is it to rent a maybach,informational,informational,high,/blog/how-much-to-rent-a-maybach-miami,covered,320,3,,"Secondary on the Maybach price post. Same SERP family as the primary."
 how much does it cost to rent a maybach,informational,informational,high,/blog/how-much-to-rent-a-maybach-miami,covered,170,3,,"Secondary on the Maybach price post. Covered in the rate card and FAQ."
