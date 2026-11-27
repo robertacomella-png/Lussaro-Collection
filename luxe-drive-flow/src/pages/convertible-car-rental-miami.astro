@@ -1,0 +1,112 @@
+---
+// /convertible-car-rental-miami
+//
+// Owns "convertible car rental miami". Only cars whose fleet name is a Spyder,
+// Spider or Cabriolet. The SF90 is a fixed-roof coupe (car-content.js) and is
+// not listed. Roof operation is the subject. The sports-car page keeps the
+// coupe choice and does not repeat these roof facts.
+import LandingLayout from '@/layouts/LandingLayout.astro';
+import RateGrid from '@/components/site/RateGrid.astro';
+import { cars } from '@/data/cars';
+import { hoursSummary } from '@/data/business';
+import { rentalTerms } from '@/data/rental-terms';
+import {
+  assertMeta,
+  assertTitle,
+  faqPage,
+  fllDelivery,
+  isOpenTop,
+  miamiDelivery,
+  productFor,
+  publicName,
+  usd,
+} from '@/lib/hub';
+
+const open = cars.filter(isOpenTop);
+const expected = ['huracan-evo-spyder', 'porsche-911-turbo-s'];
+const slugs = open.map((c) => c.slug).sort();
+if (slugs.join() !== [...expected].sort().join()) {
+  throw new Error(
+    `Convertible page expected ${expected.join(', ')} and found ${slugs.join(', ') || 'none'}. Refusing to publish a coupe as a convertible.`,
+  );
+}
+
+const spyder = open.find((c) => c.slug === 'huracan-evo-spyder');
+const porsche = open.find((c) => c.slug === 'porsche-911-turbo-s');
+const { mileage, deposit, minimumAge } = rentalTerms;
+
+const title = assertTitle('Convertible', 'Convertible Car Rental Miami | Lussaro Collection');
+const description = assertMeta(
+  'Convertible',
+  `Convertible car rental in Miami: the Huracán EVO Spyder and the 911 Turbo S Cabriolet. Delivery is ${miamiDelivery.display} each way in Miami and ${fllDelivery.display} each way in Fort Lauderdale.`,
+);
+
+const faqs = [
+  {
+    q: 'Which convertibles can I rent?',
+    a: `The Huracán EVO Spyder at ${usd(spyder.price)} a day, and the Porsche 911 Turbo S Cabriolet at ${usd(porsche.price)} a day. Those are the open cars in the fleet. The Ferrari SF90 we rent is a fixed-roof coupe, so it is not on this page.`,
+  },
+  {
+    q: 'How does the Huracán EVO Spyder roof work?',
+    a: 'The soft top opens or closes in about 17 seconds and will do it on the move at up to 31 mph, so a shower does not mean pulling over. The rear window lowers on its own, which lets you leave the roof up and still hear the V10.',
+  },
+  {
+    q: 'How does the 911 Turbo S Cabriolet roof work?',
+    a: 'It is an electric soft top. It opens or closes in seconds and works on the move at low speed. The cabin is a 2+2: two full seats in front and two small seats behind, which suit bags or a short hop rather than adults on a long drive.',
+  },
+  {
+    q: 'Which roof fits the day?',
+    a: `Choose the Huracán EVO Spyder for two seats, rear-wheel drive and a naturally aspirated V10: ${spyder.power} hp, ${spyder.zeroToSixty} to 60. Choose the 911 Turbo S Cabriolet for all-wheel drive, a front trunk and the small rear seats: ${porsche.power} hp, ${porsche.zeroToSixty} to 60. Coupes, including the Huracán STO and the Ferrari SF90, are on the sports car page.`,
+  },
+  {
+    q: 'What does delivery cost?',
+    a: `An open car is ${miamiDelivery.display} each way in Miami and at the Port of Miami, and ${fllDelivery.display} each way in Fort Lauderdale, with the handover point agreed in your quote. ${mileage.includedPerDay} miles a day are included, the refundable deposit is ${deposit.display}, and drivers must be ${minimumAge} or over with a valid license. ${hoursSummary}.`,
+  },
+];
+---
+<LandingLayout
+  title={title}
+  description={description}
+  h1="Convertible Car Rental Miami"
+  intro="The open cars are the Huracán EVO Spyder and the Porsche 911 Turbo S Cabriolet. The decision is the roof: a V10 Spyder for two, or an all-wheel-drive Cabriolet with room for bags. Coupes are a different page."
+  only={expected}
+  fleetHeading="Convertibles in the fleet"
+  fullFleetLink
+  ctaTitle="Reserve a convertible"
+  heroImage="/cars/porsche-911-turbo-s-cabriolet-rental-miami-side-profile.jpg"
+  showRating={false}
+  reserveNote="Tell us the car and the dates and we'll confirm availability."
+  leadNote="Prefer to talk now? Call or WhatsApp us."
+  schema={[...open.map(productFor), faqPage(faqs)]}
+>
+  <p>The Ferrari SF90 in the fleet is a fixed-roof coupe. It is not listed here. The Huracán STO and the Huracán EVO are coupes as well. Those three, plus these two open cars, are compared as sports cars on the <a href="/sports-car-rental-miami">sports car rental</a> page. This page stays with the roofs.</p>
+
+  <h2>Daily rates</h2>
+  <p>Both published day rates are below, then the per-day rate once the rental gets longer. Nothing on this table is a coupe.</p>
+  <RateGrid
+    items={[
+      { car: spyder, href: '/cars/huracan-evo-spyder', name: publicName(spyder) },
+      { car: porsche, href: '/cars/porsche-911-turbo-s', name: publicName(porsche) },
+    ]}
+  />
+
+  <h2>The Huracán EVO Spyder roof</h2>
+  <p>The soft top opens or closes in about 17 seconds, and it does that on the move at up to 31 mph. You do not have to stop when the weather turns. The rear window lowers independently, so the roof can stay up while the V10 stays audible. {spyder.power} hp, rear-wheel drive, {spyder.zeroToSixty} to 60, {usd(spyder.price)} a day. Two seats, and luggage goes in a small front trunk. Photos and the booking form are on the <a href="/cars/huracan-evo-spyder">Huracán EVO Spyder car page</a>. The other Lamborghinis, including the coupe, are on <a href="/lamborghini-rental-miami">Lamborghini rental Miami</a>.</p>
+
+  <h2>The 911 Turbo S Cabriolet roof</h2>
+  <p>An electric soft top opens or closes in seconds, including at low speed while the car is moving. A short shower does not end the drive. {porsche.power} hp, all-wheel drive, {porsche.zeroToSixty} to 60, {usd(porsche.price)} a day. It is a 2+2, so the two small rear seats take bags that the Spyder has nowhere to put. The page that answers the Porsche question on its own is <a href="/porsche-911-turbo-s-rental-miami">Porsche rental Miami</a>, and the photos are on the <a href="/cars/porsche-911-turbo-s">911 Turbo S car page</a>.</p>
+
+  <h2>Which roof</h2>
+  <p>Book the Spyder when the sound and the two-seat cabin are the point. Book the Cabriolet when you want the roof down and still have somewhere for a weekend's bags, plus all-wheel drive if the afternoon rain arrives. Neither car is a track car. The Huracán STO, which is track-bred and street-only, is a coupe and lives on the sports car page.</p>
+
+  <h2>Delivery and hours</h2>
+  <p>Roof-down delivery in Miami and at the Port of Miami is {miamiDelivery.display} each way, and Fort Lauderdale is {fllDelivery.display} each way, with the handover point agreed in your quote. {hoursSummary}. Miles, deposit and insurance are on the <a href="/terms">terms page</a>.</p>
+
+  <h2>Questions</h2>
+  {faqs.map((f) => (
+    <>
+      <h3>{f.q}</h3>
+      <p>{f.a}</p>
+    </>
+  ))}
+</LandingLayout>

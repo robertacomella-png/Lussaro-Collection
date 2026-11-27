@@ -54,6 +54,9 @@ When an agency asks how edits are tracked, this is the answer.
 | /blog/rent-a-lamborghini-for-a-day-miami | Lussaro | locked | Published 27 Nov 2026, 1,641 words, 54/54 on the verifier. Route guide for renting a Lamborghini for a day: Huracán STO, four Miami drives, and the one-day total. Rates, miles, deposit and age render from fleet.js and rental-terms.js. Edit sections, never regenerate. |
 | /lamborghini-rental-miami | Lussaro | locked | SEO landing copy. Owns the Lamborghini commercial cluster. |
 | /rolls-royce-rental-miami | Lussaro | locked | SEO landing copy. |
+| /mercedes-rental-miami | Public Relations, 27 Nov 2026 | locked | New brand hub, 27 Nov 2026. Owns "mercedes rental miami" only. Links down to the G63, Mercedes-Benz S580, Mercedes-Maybach S580 and Mercedes-Maybach GLS 600. Does not take maybach rental miami, mercedes s class rental miami, or g wagon rental miami. Snapshot is the blob under Approved locked edits. |
+| /sports-car-rental-miami | Public Relations, 27 Nov 2026 | locked | New category hub, 27 Nov 2026. Owns "sports car rental miami". Two-door cars only. Does not take supercar rental miami, which /fleet keeps. Snapshot is the blob under Approved locked edits. |
+| /convertible-car-rental-miami | Public Relations, 27 Nov 2026 | locked | New category hub, 27 Nov 2026. Owns "convertible car rental miami". Huracán EVO Spyder and Porsche 911 Turbo S Cabriolet only. The SF90 is a coupe and is not listed. Snapshot is the blob under Approved locked edits. |
 | /g-wagon-rental-miami | Lussaro | locked | SEO landing copy. |
 | /luxury-suv-rental-miami | Lussaro | locked | SEO landing copy. |
 | /exotic-car-rental-brickell | Lussaro | locked | SEO landing copy, neighbourhood targeting. |
@@ -205,3 +208,8 @@ A `locked` file stays locked after an approval. Approval covers one snapshot of 
 | luxe-drive-flow/src/pages/wedding-car-rental-miami.astro | 7e58a5548473a7cbc4dbe8fcd339c9696735aac6 | Public Relations, 27 Nov 2026 | The meta says delivery from $125 each way and is 159 characters. |
 | luxe-drive-flow/src/pages/blog/luxury-car-rental-miami-beach-art-basel.astro | 5ee12a72b1527d00dbc7761e12ca399df4d5710c | Public Relations, 27 Nov 2026 | The meta says public days run December 4–6 and is 160 characters. |
 | luxe-drive-flow/src/pages/blog/how-much-to-rent-a-maybach-miami.astro | b5f43a5cbb24402a885b975a8205ba089acb9785 | Public Relations, 27 Nov 2026 | The meta uses Mercedes-Maybach GLS 600 and Mercedes-Maybach S580 and is 152 characters. |
+| luxe-drive-flow/src/pages/lamborghini-rental-miami.astro | b14baab41fe5ff997ff55d5aad59904e994b5fb8 | Public Relations, 27 Nov 2026 | SEO Wave 1: live price grid, per-car Product/Offer, fuller FAQ, delivery each way from rental-terms.js, Huracán naming, track-bred street-only, rating line off. |
+| luxe-drive-flow/src/pages/rolls-royce-rental-miami.astro | 8d6d5e515a40fa1c9440fd43a22c65bda5da96c6 | Public Relations, 27 Nov 2026 | SEO Wave 1: live price grid, Product/Offer, fuller FAQ, delivery each way, US license and liter, rating line off. |
+| luxe-drive-flow/src/pages/mercedes-rental-miami.astro | 781084ad273d99dc7c1e982172b649806766a4a9 | Public Relations, 27 Nov 2026 | First publication. Mercedes hub. Owns mercedes rental miami only. |
+| luxe-drive-flow/src/pages/sports-car-rental-miami.astro | 1ea80dc252242ef30f4866483c52c90820831668 | Public Relations, 27 Nov 2026 | First publication. Sports-car hub. Owns sports car rental miami. |
+| luxe-drive-flow/src/pages/convertible-car-rental-miami.astro | 689feefba6aa4f4b2c4e1723944ec27fc20827f8 | Public Relations, 27 Nov 2026 | First publication. Convertible hub. Spyder and 911 Turbo S Cabriolet only. |

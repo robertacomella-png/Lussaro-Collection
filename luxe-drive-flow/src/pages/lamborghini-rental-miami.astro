@@ -1,31 +1,42 @@
 ---
 import LandingLayout from '@/layouts/LandingLayout.astro';
-import { cars } from '@/data/cars';
-import { rentalTerms, deliveryEachWaySummary } from '@/data/rental-terms';
+import RateGrid from '@/components/site/RateGrid.astro';
+import { hoursSummary } from '@/data/business';
+import { rentalTerms } from '@/data/rental-terms';
+import {
+  assertMeta,
+  assertTitle,
+  carsInOrder,
+  faqPage,
+  fllDelivery,
+  miamiDelivery,
+  productFor,
+  publicName,
+  usd,
+} from '@/lib/hub';
 
-// Every Lamborghini currently in fleet.js, with the STO first. A car that
-// leaves the fleet drops out of this list on the next build. The page does
-// not state a count: the owner has not confirmed the lineup is final, and the
-// marketing title names STO, EVO and Urus while the Spyder is also in the data.
-const usd = (n) => `$${n.toLocaleString('en-US')}`;
-const bySlug = (s) => cars.find((c) => c.slug === s);
+// Every Lamborghini currently in fleet.js, STO first. A car that leaves the
+// fleet drops out on the next build. The page does not state a count.
 const ORDER = ['huracan-sto', 'huracan-evo', 'huracan-evo-spyder', 'lamborghini-urus'];
-const lambos = [
-  ...ORDER.map(bySlug).filter(Boolean),
-  ...cars.filter((c) => c.make === 'Lamborghini' && !ORDER.includes(c.slug)),
-];
+const lambos = carsInOrder(ORDER);
+const bySlug = (slug) => lambos.find((c) => c.slug === slug);
 const sto = bySlug('huracan-sto');
 const evo = bySlug('huracan-evo');
 const spyder = bySlug('huracan-evo-spyder');
 const urus = bySlug('lamborghini-urus');
-const fromPrice = Math.min(...lambos.map((c) => c.price));
 const { mileage, minimumAge, deposit } = rentalTerms;
+
+const title = assertTitle('Lamborghini', 'Lamborghini Rental Miami | Lussaro Collection');
+const description = assertMeta(
+  'Lamborghini',
+  `Rent a Lamborghini in Miami: Huracán STO, EVO, Spyder and Urus. Delivery is ${miamiDelivery.display} each way in Miami and ${fllDelivery.display} each way in Fort Lauderdale. 9 AM–8 PM daily.`,
+);
 
 const faqs = [
   {
     q: 'Which Lamborghini should I book?',
     a: [
-      sto && `The Huracán STO when the drive is the point: ${sto.power} hp, rear-wheel drive, ${usd(sto.price)} a day, age ${sto.minimumAge}, and a ${sto.deposit.display} deposit.`,
+      sto && `The Huracán STO when the drive is the point: ${sto.power} hp, rear-wheel drive, ${usd(sto.price)} a day, age ${sto.minimumAge}, and a ${sto.deposit.display} deposit. It is track-bred, street-only.`,
       evo && `The Huracán EVO at ${usd(evo.price)} a day when you want that V10 with a softer ride.`,
       spyder && `The EVO Spyder at ${usd(spyder.price)} a day when the roof has to come off.`,
       urus && `The Urus at ${usd(urus.price)} a day when people or luggage have to come too.`,
@@ -33,74 +44,85 @@ const faqs = [
   },
   {
     q: 'Can I put suitcases in a Huracán?',
-    a: 'Barely. The STO, the EVO and the EVO Spyder have a small front compartment and no rear cargo area, so budget for a soft bag. Arriving from the airport with full-size luggage is a job for the Urus.',
+    a: 'Barely. The STO, the EVO and the EVO Spyder have a small front compartment and no rear cargo area, so budget for a soft bag. Luggage for more than that is a job for the Urus.',
+  },
+  {
+    q: 'Is the Huracán STO for track use?',
+    a: `No. The Huracán STO is track-bred, street-only. It is ${sto ? `${sto.power} hp and rear-wheel drive, ` : ''}rented for the street, with its own age and deposit.`,
+  },
+  {
+    q: 'What does delivery cost?',
+    a: `A Lamborghini is ${miamiDelivery.display} each way in Miami and at the Port of Miami, and ${fllDelivery.display} each way in Fort Lauderdale, and the handover point is agreed in your quote. Collection is typically the same fee as delivery.`,
   },
   {
     q: 'What does a Lamborghini rental include?',
-    a: `Each booking includes ${mileage.includedPerDay} miles for every day, pooled across the rental rather than capped daily. The refundable deposit is ${deposit.display}${sto?.depositDiffers ? `, except ${sto.deposit.display} on the Huracán STO` : ''}. Drivers must be ${minimumAge} or over${sto && sto.minimumAge !== minimumAge ? `, except the Huracán STO, which requires ${sto.minimumAge}` : ''}, with a valid license and insurance that covers the car.`,
+    a: `Each booking includes ${mileage.includedPerDay} miles for every day, pooled across the rental rather than capped daily. The refundable deposit is ${deposit.display}${sto?.depositDiffers ? `, except ${sto.deposit.display} on the Huracán STO` : ''}. Drivers must be ${minimumAge} or over${sto && sto.minimumAge !== minimumAge ? `, except the Huracán STO, which requires ${sto.minimumAge}` : ''}, with a valid license and insurance that covers the car. ${hoursSummary}.`,
   },
 ];
-
-const faqSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
-};
 ---
 <LandingLayout
-  title="Lamborghini Rental Miami – Huracán STO, EVO & Urus | Lussaro"
-  description={`Rent a Lamborghini in Miami: Huracán STO, Huracán EVO and Urus from ${usd(fromPrice)}/day. 100 miles/day, refundable deposit, delivery across Miami. Book on WhatsApp.`}
+  title={title}
+  description={description}
   h1="Lamborghini Rental in Miami"
-  intro="Rent a Lamborghini in Miami from the cars below. They are not interchangeable, and the wrong one is the booking that wastes the day."
+  intro="The Lamborghini to book depends on the day. The Huracán STO is track-bred, street-only. The Huracán EVO is that V10 with a softer ride. The EVO Spyder is the open car. The Urus is the SUV."
   only={lambos.map((c) => c.slug)}
   fleetHeading="Lamborghinis in the fleet"
   fullFleetLink
   ctaTitle="Reserve your Lamborghini"
-  schema={[faqSchema]}
+  heroImage="/cars/lamborghini-huracan-sto-rental-miami-front-quarter.jpg"
+  showRating={false}
+  reserveNote="Tell us the car and the dates and we'll confirm availability."
+  leadNote="Prefer to talk now? Call or WhatsApp us."
+  schema={[...lambos.map(productFor), faqPage(faqs)]}
 >
   <h2>Huracán STO, EVO, Spyder and Urus</h2>
-  <p>Pick by the job. The rate on each name is the 1-day price, and a longer booking costs less per day.</p>
+  <p>Pick by the job. The figure beside each name is the 1-day price. A longer booking costs less per day, and the table under these notes is the live ladder.</p>
 
   {sto && (
     <>
-      <h3><a href={`/cars/${sto.slug}`}>Lamborghini Huracán STO</a> — {usd(sto.price)}/day</h3>
-      <p>Track-bred, and homologated for the street: {sto.power} hp, rear-wheel drive, {sto.zeroToSixty} to 60, a fixed rear wing and a roof scoop. Two seats, a firm ride, and room for a soft bag. Minimum age {sto.minimumAge}, with a {sto.deposit.display} refundable deposit. Photos, the full rate ladder and the booking form are on the <a href={`/cars/${sto.slug}`}>Huracán STO rental in Miami</a> page.</p>
+      <h3><a href={`/cars/${sto.slug}`}>{publicName(sto)}</a> — {usd(sto.price)}/day</h3>
+      <p>Track-bred, street-only: {sto.power} hp, rear-wheel drive, {sto.zeroToSixty} to 60, a fixed rear wing and a roof scoop. Two seats, a firm ride, and room for a soft bag. Minimum age {sto.minimumAge}, with a {sto.deposit.display} refundable deposit. Photos, the full rate ladder and the booking form are on the <a href={`/cars/${sto.slug}`}>Huracán STO rental in Miami</a> page.</p>
     </>
   )}
 
   {evo && (
     <>
-      <h3><a href={`/cars/${evo.slug}`}>Lamborghini Huracán EVO</a> — {usd(evo.price)}/day</h3>
-      <p>Strictly two seats, a small front trunk, and a naturally aspirated V10 with no hybrid assistance and no quiet mode. {evo.power} hp, {evo.zeroToSixty} to 60. The front splitter sits low, so steep driveways want a slow, angled approach. It is the same engine family as the STO, with a softer ride around town.</p>
+      <h3><a href={`/cars/${evo.slug}`}>{publicName(evo)}</a> — {usd(evo.price)}/day</h3>
+      <p>Strictly two seats, a small front trunk, and a naturally aspirated V10 with no hybrid assistance. {evo.power} hp, {evo.zeroToSixty} to 60. The front splitter sits low, so steep driveways want a slow, angled approach. It is the same engine family as the STO, with a softer ride around town.</p>
     </>
   )}
 
   {spyder && (
     <>
-      <h3><a href={`/cars/${spyder.slug}`}>Lamborghini Huracán EVO Spyder</a> — {usd(spyder.price)}/day</h3>
-      <p>The EVO with the roof off in about seventeen seconds, at speeds up to 31 mph. {spyder.power} hp, {spyder.zeroToSixty} to 60, still two seats. Take it when the open air is the point of the booking.</p>
+      <h3><a href={`/cars/${spyder.slug}`}>{publicName(spyder)}</a> — {usd(spyder.price)}/day</h3>
+      <p>The EVO with the roof off in about seventeen seconds, at speeds up to 31 mph. {spyder.power} hp, {spyder.zeroToSixty} to 60, still two seats. Take it when the open air is the point of the booking. How that roof compares with the 911 Turbo S Cabriolet is on the <a href="/convertible-car-rental-miami">convertible car rental</a> page.</p>
     </>
   )}
 
   {urus && (
     <>
-      <h3><a href={`/cars/${urus.slug}`}>Lamborghini Urus</a> — {usd(urus.price)}/day</h3>
+      <h3><a href={`/cars/${urus.slug}`}>{publicName(urus)}</a> — {usd(urus.price)}/day</h3>
       <p>Four doors, a trunk, and the ride height to clear a speed bump or a hotel ramp. A twin-turbo V8 drives all four wheels: {urus.power} hp, {urus.zeroToSixty} to 60. It is the Lamborghini that carries people and cases.</p>
     </>
   )}
 
-  <h2>Choosing by occasion</h2>
+  <h2>Daily rates</h2>
+  <p>Each column is the per-day rate for a rental of that length. The 1-day figure is the published day rate. Longer stays read the current discount on that car, including any 3-day deal.</p>
+  <RateGrid items={lambos.map((car) => ({ car, href: `/cars/${car.slug}`, name: publicName(car) }))} />
+
+  <h2>Choosing by the day</h2>
   <ul>
-    <li><strong>Airport arrival with luggage</strong> — Urus.</li>
-    <li><strong>Dinner for more than two</strong> — Urus. A Huracán has two seats.</li>
+    <li><strong>Luggage beyond a soft bag</strong> — Urus.</li>
+    <li><strong>More than two people</strong> — Urus. A Huracán has two seats.</li>
     <li><strong>A photo or video shoot</strong> — the Huracán STO, for the wing and the shape.</li>
-    <li><strong>A day where the driving is the point</strong> — Huracán STO.</li>
+    <li><strong>A day where the driving is the point</strong> — Huracán STO. It is track-bred, street-only.</li>
     <li><strong>The same V10, less firm</strong> — Huracán EVO, or the EVO Spyder if the roof has to come off.</li>
-    <li><strong>One car across a whole week of errands</strong> — Urus.</li>
+    <li><strong>One car across a week of errands</strong> — Urus.</li>
   </ul>
+  <p>The coupes and the SF90, set beside these Huracáns, are on the <a href="/sports-car-rental-miami">sports car rental</a> page. The Urus stays on this page because it is the Lamborghini SUV, not a sports car.</p>
 
   <h2>Terms, briefly</h2>
-  <p>To rent a Lamborghini for a day, the booking includes {mileage.includedPerDay} miles, added up across the rental rather than reset every morning. The refundable deposit is {deposit.display}{sto?.depositDiffers ? `, and ${sto.deposit.display} on the Huracán STO` : ''}, taken when the booking is confirmed and returned after the car is checked on the way back. Drivers must be {minimumAge} or over{sto && sto.minimumAge !== minimumAge ? `, or ${sto.minimumAge} for the Huracán STO` : ''}, hold a valid license, and carry insurance covering the vehicle — or buy a daily policy from us. Delivery is {deliveryEachWaySummary}. The worked figures for a Lamborghini day rate sit in the <a href="/blog/how-much-is-a-lamborghini-rental">Lamborghini rental Miami price</a> guide, and every other number is on the <a href="/pricing">rate card</a>. For the rest of what we run, start at <a href="/exotic-car-rental-miami">exotic car rental in Miami</a>.</p>
+  <p>Delivery is {miamiDelivery.display} each way in Miami and at the Port of Miami, and {fllDelivery.display} each way in Fort Lauderdale, with the handover point agreed in your quote. {hoursSummary}. The worked figures for a Lamborghini day rate sit in the <a href="/blog/how-much-is-a-lamborghini-rental">Lamborghini rental price</a> guide, and every other number is on the <a href="/pricing">rate card</a>.</p>
 
   <h2>Questions</h2>
   {faqs.map((f) => (

@@ -31,6 +31,9 @@ const LABELS = {
   '/exotic-car-rental-fort-lauderdale': 'Exotic Car Rental Fort Lauderdale',
   '/wedding-car-rental-miami': 'Luxury Car Rental for a Wedding in Miami',
   '/porsche-911-turbo-s-rental-miami': 'Porsche 911 Turbo S Rental Miami',
+  '/mercedes-rental-miami': 'Mercedes Rental Miami',
+  '/sports-car-rental-miami': 'Sports Car Rental Miami',
+  '/convertible-car-rental-miami': 'Convertible Car Rental Miami',
   '/blog': 'Rental Guides',
 };
 

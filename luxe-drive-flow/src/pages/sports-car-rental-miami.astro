@@ -1,0 +1,133 @@
+---
+// /sports-car-rental-miami
+//
+// Owns "sports car rental miami". /fleet keeps "supercar rental miami".
+// /lamborghini-rental-miami keeps the Lamborghini query. The Porsche page
+// keeps "porsche rental miami". Roof operation lives on the convertible page.
+// The SF90 is a coupe (car-content.js). The Urus is an SUV and is not listed.
+import LandingLayout from '@/layouts/LandingLayout.astro';
+import RateGrid from '@/components/site/RateGrid.astro';
+import { hoursSummary } from '@/data/business';
+import { rentalTerms } from '@/data/rental-terms';
+import {
+  assertMeta,
+  assertTitle,
+  carsInOrder,
+  faqPage,
+  fllDelivery,
+  isOpenTop,
+  miamiDelivery,
+  productFor,
+  publicName,
+  usd,
+} from '@/lib/hub';
+
+const ORDER = ['huracan-sto', 'huracan-evo', 'sf90', 'huracan-evo-spyder', 'porsche-911-turbo-s'];
+const sports = carsInOrder(ORDER);
+const bySlug = (slug) => sports.find((c) => c.slug === slug);
+const sto = bySlug('huracan-sto');
+const evo = bySlug('huracan-evo');
+const sf90 = bySlug('sf90');
+const spyder = bySlug('huracan-evo-spyder');
+const porsche = bySlug('porsche-911-turbo-s');
+const { mileage, deposit, minimumAge } = rentalTerms;
+
+if (sf90 && isOpenTop(sf90)) {
+  throw new Error('SF90 matched as an open top. The sports page treats it as a coupe.');
+}
+
+const title = assertTitle('Sports', 'Sports Car Rental Miami | Lussaro Collection');
+const description = assertMeta(
+  'Sports',
+  `Sports car rental in Miami: Huracán STO, Huracán EVO, Ferrari SF90 and the open cars. Delivery is ${miamiDelivery.display} each way in Miami and ${fllDelivery.display} each way in Fort Lauderdale.`,
+);
+
+const drive = (car) => car.drivetrain.split(' · ')[0].toLowerCase();
+
+const faqs = [
+  {
+    q: 'Which sports car should I book?',
+    a: [
+      sto && `The Huracán STO at ${usd(sto.price)} a day when the drive is the point. It is track-bred, street-only, ${sto.power} hp, and it asks for age ${sto.minimumAge} and a ${sto.deposit.display} deposit.`,
+      evo && `The Huracán EVO at ${usd(evo.price)} a day for that V10 with a softer ride.`,
+      sf90 && `The Ferrari SF90 at ${usd(sf90.price)} a day when you want the quickest coupe. It is a fixed-roof car, ${sf90.power} hp.`,
+      'The Huracán EVO Spyder and the Porsche 911 Turbo S Cabriolet are the open cars. Their roofs are on the convertible page.',
+    ].filter(Boolean).join(' '),
+  },
+  {
+    q: 'Is the Ferrari SF90 a convertible?',
+    a: 'No. The Ferrari SF90 in the fleet is a fixed-roof coupe. The open cars are the Huracán EVO Spyder and the Porsche 911 Turbo S Cabriolet.',
+  },
+  {
+    q: 'Is the Huracán STO for track use?',
+    a: 'No. The Huracán STO is track-bred, street-only. It is rented for the street.',
+  },
+  {
+    q: 'What does delivery cost?',
+    a: `A sports car is ${miamiDelivery.display} each way in Miami and at the Port of Miami, and ${fllDelivery.display} each way in Fort Lauderdale, with the handover point agreed in your quote. ${mileage.includedPerDay} miles a day are included. The refundable deposit is ${deposit.display}${sto?.depositDiffers ? `, except ${sto.deposit.display} on the Huracán STO` : ''}. Drivers are ${minimumAge} or over${sto && sto.minimumAge !== minimumAge ? `, except ${sto.minimumAge} for the Huracán STO` : ''}. ${hoursSummary}.`,
+  },
+];
+---
+<LandingLayout
+  title={title}
+  description={description}
+  h1="Sports Car Rental Miami"
+  intro="A sports car here means a two-door. The Huracán STO and the Huracán EVO are coupes. The Ferrari SF90 is a fixed-roof coupe. The Huracán EVO Spyder and the Porsche 911 Turbo S Cabriolet are the open cars. SUVs and sedans are a different booking."
+  only={sports.map((c) => c.slug)}
+  fleetHeading="Sports cars in the fleet"
+  fullFleetLink
+  ctaTitle="Reserve a sports car"
+  heroImage="/cars/ferrari-sf90-rental-miami-front-quarter.jpg"
+  showRating={false}
+  reserveNote="Tell us the car and the dates and we'll confirm availability."
+  leadNote="Prefer to talk now? Call or WhatsApp us."
+  schema={[...sports.map(productFor), faqPage(faqs)]}
+>
+  <p>The job of this page is the choice among those cars. Brand pages keep their own questions: <a href="/lamborghini-rental-miami">Lamborghini rental Miami</a> for the Huracáns and the Urus, and <a href="/porsche-911-turbo-s-rental-miami">Porsche rental Miami</a> for the 911. If the roof is the whole decision, use the <a href="/convertible-car-rental-miami">convertible page</a>.</p>
+
+  <h2>Daily rates</h2>
+  <p>Per day, from the current fleet price. The 1-day column is the published rate. Longer columns are the per-day rate for a rental of that length.</p>
+  <RateGrid items={sports.map((car) => ({ car, href: `/cars/${car.slug}`, name: publicName(car) }))} />
+
+  {sto && (
+    <>
+      <h2><a href="/cars/huracan-sto">{publicName(sto)}</a></h2>
+      <p>Track-bred, street-only. {sto.power} hp, {drive(sto)}, {sto.zeroToSixty} to 60, {usd(sto.price)} a day. Two seats, a fixed rear wing, and a firmer ride than the EVO. Age {sto.minimumAge}, deposit {sto.deposit.display}. It is not a track rental. The <a href="/cars/huracan-sto">Huracán STO car page</a> has the photos.</p>
+    </>
+  )}
+
+  {evo && (
+    <>
+      <h2><a href="/cars/huracan-evo">{publicName(evo)}</a></h2>
+      <p>The coupe for the same naturally aspirated V10 with less edge. {evo.power} hp, {drive(evo)}, {evo.zeroToSixty} to 60, {usd(evo.price)} a day. Two seats and a low nose. Photos are on the <a href="/cars/huracan-evo">Huracán EVO car page</a>.</p>
+    </>
+  )}
+
+  {sf90 && (
+    <>
+      <h2><a href="/cars/sf90">{publicName(sf90)}</a></h2>
+      <p>A fixed-roof coupe, and the quickest car in this group. {sf90.power} hp, {drive(sf90)}, {sf90.zeroToSixty} to 60, {usd(sf90.price)} a day. The open-top SF90 Spider is a different car, and it is not the one we rent. Photos are on the <a href="/cars/sf90">Ferrari SF90 car page</a>.</p>
+    </>
+  )}
+
+  <h2>The open cars</h2>
+  <p>
+    {spyder && <>The <a href="/cars/huracan-evo-spyder">{publicName(spyder)}</a> is {usd(spyder.price)} a day, {spyder.power} hp, {drive(spyder)}. </>}
+    {porsche && <>The <a href="/cars/porsche-911-turbo-s">{publicName(porsche)}</a> is {usd(porsche.price)} a day, {porsche.power} hp, {drive(porsche)}, with a 2+2 cabin. </>}
+    How each roof works, and which open car fits the day, is written on the <a href="/convertible-car-rental-miami">convertible car rental</a> page rather than repeated here.
+  </p>
+
+  <h2>What this page does not cover</h2>
+  <p>The Lamborghini Urus, the Mercedes-AMG G63, the Cullinan and the sedans are not sports cars. They sit higher and they carry more. Start with <a href="/lamborghini-rental-miami">Lamborghini rental Miami</a> if the Urus is in the running, or with the fleet if you have not chosen a shape yet.</p>
+
+  <h2>Delivery and hours</h2>
+  <p>A sports car delivered in Miami or at the Port of Miami is {miamiDelivery.display} each way, and Fort Lauderdale is {fllDelivery.display} each way, with the handover point agreed in your quote. {hoursSummary}. The rest of the terms are on the <a href="/pricing">rate card</a>.</p>
+
+  <h2>Questions</h2>
+  {faqs.map((f) => (
+    <>
+      <h3>{f.q}</h3>
+      <p>{f.a}</p>
+    </>
+  ))}
+</LandingLayout>
