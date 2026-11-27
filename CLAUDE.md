@@ -117,9 +117,9 @@ Verify against the **rendered DOM**, compositing translucent layers down to an o
 
 # Conversion Tracking — required on every CTA
 
-Every WhatsApp and tap-to-call link **must** carry `data-cta="<location>"`. `Layout.astro` has a global click listener that reads it and pushes `whatsapp_click` / `call_click` into the GTM dataLayer; a CTA without it reports as `unknown` and the Meta Pixel data goes soft.
+Every WhatsApp and tap-to-call link **must** carry `data-cta="<location>"`. `Layout.astro` loads one delegated click listener (`bindContactClickTracking` in `src/lib/track.js`) that pushes `whatsapp_click` / `phone_call_click` into the GTM dataLayer, with `link_url`, `page_path` and `cta_placement`. A CTA without `data-cta` reports as `unknown` and the Meta Pixel data goes soft. The listener does not call `gtag()` — GTM is the only sender to GA4.
 
-Standard events (`src/lib/track.js`): `whatsapp_click`, `call_click`, `lead_submit`, `view_vehicle`. Map tags in the GTM UI, never in site code.
+Standard events (`src/lib/track.js`): `whatsapp_click`, `phone_call_click`, `lead_submit`, `view_vehicle`. Map tags in the GTM UI, never in site code. `phone_call_click` replaced `call_click`.
 
 Two more rules the layout enforces:
 - Any inline Call button gets `data-call-inline`, so the floating sticky Call pills hide while it's on screen. Two call buttons must never stack.

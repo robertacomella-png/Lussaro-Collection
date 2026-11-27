@@ -361,35 +361,30 @@ const breadcrumb = breadcrumbFor(Astro.url.pathname, breadcrumbName);
       captureAdSource();
     </script>
 
-    <!-- Auto-fire conversion events for every WhatsApp / Call CTA (mapped to Meta Pixel in GTM).
-         Campaign fields come from the stored touch. Email and phone never do. -->
+    <!-- In-site breadcrumb for the Collection back link. Contact clicks are
+         tracked by the listener below, not here. Bound once: this inline script
+         is re-run on view transitions, and a second listener would stack. -->
     <script is:inline>
-      var LC_CAMPAIGN_KEYS = ['gclid', 'gbraid', 'wbraid', 'fbclid', 'msclkid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
-      document.addEventListener('click', function (e) {
-        var a = e.target.closest && e.target.closest('a[href]');
-        if (!a) return;
-        var href = a.getAttribute('href') || '';
-        // breadcrumb: opening a car page from within the site means "back" is safe
-        if (href.indexOf('/cars/') === 0) { try { sessionStorage.setItem('lussaroInSiteBack', '1'); } catch (e) {} }
-        window.dataLayer = window.dataLayer || [];
-        var campaign = {};
-        try {
-          if (typeof window.lcCampaignFields === 'function') campaign = window.lcCampaignFields() || {};
-        } catch (err) {}
-        function pushClick(eventName) {
-          var payload = { event: eventName, cta_location: a.dataset.cta || 'unknown' };
-          for (var i = 0; i < LC_CAMPAIGN_KEYS.length; i++) {
-            var key = LC_CAMPAIGN_KEYS[i];
-            if (campaign[key]) payload[key] = campaign[key];
-          }
-          window.dataLayer.push(payload);
-        }
-        if (href.indexOf('wa.me') !== -1 || href.indexOf('api.whatsapp.com') !== -1) {
-          pushClick('whatsapp_click');
-        } else if (href.indexOf('tel:') === 0) {
-          pushClick('call_click');
-        }
-      });
+      if (!window.__lcInSiteBackBound) {
+        window.__lcInSiteBackBound = true;
+        document.addEventListener('click', function (e) {
+          try {
+            var node = e.target && e.target.nodeType === 3 ? e.target.parentElement : e.target;
+            var a = node && node.closest && node.closest('a[href]');
+            if (!a) return;
+            var href = a.getAttribute('href') || '';
+            if (href.indexOf('/cars/') === 0) sessionStorage.setItem('lussaroInSiteBack', '1');
+          } catch (err) {}
+        });
+      }
+    </script>
+
+    <!-- One delegated listener for every tel: and WhatsApp link (wa.me,
+         api.whatsapp.com, whatsapp://). Pushes dataLayer only — GTM-5J937M8K
+         is the single sender to GA4. See bindContactClickTracking. -->
+    <script>
+      import { bindContactClickTracking } from '@/lib/track';
+      bindContactClickTracking();
     </script>
   </body>
 </html>

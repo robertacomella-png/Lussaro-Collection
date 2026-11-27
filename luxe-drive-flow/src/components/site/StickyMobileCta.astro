@@ -28,7 +28,7 @@
 // Hidden while any inline data-call-inline CTA is on screen, via the observer
 // in Layout.astro — it keys off data-sticky-cta on the WRAPPER, since hiding a
 // single anchor would strand the other pill on screen. Both clicks are
-// auto-tracked off data-cta: tel: fires call_click, wa.me fires whatsapp_click.
+// auto-tracked off data-cta: tel: fires phone_call_click, wa.me fires whatsapp_click.
 import { Phone } from 'lucide-react';
 import WhatsAppIcon from '@/components/site/WhatsAppIcon.astro';
 import { business, telHref, whatsappWith } from '@/data/business';
