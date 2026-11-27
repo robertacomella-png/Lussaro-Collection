@@ -98,7 +98,7 @@ The distinction that keeps published pricing honest:
 - **Lussaro Collection LLC**
 - **900 Biscayne Blvd, Miami, FL 33132**
 - **+1 (645) 248-7305** — phone and WhatsApp are the same number
-- **Open Mon–Sun, 09:00–22:00**
+- **9 AM–8 PM daily, by appointment only.** Schema window: Mon–Sun 09:00–20:00.
 - **No public email.** Publish none rather than one that bounces.
 
 ## Service areas
