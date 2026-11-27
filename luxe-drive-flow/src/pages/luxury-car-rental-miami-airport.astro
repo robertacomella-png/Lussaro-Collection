@@ -1,12 +1,11 @@
 ---
 // /luxury-car-rental-miami-airport
 //
-// Owns "luxury car rental miami airport". South Beach, Brickell, and the Miami
-// hub keep their own primaries. Delivery to MIA is the Miami fee in
-// rental-terms.js. No meet point, terminal, or permit copy.
+// Owns "luxury car rental miami airport". Delivery to MIA is the Miami fee.
+// No meet point, terminal, permit, flight-number, or notice-time copy.
 import ContentPhoto from '@/components/site/ContentPhoto.astro';
 import LandingLayout from '@/layouts/LandingLayout.astro';
-import { cars, ageException, depositException } from '@/data/cars';
+import { cars } from '@/data/cars';
 import { business, telHref, whatsappWith } from '@/data/business';
 import { rentalTerms } from '@/data/rental-terms';
 import {
@@ -15,7 +14,6 @@ import {
   lateFlightSentence,
   miamiDelivery,
   returnSentence,
-  suvRateSentence,
   displayName,
 } from '@/lib/delivery-facts';
 import { deliveryBusinessSchema, faqSchema } from '@/lib/delivery-schema';
@@ -25,54 +23,42 @@ const SITE = 'https://www.lussarocollection.com';
 const PAGE_URL = `${SITE}${PAGE}`;
 
 const bySlug = (slug) => cars.find((c) => c.slug === slug);
-const usd = (n) => `$${Number(n).toLocaleString('en-US')}`;
 const named = displayName;
 
 const urus = bySlug('lamborghini-urus');
 const gls = bySlug('mercedes-maybach-gls-600');
 const cullinan = bySlug('rolls-royce-cullinan');
 const g63 = bySlug('mercedes-amg-g63');
-const sto = bySlug('huracan-sto');
-const priced = [...cars].sort((a, b) => a.price - b.price);
-const low = priced[0];
-const high = priced[priced.length - 1];
-const { deposit, mileage, cancellation, insurance, minimumAge } = rentalTerms;
-const policy = gls.insurancePerDay;
-const suvRates = suvRateSentence(urus, gls, cullinan, g63);
 
 const waMessage = "Hi, I'd like the Lamborghini Urus delivered to Miami International Airport.";
 const wa = whatsappWith(waMessage, { car: urus.name, page: PAGE });
 
-const description = `Luxury and exotic car rental delivered to MIA. The local Miami rate is ${miamiDelivery.display} each way. Return the car to us, or we pick it up for a fee agreed in your quote.`;
+const description = `Luxury and exotic car rental delivered to Miami International Airport (MIA). The local Miami rate is ${miamiDelivery.display} each way. The handover point is agreed in your quote.`;
 
 const faqs = [
   {
     q: 'Do you deliver a rental car to Miami International Airport (MIA)?',
-    a: `Yes. Lussaro Collection delivers to Miami International Airport. Delivery is the local Miami rate, ${miamiDelivery.display} each way. The address is ${business.street}, ${business.city}, ${business.region} ${business.postalCode}.`,
+    a: `Yes. Lussaro Collection delivers to Miami International Airport at the local Miami rate, ${miamiDelivery.display} each way. There is no airport desk. The address is ${business.street}, ${business.city}, ${business.region} ${business.postalCode}.`,
   },
   {
     q: 'How much is delivery to MIA?',
-    a: `Delivery to MIA is the local Miami rate, ${miamiDelivery.display} each way. That charge sits on top of the daily rate. The quote states it before you book.`,
+    a: `Delivery to MIA is the local Miami rate, ${miamiDelivery.display} each way, on top of the daily rate. The quote states it before you book.`,
   },
   {
     q: 'Do you have a counter at MIA?',
     a: `No. This is delivery, not an airport desk. The address is ${business.street}, ${business.city}, ${business.region} ${business.postalCode}.`,
   },
   {
-    q: 'Can you collect the car at the end of the rental?',
-    a: returnSentence,
+    q: 'Where is the handover?',
+    a: 'The handover point is agreed in your quote.',
   },
   {
     q: 'What if my flight is late or lands at night?',
-    a: `${lateFlightSentence} ${flightTrackingSentence}`,
+    a: `${lateFlightSentence} ${flightTrackingSentence} Hours are ${deliveryHoursLabel}.`,
   },
   {
-    q: 'Can I be driven instead?',
-    a: `Yes. Chauffeur service in the ${named(gls)} is from ${rentalTerms.chauffeurHourly.display} an hour, and we track the flight for that booking too. It is a separate reservation from a self-drive rental.`,
-  },
-  {
-    q: 'What are your hours?',
-    a: `Hours are ${deliveryHoursLabel}.`,
+    q: 'Which car makes sense with luggage?',
+    a: `After a flight, the cars with room for bags are the ${urus.name}, the ${named(gls)}, the ${named(cullinan)}, and the ${named(g63)}. A Huracán or a Ferrari SF90 is a different brief. The pricing page has every daily rate.`,
   },
 ];
 
@@ -84,7 +70,7 @@ const schema = [
     deliveryOffer: {
       name: 'Delivery to Miami International Airport',
       price: miamiDelivery.fee,
-      description: `Local Miami rate, ${miamiDelivery.display} each way, charged in addition to the daily rate. The pickup fee, if we collect the car, is agreed in the quote.`,
+      description: `Local Miami rate, ${miamiDelivery.display} each way, charged in addition to the daily rate.`,
     },
   }),
   faqSchema(faqs),
@@ -94,8 +80,8 @@ const schema = [
   title="Luxury Car Rental Miami Airport | Lussaro Collection"
   description={description}
   h1="Luxury Car Rental at Miami International Airport (MIA)"
-  intro={`Lussaro Collection delivers to Miami International Airport. Delivery is the local Miami rate, ${miamiDelivery.display} each way. You return the car to our location, or we pick it up for a fee agreed in your quote.`}
-  heroImage="/cars/lamborghini-urus-rental-miami-front-skyline.jpg"
+  intro={`Lussaro Collection delivers a luxury or exotic rental to Miami International Airport. The fee is the local Miami rate, ${miamiDelivery.display} each way. There is no desk at the airport.`}
+  heroImage="/cars/lamborghini-urus-rental-miami-rooftop-rear.jpg"
   showRating={false}
   bookingCar={urus.name}
   bookingSource={PAGE_URL}
@@ -107,41 +93,39 @@ const schema = [
   ctaTitle="Book the Urus for MIA delivery"
   leadNote="Send the car, the dates, and your arrival window."
   bandSubtitle="Tell us the car and the dates. We reply with availability and the quote."
+  formNote="Prefer to talk now? Call or WhatsApp us."
   schema={schema}
 >
   <h2 id="short-answer">The short answer</h2>
-  <p>Luxury car rental at Miami International Airport is a delivery, not a desk at the airport. Lussaro Collection is based at {business.street}, {business.city}, {business.region} {business.postalCode}, and MIA is inside the Miami delivery area. The fee is the local Miami rate, {miamiDelivery.display} each way, taken from the same rate card as every other Miami address.</p>
-  <p>{returnSentence} Hours are {deliveryHoursLabel}.</p>
+  <p>Luxury car rental at Miami International Airport is a delivery from {business.street}, {business.city}, {business.region} {business.postalCode}. MIA sits in the local Miami area, so the fee is {miamiDelivery.display} each way. That charge is separate from the daily rate. There is no airport desk. The handover point is agreed in your quote.</p>
+  <p>{returnSentence} The wording is in the <a href="/terms">terms</a>. Hours are {deliveryHoursLabel}.</p>
   <p>
     Call <a href={telHref} data-cta="mia_body" data-call-inline>{business.phoneDisplay}</a>
     or message <a href={wa} data-cta="mia_body" target="_blank" rel="noopener noreferrer">WhatsApp</a>.
-    The form on this page opens with the {urus.name} selected. You can change the car before you send it.
+    The form opens on the {urus.name}. You can change the car before you send it.
   </p>
 
   <h2 id="how-mia-delivery-works">How MIA delivery works</h2>
-  <p>Send the car, the dates, and your arrival window by WhatsApp or the form. We reply with availability and the total, including the delivery charge. Someone who meets the eligibility rules has to be there to receive the car. That is the same rule as a hotel or a residence: a valid driver's license, the age for that car, and insurance that covers the rental, or a daily policy if you do not have qualifying cover.</p>
-  <p>{flightTrackingSentence} {lateFlightSentence} We do not publish a clock for how the day runs after that. The quote is where the timing is settled.</p>
-  <p>MIA is one delivery point. <a href="/luxury-car-rental-fll">Fort Lauderdale Airport (FLL)</a> and the <a href="/car-rental-near-port-of-miami">Port of Miami</a> are separate pages, with their own fees. A rental that starts at one of them does not end at another. {returnSentence}</p>
-
-  <h2 id="what-delivery-costs">What delivery costs</h2>
-  <p>Delivery to Miami International Airport is {miamiDelivery.display} each way. That number is the published Miami fee. It is not folded into the daily rate. The <a href="/pricing">rate card</a> lists it beside the Fort Lauderdale fee, and the <a href="/terms">terms</a> state that delivery and collection are separate charges.</p>
-  <p>{returnSentence} There is no second published figure for that pickup on this page. The quote is where the pickup fee is agreed, before you book.</p>
+  <p>Send the car, the dates, and your arrival window. We reply with availability and the total, including the {miamiDelivery.display} delivery. An eligible driver has to be present to receive the car, the same rule as a hotel or a residence: a valid driver's license, the age for that car, and insurance that covers the rental, or a daily policy if you do not have qualifying cover.</p>
+  <p>{flightTrackingSentence} {lateFlightSentence} Hours stay {deliveryHoursLabel}. We do not publish a clock for the rest of the day. The quote is where the timing is settled.</p>
+  <p>This page is only Miami International Airport. <a href="/luxury-car-rental-fll">Fort Lauderdale Airport</a> and the <a href="/car-rental-near-port-of-miami">Port of Miami</a> are different deliveries, with their own pages.</p>
 
   <ContentPhoto src="/cars/lamborghini-urus-rental-miami-downtown-skyline.jpg" width={2000} height={1333} />
 
+  <h2 id="what-delivery-costs">What delivery costs</h2>
+  <p>Delivery to Miami International Airport is {miamiDelivery.display} each way. It is the published Miami fee, not a separate airport charge, and it is not folded into the daily rate. The <a href="/pricing">rate card</a> lists that fee beside the Fort Lauderdale fee.</p>
+
   <h2 id="which-cars">Which cars work after a flight</h2>
-  <p>Landing with luggage is an SUV brief. {suvRates} The form selects the <a href="/cars/lamborghini-urus">{urus.name}</a>. See the <a href="/cars/mercedes-maybach-gls-600">{named(gls)}</a>, the <a href="/cars/rolls-royce-cullinan">{named(cullinan)}</a>, the <a href="/cars/mercedes-amg-g63">{named(g63)}</a>, the <a href="/luxury-suv-rental-miami">luxury SUV rental</a> page, and the <a href="/lamborghini-urus-rental-miami">Urus page</a>.</p>
-  <p>The low cars are a different job. The <a href="/cars/huracan-evo">Huracan EVO</a> and the <a href="/cars/sf90">Ferrari SF90</a> sit low at the nose, and they are the ones to book when the drive is the point rather than the luggage. The {named(sto)} is track-bred, street-only. If you want one of those, say so in the quote so the delivery plan matches the car. Every car we run is on the <a href="/fleet">fleet</a> page.</p>
+  <p>Landing with luggage is an SUV brief. The <a href="/cars/lamborghini-urus">{urus.name}</a> is the car the form selects. The <a href="/cars/mercedes-maybach-gls-600">{named(gls)}</a>, the <a href="/cars/rolls-royce-cullinan">{named(cullinan)}</a>, and the <a href="/cars/mercedes-amg-g63">{named(g63)}</a> are the other four-door choices. One sentence covers the money: daily and multi-day rates for every car are on the <a href="/pricing">pricing</a> page.</p>
+  <p>A low car is a different job after a flight. The <a href="/cars/huracan-evo">Huracán EVO</a> and the <a href="/cars/sf90">Ferrari SF90</a> sit low at the nose. The Huracán STO is track-bred, street-only. Say so in the quote if that is the car you want. The full list is the <a href="/fleet">fleet</a>, and the Urus has its own note on the <a href="/lamborghini-urus-rental-miami">Urus page</a>. The three large SUVs are compared on the <a href="/luxury-suv-rental-miami">luxury SUV rental</a> page.</p>
 
   <ContentPhoto src="/cars/mercedes-maybach-gls-600-rental-miami-front-quarter.jpg" width={1092} height={698} />
 
   <h2 id="what-the-daily-rate-includes">What the daily rate includes</h2>
-  <p>Daily rates run from {usd(low.price)} for the {named(low)} to {usd(high.price)} for the {named(high)}, before delivery. Every day includes {mileage.includedPerDay} miles, pooled across the rental. A three-day booking is {mileage.includedPerDay * 3} miles in total, used however you like. Miles over that allowance are {usd(mileage.overagePerMile)} each.</p>
-  <p>The refundable deposit is {deposit.display}{depositException ? `, except ${depositException}` : ''}. {deposit.note} Drivers must be {minimumAge} or older with a valid driver's license{ageException ? `, except ${ageException}` : ''}. The {named(sto)} is track-bred, street-only. {insurance.summary} On a Maybach, a daily policy is {usd(policy.from)} to {usd(policy.to)} if you do not have qualifying cover.</p>
-  <p>{cancellation.summary} Cancellations made more than {cancellation.noRefundWithinDays} days before the start date are eligible for a refund of amounts paid. The full figures are on the <a href="/pricing">pricing</a> page and in the <a href="/terms">terms</a>.</p>
+  <p>After you land, the miles, the deposit, and cancellation sit on the <a href="/pricing">pricing</a> page and in the <a href="/terms">terms</a>.</p>
 
   <h2 id="prefer-to-be-driven">Prefer to be driven?</h2>
-  <p>Chauffeur service in the {named(gls)} starts at {rentalTerms.chauffeurHourly.display} an hour. That booking is separate from a self-drive rental. {flightTrackingSentence} The details, and only the details, live on the <a href="/chauffeur-service-miami">chauffeur service</a> page.</p>
+  <p>If you would rather be driven from Miami International Airport, chauffeur service in the {named(gls)} is on the <a href="/chauffeur-service-miami">chauffeur page</a>.</p>
 
   <h2 id="questions">Questions</h2>
   {faqs.map((f) => (
@@ -150,5 +134,5 @@ const schema = [
       <p>{f.a}</p>
     </>
   ))}
-  <p>Flying into the other airport? See <a href="/luxury-car-rental-fll">luxury car rental at FLL</a>. Sailing from Miami? See <a href="/car-rental-near-port-of-miami">car rental near the Port of Miami</a>. Staying in the city, the <a href="/exotic-car-rental-miami">Miami</a>, <a href="/exotic-car-rental-south-beach">South Beach</a>, and <a href="/exotic-car-rental-brickell">Brickell</a> pages cover those neighborhoods. Questions that are not about a car go through <a href="/contact">contact</a>.</p>
+  <p>Staying in the city after you land? The <a href="/exotic-car-rental-miami">Miami</a>, <a href="/exotic-car-rental-south-beach">South Beach</a>, and <a href="/exotic-car-rental-brickell">Brickell</a> pages cover those neighborhoods. Other questions start at <a href="/contact">contact</a>.</p>
 </LandingLayout>

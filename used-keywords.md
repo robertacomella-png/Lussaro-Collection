@@ -13,6 +13,7 @@ This is what stops the site competing with itself — the failure mode where two
 | Primary keyword | Used on | Date | Cluster |
 |---|---|---|---|
 | luxury car rental miami airport | [/luxury-car-rental-miami-airport](../luxe-drive-flow/src/pages/luxury-car-rental-miami-airport.astro) | 2026-11-27 | Delivery |
+| exotic car rental fort lauderdale | [/exotic-car-rental-fort-lauderdale](../luxe-drive-flow/src/pages/exotic-car-rental-fort-lauderdale.astro) | 2026-11-27 | Delivery |
 | luxury car rental fll | [/luxury-car-rental-fll](../luxe-drive-flow/src/pages/luxury-car-rental-fll.astro) | 2026-11-27 | Delivery |
 | car rental near port of miami | [/car-rental-near-port-of-miami](../luxe-drive-flow/src/pages/car-rental-near-port-of-miami.astro) | 2026-11-27 | Delivery |
 | rent a lamborghini for a day | [/blog/rent-a-lamborghini-for-a-day-miami](../luxe-drive-flow/src/pages/blog/rent-a-lamborghini-for-a-day-miami.astro) | 2026-11-27 | Lamborghini |
