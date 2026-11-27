@@ -128,4 +128,4 @@ A `locked` file stays locked after an approval. Approval covers one snapshot of 
 | luxe-drive-flow/src/pages/blog/how-much-to-rent-a-maybach-miami.astro | 513cd44c4f764332f756488006600ec1da7aa23e | Public Relations, 26 Nov 2026 | First publication. |
 | luxe-drive-flow/src/pages/exotic-car-rental-fort-lauderdale.astro | 7ce2a6aed6fda06efb4c8ee36d46ca81b0688535 | Public Relations, 26 Nov 2026 | PR review: MIA is the Miami delivery rate, and "boot" is "trunk". |
 | luxe-drive-flow/src/pages/wedding-car-rental-miami.astro | 85b459072dc6f4935a21f3d1ed8b7b91b0da7cd0 | Public Relations, 26 Nov 2026 | PR review: title is exactly "Luxury Car Rental for a Wedding in Miami | Lussaro" (50 characters), and "boot" is "trunk". |
-| luxe-drive-flow/src/pages/porsche-911-turbo-s-rental-miami.astro | 25b3af7806d21e4fdcd681009b6ad31acca85af5 | Public Relations, 26 Nov 2026 | First publication. Porsche money page. Copy awaits Public Relations review. |
+| luxe-drive-flow/src/pages/porsche-911-turbo-s-rental-miami.astro | 479b53a8a6d2e0a3af26d3d6d817561854cc18f7 | Public Relations, 26 Nov 2026 | First publication. Porsche money page. Copy awaits Public Relations review. |
