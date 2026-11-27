@@ -92,7 +92,7 @@ export const carContent = {
       'Plug-in hybrid with a silent electric-only eDrive mode — roughly 16 miles of EV range, usable up to about 84 mph.',
       'You never have to charge it. The V8 replenishes the battery as you drive; plugging in is optional.',
       'Very low at the front. Take steep driveways, ramps and speed bumps slowly and at an angle.',
-      'Storage is a front compartment of about 74 litres and nothing else — pack soft bags, and do not count on a hard suitcase fitting.',
+      'Storage is a front compartment of about 74 liters and nothing else — pack soft bags, and do not count on a hard suitcase fitting.',
       'Fixed-roof coupe. The open-top car is the separate SF90 Spider.',
       'Top speed 211 mph, with 0–124 mph in 6.7 seconds.',
     ],
@@ -210,7 +210,7 @@ export const carContent = {
     goodToKnow: [
       '2+2 seating: two full seats up front and two small rear seats, best used for bags or a short hop rather than adults on a long drive.',
       'Electric soft top that opens or closes in seconds and works on the move at low speed, so a passing shower does not mean pulling over.',
-      'All-wheel drive with a 3.7-litre twin-turbo flat-six and an eight-speed dual-clutch automatic. It is quieter at a cruise than the Huracans, and much quicker than it sounds.',
+      'All-wheel drive with a 3.7-liter twin-turbo flat-six and an eight-speed dual-clutch automatic. It is quieter at a cruise than the Huracans, and much quicker than it sounds.',
       'Adaptive dampers as standard, so it rides well over rough Miami streets for a car this fast.',
       'Luggage goes in the front trunk and on the rear seats, which makes it the most practical of our convertibles for a weekend away.',
     ],
@@ -282,7 +282,7 @@ export const carContent = {
     deliveryNotes: '',
   },
   'rolls-royce-cullinan': {
-    useCases: `The Cullinan is the one for arrivals that are the event — weddings, anniversaries, the dinner you want remembered. Rear-hinged coach doors open backwards so you step out facing forward rather than clambering, and all four doors close at the touch of a button. Underneath sits a 6.75-litre twin-turbo V12 that is quieter at speed than most cars are parked. It also happens to be practical, with about 21 cubic feet behind the rear seats, though the boot is not the reason to choose it.`,
+    useCases: `The Cullinan is the one for arrivals that are the event — weddings, anniversaries, the dinner you want remembered. Rear-hinged coach doors open backwards so you step out facing forward rather than clambering, and all four doors close at the touch of a button. Underneath sits a 6.75-liter twin-turbo V12 that is quieter at speed than most cars are parked. It also happens to be practical, with about 21 cubic feet behind the rear seats, though the boot is not the reason to choose it.`,
     goodToKnow: [
       'The rear doors are rear-hinged coach doors, and all four close powered at the touch of a button.',
       'A two-piece powered tailgate — Rolls-Royce calls it The Clasp — with roughly 21 cubic feet behind the rear seats.',

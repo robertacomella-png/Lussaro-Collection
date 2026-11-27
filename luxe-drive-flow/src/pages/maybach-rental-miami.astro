@@ -100,13 +100,13 @@ const objections = [
   {
     q: 'How much does it cost to rent a Maybach in Miami?',
     a: sameRates
-      ? `$${usd(perDay(suv, 1))} a day for the GLS 600 or the Maybach S580, with ${milesPerDay} miles included. Book ${ladder[0].days} days or more and it is $${usd(perDay(suv, ladder[0].days))} a day, $${usd(perDay(suv, ladder[1].days))} a day at ${ladder[1].days} days, or $${usd(perDay(suv, ladder[2].days))} a day at ${ladder[2].days} days. Taxes and fees of ${taxPct}% are added to the rental. The ${rentalTerms.deposit.display} deposit is refundable and held separately.`
-      : `The GLS 600 is $${usd(suv.price)} a day and the Maybach S580 is $${usd(sedan.price)} a day, with ${milesPerDay} miles included. Taxes and fees of ${taxPct}% are added to the rental. The ${rentalTerms.deposit.display} deposit is refundable and held separately.`,
+      ? `$${usd(perDay(suv, 1))} a day for the GLS 600 or the Mercedes-Maybach S580, with ${milesPerDay} miles included. Book ${ladder[0].days} days or more and it is $${usd(perDay(suv, ladder[0].days))} a day, $${usd(perDay(suv, ladder[1].days))} a day at ${ladder[1].days} days, or $${usd(perDay(suv, ladder[2].days))} a day at ${ladder[2].days} days. Taxes and fees of ${taxPct}% are added to the rental. The ${rentalTerms.deposit.display} deposit is refundable and held separately.`
+      : `The GLS 600 is $${usd(suv.price)} a day and the Mercedes-Maybach S580 is $${usd(sedan.price)} a day, with ${milesPerDay} miles included. Taxes and fees of ${taxPct}% are added to the rental. The ${rentalTerms.deposit.display} deposit is refundable and held separately.`,
   },
   {
-    q: 'What is the difference between the GLS 600 and the Maybach S580?',
+    q: 'What is the difference between the GLS 600 and the Mercedes-Maybach S580?',
     parts: [
-      `${suv.price === sedan.price ? `Both are $${usd(suv.price)} a day. ` : ''}The GLS 600 is the Maybach SUV: two rows and reclining executive rear seats. The Maybach S580 is the sedan, built around a pair of reclining rear seats. If you want to compare the Maybach S580 with the standard Mercedes-Benz S580 we also rent, we wrote that out `,
+      `${suv.price === sedan.price ? `Both are $${usd(suv.price)} a day. ` : ''}The GLS 600 is the Maybach SUV: two rows and reclining executive rear seats. The Mercedes-Maybach S580 is the sedan, built around a pair of reclining rear seats. If you want to compare the Mercedes-Maybach S580 with the standard Mercedes-Benz S580 we also rent, we wrote that out `,
       { href: '/blog/mercedes-s580-vs-maybach-s580-rental-miami/', label: 'side by side' },
       '.',
     ],
@@ -128,7 +128,7 @@ const productSchema = {
   '@context': 'https://schema.org',
   '@type': 'Product',
   name: 'Mercedes-Maybach Rental — Miami',
-  description: `Rent a Mercedes-Maybach in Miami from $${fromDisplay} a day, or $${usd(threeDay)} a day for ${ladder[0].days} days or more. The GLS 600 SUV or the Maybach S580, delivered across Miami.`,
+  description: `Rent a Mercedes-Maybach in Miami from $${fromDisplay} a day, or $${usd(threeDay)} a day for ${ladder[0].days} days or more. The GLS 600 SUV or the Mercedes-Maybach S580, delivery from ${deliverySummary} each way.`,
   image: maybachs.map((c) => `${SITE}${c.images[0]}`),
   brand: { '@type': 'Brand', name: 'Mercedes-Maybach' },
   sku: 'LC-MAYBACH-MIAMI',
@@ -168,7 +168,7 @@ const faqSchema = {
 ---
 <Layout
   title={`Rent a Maybach in Miami from $${fromDisplay} a Day | Lussaro Collection`}
-  description="Rent a Maybach in Miami from $895 a day, or $745 a day for 3+ days. The GLS 600 or Maybach S580, 100 miles a day, $1,000 deposit, delivered across Miami."
+  description={`Rent a Maybach in Miami from $895 a day, or $745 for 3+ days. Mercedes-Maybach GLS 600 or S580, 100 miles a day, $1,000 deposit, delivery from ${rentalTerms.delivery.find((d) => d.area === 'Miami').display} each way.`}
   breadcrumbName="Maybach Rental Miami"
   schema={[productSchema, faqSchema]}
 >
@@ -186,7 +186,7 @@ const faqSchema = {
         Rent a Maybach in Miami
       </h1>
       <p class="text-white/70 text-center text-base md:text-lg leading-relaxed mt-4 max-w-2xl mx-auto">
-        The Mercedes-Maybach GLS 600 and the Maybach S580, from ${fromDisplay} a day. Book {ladder[0].days} days or more and the rate is ${usd(threeDay)} a day.
+        The Mercedes-Maybach GLS 600 and the Mercedes-Maybach S580, from ${fromDisplay} a day. Book {ladder[0].days} days or more and the rate is ${usd(threeDay)} a day.
       </p>
 
       <div class="grid lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] gap-8 lg:gap-12 items-start mt-9 md:mt-12">
@@ -411,7 +411,7 @@ const faqSchema = {
                 src={getImageKitSrc(car.images[0], 800)}
                 srcset={getImageKitSrcSet(car.images[0])}
                 sizes="(min-width: 768px) 50vw, 100vw"
-                alt={altFor(car.images[0], `${car.make} ${car.name} rental in Miami`)}
+                alt={altFor(car.images[0], `${cardName(car)} rental in Miami`)}
                 width="800"
                 height="500"
                 loading="lazy"
@@ -490,7 +490,7 @@ const faqSchema = {
       <p class="text-[#0a0a0a]/65 leading-relaxed mt-10">
         More detail on how the cars are kept is in{' '}
         <SmartLink href="/blog/well-kept-exotic-car-rental-miami" class="text-[#e00e10] underline underline-offset-4">our write-up on condition</SmartLink>, and if you are weighing
-        the Maybach S580 against the standard Mercedes-Benz S580 we rent both and compared them{' '}
+        the Mercedes-Maybach S580 against the standard Mercedes-Benz S580 we rent both and compared them{' '}
         <SmartLink href="/blog/mercedes-s580-vs-maybach-s580-rental-miami" class="text-[#e00e10] underline underline-offset-4">side by side</SmartLink>. Full terms sit on{' '}
         <SmartLink href="/pricing" class="text-[#e00e10] underline underline-offset-4">the pricing page</SmartLink>, and the rest of the cars are on{' '}
         <SmartLink href="/fleet" class="text-[#e00e10] underline underline-offset-4">the fleet page</SmartLink>.
@@ -506,7 +506,7 @@ const faqSchema = {
     quoteHref="#quote"
     quoteLabel="Reserve this Maybach"
     title={'Open the door and check.\nThat is the whole <span class="text-[#ff1516]">argument</span>'}
-    subtitle={`Maybach from $${fromDisplay} a day, or $${usd(threeDay)} a day for ${ladder[0].days} days or more, delivered across Miami.`}
+    subtitle={`Maybach from $${fromDisplay} a day, or $${usd(threeDay)} a day for ${ladder[0].days} days or more. Delivery from ${deliverySummary} each way.`}
   />
   <StickyMobileCta message={waMessage} car="Maybach" page="/maybach-rental-miami" />
 </Layout>

@@ -382,8 +382,7 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
             <p>“{testimonial.text}”</p>
           </blockquote>
           <figcaption class="mt-4 text-sm text-[#0a0a0a]/60">
-            <span class="text-[#e00e10]" aria-hidden="true">★★★★★</span>
-            <span class="font-semibold text-[#0a0a0a]"> {testimonial.name}</span> — verified Google review
+            <span class="font-semibold text-[#0a0a0a]">{testimonial.name}</span> — verified Google review
           </figcaption>
         </figure>
 
@@ -509,7 +508,6 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
 
   <CtaBand
     title={`Old enough to drive.\nOld enough to <span class="text-[#ff1516]">rent with us</span>`}
-    subtitle="Delivered across Miami. Replies usually take minutes."
     message={waMessage}
   />
   <StickyMobileCta message={waMessage} page={PATH} />

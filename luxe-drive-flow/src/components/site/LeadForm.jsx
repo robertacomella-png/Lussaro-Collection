@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { fleet } from "@/data/fleet";
+import { fleet, carLabel } from "@/data/fleet";
 import { withAttribution } from "@/lib/attribution";
 import { trackLead } from "@/lib/track";
 
@@ -68,7 +68,7 @@ export default function LeadForm({ defaultVehicle = "", source = "lead_form", va
     <select name="vehicle" aria-label="Choose a car" className={field} defaultValue={defaultVehicle}>
       <option value="" disabled>Choose a car</option>
       {fleet.map((c) => (
-        <option key={c.id} value={c.name} className="bg-[#111]">{c.name}</option>
+        <option key={c.id} value={c.name} className="bg-[#111]">{carLabel(c)}</option>
       ))}
     </select>
   );
@@ -112,7 +112,7 @@ export default function LeadForm({ defaultVehicle = "", source = "lead_form", va
         {status === "sending" ? "Sending…" : "Request Availability"}
       </button>
       {!booking && (
-        <p className="text-white/50 text-xs text-center">{note ?? "Prefer to talk now? Call or WhatsApp us — we reply in minutes."}</p>
+        <p className="text-white/50 text-xs text-center">{note ?? "Prefer to talk now? Call or WhatsApp us."}</p>
       )}
     </form>
   );

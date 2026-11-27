@@ -229,9 +229,8 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
         className="mt-7 w-full max-w-md text-left"
       />
 
-      <p class="mt-5 flex items-center gap-3 text-sm text-white/60">
-        <span class="text-[#ff1516]" aria-hidden="true">★★★★★</span>
-        5.0 on Google <span aria-hidden="true">·</span> Delivered across Miami
+      <p class="mt-5 text-sm">
+        <a href={business.googleProfileLink} target="_blank" rel="noopener noreferrer" class="text-white underline decoration-white/40 underline-offset-4 hover:decoration-white">Read our reviews on Google</a>
       </p>
     </div>
   </header>
@@ -443,7 +442,7 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
 
         <p>
           That is why we screen every renter, and it is the whole reason the car you collect has not
-          been treated that way. Six cars is a small fleet. It also means we know exactly where each
+          been treated that way. The fleet is small on purpose. It also means we know exactly where each
           one has been.
         </p>
 
@@ -452,8 +451,7 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
             <p>“{testimonial.text}”</p>
           </blockquote>
           <figcaption class="mt-4 text-sm text-[#0a0a0a]/60">
-            <span class="text-[#e00e10]" aria-hidden="true">★★★★★</span>
-            <span class="font-semibold text-[#0a0a0a]"> {testimonial.name}</span> — verified Google review
+            <span class="font-semibold text-[#0a0a0a]">{testimonial.name}</span> — verified Google review
           </figcaption>
         </figure>
 
@@ -559,7 +557,7 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
             <p class="text-sm text-[#0a0a0a]/70 mt-3 leading-relaxed">
               Robert founded Lussaro Collection in Miami and runs it hands-on — he answers the phone,
               screens the renters and hands over the keys himself. The fleet started with a single
-              Mercedes-Maybach GLS 600 bought with his own savings and now runs to six cars. Every
+              Mercedes-Maybach GLS 600 bought with his own savings. Every
               price, deposit and fee quoted here is one he sets and honors personally.
               <a href="/about" class="text-[#e00e10] underline decoration-[#e00e10]/40 underline-offset-2 hover:decoration-[#e00e10]"> More about Lussaro Collection</a>.
             </p>
@@ -618,7 +616,6 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
 
   <CtaBand
     title={'Two Lamborghinis.<br><span class="text-[#ff1516]">One of them is yours this weekend.</span>'}
-    subtitle="Delivered across Miami. Replies usually take minutes."
     message={waMessage}
   />
   <StickyMobileCta message={waMessage} />

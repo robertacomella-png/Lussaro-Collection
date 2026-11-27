@@ -617,7 +617,7 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
 
   <CtaBand
     title={'One day in the Huracán STO. <span class="text-[#ff1516]">Pick your dates</span>'}
-    subtitle="Delivered across Miami. The form is already set to the STO."
+    subtitle={`Delivery across Miami from ${rentalTerms.delivery.find((d) => d.area === 'Miami').display} each way. The form is already set to the STO.`}
     message={waMessage}
     car={sto.name}
   />

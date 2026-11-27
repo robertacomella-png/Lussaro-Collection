@@ -4,6 +4,7 @@
 // /fleet landing page so the two always stay identical. Pages that render a
 // card with a 3D badge should also mount <Car3DViewer client:idle />.
 import { cars } from '@/data/cars';
+import { carLabel } from '@/data/fleet';
 import { altFor, carFullName } from '@/data/image-alt';
 import { getImageKitSrc, getImageKitSrcSet } from '@/lib/imageKit';
 
@@ -61,7 +62,7 @@ const showFilter = filter && brands.length > 1;
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {cars.map((car) => (
         <div data-car-make={car.make} class="reveal group relative rounded-[24px] bg-[#0f0f0f] border border-[#ff1516]/25 overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.4)] hover:border-[#ff1516]/50 transition-colors">
-          <a href={`/cars/${car.slug}`} class="absolute inset-0 z-10" aria-label={`View the ${car.name}`}></a>
+          <a href={`/cars/${car.slug}`} class="absolute inset-0 z-10" aria-label={`View the ${carLabel(car)}`}></a>
           <div class="relative aspect-[16/11] overflow-hidden">
             <img
               src={getImageKitSrc(car.images?.[0], 800)}
@@ -92,7 +93,7 @@ const showFilter = filter && brands.length > 1;
           </div>
           <div class="p-5 flex items-center justify-between">
             <div>
-              <h3 class="font-display text-lg font-semibold">{car.name}</h3>
+              <h3 class="font-display text-lg font-semibold">{carLabel(car)}</h3>
               <p class="text-white/50 text-xs">{car.zeroToSixty} · {car.power} HP</p>
             </div>
             <div class="text-right leading-tight">

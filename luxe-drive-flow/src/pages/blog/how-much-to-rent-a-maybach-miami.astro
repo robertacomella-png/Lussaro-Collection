@@ -96,8 +96,8 @@ const updated = 'November 26, 2026';
 const readingMinutes = 7;
 
 const TITLE = 'How Much to Rent a Maybach in Miami | Lussaro Collection';
-const DESCRIPTION = `How much to rent a Maybach in Miami: ${usd(gls.price)} a day, or ${usd(gls.threeDayDeal)} a day for ${tier(gls, 0).days}+ days. The GLS 600 or Maybach S580, chauffeur from ${chauffeurHourly.display}/hour, and the fees before you book.`;
-const waMessage = 'Hi, I read your Maybach rates guide and want a GLS 600 Maybach.';
+const DESCRIPTION = `How much to rent a Maybach in Miami: ${usd(gls.price)} a day, or ${usd(gls.threeDayDeal)} a day for ${tier(gls, 0).days}+ days. Mercedes-Maybach GLS 600 or Mercedes-Maybach S580, chauffeur from ${chauffeurHourly.display}/hour.`;
+const waMessage = 'Hi, I read your Maybach rates guide and want a Mercedes-Maybach GLS 600.';
 const wa = whatsappWith(waMessage, { car: gls.name, page: PATH });
 
 const testimonial = reviews.find((r) => r.name === 'Gregory Capo');
@@ -521,7 +521,7 @@ const jumps = [
         </p>
 
         <p>
-          For a fuller plan of that week, read our <a href="/blog/luxury-car-rental-miami-beach-art-basel">Art Basel guide to luxury car rental in Miami Beach</a>. For every Maybach in one place, see our Maybach rental Miami page.
+          For a fuller plan of that week, the Art Basel dates are in the paragraph above. For every Maybach in one place, see our Maybach rental Miami page.
         </p>
 
         <figure class="not-prose my-10">
@@ -626,7 +626,7 @@ const jumps = [
 
   <CtaBand
     title={'Published rates, both Maybachs. <span class="text-[#ff1516]">Book the GLS 600</span>'}
-    subtitle="Delivered across Miami. Send the car and the dates."
+    subtitle={`Delivery across Miami from ${rentalTerms.delivery.find((d) => d.area === 'Miami').display} each way. Send the car and the dates.`}
     message={waMessage}
     car={gls.name}
   />

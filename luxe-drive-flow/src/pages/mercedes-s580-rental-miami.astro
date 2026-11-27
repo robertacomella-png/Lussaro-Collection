@@ -125,7 +125,7 @@ const productSchema = {
   '@context': 'https://schema.org',
   '@type': 'Product',
   name: `${fullName} Rental — Miami`,
-  description: `Rent the ${fullName}, the S-Class we have in Miami, at $${priceDisplay} a day or $${usd(threeDay)} a day for ${tiers[0].days} days or more. ${s580.power} hp, delivered across Miami. Not the Maybach S580.`,
+  description: `Rent the ${fullName}, the S-Class we have in Miami, at $${priceDisplay} a day or $${usd(threeDay)} a day for ${tiers[0].days} days or more. ${s580.power} hp, delivery from ${deliverySummary} each way. Not the Maybach S580.`,
   image: galleryImages.map((i) => `${SITE}${i}`),
   brand: { '@type': 'Brand', name: s580.make },
   sku: `LC-${s580.slug.toUpperCase()}-LP`,
@@ -433,7 +433,7 @@ const faqSchema = {
     title={'Open the door and check.\nThat is the whole <span class="text-[#ff1516]">argument</span>'}
     quoteHref="#quote"
     quoteLabel="Reserve the S580"
-    subtitle={`The Mercedes-Benz S580 at $${priceDisplay} a day, or $${usd(threeDay)} a day for ${tiers[0].days} days or more, delivered across Miami.`}
+    subtitle={`The Mercedes-Benz S580 at $${priceDisplay} a day, or $${usd(threeDay)} a day for ${tiers[0].days} days or more. Delivery from ${deliverySummary} each way.`}
   />
   <StickyMobileCta message={waMessage} car={fullName} page="/mercedes-s580-rental-miami" />
 </Layout>

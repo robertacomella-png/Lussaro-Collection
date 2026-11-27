@@ -8,7 +8,7 @@
 // a form nobody has opened yet would be paid for by every visitor.
 //
 // No date fields, by the owner's call (23 Nov 2026): name, phone, email, car.
-import { fleet } from '@/data/fleet';
+import { fleet, carLabel } from '@/data/fleet';
 import { business, telHref, whatsappWith } from '@/data/business';
 import { Phone, X } from 'lucide-react';
 import WhatsAppIcon from '@/components/site/WhatsAppIcon.astro';
@@ -40,7 +40,7 @@ const label = 'block text-white/60 text-xs mb-1.5';
 
     <div data-quote-form-wrap>
       <p class="text-[#ff1516] text-xs uppercase tracking-[0.2em] mb-2">Miami · Free Quote</p>
-      <h2 id="quote-title" class="font-display text-2xl font-semibold leading-tight pr-10">Your Price, in Minutes</h2>
+      <h2 id="quote-title" class="font-display text-2xl font-semibold leading-tight pr-10">Get Your Quote</h2>
       <p class="text-white/60 text-sm mt-2 mb-5">Pick a car and leave your number. We text you the daily rate and availability. Nothing to pay today.</p>
 
       {/* data-astro-reload: without it <ClientRouter /> treats this as a
@@ -66,7 +66,7 @@ const label = 'block text-white/60 text-xs mb-1.5';
           <select id="q-car" name="vehicle" aria-label="Choose a car" class={field}>
             <option value="" class="bg-[#111]">Any car / not sure</option>
             {fleet.map((c) => (
-              <option value={c.name} data-dashboard-id={c.dashboardId || ''} class="bg-[#111]">{c.name}</option>
+              <option value={c.name} data-dashboard-id={c.dashboardId || ''} class="bg-[#111]">{carLabel(c)}</option>
             ))}
           </select>
         </div>

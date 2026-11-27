@@ -16,7 +16,6 @@ import Layout from '@/layouts/Layout.astro';
 import Nav from '@/components/site/Nav.astro';
 import CtaBand from '@/components/site/CtaBand.astro';
 import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
-import RelatedPosts from '@/components/blog/RelatedPosts.astro';
 import BlogBookingCta from '@/components/blog/BlogBookingCta.astro';
 import BlogPhoto from '@/components/blog/BlogPhoto.astro';
 import { altFor } from '@/data/image-alt';
@@ -64,7 +63,7 @@ const readingMinutes = 11;
 
 // Rendered <title> is this string, exactly. Layout prints the prop as given.
 const TITLE = 'Luxury Car Rental Miami Beach for Art Basel | Lussaro';
-const DESCRIPTION = 'Luxury car rental in Miami Beach for Art Basel 2026. We deliver a Urus, Maybach GLS 600, or Mercedes-Benz S580 to the Beach. See which car fits, then book.';
+const DESCRIPTION = `Luxury car rental in Miami Beach for Art Basel. Urus, Mercedes-Maybach GLS 600 or Mercedes-Benz S580. Delivery from ${rentalTerms.delivery.find((d) => d.area === 'Miami').display} each way. Public days run December 4–6.`;
 const waMessage = 'Hi, I read your Art Basel guide and want a car delivered to Miami Beach.';
 const wa = whatsappWith(waMessage, { page: PATH });
 
@@ -100,7 +99,7 @@ const faqs = [
   },
   {
     q: 'What do I need to book, and how do I do it?',
-    a: `A valid license, qualifying insurance or a daily policy we can sell at booking, and the deposit published on the pricing page. Message us on WhatsApp or call ${business.phoneDisplay} with the car, the dates, and the hotel. We confirm availability and send the quote. Same-day bookings are often possible; the honest answer depends on the car and the date, which is why the message is the first step rather than a form that pretends otherwise.`,
+    a: `A valid license, qualifying insurance or a daily policy we can sell at booking, and the deposit published on the pricing page. Message us on WhatsApp or call ${business.phoneDisplay} with the car, the dates, and the hotel. We'll confirm availability and send the quote. The answer depends on the car and the date, so the message is the first step.`,
   },
   {
     q: 'Can I take the car off Miami Beach during Art Basel week?',
@@ -181,10 +180,10 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
           <div class="text-center lg:text-left lg:col-start-1 lg:row-start-1">
             <p class="text-[#ff1516] tracking-[0.3em] uppercase text-xs mb-4">Art Basel</p>
             <h1 class="font-display text-3xl md:text-[2.75rem] xl:text-5xl font-bold tracking-tight text-white leading-[1.08] text-balance">
-              Luxury Car Rental in Miami Beach for Art Basel 2026: Urus, Maybach, and S580
+              Luxury Car Rental in Miami Beach for Art Basel 2026: Urus, Mercedes-Maybach and Mercedes-Benz S580
             </h1>
             <p class="text-white/65 text-base md:text-lg leading-relaxed mt-5">
-              A Lamborghini Urus, a Mercedes-Maybach GLS 600, or a Mercedes-Benz S580, delivered to the Beach. The right one depends on the drive, the back seat, or simply getting to dinner.
+              A Lamborghini Urus, a Mercedes-Maybach GLS 600, or a Mercedes-Benz S580, delivered to the Beach from {rentalTerms.delivery.find((d) => d.area === 'Miami').display} each way. The right one depends on the drive, the back seat, or simply getting to dinner.
             </p>
           </div>
 
@@ -289,7 +288,7 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
         <ul>
           <li>Lincoln Road is a pedestrian mall. A handover there happens on a cross street, not on the mall itself. Tell us the property and we will agree the meeting point before the car moves.</li>
           <li>South Beach handovers are usually at ground level — hotel forecourts, curbside valet stands, surface lots — rather than a steep ramp into a tower garage. That is kinder to a low supercar than a Brickell basement is, and it is also tighter than it looks. Older forecourts were not drawn for a wide SUV.</li>
-          <li>The Mercedes-Benz S580 is the car that threads those forecourts with the least fuss. The Urus and the Maybach GLS 600 are large enough to need a pause at a busy entrance. That is not an argument against them. It is a reason to say so out loud before you book the bigger car for a hotel that parks on the street.</li>
+          <li>The Mercedes-Benz S580 is the car that threads those forecourts with the least fuss. The Urus and the Mercedes-Maybach GLS 600 are large enough to need a pause at a busy entrance. That is not an argument against them. It is a reason to say so out loud before you book the bigger car for a hotel that parks on the street.</li>
         </ul>
 
         <p>
@@ -303,7 +302,7 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
           caption="Mercedes-Maybach GLS 600 on a palm-lined paver driveway beside the water."
         />
 
-        <h2 id="which-car">Which car fits your plans: Urus vs Maybach GLS 600 vs S580</h2>
+        <h2 id="which-car">Which car fits your plans: Urus vs Mercedes-Maybach GLS 600 vs S580</h2>
 
         <p>
           Three cars, three jobs. People asking about luxury car rental in Miami Beach often collapse them into one request. They are not the same booking.
@@ -339,8 +338,7 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
             <p>“{testimonial.text}”</p>
           </blockquote>
           <figcaption class="mt-4 text-sm text-[#0a0a0a]/60">
-            <span class="text-[#e00e10]" aria-hidden="true">★★★★★</span>
-            <span class="font-semibold text-[#0a0a0a]"> {testimonial.name}</span> — verified Google review
+            <span class="font-semibold text-[#0a0a0a]">{testimonial.name}</span> — verified Google review
           </figcaption>
         </figure>
 
@@ -395,7 +393,7 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
         />
 
         <p>
-          It is not automatically the better SUV. The Maybach GLS 600 is the more comfortable rear-seat car. The Urus is the faster, more extroverted one, and it keeps the fifth seat. If you are choosing between those two on budget as well as character, both sit on our luxury SUV rental page with live rates. We will recommend the cheaper of the two when it is the better fit, including when that is the Maybach.
+          It is not automatically the better SUV. The Mercedes-Maybach GLS 600 is the more comfortable rear-seat car. The Urus is the faster, more extroverted one, and it keeps the fifth seat. If you are choosing between those two on budget as well as character, both sit on our luxury SUV rental page with live rates. We will recommend the cheaper of the two when it is the better fit, including when that is the Maybach.
         </p>
 
         <p>
@@ -458,7 +456,7 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
         </p>
 
         <p>
-          Live rates for the Urus, the Maybach GLS 600, and the Mercedes-Benz S580 are on each car page and collected on the <a href="/pricing">pricing page</a>. Multi-day stays follow the ladder published there: each car has its own {numWord(discountTiers[0].days)}-day rate, with deeper reductions as the booking gets longer. Read the number on the page for the dates you actually want rather than carrying a one-day figure through a five-day stay.
+          Live rates for the Urus, the Mercedes-Maybach GLS 600, and the Mercedes-Benz S580 are on each car page and collected on the <a href="/pricing">pricing page</a>. Multi-day stays follow the ladder published there: each car has its own {numWord(discountTiers[0].days)}-day rate, with deeper reductions as the booking gets longer. Read the number on the page for the dates you actually want rather than carrying a one-day figure through a five-day stay.
         </p>
 
         <BlogPhoto
@@ -544,8 +542,6 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
           </a>
         </div>
 
-        <RelatedPosts currentSlug={SLUG} limit={1} />
-
         <aside class="not-prose mt-12 rounded-2xl border border-black/10 bg-[#fafafa] p-6 flex flex-col sm:flex-row gap-5">
           <img src="/favicon-96.png" width="64" height="64" alt="" aria-hidden="true"
                loading="lazy" decoding="async"
@@ -607,7 +603,7 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
 
   <CtaBand
     title={'A car on the Beach for the fair. <span class="text-[#ff1516]">Which one fits?</span>'}
-    subtitle="Delivered across Miami. Send the car, the dates, and the hotel."
+    subtitle={`Delivery across Miami from ${rentalTerms.delivery.find((d) => d.area === 'Miami').display} each way. Send the car, the dates, and the hotel.`}
     message={waMessage}
   />
   <StickyMobileCta message={waMessage} />

@@ -55,6 +55,7 @@ import RelatedPosts from '@/components/blog/RelatedPosts.astro';
 import BlogBookingCta from '@/components/blog/BlogBookingCta.astro';
 import { altFor } from '@/data/image-alt';
 import { cars } from '@/data/cars';
+import { carLabel } from '@/data/fleet';
 import { reviews } from '@/data/reviews';
 import { business, telHref, whatsappWith, addressLine, hoursSummary } from '@/data/business';
 import {
@@ -143,7 +144,7 @@ const faqs = [
   },
   {
     q: 'How much does exotic car rental insurance cost in Miami?',
-    a: `It depends on the car and on the driver. For the ${car.make} ${car.name} and the ${sedan.make} ${sedan.name} it is ${usd(cover.from)} to ${usd(cover.to)} a day. Quicker and more valuable cars cost more to cover, and a younger driver costs more than an older one on the same car.`,
+    a: `It depends on the car and on the driver. For the ${carLabel(car)} and the ${carLabel(sedan)} it is ${usd(cover.from)} to ${usd(cover.to)} a day. Quicker and more valuable cars cost more to cover, and a younger driver costs more than an older one on the same car.`,
   },
   {
     q: 'Does my credit card cover an exotic rental?',
@@ -277,7 +278,7 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
                 class="w-full h-auto rounded-2xl"
               />
               <figcaption class="text-white/45 text-xs mt-3 text-center lg:text-left">
-                {`The ${car.make} ${car.name}. Coverage on it runs ${usd(cover.from)} to ${usd(cover.to)} a day, depending on who is driving.`}
+                {`The ${carLabel(car)}. Coverage on it runs ${usd(cover.from)} to ${usd(cover.to)} a day, depending on who is driving.`}
               </figcaption>
             </figure>
 
@@ -376,13 +377,13 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
             decoding="async"
             class="w-full h-auto rounded-2xl"
           />
-          <figcaption class="text-black/60 text-sm mt-3">{`The ${sedan.make} ${sedan.name}. Most of the value in a car like this sits in the rear cabin, which is also the part a standard personal policy is least likely to have considered.`}</figcaption>
+          <figcaption class="text-black/60 text-sm mt-3">{`The ${carLabel(sedan)}. Most of the value in a car like this sits in the rear cabin, which is also the part a standard personal policy is least likely to have considered.`}</figcaption>
         </figure>
 
         <h2 id="what-it-costs">What the policy costs</h2>
 
         <p>
-          {`On either Maybach — the ${car.make} ${car.name} or the ${sedan.make} ${sedan.name}, both at ${usd(car.price)} a day — coverage runs ${usd(cover.from)} to ${usd(cover.to)} a day.`}
+          {`On either Maybach — the ${carLabel(car)} or the ${carLabel(sedan)}, both at ${usd(car.price)} a day — coverage runs ${usd(cover.from)} to ${usd(cover.to)} a day.`}
           It is a range rather than a number because two things move it: the car, and the driver.
           A quicker and more valuable vehicle costs more to cover, and on the same car a younger
           driver costs more than an older one. Your figure gets confirmed in writing before you
@@ -412,8 +413,7 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
             <p>“{testimonial.text}”</p>
           </blockquote>
           <figcaption class="mt-4 text-sm text-[#0a0a0a]/60">
-            <span class="text-[#e00e10]" aria-hidden="true">★★★★★</span>
-            <span class="font-semibold text-[#0a0a0a]"> {testimonial.name}</span> — verified Google review
+            <span class="font-semibold text-[#0a0a0a]">{testimonial.name}</span> — verified Google review
           </figcaption>
         </figure>
 
@@ -438,7 +438,7 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
         </p>
 
         <p>
-          {`If the coverage figure is what is making the trip hard to justify, the honest move is often a different car rather than a different policy. The ${entry.make} ${entry.name} is ${usd(entry.price)} a day`}
+          {`If the coverage figure is what is making the trip hard to justify, the honest move is often a different car rather than a different policy. The ${carLabel(entry)} is ${usd(entry.price)} a day`}
           {` — a long way under the Maybach — and it covers for less, because what a policy costs tracks what the car is worth. `}
           We have written the two S-Classes out{' '}
           <a href="/blog/mercedes-s580-vs-maybach-s580-rental-miami">side by side</a>, and the{' '}
@@ -565,7 +565,6 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
 
   <CtaBand
     title={'Bring a policy or buy one.\nEither way you are <span class="text-[#ff1516]">driving</span>'}
-    subtitle="Delivered across Miami. Replies usually take minutes."
     message={waMessage}
   />
   <StickyMobileCta message={waMessage} />

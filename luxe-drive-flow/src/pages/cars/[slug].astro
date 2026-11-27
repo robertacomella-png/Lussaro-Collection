@@ -11,8 +11,8 @@ import BookingCalendar from '@/components/booking/BookingCalendar.jsx';
 import VehicleBookingCard from '@/components/booking/VehicleBookingCard.jsx';
 import { Phone } from 'lucide-react';
 import WhatsAppIcon from '@/components/site/WhatsAppIcon.astro';
-import GoogleRatingBadge from '@/components/reviews/GoogleRatingBadge.astro';
 import ReviewCards from '@/components/reviews/ReviewCards.astro';
+import { carLabel } from '@/data/fleet';
 import { cars } from '@/data/cars';
 import { postsForCar, postPath } from '@/data/posts';
 import { rentalTerms, deliveryEachWaySummary, rateForDays } from '@/data/rental-terms';
@@ -27,6 +27,7 @@ export function getStaticPaths() {
 }
 
 const { car } = Astro.props;
+const label = carLabel(car);
 
 // These three model pages do not show a Google score or a same-day promise.
 // The other car pages keep the shared badge, stars, and default close.
@@ -54,7 +55,7 @@ const imgs = car.images || [];
 const routePath = `/cars/${car.slug}`;
 // Hand-written meta. Previously the description concatenated boilerplate with
 // car.description.slice(0, 110), which clipped mid-word.
-const pageTitle = titleFor(routePath) ?? `${car.name} Rental Miami | Lussaro Collection`;
+const pageTitle = titleFor(routePath) ?? `${label} Rental Miami | Lussaro Collection`;
 const pageDescription = descriptionFor(routePath);
 
 const content = contentFor(car.slug);
@@ -271,7 +272,11 @@ const publicName = (c) =>
   c.slug === 'mercedes-maybach-gls-600' ? 'Mercedes-Maybach GLS 600'
   : c.slug === 'mercedes-maybach-s580' ? 'Mercedes-Maybach S580'
   : (c.name.startsWith(c.make) ? c.name : `${c.make} ${c.name}`);
-const shown = (c) => (isDetailPage ? publicName(c) : named(c));
+const shown = (c) => {
+  const label = carLabel(c);
+  if (label !== c.name) return label.startsWith('Hurac') ? `Lamborghini ${label}` : label;
+  return isDetailPage ? publicName(c) : named(c);
+};
 const drivetrainLabel = isDetailPage ? String(car.drivetrain || '').replaceAll('4.0L', '4.0-liter') : car.drivetrain;
 const carFaqs = content ? [
   {
@@ -346,7 +351,9 @@ const ogImage = firstImg && !firstImg.endsWith('.svg')
 
 // fleet.js `name` sometimes already carries the make ("Lamborghini Urus") and
 // sometimes does not ("S580"), so only prepend when it is missing.
-const fullName = car.name.startsWith(car.make) ? car.name : `${car.make} ${car.name}`;
+const fullName = carLabel(car) !== car.name
+  ? carLabel(car)
+  : (car.name.startsWith(car.make) ? car.name : `${car.make} ${car.name}`);
 // /porsche-911-turbo-s-rental-miami owns "porsche rental miami" and leads with
 // "Porsche 911 Turbo S Rental Miami". This URL is the spec and booking record,
 // so its heading does not repeat that query.
@@ -386,7 +393,7 @@ const productSchema = {
   // Falls back to it only if a car is ever added without a meta-descriptions
   // entry, so this can't emit an undefined description.
   description: pageDescription ?? car.description,
-  brand: { '@type': 'Brand', name: car.make },
+  brand: { '@type': 'Brand', name: car.slug === 'mercedes-maybach-gls-600' ? 'Mercedes-Maybach' : car.make },
   sku: `LC-${car.slug.toUpperCase()}`,
   offers: {
     '@type': 'Offer',
@@ -447,7 +454,7 @@ const pageProductSchema = car.slug === 'huracan-sto'
   description={pageDescription}
   image={ogImage}
   schema={faqSchema ? [pageProductSchema, faqSchema] : [pageProductSchema]}
-  breadcrumbName={isDetailPage ? shown(car) : car.name}
+  breadcrumbName={isDetailPage ? shown(car) : carLabel(car)}
 >
   <Nav />
 
@@ -510,7 +517,7 @@ const pageProductSchema = car.slug === 'huracan-sto'
 
       <!-- 1 · PHOTOS -->
       <div class="relative lg:col-start-1 lg:row-start-1">
-        <CarGallery images={imgs} name={isDetailPage ? shown(car) : car.name} slug={`g-${car.slug}`} alts={galleryAlts} client:visible />
+        <CarGallery images={imgs} name={isDetailPage ? shown(car) : carLabel(car)} slug={`g-${car.slug}`} alts={galleryAlts} client:visible />
         {car.model && (
           <a href="#see-in-3d" class="absolute top-3 left-3 z-10 inline-flex items-center gap-1.5 bg-white text-black text-[11px] font-semibold px-3 py-1.5 rounded-full hover:bg-[#ff1516] transition shadow-lg">
             ◆ View in 3D{car.usdz ? ' & AR' : ''}
@@ -551,16 +558,6 @@ const pageProductSchema = car.slug === 'huracan-sto'
             </div>
           </div>
 
-          {/* Google rating pill, beside the price — brief point 01. The weekly
-              rate line that sat here was cut to shorten the card (owner, 15 Nov
-              2026); the multi-day rates still show in the estimate. */}
-          {car.slug !== 'huracan-sto' && !isDetailPage && (
-            <div class="-mt-2 mb-5">
-              <GoogleRatingBadge />
-            </div>
-          )}
-
-
           {/* client:only (not client:visible) so the calendar renders fresh on the client
               against the real current date. With static SSR, server HTML bakes in the build-date
               "today", and React hydration won't repaint the stale disabled/red states until a
@@ -583,7 +580,7 @@ const pageProductSchema = car.slug === 'huracan-sto'
               <p class="text-white font-medium">Check availability with us directly</p>
               <p class="mt-2 text-white/55 text-sm leading-relaxed">
                 The live calendar could not load in your browser. Tell us your dates and we
-                will confirm whether the {car.name} is free — usually within the hour.
+                will confirm whether the {label} is free.
               </p>
               <div class="mt-5 flex flex-col gap-2.5">
                 <a href={wa} data-cta="car_calendar_fallback_whatsapp" target="_blank" rel="noopener noreferrer"
@@ -640,7 +637,7 @@ const pageProductSchema = car.slug === 'huracan-sto'
            spec sheet and the 3D model. The description and spec grid that used
            to live here now open the reading section below. */}
       <div class="lg:col-start-1 lg:row-start-2 mt-2 lg:mt-0 space-y-10 min-w-0">
-        <ReviewCards carName={car.name} make={car.make} showRating={!isDetailPage} />
+        <ReviewCards carName={car.name} make={car.make} />
         {carFaqs.length > 0 && (
           <div class="space-y-3">
             <h2 class="font-display text-xl md:text-2xl font-bold text-white tracking-tight">{shown(car)} questions</h2>
@@ -856,7 +853,7 @@ const pageProductSchema = car.slug === 'huracan-sto'
       <div class="reveal relative z-10 max-w-5xl mx-auto px-5">
         <p class="text-[#ff1516] tracking-[0.3em] uppercase text-xs mb-4">Interactive</p>
         <h2 class="font-display text-3xl md:text-5xl font-bold text-white mb-3">See it in 3D{car.usdz ? ' & AR' : ''}</h2>
-        <p class="text-white/60 mb-8 max-w-md mx-auto">Drag to spin the {car.name} from every angle{car.usdz ? ' — or place it in your driveway with AR' : ''}.</p>
+        <p class="text-white/60 mb-8 max-w-md mx-auto">Drag to spin the {label} from every angle{car.usdz ? ' — or place it in your driveway with AR' : ''}.</p>
 
         <!-- live spinning model (lazy-loads when scrolled into view; mobile + desktop) -->
         <div class="relative w-full h-[56svh] md:h-[54svh] rounded-[24px] overflow-hidden border border-white/10 bg-gradient-to-b from-[#161616] to-[#0a0a0a]">
@@ -864,7 +861,7 @@ const pageProductSchema = car.slug === 'huracan-sto'
           <span class="absolute bottom-3 inset-x-0 text-center text-white/50 text-[11px] pointer-events-none">Drag to explore</span>
         </div>
 
-        {car.usdz && <ArButton client:visible title={car.name} usdz={car.usdz} glb={car.model} />}
+        {car.usdz && <ArButton client:visible title={label} usdz={car.usdz} glb={car.model} />}
       </div>
     </section>
   )}
@@ -875,7 +872,7 @@ const pageProductSchema = car.slug === 'huracan-sto'
       <div class="reveal text-center mb-8">
         <p class="text-[#ff1516] tracking-[0.3em] uppercase text-xs mb-3">Reserve</p>
         <h2 class="font-display text-3xl md:text-5xl font-bold text-white tracking-tight text-balance">Book the {shown(car)}</h2>
-        <p class="text-white/55 mt-3">{isDetailPage ? "Send your details and we'll confirm availability." : "Fastest reply on WhatsApp — or send your details and we'll confirm availability."}</p>
+        <p class="text-white/55 mt-3">Send your details and we'll confirm availability.</p>
       </div>
 
       <div class="reveal flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-10">

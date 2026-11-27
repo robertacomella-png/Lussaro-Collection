@@ -10,12 +10,14 @@ import QuoteDialog from '@/components/site/QuoteDialog.astro';
 import { Phone, Tag } from 'lucide-react';
 import { business, telHref } from '@/data/business';
 import { cars } from '@/data/cars';
+import { carLabel } from '@/data/fleet';
 import { rentalTerms, deliveryEachWaySummary, discountSummary } from '@/data/rental-terms';
 
 const SITE = 'https://www.lussarocollection.com';
 const usd = (n) => `$${n.toLocaleString('en-US')}`;
 const fleetFrom = Math.min(...cars.map((c) => c.price));
 const perDayMiles = rentalTerms.mileage.includedPerDay;
+const miamiDelivery = rentalTerms.delivery.find((d) => d.area === 'Miami');
 const sto = cars.find((c) => c.slug === 'huracan-sto');
 
 // The same ItemList /fleet emits for the identical car grid. The homepage
@@ -28,7 +30,7 @@ const fleetSchema = {
   itemListElement: cars.map((c, i) => ({
     '@type': 'ListItem',
     position: i + 1,
-    name: c.name,
+    name: carLabel(c),
     url: `${SITE}/cars/${c.slug}`,
   })),
 };
@@ -36,7 +38,7 @@ const fleetSchema = {
 ---
 <Layout
   title="Luxury & Exotic Car Rental Miami | Lussaro Collection"
-  description={`Luxury and exotic car rental in Miami: Lamborghini, Ferrari and Rolls-Royce from ${usd(fleetFrom)} a day, delivered to your hotel, home or airport. Booked on WhatsApp.`}
+  description={`Luxury and exotic car rental in Miami: Lamborghini, Ferrari and Rolls-Royce from ${usd(fleetFrom)} a day. Delivery from ${miamiDelivery.display} each way to your hotel, home or airport.`}
   schema={[fleetSchema]}
 >
   <link slot="head" rel="preload" as="image" type="image/webp" href="/hero/hero-vertical-1200.webp" imagesrcset="/hero/hero-vertical-800.webp 800w, /hero/hero-vertical-1200.webp 1200w, /hero/hero-vertical-1600.webp 1600w" imagesizes="150vw" media="(max-width: 767px)" fetchpriority="high" />
@@ -295,10 +297,6 @@ const fleetSchema = {
         {/* "Delivered to your door" replaces "Miami Delivery" here rather than
             going in the marque line: it is a reassurance, not a product list,
             so it belongs beside the rating where people look for one. */}
-        <div class="mt-5 flex items-center justify-center md:justify-start gap-3 text-sm text-white/55">
-          <span class="text-[#ff1516]">★★★★★</span> 5.0 Google · Delivered to your door
-        </div>
-
         {/* The cue replaces the white "See Cars & Prices" pill on mobile too —
             that pill was the brightest object in the hero and sat on the car.
             Static in the stack on a phone, where an absolutely positioned cue
@@ -320,13 +318,11 @@ const fleetSchema = {
   <!-- TRUST STRIP -->
   <section class="bg-black border-y border-white/5 py-6">
     <div class="max-w-7xl mx-auto px-5 md:px-8 flex flex-wrap items-center justify-center md:justify-between gap-x-8 gap-y-3 text-center text-white/55 text-sm">
-      <span>⚡ Same-day booking</span>
+      <span>Delivery from {miamiDelivery.display}</span>
       <span class="hidden md:inline text-white/15" aria-hidden="true">|</span>
-      <span>🛡️ Flexible insurance options</span>
+      <span>Flexible insurance options</span>
       <span class="hidden md:inline text-white/15" aria-hidden="true">|</span>
-      <span>🚗 Delivered to your door</span>
-      <span class="hidden md:inline text-white/15" aria-hidden="true">|</span>
-      <span>💬 60-second WhatsApp booking</span>
+      <span>Delivered to your door</span>
     </div>
   </section>
 
@@ -367,12 +363,12 @@ const fleetSchema = {
         <div class="text-center">
           <div class="w-14 h-14 rounded-full border border-[#ff1516]/40 text-[#ff1516] flex items-center justify-center mx-auto mb-5 font-display text-xl">1</div>
           <h3 class="font-display text-xl font-semibold text-white mb-2">Message us</h3>
-          <p class="text-white/50 leading-relaxed">Tap WhatsApp or call. Tell us the car and dates — we reply in minutes.</p>
+          <p class="text-white/50 leading-relaxed">Tap WhatsApp or call. Tell us the car and dates and we'll confirm availability.</p>
         </div>
         <div class="text-center">
           <div class="w-14 h-14 rounded-full border border-[#ff1516]/40 text-[#ff1516] flex items-center justify-center mx-auto mb-5 font-display text-xl">2</div>
           <h3 class="font-display text-xl font-semibold text-white mb-2">We deliver</h3>
-          <p class="text-white/50 leading-relaxed">White-glove delivery anywhere in Miami — hotel, home, or airport.</p>
+          <p class="text-white/50 leading-relaxed">Delivery from {miamiDelivery.display} each way — hotel, home, or airport.</p>
         </div>
         <div class="text-center">
           <div class="w-14 h-14 rounded-full border border-[#ff1516]/40 text-[#ff1516] flex items-center justify-center mx-auto mb-5 font-display text-xl">3</div>
@@ -388,10 +384,8 @@ const fleetSchema = {
     <!-- TODO: add 2–3 real customer testimonials when available -->
     <div class="reveal max-w-3xl mx-auto px-5 md:px-8 text-center">
       <p class="text-[#e00e10] tracking-[0.3em] uppercase text-xs mb-4">Trusted in Miami</p>
-      <p class="text-[#e00e10] text-3xl mb-5">★★★★★</p>
-      <p class="font-display text-2xl md:text-3xl font-semibold leading-snug">Rated 5.0 on Google</p>
-      <p class="text-[#0a0a0a]/60 mt-4 max-w-md mx-auto">White-glove delivery, immaculate vehicles, and concierge service across South Beach and Brickell.</p>
-      <a href={business.googleMaps} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 mt-6 text-[#0a0a0a] border-b border-[#0a0a0a]/30 hover:border-[#e00e10] pb-1 transition">Read our Google reviews →</a>
+      <p class="text-[#0a0a0a]/60 mt-4 max-w-md mx-auto">Delivery from {miamiDelivery.display} each way, immaculate vehicles, and concierge service across South Beach and Brickell.</p>
+      <a href={business.googleProfileLink} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 mt-6 text-[#0a0a0a] border-b border-[#0a0a0a]/30 hover:border-[#e00e10] pb-1 transition">Read our reviews on Google</a>
     </div>
   </section>
 
@@ -401,7 +395,7 @@ const fleetSchema = {
       <div class="reveal text-center mb-10">
         <p class="text-[#ff1516] tracking-[0.3em] uppercase text-xs mb-3">Reserve</p>
         <h2 class="font-display text-3xl md:text-5xl font-bold text-white">Request availability</h2>
-        <p class="text-white/55 mt-3 max-w-md mx-auto">Tell us what and when — we'll confirm your exotic in minutes.</p>
+        <p class="text-white/55 mt-3 max-w-md mx-auto">Tell us what and when and we'll confirm availability.</p>
       </div>
       <LeadForm client:visible />
     </div>

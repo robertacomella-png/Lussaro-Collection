@@ -5,6 +5,7 @@ import { getImageKitSrc, getImageKitSrcSet } from "@/lib/imageKit";
 import { business, whatsappWith } from "@/data/business";
 import { termsSummary } from "@/data/rental-terms";
 import { altFor, carFullName } from "@/data/image-alt";
+import { carLabel } from "@/data/fleet";
 
 export default function FleetModal({ car, setCar, activeImage, setActiveImage }) {
   useEffect(() => {
@@ -120,7 +121,7 @@ export default function FleetModal({ car, setCar, activeImage, setActiveImage })
                 </div>
 
                 <h3 className="text-3xl md:text-5xl font-semibold mb-5">
-                  {car.name}
+                  {carLabel(car)}
                 </h3>
 
                 <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-6">

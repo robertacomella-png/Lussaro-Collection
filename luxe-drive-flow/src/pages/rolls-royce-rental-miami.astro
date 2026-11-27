@@ -17,7 +17,7 @@ const faqs = [
   },
   {
     q: 'What is required to book it?',
-    a: `A driver of ${minimumAge} or over with a valid licence and insurance that covers the vehicle, or a daily policy bought through us. The car carries a refundable ${deposit.display} deposit and ${mileage.includedPerDay} miles for every day of the booking.`,
+    a: `A driver of ${minimumAge} or over with a valid license and insurance that covers the vehicle, or a daily policy bought through us. The car carries a refundable ${deposit.display} deposit and ${mileage.includedPerDay} miles for every day of the booking.`,
   },
 ];
 
@@ -29,9 +29,9 @@ const faqSchema = {
 ---
 <LandingLayout
   title="Rolls-Royce Rental Miami | Lussaro Collection"
-  description={`Rolls-Royce rental in Miami — the Cullinan from $${cullinan.price.toLocaleString('en-US')}/day with 100 miles included. White-glove delivery for weddings, events and VIP travel.`}
+  description={`Rolls-Royce rental in Miami — the Cullinan from $${cullinan.price.toLocaleString('en-US')}/day with 100 miles included. Delivery from ${rentalTerms.delivery.find((d) => d.area === 'Miami').display} each way for weddings, events and hotel arrivals.`}
   h1="Rolls-Royce Rental Miami"
-  intro="One Rolls-Royce, the Cullinan, delivered anywhere in Miami. It is built for the arrivals where the car is part of the occasion."
+  intro={`One Rolls-Royce, the Cullinan, delivered anywhere in Miami from ${rentalTerms.delivery.find((d) => d.area === 'Miami').display} each way. It is built for the arrivals where the car is part of the occasion.`}
   only={["rolls-royce-cullinan"]}
   fullFleetLink
   ctaTitle="Reserve the Cullinan"
@@ -39,8 +39,8 @@ const faqSchema = {
 >
   <h2>The <a href="/cars/rolls-royce-cullinan">Cullinan</a>, specifically</h2>
   <p>We run one Rolls-Royce and it is the SUV. At ${cullinan.price.toLocaleString()} a day it is the most expensive car in our fleet after the Ferrari, and while the engineering is remarkable, that is not really what it is for. The draw is what happens when it pulls up.</p>
-  <p>The rear doors hinge at the back rather than the front, so a passenger steps out facing the direction they are walking rather than shuffling sideways. Every door then closes on its own at the press of a button. Underneath sits a 6.75-litre twin-turbo V12 producing {cullinan.power} hp, quiet enough at a cruise that conversation carries without anyone raising their voice.</p>
-  <p>It is also more practical than its reputation suggests. The two-piece powered tailgate — Rolls-Royce calls it The Clasp — opens onto roughly 21 cubic feet behind the rear seats, which is real luggage capacity. There is an umbrella stowed in the door, dried by blowers built into the frame when you put it back. Expect around 12 mpg in the city on premium fuel — a 6.75-litre V12 is not an economy proposition.</p>
+  <p>The rear doors hinge at the back rather than the front, so a passenger steps out facing the direction they are walking rather than shuffling sideways. Every door then closes on its own at the press of a button. Underneath sits a 6.75-liter twin-turbo V12 producing {cullinan.power} hp, quiet enough at a cruise that conversation carries without anyone raising their voice.</p>
+  <p>It is also more practical than its reputation suggests. The two-piece powered tailgate — Rolls-Royce calls it The Clasp — opens onto roughly 21 cubic feet behind the rear seats, which is real luggage capacity. There is an umbrella stowed in the door, dried by blowers built into the frame when you put it back. Expect around 12 mpg in the city on premium fuel — a 6.75-liter V12 is not an economy proposition.</p>
 
   <h2>Booking one</h2>
   <p>Availability on a single car moves quickly, so dates matter more here than anywhere else in the fleet. Send us the day you need it and we will tell you straight away whether it is open. Every figure — deposit, mileage, delivery, multi-day rates — is published on the <a href="/pricing">rate card</a>, and the full detail sits in our <a href="/terms">terms</a>. To compare it against the rest, see <a href="/exotic-car-rental-miami">exotic car rental in Miami</a> or the <a href="/luxury-suv-rental-miami">luxury SUV comparison</a>.</p>

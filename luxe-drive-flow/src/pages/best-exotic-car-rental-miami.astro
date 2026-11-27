@@ -22,7 +22,7 @@ import {
   roundTripSummary,
   discountSummary,
 } from '@/data/rental-terms';
-import { reviews, reviewCount, averageRating } from '@/data/reviews';
+import { reviews } from '@/data/reviews';
 import { business } from '@/data/business';
 
 const { deposit, mileage, minimumAge, insurance, cancellation, collection } = rentalTerms;
@@ -68,7 +68,7 @@ const termRows = [
   ['Mileage included', `${mileage.includedPerDay} miles per day, pooled across the booking.`],
   ['Delivery', `${deliveryEachWaySummary}. Beyond those two areas, quoted before you book.`],
   ['Collection', collection.summary],
-  ['Minimum age', `${minimumAge}, with a valid driver's licence.`],
+  ['Minimum age', `${minimumAge}, with a valid driver's license.`],
   ['Insurance', insurance.summary],
   ['Multi-day rates', `${discountSummary[0].toUpperCase()}${discountSummary.slice(1)}.`],
   ['Cancellation', cancellation.summary],
@@ -91,7 +91,7 @@ const faqs = [
   },
   {
     q: 'What is the best exotic car to rent in Miami?',
-    a: `It depends on what the day is for. The Ferrari SF90 is the fastest thing we run at 986 hp and 2.5 seconds to 60. The Rolls-Royce Cullinan is the one for arrivals. The Lamborghini Urus is the car if you want supercar pace and still need to carry people and luggage. The Mercedes-Benz S580 starts at $${low} a day and is the quietest. All six are compared in the table above.`,
+    a: `It depends on what the day is for. The Ferrari SF90 is the fastest thing we run at 986 hp and 2.5 seconds to 60. The Rolls-Royce Cullinan is the one for arrivals. The Lamborghini Urus is the car if you want supercar pace and still need to carry people and luggage. The Mercedes-Benz S580 starts at $${low} a day and is the quietest. They are compared in the table above.`,
   },
   {
     q: 'How much should an exotic car rental in Miami cost?',
@@ -102,8 +102,8 @@ const faqs = [
     a: `The deposit figure and when it is returned, whether mileage is pooled or capped per day, what happens if you exceed it, whether the delivery fee is one way or return and whether collection is billed on top, what insurance you are expected to bring, and the cancellation rule. ${cancellation.summary} We publish all of it on this page and on the rate card rather than in a confirmation email.`,
   },
   {
-    q: 'Can I rent an exotic car in Miami the same day?',
-    a: 'Often, yes. Message or call and you will usually have an answer in minutes, and most bookings confirm within the hour. Short notice is normal for us — the constraint is which specific car is free, not how quickly we can move.',
+    q: 'How quickly can I book an exotic car in Miami?',
+    a: "Message us on WhatsApp, or send your details and we'll confirm availability. Which car is free depends on the date.",
   },
   {
     q: 'Do you deliver, or do I collect the car?',
@@ -139,11 +139,11 @@ const listSchema = {
 ---
 <LandingLayout
   title="Best Exotic Car Rental in Miami | Lussaro Collection"
-  description={`How to judge the best exotic car rental in Miami — deposits, mileage, delivery and insurance compared side by side. Six cars from $${low}/day, delivered.`}
+  description={`How to judge the best exotic car rental in Miami — deposits, mileage and insurance, compared side by side. Delivery from ${rentalTerms.delivery.find((d) => d.area === 'Miami').display} each way. Rates from $${low} a day.`}
   h1="Best Exotic Car Rental in Miami"
   heroImage="/cars/lamborghini-huracan-evo-rental-miami-front-quarter.jpg"
   intro="Every exotic rental in Miami photographs well. Here is what actually separates them — and every one of our own numbers, published so you can hold us to the same test."
-  fleetHeading="The six cars, compared"
+  fleetHeading="The fleet, compared"
   ctaTitle="Book the car you picked"
   schema={[faqSchema, listSchema]}
 >
@@ -161,7 +161,7 @@ const listSchema = {
     <li><strong>What insurance are you expected to bring?</strong> {insurance.summary} Ask this early — it is the question that most often changes the real price.</li>
     <li><strong>What is the cancellation rule?</strong> Ours: {cancellation.summary.toLowerCase()} You should read that here rather than discover it in a confirmation email.</li>
   </ol>
-  <p>The one thing you cannot check from a website is how fast a company actually replies. Message us and see — most enquiries are answered in minutes, and same-day bookings are routine rather than a favour.</p>
+  <p>Message us on WhatsApp, or send your details and we'll confirm availability.</p>
 
   <h2>Our terms, in full</h2>
   <div class="overflow-x-auto">
@@ -206,7 +206,7 @@ const listSchema = {
   <p>Rates fall on longer bookings — {discountSummary} — and {depositException ? `every car carries the same ${mileage.includedPerDay} miles a day and the same deposit, except ${depositException}, so the main variable between them is the one in the first column` : `every car carries the same deposit and the same ${mileage.includedPerDay} miles a day, so the only variable between them is the one in the first column`}.</p>
 
   <h2>What renters have said</h2>
-  <p>{averageRating.toFixed(1)} out of 5 across {reviewCount} reviews on Google, reproduced word for word and never edited by us. Two of them:</p>
+  <p>Google reviews, reproduced word for word and never edited by us. Two of them:</p>
   {/* figure/blockquote/figcaption rather than two <p> inside one <blockquote>:
       Tailwind Typography hangs open-quote on a blockquote's first paragraph and
       close-quote on its last, so an attribution paragraph inside the quote took

@@ -2,6 +2,7 @@
 import { cars, depositException, ageException } from '@/data/cars';
 import LandingLayout from '@/layouts/LandingLayout.astro';
 import { rentalTerms, deliveryEachWaySummary } from '@/data/rental-terms';
+import { hoursSummary } from '@/data/business';
 import { neighborhoodFor } from '@/data/neighborhood-content';
 
 const { deposit, mileage, minimumAge } = rentalTerms;
@@ -41,7 +42,7 @@ const faqSchema = {
 ---
 <LandingLayout
   title="Exotic Car Rental Brickell | Lussaro Collection"
-  description="Rent exotic cars in Brickell with Lussaro Collection. Elite vehicles, fast delivery, and premium service in Miami's financial district."
+  description={`Rent exotic cars in Brickell with Lussaro Collection. Delivery from ${rentalTerms.delivery.find((d) => d.area === 'Miami').display} each way to hotels and offices. Hours are ${hoursSummary}.`}
   h1="Exotic Car Rental Brickell"
   intro="We deliver anywhere in Miami, Brickell included — to residential towers, offices and hotels across the financial district."
   ctaTitle="Reserve your Brickell exotic"

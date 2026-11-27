@@ -18,6 +18,7 @@ import FleetCollection from '@/components/fleet/FleetCollection.astro';
 import { Phone } from 'lucide-react';
 import WhatsAppIcon from '@/components/site/WhatsAppIcon.astro';
 import { cars } from '@/data/cars';
+import { carLabel } from '@/data/fleet';
 
 // Marques, not models, and no count. The fleet rotates — cars come and go — so
 // copy pinned to a snapshot goes stale on its own. This description used to
@@ -58,7 +59,7 @@ const waMsg = "Hi, I'm interested in renting an exotic car with Lussaro Collecti
 const wa = whatsappWith(waMsg, { page: waPage });
 
 const included = [
-  { t: 'Door-to-door delivery', d: 'Hotel, home, or airport — South Beach, Brickell & beyond.' },
+  { t: 'Door-to-door delivery', d: `From ${rentalTerms.delivery.find((d) => d.area === 'Miami').display} each way — hotel, home, or airport.` },
   { t: 'Flexible insurance', d: 'Drive on your full-coverage policy, or ask us about options.' },
   { t: 'Multi-day discounts', d: 'Save up to 25% on longer rentals.' },
   { t: '24/7 support', d: 'A direct line to us the whole time the car is yours.' },
@@ -68,7 +69,7 @@ const steps = bookingSteps;
 
 const faqs = [
   { q: 'What do I need to rent?', a: `${rentalTerms.minimumAge}+ with a valid driver’s license. ${rentalTerms.insurance.summary} A refundable ${rentalTerms.deposit.display} security deposit confirms your booking.` },
-  { q: 'How fast can I book?', a: 'Often same-day. Message or call — we reply in minutes, and most bookings confirm within the hour.' },
+  { q: 'How fast can I book?', a: "Message us on WhatsApp, or send your details and we'll confirm availability for your dates." },
   { q: 'Do you deliver the car to me?', a: `Yes — hotel, home, or airport. Delivery is ${deliveryEachWaySummary}, and collection at the end is charged separately at typically the same fee. Outside those areas we quote before you book.` },
   { q: 'Are there discounts for longer rentals?', a: 'Yes: most cars are 15% off at 3+ days, 20% at 5+, 25% at 7+. Exact pricing shows on each car’s calendar.' },
   { q: 'How does the security deposit work?', a: `${depositException ? `A ${rentalTerms.deposit.display} refundable deposit on every car except ${depositException}` : `A flat ${rentalTerms.deposit.display} refundable deposit on every car`} — disclosed before you book, refunded after inspection.` },
@@ -89,14 +90,14 @@ const fleetSchema = {
   itemListElement: cars.map((c, i) => ({
     '@type': 'ListItem',
     position: i + 1,
-    name: c.name,
+    name: carLabel(c),
     url: `${SITE}/cars/${c.slug}`,
   })),
 };
 ---
 <Layout
   title="Supercar Rental Miami | The Fleet | Lussaro Collection"
-  description={`Supercar rental in Miami: Ferrari and Lamborghini from ${usd(supercarFrom)} a day, the wider fleet from ${usd(fleetFrom)}. Delivered to your hotel, home or airport. Up to 25% off.`}
+  description={`Supercar rental in Miami: Ferrari and Lamborghini from ${usd(supercarFrom)} a day, the wider fleet from ${usd(fleetFrom)}. Delivery from ${rentalTerms.delivery.find((d) => d.area === 'Miami').display} each way to your hotel, home or airport.`}
   schema={[fleetSchema, faqSchema]}
 >
   <Nav />
@@ -126,7 +127,7 @@ const fleetSchema = {
       <!-- Trust chips — the whole pitch, scannable in one second -->
       <div class="mt-6 flex flex-wrap items-center justify-center gap-2">
         <span class="inline-flex items-center rounded-full border border-white/15 bg-white/5 backdrop-blur px-4 py-1.5 text-[13px] text-white/85">Door-to-door delivery</span>
-        <span class="inline-flex items-center rounded-full border border-white/15 bg-white/5 backdrop-blur px-4 py-1.5 text-[13px] text-white/85">Delivered across Miami</span>
+        <span class="inline-flex items-center rounded-full border border-white/15 bg-white/5 backdrop-blur px-4 py-1.5 text-[13px] text-white/85">Delivery from {rentalTerms.delivery.find((d) => d.area === 'Miami').display} each way</span>
       </div>
 
       {/* WhatsApp replaces the old "See Cars & Prices ↓" jump link: on /fleet

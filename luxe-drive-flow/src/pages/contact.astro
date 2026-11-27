@@ -4,6 +4,7 @@ import Nav from '@/components/site/Nav.astro';
 import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
 import LeadForm from '@/components/site/LeadForm.jsx';
 import { business, telHref, mailHref, addressLine, hoursSummary, whatsappWith } from '@/data/business';
+import { rentalTerms } from '@/data/rental-terms';
 import { bookingSteps } from '@/data/booking-steps';
 // Derived so every WhatsApp link says which page it was tapped from without
 // a path being threaded through each route by hand.
@@ -13,6 +14,7 @@ const SITE = 'https://www.lussarocollection.com';
 const PAGE_URL = `${SITE}/contact`;
 
 const waMsg = "Hi, I'd like to check availability with Lussaro Collection.";
+const miamiDelivery = rentalTerms.delivery.find((d) => d.area === 'Miami');
 const wa = whatsappWith(waMsg, { page: waPage });
 
 // Map embed is built from the same address the NAP and JSON-LD use, so the pin
@@ -32,7 +34,7 @@ const contactSchema = {
 ---
 <Layout
   title="Contact Lussaro Collection — Miami Exotic Car Rental"
-  description="Contact Lussaro Collection: WhatsApp, phone or email. Same-day exotic car delivery across Miami, South Beach and Brickell."
+  description={`Contact Lussaro Collection by WhatsApp, phone, or email. We deliver exotic cars across Miami from ${miamiDelivery.display} each way, and we'll confirm availability for your dates.`}
   schema={[contactSchema]}
 >
   <Nav />
@@ -45,7 +47,7 @@ const contactSchema = {
         Contact {business.brandName}
       </h1>
       <p class="text-white/65 text-base md:text-lg leading-relaxed mt-5 max-w-2xl">
-        WhatsApp is our fastest channel — most messages get a reply in minutes.
+        WhatsApp is the direct line. Send the car and the dates and we'll confirm availability.
         Call or email if you prefer, and we will come straight back to you.
       </p>
 
