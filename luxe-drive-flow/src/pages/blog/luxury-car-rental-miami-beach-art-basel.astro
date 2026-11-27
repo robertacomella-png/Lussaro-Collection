@@ -63,7 +63,7 @@ const readingMinutes = 11;
 
 // Rendered <title> is this string, exactly. Layout prints the prop as given.
 const TITLE = 'Luxury Car Rental Miami Beach for Art Basel | Lussaro';
-const DESCRIPTION = 'Luxury car rental in Miami Beach for Art Basel 2026. We deliver a Urus, Maybach GLS 600, or Mercedes-Benz S580 to the Beach. See which car fits, then book.';
+const DESCRIPTION = `Luxury car rental in Miami Beach for Art Basel 2026. A Urus, Maybach GLS 600, or Mercedes-Benz S580, delivery from ${rentalTerms.delivery.find((d) => d.area === 'Miami').display} to the Beach. See which car fits.`;
 const waMessage = 'Hi, I read your Art Basel guide and want a car delivered to Miami Beach.';
 const wa = whatsappWith(waMessage, { page: PATH });
 

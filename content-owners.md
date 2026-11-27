@@ -190,3 +190,5 @@ A `locked` file stays locked after an approval. Approval covers one snapshot of 
 | luxe-drive-flow/src/pages/rolls-royce-rental-miami.astro | 2d213439af3f6af5cff830de10411001eb1e7891 | Public Relations, 27 Nov 2026 | The intro and the meta price delivery from $125 each way. The meta is 152 characters. |
 | luxe-drive-flow/src/pages/terms.astro | fd7698c019a673bf8df6c9b29d49f80184c53013 | Public Relations, 27 Nov 2026 | The car table uses the display names, including Mercedes-Maybach GLS 600. |
 | luxe-drive-flow/src/pages/wedding-car-rental-miami.astro | f7f931e04c5968fcf7cc8c6530f563d31657d1af | Public Relations, 27 Nov 2026 | The unused landing-page star prop is gone. |
+| luxe-drive-flow/src/pages/exotic-car-rental-brickell.astro | 4a46c78cd2e2b323860d2d16b28d45cc9d95c1bc | Public Relations, 27 Nov 2026 | The meta prices delivery from $125 each way and is 154 characters. |
+| luxe-drive-flow/src/pages/blog/luxury-car-rental-miami-beach-art-basel.astro | e0c8429016ab45140c08b3f5a77639a9e4490ad3 | Public Relations, 27 Nov 2026 | The meta prices delivery to the Beach from $125 and is 153 characters. |
