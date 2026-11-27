@@ -93,8 +93,10 @@ test('G63 and GLS 600 rates are stated per length from the fleet price', () => {
     { name: 'Cullinan', make: 'Rolls-Royce', price: 1295, discountTiers: rentalTerms.discountTiers },
     g63,
   );
-  assert.match(sentence, /At 3 days the Mercedes-Benz G63 and the Mercedes-Benz GLS 600 Maybach are both \$745 a day/);
-  assert.match(sentence, /At 5 days the Mercedes-Benz G63 is \$636 a day and the Mercedes-Benz GLS 600 Maybach is \$716 a day/);
-  assert.match(sentence, /At 7 days the Mercedes-Benz G63 is \$596 a day and the Mercedes-Benz GLS 600 Maybach is \$671 a day/);
+  assert.match(sentence, /At 3 days the Mercedes-Benz G63 and the Mercedes-Maybach GLS 600 are both \$745 a day/);
+  assert.match(sentence, /At 5 days the Mercedes-Benz G63 is \$636 a day and the Mercedes-Maybach GLS 600 is \$716 a day/);
+  assert.match(sentence, /At 7 days the Mercedes-Benz G63 is \$596 a day and the Mercedes-Maybach GLS 600 is \$671 a day/);
+  assert.equal(sentence.includes('GLS 600 Maybach'), false);
+  assert.equal(sentence.includes('Mercedes-Benz GLS 600'), false);
   assert.equal(sentence.includes('From 3 days'), false);
 });

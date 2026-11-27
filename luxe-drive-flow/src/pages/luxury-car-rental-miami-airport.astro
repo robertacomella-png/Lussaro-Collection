@@ -16,6 +16,7 @@ import {
   miamiDelivery,
   returnSentence,
   suvRateSentence,
+  displayName,
 } from '@/lib/delivery-facts';
 import { deliveryBusinessSchema, faqSchema } from '@/lib/delivery-schema';
 
@@ -25,7 +26,7 @@ const PAGE_URL = `${SITE}${PAGE}`;
 
 const bySlug = (slug) => cars.find((c) => c.slug === slug);
 const usd = (n) => `$${Number(n).toLocaleString('en-US')}`;
-const named = (c) => (c.name.startsWith(c.make) ? c.name : `${c.make} ${c.name}`);
+const named = displayName;
 
 const urus = bySlug('lamborghini-urus');
 const gls = bySlug('mercedes-maybach-gls-600');
