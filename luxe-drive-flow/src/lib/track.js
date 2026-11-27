@@ -7,6 +7,8 @@ import { CAMPAIGN_KEYS, toE164 } from './attribution.js';
 // Standard events:
 //   whatsapp_click     — any WhatsApp CTA (wa.me, api.whatsapp.com, whatsapp://)
 //   phone_call_click   — any tap-to-call CTA (tel:)
+//   call_click         — the same tel: tap, with the pre-cleanup payload.
+//                        Temporary. See the TODO in bindContactClickTracking.
 //   lead_submit        — contact/lead form submission (also reported to the
 //                        OpenAI Pixel as lead_created; see trackLead below)
 //   generate_lead      — the same successful submit, once, for GA4 / Google Ads.
@@ -186,6 +188,27 @@ export function contactClickPayload(href, {
   };
 }
 
+// The payload Layout.astro pushed before this cleanup: cta_location from the
+// anchor's own data-cta (no ancestor walk), plus stored click ids and UTMs.
+// No link_url, page_path, or cta_placement.
+export function legacyCallClickPayload(anchor, campaign) {
+  let cta_location = 'unknown';
+  try {
+    const fromDataset = anchor && anchor.dataset ? anchor.dataset.cta : undefined;
+    const raw = typeof fromDataset === 'string'
+      ? fromDataset
+      : (anchor && typeof anchor.getAttribute === 'function' ? anchor.getAttribute('data-cta') : '');
+    cta_location = raw || 'unknown';
+  } catch {
+    cta_location = 'unknown';
+  }
+  return {
+    event: 'call_click',
+    cta_location,
+    ...campaignParams(campaign),
+  };
+}
+
 function clickAnchor(target) {
   let node = target;
   if (node && node.nodeType === 3) node = node.parentElement || node.parentNode;
@@ -222,14 +245,25 @@ export function bindContactClickTracking(win = browserWindow()) {
       const anchor = clickAnchor(event && event.target);
       if (!anchor || typeof anchor.getAttribute !== 'function') return;
       const href = anchor.getAttribute('href') || '';
+      const campaign = storedCampaign(win);
       const payload = contactClickPayload(href, {
         pagePath: pagePathOf(win),
         ctaPlacement: ctaPlacement(anchor),
-        campaign: storedCampaign(win),
+        campaign,
       });
       if (!payload) return;
       const { event: eventName, ...data } = payload;
       track(eventName, data);
+      // TODO: remove this second push once GTM-5J937M8K is republished with
+      // the phone_call_click trigger and the Google Ads "Phone call lead"
+      // conversion is moved off call_click. The container change lands after
+      // this code, so a tel: tap still has to emit the old event or that
+      // conversion goes dark in the gap. WhatsApp taps do not double-push.
+      if (eventName === 'phone_call_click') {
+        const legacy = legacyCallClickPayload(anchor, campaign);
+        const { event: legacyName, ...legacyData } = legacy;
+        track(legacyName, legacyData);
+      }
     } catch {
       // The tap still navigates. Tracking must not turn it into an error.
     }

@@ -6,6 +6,7 @@ import {
   contactLinkKind,
   ctaPlacement,
   leadEvents,
+  legacyCallClickPayload,
   trackLead,
 } from './track.js';
 
@@ -182,7 +183,85 @@ test('cta placement reads the anchor, then the nearest data-cta ancestor', () =>
   assert.equal(ctaPlacement(null), 'unknown');
 });
 
-test('the contact listener pushes one dataLayer event, ignores gtag, and never blocks the click', () => {
+test('legacy call_click keeps the old fields and ignores a parent data-cta', () => {
+  const campaign = {
+    gclid: 'gclid-1',
+    utm_source: 'google',
+    email: 'ada@example.com',
+    phone: '+13055550199',
+    user_data: { email: 'ada@example.com' },
+  };
+  const tagged = {
+    dataset: { cta: 'hero' },
+    getAttribute(name) { return name === 'data-cta' ? 'hero' : null; },
+  };
+  const legacy = legacyCallClickPayload(tagged, campaign);
+  assert.equal(legacy.event, 'call_click');
+  assert.equal(legacy.cta_location, 'hero');
+  assert.equal(legacy.gclid, 'gclid-1');
+  assert.equal(legacy.utm_source, 'google');
+  assert.equal(legacy.link_url, undefined);
+  assert.equal(legacy.page_path, undefined);
+  assert.equal(legacy.cta_placement, undefined);
+  assert.equal(legacy.email, undefined);
+  assert.equal(legacy.phone, undefined);
+  assert.equal(legacy.user_data, undefined);
+  assert.deepEqual(Object.keys(legacy).sort(), ['cta_location', 'event', 'gclid', 'utm_source']);
+
+  const parentOnly = {
+    getAttribute() { return null; },
+  };
+  assert.equal(legacyCallClickPayload(parentOnly, {}).cta_location, 'unknown');
+  assert.equal(legacyCallClickPayload({ dataset: { cta: '' } }, {}).cta_location, 'unknown');
+});
+
+test('a tel tap pushes phone_call_click first, then call_click from the anchor only', () => {
+  const layer = [];
+  const parent = {
+    getAttribute(name) { return name === 'data-cta' ? 'sticky_call' : null; },
+  };
+  const anchor = {
+    getAttribute(name) {
+      if (name === 'href') return 'tel:+16452487305';
+      return null;
+    },
+    closest(sel) { return sel === '[data-cta]' ? parent : null; },
+  };
+  const listeners = [];
+  const mock = {
+    location: { pathname: '/cars/lamborghini-urus' },
+    dataLayer: layer,
+    lcCampaignFields() { return { gclid: 'abc', email: 'ada@example.com' }; },
+    document: {
+      addEventListener(type, fn) { listeners.push({ type, fn }); },
+    },
+  };
+  const previous = globalThis.window;
+  globalThis.window = mock;
+  try {
+    bindContactClickTracking();
+    listeners[0].fn({
+      target: { closest(sel) { return sel === 'a[href]' ? anchor : null; } },
+    });
+    assert.equal(layer.length, 2);
+    assert.equal(layer[0].event, 'phone_call_click');
+    assert.equal(layer[0].cta_placement, 'sticky_call');
+    assert.equal(layer[0].link_url, 'tel:+16452487305');
+    assert.equal(layer[0].page_path, '/cars/lamborghini-urus');
+    assert.equal(layer[1].event, 'call_click');
+    assert.equal(layer[1].cta_location, 'unknown');
+    assert.equal(layer[1].gclid, 'abc');
+    assert.equal(layer[1].email, undefined);
+    assert.equal(layer[1].link_url, undefined);
+    assert.equal(layer[1].page_path, undefined);
+    assert.equal(layer[1].cta_placement, undefined);
+  } finally {
+    if (previous === undefined) delete globalThis.window;
+    else globalThis.window = previous;
+  }
+});
+
+test('the contact listener ignores gtag, never blocks the click, and doubles only tel taps', () => {
   const layer = [];
   const gtagCalls = [];
   let prevented = false;
@@ -245,7 +324,7 @@ test('the contact listener pushes one dataLayer event, ignores gtag, and never b
     });
     assert.doesNotThrow(() => listeners[0].fn({ get target() { throw new Error('boom'); } }));
 
-    assert.equal(layer.length, 2);
+    assert.equal(layer.length, 3);
     assert.equal(layer[0].event, 'whatsapp_click');
     assert.equal(layer[0].link_url, 'https://api.whatsapp.com/send?phone=16452487305&text=Hi');
     assert.equal(layer[0].page_path, '/fleet');
@@ -254,10 +333,19 @@ test('the contact listener pushes one dataLayer event, ignores gtag, and never b
     assert.equal(layer[0].email, undefined);
     assert.equal(layer[0].phone, undefined);
     assert.equal(layer[0].user_data, undefined);
+    assert.equal(layer.filter((entry) => entry.event === 'call_click' && entry !== layer[2]).length, 0);
     assert.equal(layer[1].event, 'phone_call_click');
     assert.equal(layer[1].link_url, 'tel:+16452487305');
     assert.equal(layer[1].cta_placement, 'unknown');
     assert.equal(layer[1].page_path, '/fleet');
+    assert.equal(layer[2].event, 'call_click');
+    assert.equal(layer[2].cta_location, 'unknown');
+    assert.equal(layer[2].gclid, 'abc');
+    assert.equal(layer[2].link_url, undefined);
+    assert.equal(layer[2].page_path, undefined);
+    assert.equal(layer[2].cta_placement, undefined);
+    assert.equal(layer[2].email, undefined);
+    assert.equal(layer[2].phone, undefined);
     assert.equal(gtagCalls.length, 0);
     assert.equal(prevented, false);
   } finally {
