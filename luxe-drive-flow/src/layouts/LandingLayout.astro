@@ -28,8 +28,6 @@ const {
   heroImage = 'https://ik.imagekit.io/8i3ae7fac/cars-14.jpg',
   // Absolute og:image. Omitted pages keep Layout's default.
   image = '',
-  // The star line is the old landing-page default. New pages pass false.
-  showRating = false,
   // Fleet `name` (the lead-form option value). When set, the hero leads with
   // the booking form and WhatsApp sits under it. Empty keeps the WhatsApp pill.
   bookingCar = '',
@@ -82,12 +80,6 @@ const wa = whatsappWith(waMessage, { page: waPage });
           <a href={telHref} data-cta="landing_hero" class="flex-1 inline-flex items-center justify-center border border-white/25 text-white px-7 py-4 rounded-full font-medium hover:border-[#e00e10] hover:text-[#e00e10] transition">
             Call Now
           </a>
-        </div>
-      )}
-
-      {showRating && (
-        <div class="mt-5 flex items-center gap-3 text-sm text-white/55">
-          <span class="text-[#ff1516]">★★★★★</span> 5.0 Google · Miami Delivery
         </div>
       )}
     </div>

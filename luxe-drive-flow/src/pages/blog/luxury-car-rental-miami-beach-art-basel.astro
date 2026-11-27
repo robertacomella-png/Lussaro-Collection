@@ -183,7 +183,7 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
               Luxury Car Rental in Miami Beach for Art Basel 2026: Urus, Maybach, and S580
             </h1>
             <p class="text-white/65 text-base md:text-lg leading-relaxed mt-5">
-              A Lamborghini Urus, a Mercedes-Maybach GLS 600, or a Mercedes-Benz S580, delivered to the Beach. The right one depends on the drive, the back seat, or simply getting to dinner.
+              A Lamborghini Urus, a Mercedes-Maybach GLS 600, or a Mercedes-Benz S580, delivered to the Beach from {rentalTerms.delivery.find((d) => d.area === 'Miami').display} each way. The right one depends on the drive, the back seat, or simply getting to dinner.
             </p>
           </div>
 
@@ -603,7 +603,7 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
 
   <CtaBand
     title={'A car on the Beach for the fair. <span class="text-[#ff1516]">Which one fits?</span>'}
-    subtitle="Delivered across Miami. Send the car, the dates, and the hotel."
+    subtitle={`Delivery across Miami from ${rentalTerms.delivery.find((d) => d.area === 'Miami').display} each way. Send the car, the dates, and the hotel.`}
     message={waMessage}
   />
   <StickyMobileCta message={waMessage} />

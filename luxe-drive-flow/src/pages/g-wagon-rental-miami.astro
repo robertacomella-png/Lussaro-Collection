@@ -6,6 +6,7 @@ const g63 = cars.find((c) => c.name === 'G63');
 const g63Rate = `$${g63.price.toLocaleString('en-US')}`;
 import LandingLayout from '@/layouts/LandingLayout.astro';
 import { business, whatsappWith } from '@/data/business';
+import { rentalTerms } from '@/data/rental-terms';
 // Derived so every WhatsApp link says which page it was tapped from without
 // a path being threaded through each route by hand.
 const waPage = Astro.url.pathname.replace(/(.)\/$/, '$1');
@@ -20,9 +21,9 @@ const wa = whatsappWith("Hi, I'd like to check G63 availability and rates for my
 ---
 <LandingLayout
   title="G-Wagon Rental Miami | Lussaro Collection"
-  description={`Rent a Mercedes-AMG G63 in Miami from ${g63Rate}/day. 577 hp twin-turbo V8, 100 miles included, delivered to your hotel, home or airport.`}
+  description={`Rent a Mercedes-AMG G63 in Miami from ${g63Rate}/day. 577 hp twin-turbo V8, 100 miles included. Delivery from ${rentalTerms.delivery.find((d) => d.area === 'Miami').display} each way to your hotel, home, or airport.`}
   h1="G-Wagon Rental Miami"
-  intro={`Our Mercedes-AMG G63 is on the lot and bookable on live dates, from ${g63Rate} a day with 100 miles included. Delivered anywhere in Miami.`}
+  intro={`Our Mercedes-AMG G63 is on the lot and bookable on live dates, from ${g63Rate} a day with 100 miles included. Delivery from ${rentalTerms.delivery.find((d) => d.area === 'Miami').display} each way, anywhere in Miami.`}
   fleetHeading="Also in our Miami fleet"
   ctaTitle="Book the G-Wagon"
 >

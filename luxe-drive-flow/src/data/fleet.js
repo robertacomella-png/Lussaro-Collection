@@ -370,6 +370,12 @@ export const fleet = [
 ];
 
 // Public name. `name` stays the lead-form option value the CRM already stores.
-// Only the GLS is renamed on screen; "GLS 600 Maybach" reads the model backwards.
-export const carLabel = (car) =>
-  car?.name === "GLS 600 Maybach" ? "Mercedes-Maybach GLS 600" : car?.name ?? "";
+const DISPLAY_NAMES = {
+  "GLS 600 Maybach": "Mercedes-Maybach GLS 600",
+  "S580 Maybach": "Mercedes-Maybach S580",
+  "S580": "Mercedes-Benz S580",
+  "Huracan STO": "Huracán STO",
+  "Huracan EVO Spyder": "Huracán EVO Spyder",
+  "Huracan EVO": "Huracán EVO",
+};
+export const carLabel = (car) => DISPLAY_NAMES[car?.name] ?? car?.name ?? "";

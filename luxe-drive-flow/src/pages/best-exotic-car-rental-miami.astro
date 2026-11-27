@@ -91,7 +91,7 @@ const faqs = [
   },
   {
     q: 'What is the best exotic car to rent in Miami?',
-    a: `It depends on what the day is for. The Ferrari SF90 is the fastest thing we run at 986 hp and 2.5 seconds to 60. The Rolls-Royce Cullinan is the one for arrivals. The Lamborghini Urus is the car if you want supercar pace and still need to carry people and luggage. The Mercedes-Benz S580 starts at $${low} a day and is the quietest. All six are compared in the table above.`,
+    a: `It depends on what the day is for. The Ferrari SF90 is the fastest thing we run at 986 hp and 2.5 seconds to 60. The Rolls-Royce Cullinan is the one for arrivals. The Lamborghini Urus is the car if you want supercar pace and still need to carry people and luggage. The Mercedes-Benz S580 starts at $${low} a day and is the quietest. They are compared in the table above.`,
   },
   {
     q: 'How much should an exotic car rental in Miami cost?',
@@ -102,7 +102,7 @@ const faqs = [
     a: `The deposit figure and when it is returned, whether mileage is pooled or capped per day, what happens if you exceed it, whether the delivery fee is one way or return and whether collection is billed on top, what insurance you are expected to bring, and the cancellation rule. ${cancellation.summary} We publish all of it on this page and on the rate card rather than in a confirmation email.`,
   },
   {
-    q: 'Can I rent an exotic car in Miami the same day?',
+    q: 'How quickly can I book an exotic car in Miami?',
     a: "Message us on WhatsApp, or send your details and we'll confirm availability. Which car is free depends on the date.",
   },
   {
@@ -139,11 +139,11 @@ const listSchema = {
 ---
 <LandingLayout
   title="Best Exotic Car Rental in Miami | Lussaro Collection"
-  description={`How to judge the best exotic car rental in Miami — deposits, mileage, delivery and insurance compared side by side. Six cars from $${low}/day, delivered.`}
+  description={`How to judge the best exotic car rental in Miami — deposits, mileage and insurance, compared side by side. Delivery from ${rentalTerms.delivery.find((d) => d.area === 'Miami').display} each way. Rates from $${low} a day.`}
   h1="Best Exotic Car Rental in Miami"
   heroImage="/cars/lamborghini-huracan-evo-rental-miami-front-quarter.jpg"
   intro="Every exotic rental in Miami photographs well. Here is what actually separates them — and every one of our own numbers, published so you can hold us to the same test."
-  fleetHeading="The six cars, compared"
+  fleetHeading="The fleet, compared"
   ctaTitle="Book the car you picked"
   schema={[faqSchema, listSchema]}
 >

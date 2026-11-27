@@ -31,7 +31,7 @@ const faqSchema = {
 ---
 <LandingLayout
   title="Luxury SUV Rental Miami | Lussaro Collection"
-  description="Luxury SUV rental in Miami: Lamborghini Urus, Maybach GLS 600 and Rolls-Royce Cullinan. Delivered to your hotel, home or the airport."
+  description={`Luxury SUV rental in Miami: Lamborghini Urus, Mercedes-Maybach GLS 600 and Rolls-Royce Cullinan. Delivery from ${rentalTerms.delivery.find((d) => d.area === 'Miami').display} to your hotel, home or the airport.`}
   h1="Luxury SUV Rental Miami"
   intro="Three large SUVs that do three genuinely different jobs. The question is not which is best — it is whether you are driving, being driven, or making an entrance."
   only={["lamborghini-urus", "mercedes-maybach-gls-600", "rolls-royce-cullinan"]}

@@ -626,7 +626,7 @@ const jumps = [
 
   <CtaBand
     title={'Published rates, both Maybachs. <span class="text-[#ff1516]">Book the GLS 600</span>'}
-    subtitle="Delivered across Miami. Send the car and the dates."
+    subtitle={`Delivery across Miami from ${rentalTerms.delivery.find((d) => d.area === 'Miami').display} each way. Send the car and the dates.`}
     message={waMessage}
     car={gls.name}
   />

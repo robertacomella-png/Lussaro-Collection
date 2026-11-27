@@ -272,7 +272,11 @@ const publicName = (c) =>
   c.slug === 'mercedes-maybach-gls-600' ? 'Mercedes-Maybach GLS 600'
   : c.slug === 'mercedes-maybach-s580' ? 'Mercedes-Maybach S580'
   : (c.name.startsWith(c.make) ? c.name : `${c.make} ${c.name}`);
-const shown = (c) => (isDetailPage ? publicName(c) : named(c));
+const shown = (c) => {
+  const label = carLabel(c);
+  if (label !== c.name) return label.startsWith('Hurac') ? `Lamborghini ${label}` : label;
+  return isDetailPage ? publicName(c) : named(c);
+};
 const drivetrainLabel = isDetailPage ? String(car.drivetrain || '').replaceAll('4.0L', '4.0-liter') : car.drivetrain;
 const carFaqs = content ? [
   {
@@ -347,8 +351,8 @@ const ogImage = firstImg && !firstImg.endsWith('.svg')
 
 // fleet.js `name` sometimes already carries the make ("Lamborghini Urus") and
 // sometimes does not ("S580"), so only prepend when it is missing.
-const fullName = car.name === 'GLS 600 Maybach'
-  ? label
+const fullName = carLabel(car) !== car.name
+  ? carLabel(car)
   : (car.name.startsWith(car.make) ? car.name : `${car.make} ${car.name}`);
 // /porsche-911-turbo-s-rental-miami owns "porsche rental miami" and leads with
 // "Porsche 911 Turbo S Rental Miami". This URL is the spec and booking record,
@@ -389,7 +393,7 @@ const productSchema = {
   // Falls back to it only if a car is ever added without a meta-descriptions
   // entry, so this can't emit an undefined description.
   description: pageDescription ?? car.description,
-  brand: { '@type': 'Brand', name: car.make },
+  brand: { '@type': 'Brand', name: car.slug === 'mercedes-maybach-gls-600' ? 'Mercedes-Maybach' : car.make },
   sku: `LC-${car.slug.toUpperCase()}`,
   offers: {
     '@type': 'Offer',
@@ -633,7 +637,7 @@ const pageProductSchema = car.slug === 'huracan-sto'
            spec sheet and the 3D model. The description and spec grid that used
            to live here now open the reading section below. */}
       <div class="lg:col-start-1 lg:row-start-2 mt-2 lg:mt-0 space-y-10 min-w-0">
-        <ReviewCards carName={car.name} make={car.make} showRating={!isDetailPage} />
+        <ReviewCards carName={car.name} make={car.make} />
         {carFaqs.length > 0 && (
           <div class="space-y-3">
             <h2 class="font-display text-xl md:text-2xl font-bold text-white tracking-tight">{shown(car)} questions</h2>
@@ -868,7 +872,7 @@ const pageProductSchema = car.slug === 'huracan-sto'
       <div class="reveal text-center mb-8">
         <p class="text-[#ff1516] tracking-[0.3em] uppercase text-xs mb-3">Reserve</p>
         <h2 class="font-display text-3xl md:text-5xl font-bold text-white tracking-tight text-balance">Book the {shown(car)}</h2>
-        <p class="text-white/55 mt-3">{isDetailPage ? "Send your details and we'll confirm availability." : "Fastest reply on WhatsApp — or send your details and we'll confirm availability."}</p>
+        <p class="text-white/55 mt-3">Send your details and we'll confirm availability.</p>
       </div>
 
       <div class="reveal flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-10">

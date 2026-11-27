@@ -6,7 +6,7 @@ import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
 import CtaBand from '@/components/site/CtaBand.astro';
 import { business, hoursSummary, whatsappWith } from '@/data/business';
 import { altFor } from '@/data/image-alt';
-import { fleet } from '@/data/fleet';
+import { fleet, carLabel } from '@/data/fleet';
 // Derived so every WhatsApp link says which page it was tapped from without
 // a path being threaded through each route by hand.
 const waPage = Astro.url.pathname.replace(/(.)\/$/, '$1');
@@ -25,7 +25,11 @@ const cheapest = fleet.find((c) => c.price === Math.min(...prices));
 const dearest = fleet.find((c) => c.price === Math.max(...prices));
 
 // Fleet named from data, so a car added or dropped can't leave the prose stale.
-const fullName = (c) => (c.name.startsWith(c.make) ? c.name : `${c.make} ${c.name}`);
+const miamiDelivery = rentalTerms.delivery.find((d) => d.area === 'Miami');
+const fullName = (c) => {
+  const label = carLabel(c);
+  return label !== c.name ? label : (c.name.startsWith(c.make) ? c.name : `${c.make} ${c.name}`);
+};
 const lineup = fleet.map(fullName);
 const lineupText = `${lineup.slice(0, -1).join(', ')} and the ${lineup.at(-1)}`;
 
@@ -51,7 +55,7 @@ const aboutSchema = {
 ---
 <Layout
   title="About Lussaro Collection — Miami Exotic Car Rental"
-  description="The story behind Lussaro Collection: a curated one-of-one exotic fleet, white-glove delivery, and concierge service across Miami."
+  description={`The story behind Lussaro Collection: a curated one-of-one exotic fleet in Miami. Delivery from ${miamiDelivery.display} each way, and concierge service across the city. Ask us.`}
   schema={[aboutSchema]}
 >
   <Nav />
@@ -110,8 +114,8 @@ const aboutSchema = {
           you hear straight away whether your dates are open.
         </p>
         <p class="text-white/70 leading-relaxed">
-          We bring the car to you — hotel, home, or airport, anywhere in Miami, from South Beach
-          to Brickell and beyond. Message us on WhatsApp, or send your details and we'll confirm availability.
+          We bring the car to you — hotel, home, or airport — from {miamiDelivery.display} each way,
+          anywhere in Miami, from South Beach to Brickell and beyond. Message us on WhatsApp, or send your details and we'll confirm availability.
         </p>
       </div>
 

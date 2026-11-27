@@ -1,8 +1,10 @@
 ---
 import { business, telHref, whatsappWith } from '@/data/business';
+import { rentalTerms } from '@/data/rental-terms';
+const miamiDelivery = rentalTerms.delivery.find((d) => d.area === 'Miami');
 const {
   title = 'Ready when you are.',
-  subtitle = "Delivered across Miami. Send your details and we'll confirm availability.",
+  subtitle = `Delivery across Miami from ${miamiDelivery.display} each way. Send your details and we'll confirm availability.`,
   message = "Hi, I'm interested in renting a luxury car with Lussaro Collection.",
   // Forwarded to the WhatsApp signature so a band sitting on a car page says
   // which car, instead of reporting itself as a general enquiry.

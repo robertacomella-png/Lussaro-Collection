@@ -2,7 +2,11 @@
 import { depositException, ageException } from '@/data/cars';
 import { business } from '@/data/business';
 import { rentalTerms } from '@/data/rental-terms';
-import { fleet } from '@/data/fleet';
+import { fleet, carLabel } from '@/data/fleet';
+const publicName = (c) => {
+  const label = carLabel(c);
+  return label !== c.name ? label : (c.name.startsWith(c.make) ? c.name : `${c.make} ${c.name}`);
+};
 import Layout from '@/layouts/Layout.astro';
 import Nav from '@/components/site/Nav.astro';
 ---
@@ -54,7 +58,7 @@ import Nav from '@/components/site/Nav.astro';
               <tbody class="text-white/70">
                 {fleet.map((c) => (
                   <tr class="border-t border-white/10">
-                    <td class="px-4 py-3">{c.name.startsWith(c.make) ? c.name : `${c.make} ${c.name}`}</td>
+                    <td class="px-4 py-3">{publicName(c)}</td>
                     <td class="px-4 py-3">${c.price.toLocaleString()}/day</td>
                     <td class="px-4 py-3">{c.deposit ? `$${c.deposit.toLocaleString('en-US')}` : rentalTerms.deposit.display}</td>
                   </tr>

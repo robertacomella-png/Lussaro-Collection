@@ -116,7 +116,7 @@ const productSchema = {
   '@context': 'https://schema.org',
   '@type': 'Product',
   name: `${urus.make} ${urus.name.replace(`${urus.make} `, '')} Rental — Miami`,
-  description: `Rent the Lamborghini Urus in Miami at $${priceDisplay} a day, or $${usd(threeDay)} a day for ${tiers[0].days} days or more. ${urus.power} hp, ${urus.zeroToSixty} to 60, delivered across Miami.`,
+  description: `Rent the Lamborghini Urus in Miami at $${priceDisplay} a day, or $${usd(threeDay)} a day for ${tiers[0].days} days or more. ${urus.power} hp, ${urus.zeroToSixty} to 60, delivery from ${deliverySummary} each way.`,
   image: urus.images.filter((i) => i.startsWith('/cars/')).map((i) => `${SITE}${i}`),
   brand: { '@type': 'Brand', name: urus.make },
   sku: `LC-${urus.slug.toUpperCase()}-LP`,
@@ -148,7 +148,7 @@ const faqSchema = {
 ---
 <Layout
   title="Lamborghini Urus Rental Miami from $995 | Lussaro Collection"
-  description="Rent the Lamborghini Urus in Miami at $995 a day, or $845 a day for 3+ days. 641 hp, 3.3s to 60, 100 miles included, $1,000 deposit, delivered in Miami."
+  description={`Rent the Lamborghini Urus in Miami at $995 a day, or $845 a day for 3+ days. 641 hp, 3.3s to 60, 100 miles included, $1,000 deposit, delivery from ${rentalTerms.delivery.find((d) => d.area === 'Miami').display}.`}
   breadcrumbName="Lamborghini Urus Rental Miami"
   schema={[productSchema, faqSchema]}
 >
@@ -409,7 +409,7 @@ const faqSchema = {
     title={'Open the door and check.\nThat is the whole <span class="text-[#ff1516]">argument</span>'}
     quoteHref="#quote"
     quoteLabel="Reserve the Urus"
-    subtitle={`The Urus at $${priceDisplay} a day, or $${usd(threeDay)} a day for ${tiers[0].days} days or more, delivered across Miami.`}
+    subtitle={`The Urus at $${priceDisplay} a day, or $${usd(threeDay)} a day for ${tiers[0].days} days or more. Delivery from ${deliverySummary} each way.`}
   />
   <StickyMobileCta message={waMessage} car={urus.name} page="/lamborghini-urus-rental-miami" />
 </Layout>

@@ -4,7 +4,7 @@ import Layout from '@/layouts/Layout.astro';
 import Nav from '@/components/site/Nav.astro';
 import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
 import CtaBand from '@/components/site/CtaBand.astro';
-import { fleet } from '@/data/fleet';
+import { fleet, carLabel } from '@/data/fleet';
 import { postsByDate, postPath } from '@/data/posts';
 import { business, whatsappWith } from '@/data/business';
 // Derived so every WhatsApp link says which page it was tapped from without
@@ -25,7 +25,10 @@ const wa = whatsappWith(waMsg, { page: waPage });
 
 const { deposit, mileage, cancellation, discountTiers, insurance, minimumAge } = rentalTerms;
 const usd = (n) => `$${n.toLocaleString('en-US')}`;
-const named = (c) => (c.name.startsWith(c.make) ? c.name : `${c.make} ${c.name}`);
+const named = (c) => {
+  const label = carLabel(c);
+  return label !== c.name ? label : (c.name.startsWith(c.make) ? c.name : `${c.make} ${c.name}`);
+};
 // Per-car ladder from cars.js, which folds in the owner's 3-Day Deals and the
 // SF90's own tiers. fleet.js alone has neither, so reading c.discountTiers off a
 // fleet entry quoted the standard 15% for every car (23 Nov 2026).
@@ -81,7 +84,7 @@ const faqSchema = {
 ---
 <Layout
   title="Exotic Car Rental Prices Miami — Full Rate Card | Lussaro"
-  description={`Every Lussaro rate, deposit and policy on one page: ${fleet.length} cars from ${usd(cheapest.price)}/day, multi-day discounts, mileage, delivery and cancellation — no surprises.`}
+  description={`Every Lussaro rate, deposit and policy on one page: from ${usd(cheapest.price)} a day, multi-day discounts, mileage, and delivery from ${rentalTerms.delivery.find((d) => d.area === 'Miami').display} each way. Confirmed before you book.`}
   schema={[faqSchema]}
 >
   <Nav />
