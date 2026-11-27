@@ -11,6 +11,7 @@ import BookingCalendar from '@/components/booking/BookingCalendar.jsx';
 import VehicleBookingCard from '@/components/booking/VehicleBookingCard.jsx';
 import { Phone } from 'lucide-react';
 import WhatsAppIcon from '@/components/site/WhatsAppIcon.astro';
+import GoogleRatingBadge from '@/components/reviews/GoogleRatingBadge.astro';
 import ReviewCards from '@/components/reviews/ReviewCards.astro';
 import { carLabel } from '@/data/fleet';
 import { cars } from '@/data/cars';
@@ -557,6 +558,16 @@ const pageProductSchema = car.slug === 'huracan-sto'
               </div>
             </div>
           </div>
+
+          {/* Google rating pill, beside the price — brief point 01. The weekly
+              rate line that sat here was cut to shorten the card (owner, 15 Nov
+              2026); the multi-day rates still show in the estimate. */}
+          {car.slug !== 'huracan-sto' && !isDetailPage && (
+            <div class="-mt-2 mb-5">
+              <GoogleRatingBadge />
+            </div>
+          )}
+
 
           {/* client:only (not client:visible) so the calendar renders fresh on the client
               against the real current date. With static SSR, server HTML bakes in the build-date
