@@ -4,7 +4,7 @@ import Layout from '@/layouts/Layout.astro';
 import Nav from '@/components/site/Nav.astro';
 import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
 import CtaBand from '@/components/site/CtaBand.astro';
-import { business, whatsappWith } from '@/data/business';
+import { business, hoursSummary, whatsappWith } from '@/data/business';
 import { altFor } from '@/data/image-alt';
 import { fleet } from '@/data/fleet';
 // Derived so every WhatsApp link says which page it was tapped from without
@@ -141,7 +141,7 @@ const aboutSchema = {
         </p>
         <p class="text-white/50 text-sm leading-relaxed pt-2">
           {business.brandName} is operated by {business.legalName}, {business.city}, {business.region}.
-          Open {business.hours[0].opens}–{business.hours[0].closes}, seven days a week.
+          {hoursSummary}.
         </p>
       </div>
 
