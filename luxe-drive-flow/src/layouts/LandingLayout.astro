@@ -32,8 +32,7 @@ const {
   // and does not state a response time. The star row is gone.
   reserveNote = "Tell us what and when and we'll confirm availability.",
   leadNote,
-  // Empty keeps CtaBand's own subtitle. Hubs pass their own so the default
-  // same-day line stays off these pages without editing CtaBand.astro.
+  // Empty keeps CtaBand's priced delivery line. Hubs pass their own closer.
   ctaSubtitle = '',
   // Fleet `name` (the lead-form option value). When set, the hero leads with
   // the booking form and WhatsApp sits under it. Empty keeps the WhatsApp pill.
@@ -41,8 +40,6 @@ const {
   bookingSource = '',
   bookingCta = 'landing_hero',
   waMessage: waMessageProp = '',
-  // Optional closer under the page. Empty keeps the shared Miami delivery line.
-  ctaSubtitle = '',
 } = Astro.props;
 
 // ImageKit URLs keep the 1600px transform they have always used; a local photo
