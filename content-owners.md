@@ -226,3 +226,4 @@ A `locked` file stays locked after an approval. Approval covers one snapshot of 
 | luxe-drive-flow/src/pages/rolls-royce-rental-miami.astro | f281500494177165c9e5c81bc6ce168c9f76b5ce | Public Relations, 27 Nov 2026 | The specs sentence points at the Cullinan link in the heading above it. |
 | luxe-drive-flow/src/pages/sports-car-rental-miami.astro | 92b75688f5606163bc63b31ebf0a45d1665491ea | Public Relations, 27 Nov 2026 | The intro points at the open-car section below it. The FAQ is unchanged. |
 | luxe-drive-flow/src/pages/exotic-car-rental-downtown-miami.astro | 1f9beed615d3cef4dc9cd3597a67f315c447a1ad | Lussaro, 27 Nov 2026 | First publication. Downtown delivery is $100 each way. 900 Biscayne Blvd is storage only. |
+| luxe-drive-flow/src/pages/exotic-car-rental-downtown-miami.astro | 3af18b9b62f09d425e842fb37f07789516d35661 | Lussaro, 27 Nov 2026 | Collection is also $100. Handover sentence is guidance, not a booking-history claim. |

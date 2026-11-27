@@ -36,7 +36,7 @@ const ctaSubtitle = `Downtown delivery is ${downtownDeliveryEachWay.display} eac
 const faqs = [
   {
     q: 'Can the car be brought to a downtown hotel or condo?',
-    a: `Yes. Downtown delivery is ${downtownDeliveryEachWay.display} each way, to hotels and condo towers north of the Miami River. Collection at the end of the rental is charged separately and is typically the same fee. Send the address and the day, and the quote confirms the handover point and both fees.`,
+    a: `Yes. Downtown delivery is ${downtownDeliveryEachWay.display} each way, to hotels and condo towers north of the Miami River. Collection at the end of the rental is also ${downtownDeliveryEachWay.display}. Send the address and the day, and the quote confirms the handover point.`,
   },
   {
     q: 'Which cars suit a downtown garage?',
@@ -63,7 +63,7 @@ const faqs = [
   schema={[faqPage(faqs)]}
 >
   <h2>Delivered north of the river</h2>
-  <p>Downtown Miami sits north of the Miami River. Biscayne Boulevard runs along the bay, with Bayfront Park between the boulevard and the water and the Kaseya Center beside Bayside Marketplace. Brightline's MiamiCentral station is on the west side of downtown, and the Metromover links that side to the bayfront. Hotels and condo towers fill the boulevard and the blocks around Miami Worldcenter. Send the address and the day. Downtown delivery is {downtownDeliveryEachWay.display} each way. Collection at the end of the rental is charged separately and is typically the same fee, and the quote states both before you book.</p>
+  <p>Downtown Miami sits north of the Miami River. Biscayne Boulevard runs along the bay, with Bayfront Park between the boulevard and the water and the Kaseya Center beside Bayside Marketplace. Brightline's MiamiCentral station is on the west side of downtown, and the Metromover links that side to the bayfront. Hotels and condo towers fill the boulevard and the blocks around Miami Worldcenter. Send the address and the day. Downtown delivery is {downtownDeliveryEachWay.display} each way. Collection at the end of the rental is also {downtownDeliveryEachWay.display}.</p>
   <p>Hours are {hoursSummary}. Our cars are stored at {business.street}. The handover is at your hotel or condo. Write to <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
   {local?.deliveryLogistics && <p>{local.deliveryLogistics}</p>}
 
@@ -71,7 +71,7 @@ const faqs = [
   <p>The MacArthur Causeway leaves downtown on I-395, crosses Watson Island, and comes ashore in <a href="/exotic-car-rental-south-beach">South Beach</a>. The Brickell Avenue Bridge crosses the Miami River onto Brickell Avenue. <a href="/exotic-car-rental-brickell">Brickell</a>, south of the river, has its own page. For Key Biscayne, continue south through Brickell to the Rickenbacker Causeway entrance at the south end of Brickell, then across to Virginia Key and the island.</p>
 
   <h2>Choosing a car for downtown</h2>
-  <p>Most handovers here are a hotel drive or a condo garage: a ramp, a valet lane, or a curb on Biscayne Boulevard. The <a href="/cars/mercedes-s580">Mercedes-Benz S580</a> is {usd(s580.price)} a day and the simplest sedan for that. The <a href="/cars/lamborghini-urus">Lamborghini Urus</a> is {usd(urus.price)} a day, and the <a href="/cars/mercedes-maybach-gls-600">Mercedes-Maybach GLS 600</a> is {usd(gls.price)} a day. Both clear a normal garage entry more easily than a low coupe. The Rolls-Royce Cullinan is {usd(cullinan.price)} a day.</p>
+  <p>Downtown handovers happen at a hotel drive, a valet lane, a condo garage ramp, or a curb on Biscayne Boulevard. The <a href="/cars/mercedes-s580">Mercedes-Benz S580</a> is {usd(s580.price)} a day and the simplest sedan for that. The <a href="/cars/lamborghini-urus">Lamborghini Urus</a> is {usd(urus.price)} a day, and the <a href="/cars/mercedes-maybach-gls-600">Mercedes-Maybach GLS 600</a> is {usd(gls.price)} a day. Both clear a normal garage entry more easily than a low coupe. The Rolls-Royce Cullinan is {usd(cullinan.price)} a day.</p>
   <p>The <a href="/cars/huracan-sto">Lamborghini Huracán STO</a> is {usd(sto.price)} a day: two seats, and a nose that sits close to the road. Book it when the drive is the point — across the MacArthur, or south to the Rickenbacker — and take the handover at street level if the building has a steep ramp. The rest of the Lamborghinis are on the <a href="/lamborghini-rental-miami">Lamborghini rental in Miami</a> page. The wider service area is on our <a href="/exotic-car-rental-miami">Miami page</a>.</p>
 
   <h2>Rates and requirements</h2>
