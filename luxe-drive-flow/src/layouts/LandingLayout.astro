@@ -5,6 +5,7 @@ import Layout from '@/layouts/Layout.astro';
 import Nav from '@/components/site/Nav.astro';
 import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
 import CtaBand from '@/components/site/CtaBand.astro';
+import BlogBookingCta from '@/components/blog/BlogBookingCta.astro';
 import FleetGrid from '@/components/fleet/FleetGrid.jsx';
 import LeadForm from '@/components/site/LeadForm.jsx';
 import { business, telHref, whatsappWith } from '@/data/business';
@@ -25,6 +26,18 @@ const {
   // pages that do not set it render exactly as before. Give a page its own
   // image when it should not look like a sibling in a search result.
   heroImage = 'https://ik.imagekit.io/8i3ae7fac/cars-14.jpg',
+  // Absolute og:image. Omitted pages keep Layout's default.
+  image = '',
+  // The star line is the old landing-page default. New pages pass false.
+  showRating = true,
+  // Fleet `name` (the lead-form option value). When set, the hero leads with
+  // the booking form and WhatsApp sits under it. Empty keeps the WhatsApp pill.
+  bookingCar = '',
+  bookingSource = '',
+  bookingCta = 'landing_hero',
+  waMessage: waMessageProp = '',
+  leadNote = "Tell us what and when — we'll confirm in minutes.",
+  bandSubtitle = 'Same-day availability across Miami. Reserve in under a minute.',
 } = Astro.props;
 
 // ImageKit URLs keep the 1600px transform they have always used; a local photo
@@ -35,13 +48,13 @@ const heroSrc = heroImage.includes('ik.imagekit.io')
   ? `${heroImage}?tr=w-1600,q-70,f-webp`
   : getImageKitSrc(heroImage, 1200);
 
-const waMessage = `Hi, I'm interested in renting a luxury car with Lussaro Collection (${h1}).`;
+const waMessage = waMessageProp || `Hi, I'm interested in renting a luxury car with Lussaro Collection (${h1}).`;
 // Derived rather than passed: every landing page gets the right path with no
 // per-page prop to forget.
 const waPage = Astro.url.pathname.replace(/(.)\/$/, '$1');
 const wa = whatsappWith(waMessage, { page: waPage });
 ---
-<Layout title={title} description={description} schema={schema}>
+<Layout title={title} description={description} schema={schema} {...(image ? { image } : {})}>
   <Nav />
 
   <!-- HERO -->
@@ -55,18 +68,30 @@ const wa = whatsappWith(waMessage, { page: waPage });
       <h1 class="font-display text-4xl md:text-6xl font-bold tracking-tight text-white max-w-4xl">{h1}</h1>
       <p class="text-white/65 max-w-3xl text-base md:text-lg leading-relaxed mt-5">{intro}</p>
 
-      <div class="mt-8 flex flex-col sm:flex-row gap-3 max-w-md">
-        <a href={wa} data-cta="landing_hero" target="_blank" rel="noopener noreferrer" class="flex-1 inline-flex items-center justify-center gap-2 bg-white text-black px-7 py-4 rounded-full font-semibold hover:bg-[#ff1516] transition">
-          Reserve on WhatsApp <span class="w-2 h-2 rounded-full bg-[#1f7a3f]"></span>
-        </a>
-        <a href={telHref} data-cta="landing_hero" class="flex-1 inline-flex items-center justify-center border border-white/25 text-white px-7 py-4 rounded-full font-medium hover:border-[#e00e10] hover:text-[#e00e10] transition">
-          Call Now
-        </a>
-      </div>
+      {bookingCar ? (
+        <BlogBookingCta
+          car={bookingCar}
+          source={bookingSource}
+          whatsappHref={wa}
+          cta={bookingCta}
+          className="mt-8 w-full max-w-md text-left"
+        />
+      ) : (
+        <div class="mt-8 flex flex-col sm:flex-row gap-3 max-w-md">
+          <a href={wa} data-cta="landing_hero" target="_blank" rel="noopener noreferrer" class="flex-1 inline-flex items-center justify-center gap-2 bg-white text-black px-7 py-4 rounded-full font-semibold hover:bg-[#ff1516] transition">
+            Reserve on WhatsApp <span class="w-2 h-2 rounded-full bg-[#1f7a3f]"></span>
+          </a>
+          <a href={telHref} data-cta="landing_hero" class="flex-1 inline-flex items-center justify-center border border-white/25 text-white px-7 py-4 rounded-full font-medium hover:border-[#e00e10] hover:text-[#e00e10] transition">
+            Call Now
+          </a>
+        </div>
+      )}
 
-      <div class="mt-5 flex items-center gap-3 text-sm text-white/55">
-        <span class="text-[#ff1516]">★★★★★</span> 5.0 Google · Miami Delivery
-      </div>
+      {showRating && (
+        <div class="mt-5 flex items-center gap-3 text-sm text-white/55">
+          <span class="text-[#ff1516]">★★★★★</span> 5.0 Google · Miami Delivery
+        </div>
+      )}
     </div>
   </header>
 
@@ -100,12 +125,12 @@ const wa = whatsappWith(waMessage, { page: waPage });
       <div class="reveal text-center mb-10">
         <p class="text-[#ff1516] tracking-[0.3em] uppercase text-xs mb-3">Reserve</p>
         <h2 class="font-display text-3xl md:text-5xl font-bold text-white">{ctaTitle}</h2>
-        <p class="text-white/55 mt-3 max-w-md mx-auto">Tell us what and when — we'll confirm in minutes.</p>
+        <p class="text-white/55 mt-3 max-w-md mx-auto">{leadNote}</p>
       </div>
-      <LeadForm client:visible />
+      <LeadForm client:visible defaultVehicle={bookingCar} source={bookingSource || 'lead_form'} />
     </div>
   </section>
 
-  <CtaBand message={waMessage} page={waPage} />
-  <StickyMobileCta message={waMessage} page={waPage} />
+  <CtaBand message={waMessage} page={waPage} subtitle={bandSubtitle} car={bookingCar || undefined} />
+  <StickyMobileCta message={waMessage} page={waPage} car={bookingCar || undefined} />
 </Layout>

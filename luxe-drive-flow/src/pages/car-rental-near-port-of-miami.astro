@@ -1,0 +1,154 @@
+---
+// /car-rental-near-port-of-miami
+//
+// Owns "car rental near port of miami". The page is luxury and exotic delivery
+// to the port, not an on-port rental counter. The fee is the Miami row in
+// rental-terms.js. No meet point, terminal, or permit copy.
+import ContentPhoto from '@/components/site/ContentPhoto.astro';
+import LandingLayout from '@/layouts/LandingLayout.astro';
+import { cars, ageException, depositException } from '@/data/cars';
+import { business, telHref, whatsappWith } from '@/data/business';
+import { rentalTerms } from '@/data/rental-terms';
+import {
+  deliveryHoursLabel,
+  lateShipSentence,
+  miamiDelivery,
+  returnSentence,
+} from '@/lib/delivery-facts';
+import { deliveryBusinessSchema, faqSchema } from '@/lib/delivery-schema';
+
+const PAGE = '/car-rental-near-port-of-miami';
+const SITE = 'https://www.lussarocollection.com';
+const PAGE_URL = `${SITE}${PAGE}`;
+
+const bySlug = (slug) => cars.find((c) => c.slug === slug);
+const usd = (n) => `$${Number(n).toLocaleString('en-US')}`;
+const named = (c) => (c.name.startsWith(c.make) ? c.name : `${c.make} ${c.name}`);
+
+const urus = bySlug('lamborghini-urus');
+const gls = bySlug('mercedes-maybach-gls-600');
+const cullinan = bySlug('rolls-royce-cullinan');
+const g63 = bySlug('mercedes-amg-g63');
+const sto = bySlug('huracan-sto');
+const priced = [...cars].sort((a, b) => a.price - b.price);
+const low = priced[0];
+const high = priced[priced.length - 1];
+const { deposit, mileage, cancellation, insurance, minimumAge } = rentalTerms;
+const policy = gls.insurancePerDay;
+
+const waMessage = "Hi, I'd like the Lamborghini Urus delivered to the Port of Miami.";
+const wa = whatsappWith(waMessage, { car: urus.name, page: PAGE });
+
+const description = `Luxury and exotic car rental near the Port of Miami at ${miamiDelivery.display} each way, the Miami rate. Return the car to us, or we pick it up for a fee agreed in your quote.`;
+
+const faqs = [
+  {
+    q: 'Do you deliver to the Port of Miami?',
+    a: `Yes. Delivery to the Port of Miami is ${miamiDelivery.display} each way, the Miami rate. This is delivery to the port for a cruise, not a rental counter at the port.`,
+  },
+  {
+    q: 'How much is delivery to the Port of Miami?',
+    a: `${miamiDelivery.display} each way, the Miami rate, on top of the daily rate. The quote shows it before you book.`,
+  },
+  {
+    q: 'Is there a Lussaro counter at the port?',
+    a: `No. If you are looking for car rental companies near the Port of Miami, this is not a desk at the port. The address is ${business.street}, ${business.city}, ${business.region} ${business.postalCode}. We deliver the car.`,
+  },
+  {
+    q: 'Can you collect the car when I sail, or deliver it when I get off the ship?',
+    a: `${returnSentence} ${lateShipSentence}`,
+  },
+  {
+    q: 'Can I keep the car before I embark and have you collect it at the port?',
+    a: returnSentence,
+  },
+  {
+    q: 'Which cars are practical with cruise luggage?',
+    a: `Start with an SUV: the ${urus.name} at ${usd(urus.price)} a day, the ${named(gls)} at ${usd(gls.price)}, the ${named(cullinan)} at ${usd(cullinan.price)}, or the ${named(g63)} at ${usd(g63.price)}. The low cars are a different brief.`,
+  },
+  {
+    q: 'Can I be driven instead?',
+    a: `Yes. Chauffeur service in the ${named(gls)} is from ${rentalTerms.chauffeurHourly.display} an hour. That is a separate booking.`,
+  },
+];
+
+const schema = [
+  deliveryBusinessSchema({
+    pageUrl: PAGE_URL,
+    areaServed: { '@type': 'Place', name: 'Port of Miami' },
+    description: `Luxury and exotic car rental delivered to the Port of Miami at the Miami rate of ${miamiDelivery.display} each way.`,
+    deliveryOffer: {
+      name: 'Delivery to the Port of Miami',
+      price: miamiDelivery.fee,
+      description: `Miami rate, ${miamiDelivery.display} each way, for delivery to the Port of Miami. Charged in addition to the daily rate. The pickup fee, if we collect the car, is agreed in the quote.`,
+    },
+  }),
+  faqSchema(faqs),
+];
+---
+<LandingLayout
+  title="Car Rental Near Port of Miami | Cruise Delivery | Lussaro"
+  description={description}
+  h1="Luxury Car Rental Near the Port of Miami"
+  intro={`Lussaro Collection delivers to the Port of Miami. Delivery is ${miamiDelivery.display} each way, the Miami rate. This is delivery for a cruise, not a rental counter at the port.`}
+  heroImage="/cars/rolls-royce-cullinan-rental-miami-front-quarter.jpg"
+  showRating={false}
+  bookingCar={urus.name}
+  bookingSource={PAGE_URL}
+  bookingCta="port_hero"
+  waMessage={waMessage}
+  fleetHeading="SUVs for a cruise day"
+  only={['lamborghini-urus', 'mercedes-maybach-gls-600', 'rolls-royce-cullinan']}
+  fullFleetLink={true}
+  ctaTitle="Book cruise-port delivery"
+  leadNote="Send the car, the dates, and your ship window."
+  bandSubtitle="Tell us the car and the dates. We reply with availability and the quote."
+  schema={schema}
+>
+  <h2 id="short-answer">The short answer</h2>
+  <p>Car rental near the Port of Miami, from Lussaro Collection, means we bring the car to you for a cruise. It does not mean a counter on the port property. The company address is {business.street}, {business.city}, {business.region} {business.postalCode}. Delivery is {miamiDelivery.display} each way, the Miami rate, the same published fee as the rest of Miami.</p>
+  <p>{returnSentence} Hours are {deliveryHoursLabel}. {lateShipSentence}</p>
+  <p>
+    Call <a href={telHref} data-cta="port_body" data-call-inline>{business.phoneDisplay}</a>
+    or message <a href={wa} data-cta="port_body" target="_blank" rel="noopener noreferrer">WhatsApp</a>.
+    The booking form opens on the {urus.name}. Switch the car if the bags, or the plan, call for something else.
+  </p>
+
+  <h2 id="how-cruise-delivery-works">How cruise-day delivery works</h2>
+  <p>Send the car, the dates, the ship name, and the arrival or departure window. We reply with availability and the total. The Miami delivery fee of {miamiDelivery.display} each way is part of that total, written out before you book. An eligible driver has to be present to receive the car.</p>
+  <p>{lateShipSentence} That includes a ship outside the daily hours above. The quote is where the timing is agreed.</p>
+  <p>{returnSentence} A hotel the night before, and the port the morning you sail, is not a one-way drop-off we offer. The return is our location, or a pickup we price in the quote.</p>
+
+  <h2 id="what-delivery-costs">What delivery costs</h2>
+  <p>Delivery to the Port of Miami is {miamiDelivery.display} each way, the Miami rate. The rate card does not keep a separate port line, so this page uses that published Miami fee and no other number. It is an extra charge, not a discount off the daily rate. See <a href="/pricing">pricing</a> and the <a href="/terms">terms</a>.</p>
+  <p>{returnSentence}</p>
+  <p>The airport pages are separate. <a href="/luxury-car-rental-miami-airport">Miami International</a> uses this same Miami fee. <a href="/luxury-car-rental-fll">Fort Lauderdale Airport</a> uses the Fort Lauderdale fee. A port rental does not turn into an airport return.</p>
+
+  <ContentPhoto src="/cars/lamborghini-urus-rental-miami-downtown-skyline.jpg" width={2000} height={1333} />
+
+  <h2 id="which-cars">Cars that work on a cruise day</h2>
+  <p>Cruise luggage wants an SUV. The <a href="/cars/lamborghini-urus">{urus.name}</a> is {usd(urus.price)} a day and is the car selected in the form. The <a href="/cars/mercedes-maybach-gls-600">{named(gls)}</a> is {usd(gls.price)} a day. The <a href="/cars/rolls-royce-cullinan">{named(cullinan)}</a> is {usd(cullinan.price)} a day. The <a href="/cars/mercedes-amg-g63">{named(g63)}</a> is {usd(g63.price)} a day. Read the three main SUVs together on the <a href="/luxury-suv-rental-miami">luxury SUV rental</a> page, and the Urus on its own at <a href="/lamborghini-urus-rental-miami">Lamborghini Urus rental in Miami</a>.</p>
+  <p>A <a href="/cars/huracan-evo">Huracan</a> or a <a href="/cars/sf90">Ferrari SF90</a> is the wrong tool for a pile of suitcases and the right one when the day in Miami is the point. The {named(sto)} is track-bred, street-only. The <a href="/fleet">fleet</a> lists every car and the daily rate next to it.</p>
+
+  <ContentPhoto src="/cars/mercedes-maybach-gls-600-rental-miami-front-quarter.jpg" width={1092} height={698} />
+
+  <h2 id="what-the-daily-rate-includes">What the daily rate includes</h2>
+  <p>Daily rates run from {usd(low.price)} for the {named(low)} to {usd(high.price)} for the {named(high)}, before the {miamiDelivery.display} delivery. You get {mileage.includedPerDay} miles per day, pooled across the booking. Three days is {mileage.includedPerDay * 3} miles. Additional miles are {usd(mileage.overagePerMile)} each.</p>
+  <p>The deposit is {deposit.display}{depositException ? `, except ${depositException}` : ''}. {deposit.note} The driver is {minimumAge} or older, with a valid driver's license{ageException ? `, except ${ageException}` : ''}. The {named(sto)} is track-bred, street-only. {insurance.summary} If the car is a Maybach and you need the daily policy, it is {usd(policy.from)} to {usd(policy.to)}.</p>
+  <p>{cancellation.summary} Outside that window, more than {cancellation.noRefundWithinDays} days before the start, amounts paid can be refunded. The <a href="/pricing">rate card</a> and the <a href="/terms">terms</a> are the full version.</p>
+
+  <h2 id="before-or-after">A day in Miami before or after the cruise</h2>
+  <p>Days on either side of the ship stay in the Miami delivery area, with the same return rule. <a href="/exotic-car-rental-south-beach">South Beach</a>, along Ocean Drive and Collins Avenue, and <a href="/exotic-car-rental-brickell">Brickell</a> are the usual pairings. The wider map is the <a href="/exotic-car-rental-miami">Miami page</a>. We do not publish a street-by-street schedule.</p>
+
+  <h2 id="prefer-to-be-driven">Prefer to be driven?</h2>
+  <p>If you would rather not drive, chauffeur service in the {named(gls)} starts at {rentalTerms.chauffeurHourly.display} an hour. Book it on the <a href="/chauffeur-service-miami">chauffeur page</a>. It is not a self-drive rental with a driver added at the end.</p>
+
+  <h2 id="questions">Questions</h2>
+  {faqs.map((f) => (
+    <>
+      <h3>{f.q}</h3>
+      <p>{f.a}</p>
+    </>
+  ))}
+  <p>Airport deliveries are on the <a href="/luxury-car-rental-miami-airport">MIA</a> and <a href="/luxury-car-rental-fll">FLL</a> pages. Anything else starts at <a href="/contact">contact</a>.</p>
+</LandingLayout>
