@@ -145,6 +145,7 @@ A `locked` file stays locked after an approval. Approval covers one snapshot of 
 | luxe-drive-flow/src/pages/chauffeur-service-miami.astro | 5e4080457d8327f6d16911a6505e53bc8eb4aa5a | Public Relations, 27 Nov 2026 | Same-day evening line, the 5.0 on Google row, and the 5.0 star stat removed. Evening bookings are asked by date. |
 | luxe-drive-flow/src/pages/g-wagon-rental-miami.astro | e75b898534cc368c1cdc3abcb03054aca4077b6d | Public Relations, 27 Nov 2026 | The same-day sentence now says we will confirm availability. The cars are still not sourced in. |
 | luxe-drive-flow/src/pages/reviews.astro | c192dda2fc8f372deec1aa1607983f8580c8b1c6 | Public Relations, 27 Nov 2026 | Header is "What renters say". The 5.0 row, the review count, and the stars beside each quote are gone. Quotes, names, and dates are unchanged. |
+| luxe-drive-flow/src/pages/reviews.astro | 6bafb84b811375990086ebdfbb87babed4dd8617 | Robert, 27 Nov 2026 | The meta drops "five-star" and says names and dates are included. It is 151 characters. |
 | luxe-drive-flow/src/pages/about.astro | 60520f6e358be209d0a6c32849df9a4696edfaf1 | Public Relations, 27 Nov 2026 | "driver's licence" is now "driver's license". |
 | luxe-drive-flow/src/pages/exotic-car-rental-miami.astro | 51f468900392e3e96f4d1cca46afdd95a9aeef35 | Public Relations, 27 Nov 2026 | "driver's licence" is now "driver's license". |
 | luxe-drive-flow/src/pages/best-exotic-car-rental-miami.astro | 6c9a72f695ea47ba0fc174e42dbebc70a3945f80 | Public Relations, 27 Nov 2026 | "driver's licence" is now "driver's license". |
