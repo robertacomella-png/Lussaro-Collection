@@ -155,8 +155,8 @@ export default function BookingRequestCard({
         </p>
         <h3 className="font-display text-xl font-semibold text-white mb-2">Request received</h3>
         <p className="text-white/60 text-sm leading-relaxed">
-          We will confirm availability for the {activeName} on your dates. For the
-          fastest reply, message us on WhatsApp.
+          We will confirm availability for the {activeName} on your dates. You can
+          also message us on WhatsApp.
         </p>
       </div>
     );

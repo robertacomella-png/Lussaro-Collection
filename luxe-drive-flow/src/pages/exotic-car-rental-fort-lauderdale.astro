@@ -131,6 +131,7 @@ const faqSchema = {
   waMessage="Hi, I'd like an exotic car delivered to Fort Lauderdale. I'm looking at the Lamborghini Urus."
   fleetHeading="The cars"
   ctaTitle="Book the Urus for Fort Lauderdale"
+  ctaSubtitle={`Delivery to Fort Lauderdale is ${fll.display} each way. Send your details and we'll confirm availability.`}
   schema={[faqSchema]}
 >
   <p>Daily rates run from {usd(low.day)} for the {low.label} to {usd(high.day)} for the {high.label}. Every day includes {miles} miles. A {rentalTerms.deposit.display} refundable deposit is held on every car except the {LABEL['huracan-sto']}, which is {sto.deposit.display}.</p>

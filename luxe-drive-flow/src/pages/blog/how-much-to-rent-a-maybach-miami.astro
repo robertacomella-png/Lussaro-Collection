@@ -15,7 +15,6 @@ import Layout from '@/layouts/Layout.astro';
 import Nav from '@/components/site/Nav.astro';
 import CtaBand from '@/components/site/CtaBand.astro';
 import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
-import RelatedPosts from '@/components/blog/RelatedPosts.astro';
 import BlogBookingCta from '@/components/blog/BlogBookingCta.astro';
 import { altFor } from '@/data/image-alt';
 import { cars } from '@/data/cars';
@@ -97,7 +96,7 @@ const readingMinutes = 7;
 
 const TITLE = 'How Much to Rent a Maybach in Miami | Lussaro Collection';
 const DESCRIPTION = `How much to rent a Maybach in Miami: ${usd(gls.price)} a day, or ${usd(gls.threeDayDeal)} a day for ${tier(gls, 0).days}+ days. The GLS 600 or Maybach S580, chauffeur from ${chauffeurHourly.display}/hour, and the fees before you book.`;
-const waMessage = 'Hi, I read your Maybach rates guide and want a GLS 600 Maybach.';
+const waMessage = 'Hi, I read your Maybach rates guide and want a Mercedes-Maybach GLS 600.';
 const wa = whatsappWith(waMessage, { car: gls.name, page: PATH });
 
 const testimonial = reviews.find((r) => r.name === 'Gregory Capo');
@@ -565,8 +564,6 @@ const jumps = [
             Call {business.phoneDisplayShort}
           </a>
         </div>
-
-        <RelatedPosts currentSlug={SLUG} limit={1} />
 
         <aside class="not-prose mt-12 rounded-2xl border border-black/10 bg-[#fafafa] p-6 flex flex-col sm:flex-row gap-5">
           <img src="/favicon-96.png" width="64" height="64" alt="" aria-hidden="true"

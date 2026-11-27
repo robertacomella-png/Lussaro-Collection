@@ -2,6 +2,7 @@
 import LandingLayout from '@/layouts/LandingLayout.astro';
 import { cars, ageException, depositException } from '@/data/cars';
 import { rentalTerms } from '@/data/rental-terms';
+import { hoursSummary } from '@/data/business';
 import { neighborhoodFor } from '@/data/neighborhood-content';
 
 const usd = (n) => `$${n.toLocaleString('en-US')}`;
@@ -33,7 +34,7 @@ const faqSchema = {
 ---
 <LandingLayout
   title="Exotic Car Rental South Beach | Lussaro Collection"
-  description={`Rent exotic cars in South Beach with Lussaro Collection. Delivery from ${rentalTerms.delivery.find((d) => d.area === 'Miami').display} each way to beachfront hotels on Ocean Drive and Collins Avenue. Ask for your dates.`}
+  description={`Rent exotic cars in South Beach. Delivery from ${rentalTerms.delivery.find((d) => d.area === 'Miami').display} each way to Ocean Drive and Collins Avenue hotels. Hours are ${hoursSummary}.`}
   h1="Exotic Car Rental South Beach"
   intro="Our delivery area covers South Beach — the beachfront hotels, the blocks off Ocean Drive and Collins Avenue, and the streets either side of Lincoln Road."
   ctaTitle="Reserve your South Beach exotic"

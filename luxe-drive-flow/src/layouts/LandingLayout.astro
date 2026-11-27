@@ -34,6 +34,8 @@ const {
   bookingSource = '',
   bookingCta = 'landing_hero',
   waMessage: waMessageProp = '',
+  // Optional closer under the page. Empty keeps the shared Miami delivery line.
+  ctaSubtitle = '',
 } = Astro.props;
 
 // ImageKit URLs keep the 1600px transform they have always used; a local photo
@@ -121,6 +123,6 @@ const wa = whatsappWith(waMessage, { page: waPage });
     </div>
   </section>
 
-  <CtaBand message={waMessage} page={waPage} />
+  <CtaBand message={waMessage} page={waPage} {...(ctaSubtitle ? { subtitle: ctaSubtitle } : {})} />
   <StickyMobileCta message={waMessage} page={waPage} />
 </Layout>
