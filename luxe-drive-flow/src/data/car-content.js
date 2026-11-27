@@ -168,7 +168,7 @@ export const carContent = {
         id: 'lineup',
         heading: 'Where the STO fits a Lamborghini rental in Miami',
         paragraphs: [
-          'This page is the Huracán STO. [Lamborghini rental in Miami](/lamborghini-rental-miami) is the wider choice: the Urus when the booking needs doors and a trunk, the EVO when you want the V10 without the track setup. What the day rate does not include is in the [Lamborghini rental Miami price](/blog/how-much-is-a-lamborghini-rental) guide. If the STO is the car, the rate, the photos and the form on this page are the ones that apply.',
+          'This page is the Huracán STO. [Lamborghini rental in Miami](/lamborghini-rental-miami) is the wider choice: the Urus when the booking needs doors and a trunk, the EVO when you want the V10 without the STO\'s firmer, track-bred setup. What the day rate does not include is in the [Lamborghini rental Miami price](/blog/how-much-is-a-lamborghini-rental) guide. If the STO is the car, the rate, the photos and the form on this page are the ones that apply.',
         ],
       },
     ],
@@ -186,14 +186,14 @@ export const carContent = {
     goodToKnow: [
       'Strictly two seats — driver plus one passenger, with no rear bench.',
       'Rear-wheel drive, with the naturally aspirated 5.2-liter V10 tuned to 631 hp. No hybrid system and no electric mode.',
-      'Track-focused suspension. It rides noticeably firmer than the Huracan EVO, which you will feel on rough Miami streets.',
+      'Track-bred suspension, set up for the street. It rides noticeably firmer than the Huracan EVO, which you will feel on rough Miami streets.',
       'Very low nose and front splitter. Take steep driveways, ramps and speed bumps slowly and at an angle.',
       'Fixed roof and conventional front-hinged doors — no Spyder version and no scissor doors.',
       'Space for luggage is minimal. Plan on a soft bag, not a suitcase.',
     ],
     faqQuestion: 'How is the Huracan STO different from the Huracan EVO?',
     faqAnswer:
-      'Both carry a naturally aspirated V10 and drive the rear wheels, but the STO is the track version. It makes 631 hp against the EVO\u2019s 602, wears a fixed rear wing and roof scoop from the Super Trofeo race car, and rides firmer. Book the STO for the most intense drive we offer in a Huracan, and the EVO if you want the same sound with more comfort around town.',
+      'Both carry a naturally aspirated V10 and drive the rear wheels, but the STO is the track-bred version, rented for street driving only. It makes 631 hp against the EVO\u2019s 602, wears a fixed rear wing and roof scoop from the Super Trofeo race car, and rides firmer. Book the STO for the most intense drive we offer in a Huracan, and the EVO if you want the same sound with more comfort around town.',
     siblings: ['huracan-evo', 'sf90'],
     category: { href: '/lamborghini-rental-miami', label: 'Lamborghini rental in Miami' },
     realMoment: '',
