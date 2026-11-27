@@ -16,7 +16,6 @@ import Layout from '@/layouts/Layout.astro';
 import Nav from '@/components/site/Nav.astro';
 import CtaBand from '@/components/site/CtaBand.astro';
 import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
-import RelatedPosts from '@/components/blog/RelatedPosts.astro';
 import BlogBookingCta from '@/components/blog/BlogBookingCta.astro';
 import BlogPhoto from '@/components/blog/BlogPhoto.astro';
 import { altFor } from '@/data/image-alt';
@@ -339,8 +338,7 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
             <p>“{testimonial.text}”</p>
           </blockquote>
           <figcaption class="mt-4 text-sm text-[#0a0a0a]/60">
-            <span class="text-[#e00e10]" aria-hidden="true">★★★★★</span>
-            <span class="font-semibold text-[#0a0a0a]"> {testimonial.name}</span> — verified Google review
+            <span class="font-semibold text-[#0a0a0a]">{testimonial.name}</span> — verified Google review
           </figcaption>
         </figure>
 
@@ -543,8 +541,6 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
             Call {business.phoneDisplayShort}
           </a>
         </div>
-
-        <RelatedPosts currentSlug={SLUG} limit={1} />
 
         <aside class="not-prose mt-12 rounded-2xl border border-black/10 bg-[#fafafa] p-6 flex flex-col sm:flex-row gap-5">
           <img src="/favicon-96.png" width="64" height="64" alt="" aria-hidden="true"
