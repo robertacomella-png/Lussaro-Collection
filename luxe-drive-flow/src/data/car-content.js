@@ -22,10 +22,10 @@
 
 export const carContent = {
   'lamborghini-urus': {
-    useCases: `The Urus is the one to take when you want the Lamborghini without giving anything up. It is an SUV, so the hotel ramps and speed bumps that make a low supercar a liability are simply not the problem they would otherwise be, and the boot swallows several large cases — around 616 litres behind the rear seats. That covers the airport run, the group heading out to dinner, and the week where you only want to hire one car. Underneath it is still a twin-turbo V8 driving all four wheels, so none of that practicality costs you the drama.`,
+    useCases: `The Urus is the one to take when you want the Lamborghini without giving anything up. It is an SUV, so the hotel ramps and speed bumps that make a low supercar a liability are simply not the problem they would otherwise be, and the boot swallows several large cases — around 616 liters behind the rear seats. That covers the airport run, the group heading out to dinner, and the week where you only want to hire one car. Underneath it is still a twin-turbo V8 driving all four wheels, so none of that practicality costs you the drama.`,
     goodToKnow: [
       'Adaptive air suspension with adjustable ride height — worth raising for steep driveways and ramps, since at its lowest setting ground clearance is only about 6.2 inches.',
-      'The boot is genuinely usable: around 616 litres behind the rear seats and roughly 1,596 with them folded. If the car has the optional four-seat rear layout, that drops to about 574.',
+      'The boot is genuinely usable: around 616 liters behind the rear seats and roughly 1,596 with them folded. If the car has the optional four-seat rear layout, that drops to about 574.',
       'Pure petrol twin-turbo V8 — no hybrid system and no electric-only mode. It takes premium fuel and returns mid-teens mpg.',
       'All-wheel drive on every Urus ever built; there has never been a rear-drive version.',
       'It is wide: about 79 inches across the body and nearly 86 with the mirrors out, so older Miami garages and narrow valet lanes need care.',
@@ -44,7 +44,7 @@ export const carContent = {
   },
 
   'mercedes-s580': {
-    useCases: `The S580 is the quiet one, and that is precisely its job. It is the most affordable car we run at $445 a day, and the one to take when the occasion rewards arriving well rather than arriving loudly — a client meeting in Brickell, a wedding where you are not the couple, an airport run where a calm cabin beats a loud exhaust. The 4.0-litre V8 and air suspension mean it is quick and unruffled rather than theatrical. If you want the car to make an impression without making a scene, this is it.`,
+    useCases: `The S580 is the quiet one, and that is precisely its job. It is the most affordable car we run at $445 a day, and the one to take when the occasion rewards arriving well rather than arriving loudly — a client meeting in Brickell, a wedding where you are not the couple, an airport run where a calm cabin beats a loud exhaust. The 4.0-liter V8 and air suspension mean it is quick and unruffled rather than theatrical. If you want the car to make an impression without making a scene, this is it.`,
     goodToKnow: [
       'Standard AIRMATIC air suspension with adjustable ride height — the smoothest car in the fleet over Miami road joints.',
       'The V8 has 48-volt mild-hybrid assist, which never needs charging and cannot drive on electricity alone.',
@@ -54,7 +54,7 @@ export const carContent = {
     ],
     faqQuestion: 'Does the Mercedes-Benz S580 need charging?',
     faqAnswer:
-      'No. It is a 48-volt mild hybrid, not a plug-in. The electrical system assists the 4.0-litre V8 and recovers energy under braking, but it never runs on electricity alone and there is nothing to plug in. Fill it with premium unleaded, 91 octane or higher, and treat it exactly like any petrol car.',
+      'No. It is a 48-volt mild hybrid, not a plug-in. The electrical system assists the 4.0-liter V8 and recovers energy under braking, but it never runs on electricity alone and there is nothing to plug in. Fill it with premium unleaded, 91 octane or higher, and treat it exactly like any petrol car.',
     siblings: ['mercedes-maybach-gls-600', 'rolls-royce-cullinan'],
     category: { href: '/exotic-car-rental-miami', label: 'Exotic car rental in Miami' },
     realMoment: '',
@@ -88,7 +88,7 @@ export const carContent = {
       'Plug-in hybrid with a silent electric-only eDrive mode — roughly 16 miles of EV range, usable up to about 84 mph.',
       'You never have to charge it. The V8 replenishes the battery as you drive; plugging in is optional.',
       'Very low at the front. Take steep driveways, ramps and speed bumps slowly and at an angle.',
-      'Storage is a front compartment of about 74 litres and nothing else — pack soft bags, and do not count on a hard suitcase fitting.',
+      'Storage is a front compartment of about 74 liters and nothing else — pack soft bags, and do not count on a hard suitcase fitting.',
       'Fixed-roof coupe. The open-top car is the separate SF90 Spider.',
       'Top speed 211 mph, with 0–124 mph in 6.7 seconds.',
     ],
@@ -206,7 +206,7 @@ export const carContent = {
     goodToKnow: [
       '2+2 seating: two full seats up front and two small rear seats, best used for bags or a short hop rather than adults on a long drive.',
       'Electric soft top that opens or closes in seconds and works on the move at low speed, so a passing shower does not mean pulling over.',
-      'All-wheel drive with a 3.7-litre twin-turbo flat-six and an eight-speed dual-clutch automatic. It is quieter at a cruise than the Huracans, and much quicker than it sounds.',
+      'All-wheel drive with a 3.7-liter twin-turbo flat-six and an eight-speed dual-clutch automatic. It is quieter at a cruise than the Huracans, and much quicker than it sounds.',
       'Adaptive dampers as standard, so it rides well over rough Miami streets for a car this fast.',
       'Luggage goes in the front trunk and on the rear seats, which makes it the most practical of our convertibles for a weekend away.',
     ],
@@ -278,7 +278,7 @@ export const carContent = {
     deliveryNotes: '',
   },
   'rolls-royce-cullinan': {
-    useCases: `The Cullinan is the one for arrivals that are the event — weddings, anniversaries, the dinner you want remembered. Rear-hinged coach doors open backwards so you step out facing forward rather than clambering, and all four doors close at the touch of a button. Underneath sits a 6.75-litre twin-turbo V12 that is quieter at speed than most cars are parked. It also happens to be practical, with about 21 cubic feet behind the rear seats, though the boot is not the reason to choose it.`,
+    useCases: `The Cullinan is the one for arrivals that are the event — weddings, anniversaries, the dinner you want remembered. Rear-hinged coach doors open backwards so you step out facing forward rather than clambering, and all four doors close at the touch of a button. Underneath sits a 6.75-liter twin-turbo V12 that is quieter at speed than most cars are parked. It also happens to be practical, with about 21 cubic feet behind the rear seats, though the boot is not the reason to choose it.`,
     goodToKnow: [
       'The rear doors are rear-hinged coach doors, and all four close powered at the touch of a button.',
       'A two-piece powered tailgate — Rolls-Royce calls it The Clasp — with roughly 21 cubic feet behind the rear seats.',

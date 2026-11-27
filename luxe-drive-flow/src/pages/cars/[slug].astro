@@ -11,8 +11,8 @@ import BookingCalendar from '@/components/booking/BookingCalendar.jsx';
 import VehicleBookingCard from '@/components/booking/VehicleBookingCard.jsx';
 import { Phone } from 'lucide-react';
 import WhatsAppIcon from '@/components/site/WhatsAppIcon.astro';
-import GoogleRatingBadge from '@/components/reviews/GoogleRatingBadge.astro';
 import ReviewCards from '@/components/reviews/ReviewCards.astro';
+import { carLabel } from '@/data/fleet';
 import { cars } from '@/data/cars';
 import { postsForCar, postPath } from '@/data/posts';
 import { rentalTerms, deliveryEachWaySummary, rateForDays } from '@/data/rental-terms';
@@ -27,6 +27,7 @@ export function getStaticPaths() {
 }
 
 const { car } = Astro.props;
+const label = carLabel(car);
 
 // TEMPORARY — owner's call, Oct 2026. Hides the availability calendar on every
 // car page. Nothing is deleted: the island, its no-JS fallback and the
@@ -50,7 +51,7 @@ const imgs = car.images || [];
 const routePath = `/cars/${car.slug}`;
 // Hand-written meta. Previously the description concatenated boilerplate with
 // car.description.slice(0, 110), which clipped mid-word.
-const pageTitle = titleFor(routePath) ?? `${car.name} Rental Miami | Lussaro Collection`;
+const pageTitle = titleFor(routePath) ?? `${label} Rental Miami | Lussaro Collection`;
 const pageDescription = descriptionFor(routePath);
 
 const content = contentFor(car.slug);
@@ -153,15 +154,15 @@ const carFaqs = content ? [
     a: `${usdFmt(car.price)} a day, with ${milesPerDay} miles included. Book ${firstTier.days} days or more and it drops to ${usdFmt(rateForDays(car.price, firstTier.days, bookingTiers).perDay)} a day, or ${usdFmt(rateForDays(car.price, weekTier.days, bookingTiers).perDay)} a day for ${weekTier.days} days or more. Taxes and fees of ${taxPct}% are added to the rental, and the ${car.deposit.display} deposit is refundable and held separately.`,
   },
   {
-    q: `What is the security deposit on the ${car.name}?`,
-    a: `${car.deposit.display}${car.depositDiffers ? ` on the ${car.name}, above the ${rentalTerms.deposit.display} that applies to the rest of the fleet` : ''}, taken when your booking is confirmed. ${rentalTerms.deposit.note} It can also cover excess mileage, a late return, cleaning, or fines picked up during the rental.`,
+    q: `What is the security deposit on the ${label}?`,
+    a: `${car.deposit.display}${car.depositDiffers ? ` on the ${label}, above the ${rentalTerms.deposit.display} that applies to the rest of the fleet` : ''}, taken when your booking is confirmed. ${rentalTerms.deposit.note} It can also cover excess mileage, a late return, cleaning, or fines picked up during the rental.`,
   },
   {
-    q: `How many miles come with the ${car.name}?`,
+    q: `How many miles come with the ${label}?`,
     a: `${milesPerDay} a day, pooled across the whole booking rather than capped daily. Take it for ${exDays} days and you have ${milesPerDay * exDays} miles to spend however suits you — only the total showing at return is counted. Anything past that is charged at a per-mile rate confirmed before you book, and can come out of your deposit.`,
   },
   {
-    q: `Will you bring the ${car.name} to my hotel?`,
+    q: `Will you bring the ${label} to my hotel?`,
     a: `Yes, along with residences, offices and both airports. Delivery is ${deliveryEachWaySummary}, and collection at the end of the rental is charged separately at typically the same fee. Beyond those two areas we quote you first, so nothing lands on the invoice unannounced.`,
   },
   {
@@ -217,7 +218,9 @@ const ogImage = firstImg && !firstImg.endsWith('.svg')
 
 // fleet.js `name` sometimes already carries the make ("Lamborghini Urus") and
 // sometimes does not ("S580"), so only prepend when it is missing.
-const fullName = car.name.startsWith(car.make) ? car.name : `${car.make} ${car.name}`;
+const fullName = car.name === 'GLS 600 Maybach'
+  ? label
+  : (car.name.startsWith(car.make) ? car.name : `${car.make} ${car.name}`);
 // /porsche-911-turbo-s-rental-miami owns "porsche rental miami" and leads with
 // "Porsche 911 Turbo S Rental Miami". This URL is the spec and booking record,
 // so its heading does not repeat that query.
@@ -318,7 +321,7 @@ const pageProductSchema = car.slug === 'huracan-sto'
   description={pageDescription}
   image={ogImage}
   schema={faqSchema ? [pageProductSchema, faqSchema] : [pageProductSchema]}
-  breadcrumbName={car.name}
+  breadcrumbName={label}
 >
   <Nav />
 
@@ -374,7 +377,7 @@ const pageProductSchema = car.slug === 'huracan-sto'
 
       <!-- 1 · PHOTOS -->
       <div class="relative lg:col-start-1 lg:row-start-1">
-        <CarGallery images={imgs} name={car.name} slug={`g-${car.slug}`} alts={galleryAlts} client:visible />
+        <CarGallery images={imgs} name={label} slug={`g-${car.slug}`} alts={galleryAlts} client:visible />
         {car.model && (
           <a href="#see-in-3d" class="absolute top-3 left-3 z-10 inline-flex items-center gap-1.5 bg-white text-black text-[11px] font-semibold px-3 py-1.5 rounded-full hover:bg-[#ff1516] transition shadow-lg">
             ◆ View in 3D{car.usdz ? ' & AR' : ''}
@@ -415,16 +418,6 @@ const pageProductSchema = car.slug === 'huracan-sto'
             </div>
           </div>
 
-          {/* Google rating pill, beside the price — brief point 01. The weekly
-              rate line that sat here was cut to shorten the card (owner, 15 Nov
-              2026); the multi-day rates still show in the estimate. */}
-          {car.slug !== 'huracan-sto' && (
-            <div class="-mt-2 mb-5">
-              <GoogleRatingBadge />
-            </div>
-          )}
-
-
           {/* client:only (not client:visible) so the calendar renders fresh on the client
               against the real current date. With static SSR, server HTML bakes in the build-date
               "today", and React hydration won't repaint the stale disabled/red states until a
@@ -447,7 +440,7 @@ const pageProductSchema = car.slug === 'huracan-sto'
               <p class="text-white font-medium">Check availability with us directly</p>
               <p class="mt-2 text-white/55 text-sm leading-relaxed">
                 The live calendar could not load in your browser. Tell us your dates and we
-                will confirm whether the {car.name} is free — usually within the hour.
+                will confirm whether the {label} is free.
               </p>
               <div class="mt-5 flex flex-col gap-2.5">
                 <a href={wa} data-cta="car_calendar_fallback_whatsapp" target="_blank" rel="noopener noreferrer"
@@ -507,7 +500,7 @@ const pageProductSchema = car.slug === 'huracan-sto'
         <ReviewCards carName={car.name} make={car.make} />
         {carFaqs.length > 0 && (
           <div class="space-y-3">
-            <h2 class="font-display text-xl md:text-2xl font-bold text-white tracking-tight">{car.name} questions</h2>
+            <h2 class="font-display text-xl md:text-2xl font-bold text-white tracking-tight">{label} questions</h2>
             <div class="divide-y divide-white/10 border-y border-white/10">
               {carFaqs.map((f) => (
                 <details class="group py-5">
@@ -648,7 +641,7 @@ const pageProductSchema = car.slug === 'huracan-sto'
         ))}
 
         <div class="space-y-4">
-          <h2 class="reveal font-display text-2xl md:text-3xl font-bold text-white tracking-tight">Is the {car.name} right for your trip?</h2>
+          <h2 class="reveal font-display text-2xl md:text-3xl font-bold text-white tracking-tight">Is the {label} right for your trip?</h2>
           <p class="reveal text-white/70 leading-relaxed">{content.useCases}</p>
           {content.compareLink && (
             <p class="reveal text-sm">
@@ -676,7 +669,7 @@ const pageProductSchema = car.slug === 'huracan-sto'
                 ? `Extra miles run ${'$'}${rentalTerms.mileage.overagePerMile} each.`
                 : 'The rate beyond that is confirmed before you book.'}</li>
             <li>Delivery {deliveryEachWaySummary}; collection charged separately; further afield is quoted first.</li>
-            <li>{car.minimumAge}+ with a valid {car.slug === 'huracan-sto' ? 'license' : 'licence'}. {rentalTerms.insurance.summary}</li>
+            <li>{car.minimumAge}+ with a valid license. {rentalTerms.insurance.summary}</li>
           </ul>
           <p class="reveal text-white/50 text-xs">
             <a href="/pricing" class="text-[#ff1516] hover:underline">Full rate card</a> · <a href="/terms" class="text-[#ff1516] hover:underline">Terms of Service</a>
@@ -708,7 +701,7 @@ const pageProductSchema = car.slug === 'huracan-sto'
       <div class="reveal relative z-10 max-w-5xl mx-auto px-5">
         <p class="text-[#ff1516] tracking-[0.3em] uppercase text-xs mb-4">Interactive</p>
         <h2 class="font-display text-3xl md:text-5xl font-bold text-white mb-3">See it in 3D{car.usdz ? ' & AR' : ''}</h2>
-        <p class="text-white/60 mb-8 max-w-md mx-auto">Drag to spin the {car.name} from every angle{car.usdz ? ' — or place it in your driveway with AR' : ''}.</p>
+        <p class="text-white/60 mb-8 max-w-md mx-auto">Drag to spin the {label} from every angle{car.usdz ? ' — or place it in your driveway with AR' : ''}.</p>
 
         <!-- live spinning model (lazy-loads when scrolled into view; mobile + desktop) -->
         <div class="relative w-full h-[56svh] md:h-[54svh] rounded-[24px] overflow-hidden border border-white/10 bg-gradient-to-b from-[#161616] to-[#0a0a0a]">
@@ -716,7 +709,7 @@ const pageProductSchema = car.slug === 'huracan-sto'
           <span class="absolute bottom-3 inset-x-0 text-center text-white/50 text-[11px] pointer-events-none">Drag to explore</span>
         </div>
 
-        {car.usdz && <ArButton client:visible title={car.name} usdz={car.usdz} glb={car.model} />}
+        {car.usdz && <ArButton client:visible title={label} usdz={car.usdz} glb={car.model} />}
       </div>
     </section>
   )}
@@ -726,7 +719,7 @@ const pageProductSchema = car.slug === 'huracan-sto'
     <div class="max-w-3xl mx-auto px-5 md:px-8">
       <div class="reveal text-center mb-8">
         <p class="text-[#ff1516] tracking-[0.3em] uppercase text-xs mb-3">Reserve</p>
-        <h2 class="font-display text-3xl md:text-5xl font-bold text-white tracking-tight text-balance">Book the {car.name}</h2>
+        <h2 class="font-display text-3xl md:text-5xl font-bold text-white tracking-tight text-balance">Book the {label}</h2>
         <p class="text-white/55 mt-3">Fastest reply on WhatsApp — or send your details and we'll confirm availability.</p>
       </div>
 

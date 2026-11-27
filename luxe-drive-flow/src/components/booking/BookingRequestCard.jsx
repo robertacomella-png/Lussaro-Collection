@@ -137,7 +137,7 @@ export default function BookingRequestCard({
         </p>
         <h3 className="font-display text-xl font-semibold text-white mb-2">Request received</h3>
         <p className="text-white/60 text-sm leading-relaxed">
-          We will confirm the {carName} for your dates shortly — usually within the hour. For the
+          We will confirm availability for the {carName} on your dates. For the
           fastest reply, message us on WhatsApp.
         </p>
       </div>

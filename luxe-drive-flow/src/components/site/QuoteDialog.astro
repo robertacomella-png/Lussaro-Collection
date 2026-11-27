@@ -8,7 +8,7 @@
 // a form nobody has opened yet would be paid for by every visitor.
 //
 // No date fields, by the owner's call (23 Nov 2026): name, phone, email, car.
-import { fleet } from '@/data/fleet';
+import { fleet, carLabel } from '@/data/fleet';
 import { business, telHref, whatsappWith } from '@/data/business';
 import { Phone, X } from 'lucide-react';
 import WhatsAppIcon from '@/components/site/WhatsAppIcon.astro';
@@ -66,7 +66,7 @@ const label = 'block text-white/60 text-xs mb-1.5';
           <select id="q-car" name="vehicle" aria-label="Choose a car" class={field}>
             <option value="" class="bg-[#111]">Any car / not sure</option>
             {fleet.map((c) => (
-              <option value={c.name} data-dashboard-id={c.dashboardId || ''} class="bg-[#111]">{c.name}</option>
+              <option value={c.name} data-dashboard-id={c.dashboardId || ''} class="bg-[#111]">{carLabel(c)}</option>
             ))}
           </select>
         </div>

@@ -1,6 +1,7 @@
 import { getImageKitSrc, getImageKitSrcSet, getImageKitSizes } from "@/lib/imageKit";
 import { business, whatsappWith } from "@/data/business";
 import { altFor, carFullName } from "@/data/image-alt";
+import { carLabel } from "@/data/fleet";
 
 export default function FleetCard({ car, onOpen }) {
   // Raw, not encoded: whatsappWith does the encoding. This used to be wrapped
@@ -46,7 +47,7 @@ export default function FleetCard({ car, onOpen }) {
 
         <div className="absolute bottom-3 left-3 right-3">
           <h3 className="text-white text-[17px] md:text-2xl leading-tight font-semibold tracking-tight">
-            {car.name}
+            {carLabel(car)}
           </h3>
         </div>
       </div>
