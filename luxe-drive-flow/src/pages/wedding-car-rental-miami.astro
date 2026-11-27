@@ -43,7 +43,7 @@ const rows = [
   { slug: 'mercedes-amg-g63', car: g63, label: 'Mercedes-AMG G63', fit: 'A second SUV' },
 ].map((row) => ({ ...row, href: `/cars/${row.slug}`, multi: multiDay(row.car) }));
 
-const description = `Luxury car rental for a wedding in Miami: the Cullinan from ${usd(cullinan.price)} a day, or a chauffeured Mercedes-Maybach GLS 600 from ${hour} an hour. Delivery from ${miami.display}.`;
+const description = `Luxury car rental for a wedding in Miami: Cullinan from ${usd(cullinan.price)} a day, or a chauffeured Mercedes-Maybach GLS 600 from ${hour} an hour. Delivery is ${miami.display} each way.`;
 
 const wa = whatsappWith(
   "Hi, I'd like the Rolls-Royce Cullinan for a wedding in Miami. The date is set — can you check it?",

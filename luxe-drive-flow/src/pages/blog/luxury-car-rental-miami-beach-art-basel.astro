@@ -63,7 +63,7 @@ const readingMinutes = 11;
 
 // Rendered <title> is this string, exactly. Layout prints the prop as given.
 const TITLE = 'Luxury Car Rental Miami Beach for Art Basel | Lussaro';
-const DESCRIPTION = `Luxury car rental in Miami Beach for Art Basel 2026. Urus, Mercedes-Maybach GLS 600 or S580. Delivery from ${rentalTerms.delivery.find((d) => d.area === 'Miami').display} each way. Public days run December 4–6.`;
+const DESCRIPTION = `Luxury car rental in Miami Beach for Art Basel 2026. Urus, Mercedes-Maybach GLS 600 or Mercedes-Benz S580. Delivery from ${rentalTerms.delivery.find((d) => d.area === 'Miami').display} each way. Open December 4–6.`;
 const waMessage = 'Hi, I read your Art Basel guide and want a car delivered to Miami Beach.';
 const wa = whatsappWith(waMessage, { page: PATH });
 
@@ -180,7 +180,7 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
           <div class="text-center lg:text-left lg:col-start-1 lg:row-start-1">
             <p class="text-[#ff1516] tracking-[0.3em] uppercase text-xs mb-4">Art Basel</p>
             <h1 class="font-display text-3xl md:text-[2.75rem] xl:text-5xl font-bold tracking-tight text-white leading-[1.08] text-balance">
-              Luxury Car Rental in Miami Beach for Art Basel 2026: Urus, Maybach, and S580
+              Luxury Car Rental in Miami Beach for Art Basel 2026: Urus, Mercedes-Maybach and Mercedes-Benz S580
             </h1>
             <p class="text-white/65 text-base md:text-lg leading-relaxed mt-5">
               A Lamborghini Urus, a Mercedes-Maybach GLS 600, or a Mercedes-Benz S580, delivered to the Beach from {rentalTerms.delivery.find((d) => d.area === 'Miami').display} each way. The right one depends on the drive, the back seat, or simply getting to dinner.
