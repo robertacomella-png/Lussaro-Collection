@@ -42,22 +42,21 @@ const breadcrumb = breadcrumbFor(Astro.url.pathname, breadcrumbName);
          enough on its own to push it past the limit. Nothing goes above this. -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <slot name="head" />
 
-    <!-- OpenAI Pixel — base setup. Supplied by the marketing team and kept
-         verbatim, except that the debug flag was removed on 23 Nov 2026 at the
-         owner's request (debug logging has no place in production; put it back
-         temporarily if the pixel needs verifying). It sits as high as a script legally can:
-         the charset declaration above has to land inside the first 1024 bytes
-         and cannot be displaced.
+    <!-- OpenAI Pixel — queue only. The SDK used to download from this spot,
+         competing with the hero image. The stub stays here so lead_created
+         (lib/track.js) can queue before the file arrives; loadThirdParties()
+         below inserts the SDK on the same schedule as GTM. The vendor snippet
+         is otherwise unchanged, including the pixel id. Debug logging stays
+         off (owner, 23 Nov 2026).
 
          One setup script per page, which this layout gives for free — it is the
          only <head> in the site, so there is no second copy to drift out of sync.
 
-         `oaiq` is a queueing stub until the SDK lands, so the lead_created call
-         in lib/track.js is safe to fire before the network finishes. The
-         `if(w.oaiq)return` guard makes it a no-op should a view transition ever
-         re-run it. -->
-    <script is:inline>!function(w,d,s,u){if(w.oaiq)return;var q=function(){q.q.push(arguments)};q.q=[];w.oaiq=q;var j=d.createElement(s);j.async=1;j.src=u;var f=d.getElementsByTagName(s)[0];f.parentNode.insertBefore(j,f)}(window,document,"script","https://bzrcdn.openai.com/sdk/oaiq.min.js");oaiq("init",{pixelId:"Sed9HtBUf7qjiKJ1WcuL3V"});</script>
+         The `if(w.oaiq)return` guard makes it a no-op should a view transition
+         ever re-run it. `oaiq("init")` runs immediately against the stub. -->
+    <script is:inline>!function(w,d,s,u){if(w.oaiq)return;var q=function(){q.q.push(arguments)};q.q=[];w.oaiq=q;w.__loadOaiq=function(){if(w.__oaiqLoaded)return;w.__oaiqLoaded=1;var j=d.createElement(s);j.async=1;j.src=u;var f=d.getElementsByTagName(s)[0];f.parentNode.insertBefore(j,f)}}(window,document,"script","https://bzrcdn.openai.com/sdk/oaiq.min.js");oaiq("init",{pixelId:"Sed9HtBUf7qjiKJ1WcuL3V"});</script>
 
     <!-- Marks the document as scripting-capable at parse time. Anything that
          must degrade when JS never runs (see the booking-calendar fallback on
@@ -78,12 +77,17 @@ const breadcrumb = breadcrumbFor(Astro.url.pathname, breadcrumbName);
       })();
     </script>
 
-    <!-- Google Tag Manager (deferred) -->
+    <!-- Google Tag Manager, Meta Pixel and Clarity (all via this container),
+         plus the OpenAI Pixel SDK. Deferred together so none of them compete
+         with the hero. Events pushed before the container arrives stay in
+         dataLayer and are processed when gtm.js runs; oaiq calls stay on the
+         stub queue until its SDK runs. -->
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
-      function loadGTM() {
+      function loadThirdParties() {
         if (window.gtmLoaded) return;
         window.gtmLoaded = true;
+        if (typeof window.__loadOaiq === 'function') window.__loadOaiq();
         window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
         var f = document.getElementsByTagName('script')[0];
         var s = document.createElement('script');
@@ -94,7 +98,7 @@ const breadcrumb = breadcrumbFor(Astro.url.pathname, breadcrumbName);
       // Any real interaction loads the tags immediately, so an engaged visitor
       // is always tracked without delay. This path is unchanged.
       ['click', 'keydown', 'mousemove', 'touchstart', 'scroll'].forEach(function (e) {
-        window.addEventListener(e, function h() { loadGTM(); }, { passive: true, once: true });
+        window.addEventListener(e, function h() { loadThirdParties(); }, { passive: true, once: true });
       });
 
       // For everyone else, wait for `load` before even scheduling idle work.
@@ -104,8 +108,8 @@ const breadcrumb = breadcrumbFor(Astro.url.pathname, breadcrumbName);
       // render delay on mobile — the image itself downloads in 6.5ms. Firing on
       // a bare 3s idle timeout landed the tags squarely inside the paint window.
       function scheduleGTM() {
-        if ('requestIdleCallback' in window) requestIdleCallback(loadGTM, { timeout: 4000 });
-        else setTimeout(loadGTM, 2000);
+        if ('requestIdleCallback' in window) requestIdleCallback(loadThirdParties, { timeout: 4000 });
+        else setTimeout(loadThirdParties, 2000);
       }
       if (document.readyState === 'complete') scheduleGTM();
       else window.addEventListener('load', scheduleGTM, { once: true });

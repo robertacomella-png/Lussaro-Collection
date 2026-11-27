@@ -16,6 +16,18 @@
 
 export const posts = [
   {
+    slug: 'rent-a-lamborghini-for-a-day-miami',
+    title: 'Rent a Lamborghini for a Day in Miami: How to Spend It',
+    excerpt:
+      'Where to drive a Lamborghini for one day in Miami. Four routes that fit the miles, which car to take, and what the Huracán STO actually costs once delivery and tax are on the bill.',
+    published: '2026-11-27',
+    updated: '2026-11-27',
+    hero: '/cars/lamborghini-huracan-sto-rental-miami-front-quarter.jpg',
+    cluster: 'Lamborghini',
+    readingMinutes: 7,
+    relatedCars: ['huracan-sto', 'lamborghini-urus', 'huracan-evo', 'huracan-evo-spyder'],
+  },
+  {
     slug: 'how-much-to-rent-a-maybach-miami',
     title: 'How Much to Rent a Maybach in Miami',
     excerpt:

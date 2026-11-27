@@ -39,6 +39,8 @@ const fleetSchema = {
   description={`Luxury and exotic car rental in Miami: Lamborghini, Ferrari and Rolls-Royce from ${usd(fleetFrom)} a day, delivered to your hotel, home or airport. Booked on WhatsApp.`}
   schema={[fleetSchema]}
 >
+  <link slot="head" rel="preload" as="image" type="image/webp" href="/hero/hero-vertical-1200.webp" imagesrcset="/hero/hero-vertical-800.webp 800w, /hero/hero-vertical-1200.webp 1200w, /hero/hero-vertical-1600.webp 1600w" imagesizes="150vw" media="(max-width: 767px)" fetchpriority="high" />
+  <link slot="head" rel="preload" as="image" type="image/webp" href="/hero/hero-perf-rims-1920.webp" media="(min-width: 768px)" fetchpriority="high" />
   <Nav />
 
   <!-- HERO — cinematic photo: text top, CTAs bottom (mobile) / centered (desktop) -->
@@ -203,7 +205,10 @@ const fleetSchema = {
         <img src="/hero/hero-vertical-800.webp"
              srcset="/hero/hero-vertical-800.webp 800w, /hero/hero-vertical-1200.webp 1200w, /hero/hero-vertical-1600.webp 1600w"
              sizes="150vw"
-             alt="Exotic car rental in Miami" class="w-full h-full object-cover brightness-[0.8] md:brightness-[0.95]" fetchpriority="high" />
+             width="800"
+             height="1422"
+             alt="Exotic car in Miami at sunset"
+             class="w-full h-full object-cover brightness-[0.8] md:brightness-[0.95]" fetchpriority="high" />
       </picture>
       {/* The 0.8 darkening is kept on mobile and all but lifted on desktop.
           Measured on the shipped files: the mobile clip averages 120/255 luma,
