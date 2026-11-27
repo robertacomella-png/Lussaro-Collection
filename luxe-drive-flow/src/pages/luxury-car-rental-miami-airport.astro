@@ -36,6 +36,11 @@ const low = priced[0];
 const high = priced[priced.length - 1];
 const { deposit, mileage, cancellation, insurance, minimumAge } = rentalTerms;
 const policy = gls.insurancePerDay;
+const suvRates = `The 1-day rate is ${usd(urus.price)} for the ${urus.name}, ${usd(gls.price)} for the ${named(gls)}, ${usd(cullinan.price)} for the ${named(cullinan)}, and ${usd(g63.price)} for the ${named(g63)}.${
+  g63.threeDayDeal === gls.threeDayDeal
+    ? ` From 3 days, the ${named(g63)} and the ${named(gls)} are both ${usd(g63.threeDayDeal)} a day.`
+    : ''
+}`;
 
 const waMessage = "Hi, I'd like the Lamborghini Urus delivered to Miami International Airport.";
 const wa = whatsappWith(waMessage, { car: urus.name, page: PAGE });
@@ -127,7 +132,7 @@ const schema = [
   <ContentPhoto src="/cars/lamborghini-urus-rental-miami-downtown-skyline.jpg" width={2000} height={1333} />
 
   <h2 id="which-cars">Which cars work after a flight</h2>
-  <p>Landing with luggage is an SUV brief. The <a href="/cars/lamborghini-urus">{urus.name}</a> is {usd(urus.price)} a day, the <a href="/cars/mercedes-maybach-gls-600">{named(gls)}</a> is {usd(gls.price)} a day, the <a href="/cars/rolls-royce-cullinan">{named(cullinan)}</a> is {usd(cullinan.price)} a day, and the <a href="/cars/mercedes-amg-g63">{named(g63)}</a> is {usd(g63.price)} a day. All four have four doors. The Urus is the one the form selects, because it is the practical car for bags and a normal ride height. The wider comparison is on the <a href="/luxury-suv-rental-miami">luxury SUV rental</a> page, and the Urus has its own page at <a href="/lamborghini-urus-rental-miami">Lamborghini Urus rental in Miami</a>.</p>
+  <p>Landing with luggage is an SUV brief. {suvRates} All four have four doors. The <a href="/cars/lamborghini-urus">{urus.name}</a> is the one the form selects, because it is the practical car for bags and a normal ride height. The <a href="/cars/mercedes-maybach-gls-600">{named(gls)}</a>, the <a href="/cars/rolls-royce-cullinan">{named(cullinan)}</a>, and the <a href="/cars/mercedes-amg-g63">{named(g63)}</a> are the other four-door choices. The wider comparison is on the <a href="/luxury-suv-rental-miami">luxury SUV rental</a> page, and the Urus has its own page at <a href="/lamborghini-urus-rental-miami">Lamborghini Urus rental in Miami</a>.</p>
   <p>The low cars are a different job. The <a href="/cars/huracan-evo">Huracan EVO</a> and the <a href="/cars/sf90">Ferrari SF90</a> sit low at the nose, and they are the ones to book when the drive is the point rather than the luggage. The {named(sto)} is track-bred, street-only. If you want one of those, say so in the quote so the delivery plan matches the car. Every car we run is on the <a href="/fleet">fleet</a> page.</p>
 
   <ContentPhoto src="/cars/mercedes-maybach-gls-600-rental-miami-front-quarter.jpg" width={1092} height={698} />

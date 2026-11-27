@@ -13,7 +13,7 @@ export const fleet = [
     // tier is withdrawn, so there is no `mileageUpgrade` and `miles` is 100 —
     // those two always move together, or the page quotes a rate against an
     // allowance it does not buy. No sale price: the
-    // $999 rate is permanent (owner, 23 Nov 2026), so no strike-through or OFF badge.
+    // $995 rate is permanent (owner, 23 Nov 2026), so no strike-through or OFF badge.
     price: 995,
     power: 641,
     miles: 100,

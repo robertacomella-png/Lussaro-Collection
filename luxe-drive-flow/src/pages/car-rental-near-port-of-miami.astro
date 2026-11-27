@@ -35,6 +35,11 @@ const low = priced[0];
 const high = priced[priced.length - 1];
 const { deposit, mileage, cancellation, insurance, minimumAge } = rentalTerms;
 const policy = gls.insurancePerDay;
+const suvRates = `The 1-day rate is ${usd(urus.price)} for the ${urus.name}, ${usd(gls.price)} for the ${named(gls)}, ${usd(cullinan.price)} for the ${named(cullinan)}, and ${usd(g63.price)} for the ${named(g63)}.${
+  g63.threeDayDeal === gls.threeDayDeal
+    ? ` From 3 days, the ${named(g63)} and the ${named(gls)} are both ${usd(g63.threeDayDeal)} a day.`
+    : ''
+}`;
 
 const waMessage = "Hi, I'd like the Lamborghini Urus delivered to the Port of Miami.";
 const wa = whatsappWith(waMessage, { car: urus.name, page: PAGE });
@@ -64,7 +69,7 @@ const faqs = [
   },
   {
     q: 'Which cars are practical with cruise luggage?',
-    a: `Start with an SUV: the ${urus.name} at ${usd(urus.price)} a day, the ${named(gls)} at ${usd(gls.price)}, the ${named(cullinan)} at ${usd(cullinan.price)}, or the ${named(g63)} at ${usd(g63.price)}. The low cars are a different brief.`,
+    a: `${suvRates} The low cars are a different brief.`,
   },
   {
     q: 'Can I be driven instead?',
@@ -127,7 +132,7 @@ const schema = [
   <ContentPhoto src="/cars/lamborghini-urus-rental-miami-downtown-skyline.jpg" width={2000} height={1333} />
 
   <h2 id="which-cars">Cars that work on a cruise day</h2>
-  <p>Cruise luggage wants an SUV. The <a href="/cars/lamborghini-urus">{urus.name}</a> is {usd(urus.price)} a day and is the car selected in the form. The <a href="/cars/mercedes-maybach-gls-600">{named(gls)}</a> is {usd(gls.price)} a day. The <a href="/cars/rolls-royce-cullinan">{named(cullinan)}</a> is {usd(cullinan.price)} a day. The <a href="/cars/mercedes-amg-g63">{named(g63)}</a> is {usd(g63.price)} a day. Read the three main SUVs together on the <a href="/luxury-suv-rental-miami">luxury SUV rental</a> page, and the Urus on its own at <a href="/lamborghini-urus-rental-miami">Lamborghini Urus rental in Miami</a>.</p>
+  <p>Cruise luggage wants an SUV. {suvRates} The <a href="/cars/lamborghini-urus">{urus.name}</a> is the car selected in the form. Read the <a href="/cars/mercedes-maybach-gls-600">{named(gls)}</a>, the <a href="/cars/rolls-royce-cullinan">{named(cullinan)}</a>, and the <a href="/cars/mercedes-amg-g63">{named(g63)}</a> against the length you book. The wider note is the <a href="/luxury-suv-rental-miami">luxury SUV rental</a> page, and the Urus has its own page at <a href="/lamborghini-urus-rental-miami">Lamborghini Urus rental in Miami</a>.</p>
   <p>A <a href="/cars/huracan-evo">Huracan</a> or a <a href="/cars/sf90">Ferrari SF90</a> is the wrong tool for a pile of suitcases and the right one when the day in Miami is the point. The {named(sto)} is track-bred, street-only. The <a href="/fleet">fleet</a> lists every car and the daily rate next to it.</p>
 
   <ContentPhoto src="/cars/mercedes-maybach-gls-600-rental-miami-front-quarter.jpg" width={1092} height={698} />
