@@ -111,17 +111,14 @@ const objections = [
   },
   {
     q: 'Can I rent a Maybach with a chauffeur?',
-    parts: [
-      `Yes. Chauffeur service is offered in the GLS 600 from ${hourly} an hour, including fuel. Most bookings run a few hours or longer. Details are on the `,
-      { href: '/chauffeur-service-miami/', label: 'chauffeur page.' },
-    ],
+    a: `Yes. Chauffeur service is offered in the GLS 600 from ${hourly} an hour, including fuel. Most bookings run a few hours or longer.`,
   },
 ];
 
 const faqText = (o) => (o.parts ? o.parts.map((p) => (typeof p === 'string' ? p : p.label)).join('') : o.a);
 for (const o of objections) if (!o.a) o.a = faqText(o);
 
-// ItemList of links to the car pages. Visible quotes stay on the page
+// ItemList of links to the car pages. The visible quotes stay on the page
 // and are not copied into review markup.
 const lineup = itemListFor([suv, sedan].filter(Boolean));
 
@@ -139,7 +136,7 @@ const faqSchema = {
   title={assertTitle('Maybach', 'Maybach Rental Miami | Lussaro Collection')}
   description={assertMeta(
     'Maybach',
-    `Rent a Maybach in Miami from $${fromDisplay} a day, or $${usd(threeDay)} for 3+ days. Mercedes-Maybach GLS 600 or Mercedes-Maybach S580. Delivery from ${miamiDelivery.display} each way. By appointment.`,
+    `Rent a Maybach in Miami from $${fromDisplay} a day, or $${usd(threeDay)} for 3+ days. Mercedes-Maybach GLS 600 or S580. ${miamiDelivery.display} each way in Miami, ${fllDelivery.display} each way to Fort Lauderdale.`,
   )}
   breadcrumbName="Maybach Rental Miami"
   schema={[lineup, faqSchema]}
@@ -316,8 +313,7 @@ const faqSchema = {
           {milesPerDay} miles a day are included and pooled across the booking. Additional miles are ${overage} each. Maybach delivery is {miamiDelivery.display} each way in Miami, and {fllDelivery.display} each way in Fort Lauderdale, with the handover point agreed in your quote. {hoursSummary}.
         </p>
         <p class="text-white/70 leading-relaxed mt-4 text-[15px]">
-          Full Maybach pricing, including what changes a weekend or an event week, is in{' '}
-          <SmartLink href="/blog/how-much-to-rent-a-maybach-miami/" class="text-white underline decoration-white/40 underline-offset-4 hover:decoration-white">How Much to Rent a Maybach in Miami</SmartLink>.
+          The table is the published ladder. A longer stay uses the per-day rate for that length.
         </p>
       </div>
       <img
@@ -352,9 +348,6 @@ const faqSchema = {
             </figure>
           ))}
         </div>
-        <p class="text-white/50 text-sm mt-6">
-          <SmartLink href="/reviews" class="text-white underline decoration-white/30 underline-offset-4 hover:decoration-white transition">Read every review we have</SmartLink>
-        </p>
       </div>
     </section>
   )}
@@ -374,9 +367,9 @@ const faqSchema = {
 
       <div class="grid md:grid-cols-2 gap-6 md:gap-8 mt-10">
         {[
-          { car: suv, when: 'Pick this if people are coming with you', why: 'The SUV. Sits high, carries luggage, and nobody fights for space on the way to dinner.' },
-          { car: sedan, when: 'Pick this if you would rather be driven', why: 'The sedan. The rear is the point — reclining seats behind double-glazed glass that takes most of Miami out of the conversation.' },
-        ].map(({ car, when, why }) => (
+          { car: suv, when: 'Pick this if people are coming with you', why: 'The SUV. Sits high, carries luggage, and nobody fights for space on the way to dinner.', link: 'Mercedes-Maybach GLS 600 specs' },
+          { car: sedan, when: 'Pick this if you would rather be driven', why: 'The sedan. The rear is the point — reclining seats behind double-glazed glass that takes most of Miami out of the conversation.', link: 'Mercedes-Maybach S580 specs' },
+        ].map(({ car, when, why, link }) => (
           <article class="rounded-[26px] border border-[#0a0a0a]/12 overflow-hidden flex flex-col">
             <div class="relative aspect-[16/10] bg-[#f3f3f3]">
               <img
@@ -403,7 +396,7 @@ const faqSchema = {
                 href={`/cars/${car.slug}`}
                 class="mt-5 inline-flex items-center justify-center border border-[#0a0a0a]/20 hover:border-[#e00e10] hover:text-[#e00e10] px-6 py-3 rounded-full text-sm font-medium transition"
               >
-                See specs and photos
+                {link}
               </SmartLink>
             </div>
           </article>
@@ -460,15 +453,10 @@ const faqSchema = {
       </div>
 
       <p class="text-[#0a0a0a]/65 leading-relaxed mt-10">
-        More detail on how the cars are kept is in{' '}
-        <SmartLink href="/blog/well-kept-exotic-car-rental-miami" class="text-[#e00e10] underline underline-offset-4">our write-up on condition</SmartLink>, and if you are weighing
-        the Mercedes-Maybach S580 against the standard Mercedes-Benz S580 we rent both and compared them{' '}
-        <SmartLink href="/blog/mercedes-s580-vs-maybach-s580-rental-miami" class="text-[#e00e10] underline underline-offset-4">side by side</SmartLink>.
         The G63 and the Mercedes-Benz S580 sit with these two on{' '}
         <SmartLink href="/mercedes-rental-miami" class="text-[#e00e10] underline underline-offset-4">Mercedes rental Miami</SmartLink>.
         Full terms sit on{' '}
-        <SmartLink href="/pricing" class="text-[#e00e10] underline underline-offset-4">the pricing page</SmartLink>, and the rest of the cars are on{' '}
-        <SmartLink href="/fleet" class="text-[#e00e10] underline underline-offset-4">the fleet page</SmartLink>.
+        <SmartLink href="/pricing" class="text-[#e00e10] underline underline-offset-4">the pricing page</SmartLink>.
       </p>
     </div>
   </section>

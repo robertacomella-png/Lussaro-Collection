@@ -30,7 +30,7 @@ const { mileage, minimumAge, deposit } = rentalTerms;
 const title = assertTitle('Lamborghini', 'Lamborghini Rental Miami | Lussaro Collection');
 const description = assertMeta(
   'Lamborghini',
-  `Rent a Lamborghini in Miami: Huracán STO, EVO, Spyder and Urus. Delivery is ${miamiDelivery.display} each way in Miami and ${fllDelivery.display} each way in Fort Lauderdale. 9 AM–8 PM daily.`,
+  `Rent a Lamborghini in Miami: Huracán STO, EVO, Spyder, Urus. ${miamiDelivery.display} each way in Miami, ${fllDelivery.display} each way in Fort Lauderdale. 9 AM–8 PM daily, by appointment only.`,
 );
 
 const faqs = [
@@ -83,7 +83,7 @@ const faqs = [
   {sto && (
     <>
       <h3><a href={`/cars/${sto.slug}`}>{publicName(sto)}</a> — {usd(sto.price)}/day</h3>
-      <p>Track-bred, street-only: {sto.power} hp, rear-wheel drive, {sto.zeroToSixty} to 60, a fixed rear wing and a roof scoop. Two seats, a firm ride, and room for a soft bag. Minimum age {sto.minimumAge}, with a {sto.deposit.display} refundable deposit. Photos, the full rate ladder and the booking form are on the <a href={`/cars/${sto.slug}`}>Huracán STO rental in Miami</a> page.</p>
+      <p>Track-bred, street-only: {sto.power} hp, rear-wheel drive, {sto.zeroToSixty} to 60, a fixed rear wing and a roof scoop. Two seats, a firm ride, and room for a soft bag. Minimum age {sto.minimumAge}, with a {sto.deposit.display} refundable deposit.</p>
     </>
   )}
 
@@ -124,7 +124,7 @@ const faqs = [
   <p>The coupes and the SF90, set beside these Huracáns, are on the <a href="/sports-car-rental-miami">sports car rental</a> page. The Urus stays on this page because it is the Lamborghini SUV, not a sports car.</p>
 
   <h2>Terms, briefly</h2>
-  <p>Delivery is {miamiDelivery.display} each way in Miami, and {fllDelivery.display} each way in Fort Lauderdale, with the handover point agreed in your quote. {hoursSummary}. The worked figures for a Lamborghini day rate sit in the <a href="/blog/how-much-is-a-lamborghini-rental">Lamborghini rental price</a> guide, and every other number is on the <a href="/pricing">rate card</a>.</p>
+  <p>Delivery is {miamiDelivery.display} each way in Miami, and {fllDelivery.display} each way in Fort Lauderdale, with the handover point agreed in your quote. {hoursSummary}. Every other number is on the <a href="/pricing">rate card</a>.</p>
 
   <h2>Questions</h2>
   {faqs.map((f) => (

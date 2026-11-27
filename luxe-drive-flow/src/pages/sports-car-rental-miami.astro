@@ -51,7 +51,7 @@ const faqs = [
     a: [
       sto && `The Huracán STO at ${usd(sto.price)} a day when the drive is the point. It is track-bred, street-only, ${sto.power} hp, and it asks for age ${sto.minimumAge} and a ${sto.deposit.display} deposit.`,
       evo && `The Huracán EVO at ${usd(evo.price)} a day for that V10 with a softer ride.`,
-      sf90 && `The Ferrari SF90 at ${usd(sf90.price)} a day when you want the quickest coupe. It is a fixed-roof car, ${sf90.power} hp.`,
+      sf90 && `The Ferrari SF90 at ${usd(sf90.price)} a day is a fixed-roof plug-in hybrid, ${sf90.power} hp, ${sf90.zeroToSixty} to 60.`,
       'The Huracán EVO Spyder and the Porsche 911 Turbo S Cabriolet are the open cars. Their roofs are on the convertible page.',
     ].filter(Boolean).join(' '),
   },
@@ -76,7 +76,6 @@ const faqs = [
   intro="A sports car here means a two-door. The Huracán STO and the Huracán EVO are coupes. The Ferrari SF90 is a fixed-roof coupe. The Huracán EVO Spyder and the Porsche 911 Turbo S Cabriolet are the open cars. SUVs and sedans are a different booking."
   only={sports.map((c) => c.slug)}
   fleetHeading="Sports cars in the fleet"
-  fullFleetLink
   ctaTitle="Reserve a sports car"
   heroImage="/cars/ferrari-sf90-rental-miami-front-quarter.jpg"
   showRating={false}
@@ -85,7 +84,7 @@ const faqs = [
   ctaSubtitle={hubCtaSubtitle}
   schema={[itemListFor(sports), faqPage(faqs)]}
 >
-  <p>The job of this page is the choice among those cars. Brand pages keep their own questions: <a href="/lamborghini-rental-miami">Lamborghini rental Miami</a> for the Huracáns and the Urus, and <a href="/porsche-911-turbo-s-rental-miami">Porsche rental Miami</a> for the 911. If the roof is the whole decision, use the <a href="/convertible-car-rental-miami">convertible page</a>.</p>
+  <p>The job of this page is the choice among those cars. The Huracán coupes and the Urus are a Lamborghini question, and the 911 is a Porsche question. If the roof is the whole decision, that comparison is below.</p>
 
   <h2>Daily rates</h2>
   <p>Per day, from the current fleet price. The 1-day column is the published rate. Longer columns are the per-day rate for a rental of that length.</p>
@@ -94,21 +93,21 @@ const faqs = [
   {sto && (
     <>
       <h2><a href="/cars/huracan-sto">{publicName(sto)}</a></h2>
-      <p>Track-bred, street-only. {sto.power} hp, {drive(sto)}, {sto.zeroToSixty} to 60, {usd(sto.price)} a day. Two seats, a fixed rear wing, and a firmer ride than the EVO. Age {sto.minimumAge}, deposit {sto.deposit.display}. It is not a track rental. The <a href="/cars/huracan-sto">Huracán STO car page</a> has the photos.</p>
+      <p>Track-bred, street-only. {sto.power} hp, {drive(sto)}, {sto.zeroToSixty} to 60, {usd(sto.price)} a day. Two seats, a fixed rear wing, and a firmer ride than the EVO. Age {sto.minimumAge}, deposit {sto.deposit.display}. It is not a track rental.</p>
     </>
   )}
 
   {evo && (
     <>
       <h2><a href="/cars/huracan-evo">{publicName(evo)}</a></h2>
-      <p>The coupe for the same naturally aspirated V10 with less edge. {evo.power} hp, {drive(evo)}, {evo.zeroToSixty} to 60, {usd(evo.price)} a day. Two seats and a low nose. Photos are on the <a href="/cars/huracan-evo">Huracán EVO car page</a>.</p>
+      <p>The coupe for the same naturally aspirated V10 with less edge. {evo.power} hp, {drive(evo)}, {evo.zeroToSixty} to 60, {usd(evo.price)} a day. Two seats and a low nose.</p>
     </>
   )}
 
   {sf90 && (
     <>
       <h2><a href="/cars/sf90">{publicName(sf90)}</a></h2>
-      <p>A fixed-roof coupe, and the quickest car in this group. {sf90.power} hp, {drive(sf90)}, {sf90.zeroToSixty} to 60, {usd(sf90.price)} a day. The open-top SF90 Spider is a different car, and it is not the one we rent. Photos are on the <a href="/cars/sf90">Ferrari SF90 car page</a>.</p>
+      <p>A fixed-roof coupe: a {sf90.power} hp plug-in hybrid, 0–60 in {sf90.zeroToSixty}. {usd(sf90.price)} a day, {drive(sf90)}. The open-top SF90 Spider is a different car, and it is not the one we rent.</p>
     </>
   )}
 
@@ -116,11 +115,11 @@ const faqs = [
   <p>
     {spyder && <>The <a href="/cars/huracan-evo-spyder">{publicName(spyder)}</a> is {usd(spyder.price)} a day, {spyder.power} hp, {drive(spyder)}. </>}
     {porsche && <>The <a href="/cars/porsche-911-turbo-s">{publicName(porsche)}</a> is {usd(porsche.price)} a day, {porsche.power} hp, {drive(porsche)}, with a 2+2 cabin. </>}
-    How each roof works, and which open car fits the day, is written on the <a href="/convertible-car-rental-miami">convertible car rental</a> page rather than repeated here.
+    How each roof works is on the <a href="/convertible-car-rental-miami">convertible rental</a> page.
   </p>
 
   <h2>What this page does not cover</h2>
-  <p>The Lamborghini Urus, the Mercedes-AMG G63, the Cullinan and the sedans are not sports cars. They sit higher and they carry more. Start with <a href="/lamborghini-rental-miami">Lamborghini rental Miami</a> if the Urus is in the running, or with the fleet if you have not chosen a shape yet.</p>
+  <p>The Lamborghini Urus, the Mercedes-AMG G63, the Cullinan and the sedans are not sports cars. They sit higher and they carry more.</p>
 
   <h2>Delivery and hours</h2>
   <p>A sports car delivered in Miami is {miamiDelivery.display} each way, and Fort Lauderdale is {fllDelivery.display} each way, with the handover point agreed in your quote. {hoursSummary}. The rest of the terms are on the <a href="/pricing">rate card</a>.</p>

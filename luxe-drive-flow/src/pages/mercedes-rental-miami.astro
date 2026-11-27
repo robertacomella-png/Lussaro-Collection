@@ -71,7 +71,6 @@ const faqs = [
   intro="Four Mercedes cars, and they are not substitutes. The Mercedes-AMG G63 is the upright SUV. The Mercedes-Benz S580 is the sedan you drive. The Mercedes-Maybach S580 is the sedan you sit in. The Mercedes-Maybach GLS 600 is the Maybach SUV."
   only={mercs.map((c) => c.slug)}
   fleetHeading="Mercedes cars in the fleet"
-  fullFleetLink
   ctaTitle="Reserve a Mercedes"
   heroImage="/cars/mercedes-s580-rental-miami-front-quarter.jpg"
   showRating={false}
@@ -89,32 +88,32 @@ const faqs = [
   {g63 && (
     <>
       <h2><a href="/cars/mercedes-amg-g63">{publicName(g63)}</a></h2>
-      <p>{g63.power} hp, {g63.zeroToSixty} to 60, {usd(g63.price)} a day. It is the boxy SUV, high enough that a hotel ramp is not the problem a low nose would be. Specs and photos are on the <a href="/cars/mercedes-amg-g63">G63 car page</a>. The page that answers the G-Wagon question on its own is <a href="/g-wagon-rental-miami">G-Wagon rental Miami</a>.</p>
+      <p>{g63.power} hp, {g63.zeroToSixty} to 60, {usd(g63.price)} a day. It is the boxy SUV, high enough that a hotel ramp is not the problem a low nose would be. The G-Wagon question on its own is the <a href="/g-wagon-rental-miami">G-Wagon page</a>.</p>
     </>
   )}
 
   {s580 && (
     <>
       <h2><a href="/cars/mercedes-s580">{publicName(s580)}</a></h2>
-      <p>{s580.power} hp from a twin-turbo V8 with mild-hybrid assist, {s580.zeroToSixty} to 60, {usd(s580.price)} a day. This is the Mercedes-Benz S580, the sedan you drive, not the Maybach. The <a href="/cars/mercedes-s580">S580 car page</a> has the photos. The page aimed at the S-Class search is <a href="/mercedes-s580-rental-miami">Mercedes-Benz S580 rental Miami</a>.</p>
+      <p>{s580.power} hp from a twin-turbo V8 with mild-hybrid assist, {s580.zeroToSixty} to 60, {usd(s580.price)} a day. This is the Mercedes-Benz S580, the sedan you drive, not the Maybach. The S-Class search has its own <a href="/mercedes-s580-rental-miami">S-Class page</a>.</p>
     </>
   )}
 
   {maybachS && (
     <>
       <h2><a href="/cars/mercedes-maybach-s580">{publicName(maybachS)}</a></h2>
-      <p>{maybachS.power} hp, {maybachS.zeroToSixty} to 60, {usd(maybachS.price)} a day. Four seats: the rear is a pair of executive chairs with a fixed console between them, so there is no middle seat. It is quieter and longer than the Mercedes-Benz S580, and it costs more. Photos are on the <a href="/cars/mercedes-maybach-s580">Mercedes-Maybach S580 car page</a>.</p>
+      <p>{maybachS.power} hp, {maybachS.zeroToSixty} to 60, {usd(maybachS.price)} a day. Four seats: the rear is a pair of executive chairs with a fixed console between them, so there is no middle seat. It is quieter and longer than the Mercedes-Benz S580, and it costs more.</p>
     </>
   )}
 
   {gls && (
     <>
       <h2><a href="/cars/mercedes-maybach-gls-600">{publicName(gls)}</a></h2>
-      <p>{gls.power} hp, {gls.zeroToSixty} to 60, {usd(gls.price)} a day. The rear is built around reclining executive seats. It is the Maybach SUV, not a third-row family hauler. Photos are on the <a href="/cars/mercedes-maybach-gls-600">Mercedes-Maybach GLS 600 car page</a>.</p>
+      <p>{gls.power} hp, {gls.zeroToSixty} to 60, {usd(gls.price)} a day. The rear is built around reclining executive seats. It is the Maybach SUV, not a third-row family hauler.</p>
     </>
   )}
 
-  <p>The Mercedes-Maybach S580 and the Mercedes-Maybach GLS 600 together, including chauffeur in the GLS 600, are on <a href="/maybach-rental-miami">Maybach rental Miami</a>. This page does not take that query.</p>
+  <p>The Mercedes-Maybach S580 and the Mercedes-Maybach GLS 600 together, including chauffeur in the GLS 600, are on the <a href="/maybach-rental-miami">Maybach page</a>. This page does not take that query.</p>
 
   <h2>Delivery and hours</h2>
   <p>Mercedes delivery is {miamiDelivery.display} each way in Miami, and {fllDelivery.display} each way in Fort Lauderdale, with the handover point agreed in your quote. {hoursSummary}. Deposit, miles and insurance are on the <a href="/pricing">rate card</a>.</p>
