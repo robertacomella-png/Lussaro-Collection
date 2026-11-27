@@ -3,7 +3,7 @@
 // deliberately does not use these.
 
 export const bookingSteps = [
-  { n: '1', t: 'Message us', d: 'Tap WhatsApp or call. Tell us the car and dates — we reply in minutes.' },
+  { n: '1', t: 'Message us', d: 'Tap WhatsApp or call. Tell us the car and dates and we\'ll confirm availability.' },
   { n: '2', t: 'We deliver', d: 'White-glove delivery anywhere in Miami — hotel, home, or airport.' },
   { n: '3', t: 'You drive', d: 'Keys in hand, full orientation, 24/7 support. Just enjoy the road.' },
 ];

@@ -14,7 +14,6 @@
 // Reviews that name this car come first; the rest fill in from DEFAULT_ORDER.
 import { reviews } from '@/data/reviews';
 import { business } from '@/data/business';
-import { googleCountLabel } from '@/data/google-rating';
 
 const { carName = '', make = '' } = Astro.props;
 
@@ -64,6 +63,6 @@ const monthLabel = (m) =>
   </ul>
 
   <p class="mt-4 text-[15px] text-center sm:text-left">
-    <a href={business.googleProfileLink} target="_blank" rel="noopener noreferrer" class="text-white underline decoration-white/40 underline-offset-4 hover:decoration-white transition-colors">Read all {googleCountLabel()} reviews on Google</a>
+    <a href={business.googleProfileLink} target="_blank" rel="noopener noreferrer" class="text-white underline decoration-white/40 underline-offset-4 hover:decoration-white transition-colors">Read our reviews on Google</a>
   </p>
 </section>

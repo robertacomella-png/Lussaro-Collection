@@ -112,7 +112,7 @@ export default function LeadForm({ defaultVehicle = "", source = "lead_form", va
         {status === "sending" ? "Sending…" : "Request Availability"}
       </button>
       {!booking && (
-        <p className="text-white/50 text-xs text-center">Prefer to talk now? Call or WhatsApp us — we reply in minutes.</p>
+        <p className="text-white/50 text-xs text-center">Prefer to talk now? Call or WhatsApp us.</p>
       )}
     </form>
   );
