@@ -8,6 +8,11 @@ const {
   // which car, instead of reporting itself as a general enquiry.
   car = undefined,
   page = undefined,
+  // When set, the white button scrolls to the on-page booking form and
+  // WhatsApp becomes the secondary button. Omitted, the band stays
+  // WhatsApp-primary, which is what every other page still uses.
+  quoteHref = '',
+  quoteLabel = 'Check dates',
 } = Astro.props;
 const here = Astro.url.pathname.replace(/(.)\/$/, '$1');
 const wa = whatsappWith(message, { car, page: page ?? here });
@@ -17,8 +22,17 @@ const wa = whatsappWith(message, { car, page: page ?? here });
     <h2 class="font-display text-3xl md:text-5xl font-bold text-white mb-4" set:html={title} />
     <p class="text-white/55 mb-8">{subtitle}</p>
     <div class="flex flex-col sm:flex-row gap-3 justify-center max-w-md mx-auto">
-      <a href={wa} data-cta="cta_band" target="_blank" rel="noopener noreferrer" class="flex-1 bg-white text-black px-8 py-4 rounded-full font-semibold hover:bg-[#ff1516] transition">Book on WhatsApp</a>
-      <a href={telHref} data-cta="cta_band" class="flex-1 border border-white/25 text-white px-8 py-4 rounded-full font-medium hover:border-[#ff1516] hover:text-[#ff1516] transition">Call Now</a>
+      {quoteHref ? (
+        <>
+          <a href={quoteHref} class="flex-1 bg-white text-black px-8 py-4 rounded-full font-semibold hover:bg-[#ff1516] hover:text-white transition">{quoteLabel}</a>
+          <a href={wa} data-cta="cta_band" target="_blank" rel="noopener noreferrer" class="flex-1 border border-white/25 text-white px-8 py-4 rounded-full font-medium hover:border-[#ff1516] hover:text-[#ff1516] transition">WhatsApp</a>
+        </>
+      ) : (
+        <>
+          <a href={wa} data-cta="cta_band" target="_blank" rel="noopener noreferrer" class="flex-1 bg-white text-black px-8 py-4 rounded-full font-semibold hover:bg-[#ff1516] transition">Book on WhatsApp</a>
+          <a href={telHref} data-cta="cta_band" class="flex-1 border border-white/25 text-white px-8 py-4 rounded-full font-medium hover:border-[#ff1516] hover:text-[#ff1516] transition">Call Now</a>
+        </>
+      )}
     </div>
   </div>
 </section>

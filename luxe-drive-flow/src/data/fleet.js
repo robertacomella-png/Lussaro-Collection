@@ -12,8 +12,9 @@ export const fleet = [
     // One rate, one allowance (owner's call, Oct 2026). The reduced 50-mile
     // tier is withdrawn, so there is no `mileageUpgrade` and `miles` is 100 —
     // those two always move together, or the page quotes a rate against an
-    // allowance it does not buy. No sale price: the
-    // $999 rate is permanent (owner, 23 Nov 2026), so no strike-through or OFF badge.
+    // allowance it does not buy. No sale price, so no strike-through or OFF badge.
+    // The live rate is `price`. An older comment named $999; that figure is not
+    // the current rate.
     price: 995,
     power: 641,
     miles: 100,
@@ -292,8 +293,8 @@ export const fleet = [
   },
   {
     id: 4,
-    // NOT the S580 above. That is the standard Mercedes-Benz S-Class at $399;
-    // this is the Mercedes-Maybach S580 — longer wheelbase, four seats, and its
+    // NOT the S580 above. That is the standard Mercedes-Benz S-Class (its price
+    // lives on that entry); this is the Mercedes-Maybach S580 — longer wheelbase, four seats, and its
     // own slug (mercedes-maybach-s580, set in cars.js). Keep the two distinct
     // in copy as well as in data, or the pages start cannibalising each other.
     name: "S580 Maybach",

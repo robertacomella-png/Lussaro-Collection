@@ -20,9 +20,11 @@ import BookingRequestCard from '@/components/booking/BookingRequestCard.jsx';
 import CarGallery from '@/components/fleet/CarGallery.jsx';
 import { altFor } from '@/data/image-alt';
 import { cars } from '@/data/cars';
-import { rentalTerms, deliveryEachWaySummary } from '@/data/rental-terms';
-import { reviews, averageRating, reviewCount } from '@/data/reviews';
+import { rentalTerms, deliverySummary, rateForDays } from '@/data/rental-terms';
+import { reviews } from '@/data/reviews';
+import { contentFor } from '@/data/car-content';
 import { business, telHref, whatsappWith } from '@/data/business';
+import { getImageKitSrc, getImageKitSrcSet } from '@/lib/imageKit';
 
 const SITE = 'https://www.lussarocollection.com';
 
@@ -35,8 +37,28 @@ const onSale = s580.wasPrice > s580.price;
 const milesPerDay = s580.miles ?? rentalTerms.mileage.includedPerDay;
 const overage = rentalTerms.mileage.overagePerMile;
 const tiers = s580.discountTiers ?? rentalTerms.discountTiers;
-const weekPct = tiers.reduce((acc, t) => (7 >= t.days ? t.pct : acc), 0);
-const miamiDelivery = rentalTerms.delivery.find((d) => d.area === 'Miami');
+const taxPct = Math.round(rentalTerms.taxesAndFeesRate * 100);
+const usd = (n) => n.toLocaleString('en-US');
+const perDay = (days) => rateForDays(s580.price, days, tiers).perDay;
+const rateRows = [
+  { label: `1–${tiers[0].days - 1} days`, days: 1 },
+  ...tiers.map((t) => ({ label: `${t.days}+ days`, days: t.days })),
+];
+const threeDay = perDay(tiers[0].days);
+const seatLabel = s580.seatsNote || String(s580.seats);
+const floor = Math.min(...cars.map((c) => c.price));
+const aloneAtFloor = s580.price === floor && cars.filter((c) => c.price === floor).length === 1;
+const quicker = parseFloat(s580.zeroToSixty) < parseFloat(maybachS580.zeroToSixty);
+const joinBits = (xs) => (xs.length < 2 ? xs.join('') : `${xs.slice(0, -1).join(', ')} and ${xs.at(-1)}`);
+const s580CardBits = [`${seatLabel} seats`];
+if (quicker) s580CardBits.push('the quickest of the two');
+if (aloneAtFloor) s580CardBits.push('the lowest daily rate in the fleet');
+const s580CardNote = `The S-Class you drive yourself. ${joinBits(s580CardBits)}.`;
+const s580Facts = contentFor(s580.slug);
+const cardName = (c) =>
+  c.slug === 'mercedes-maybach-gls-600' ? 'Mercedes-Maybach GLS 600'
+  : c.slug === 'mercedes-maybach-s580' ? 'Mercedes-Maybach S580'
+  : (c.name.startsWith(c.make) ? c.name : `${c.make} ${c.name}`);
 
 // No review names this car. The two below carry no vehicle attribution at all,
 // so they are shown as what they are — comments on the service — and the
@@ -53,7 +75,7 @@ const wa = whatsappWith(waMessage, { car: fullName, page: '/mercedes-s580-rental
 const objections = [
   {
     q: 'Is this the Maybach S580?',
-    a: `No. This is the ${fullName} at $${priceDisplay} a day. The Mercedes-Maybach S580 is a different car — longer, four seats instead of ${s580.seats}, and $${maybachS580.price.toLocaleString('en-US')} a day. We rent both, and they are easy to confuse because the badge reads the same.`,
+    a: `No. This is the ${fullName} at $${priceDisplay} a day. The Mercedes-Maybach S580 is a different car, with ${maybachS580.seats} seats instead of ${seatLabel}, and $${usd(maybachS580.price)} a day. We rent both. What the two cars share is the S580 designation.`,
   },
   {
     q: 'Is the price negotiable?',
@@ -73,16 +95,37 @@ const objections = [
   },
   {
     q: 'Can you deliver it?',
-    a: `Delivery ${deliveryEachWaySummary}. Collection at the end is charged separately, so budget roughly double for a round trip. Hotels, Brickell addresses, South Beach and both airports are routine.`,
+    a: `Delivery is ${deliverySummary}, each way. Collection is typically the same fee, confirmed in the quote. Hotels, Brickell addresses, South Beach and both airports are routine.`,
   },
+  {
+    q: 'How much does it cost to rent the S580 in Miami?',
+    a: `$${usd(perDay(1))} a day, with ${milesPerDay} miles included. Book ${tiers[0].days} days or more and it is $${usd(perDay(tiers[0].days))} a day, $${usd(perDay(tiers[1].days))} a day at ${tiers[1].days} days, or $${usd(perDay(tiers[2].days))} a day at ${tiers[2].days} days. Taxes and fees of ${taxPct}% are added. The ${rentalTerms.deposit.display} deposit is refundable and held separately.`,
+  },
+  {
+    q: 'Is this an S-Class?',
+    a: `Yes. The Mercedes-Benz S580 is the S-Class we rent in Miami. The Maybach S580 is a separate car at $${usd(maybachS580.price)} a day. Both are in the fleet. This page is only for the Mercedes-Benz S580 at $${priceDisplay} a day.`,
+  },
+  ...(s580Facts?.faqAnswer
+    ? [{
+        q: 'Does the S580 need charging?',
+        parts: [
+          'No. It is a 48-volt mild hybrid, not a plug-in. ',
+          { href: `/cars/${s580.slug}/`, label: 'The car page has the full answer' },
+          '.',
+        ],
+      }]
+    : []),
 ];
+
+const faqText = (o) => (o.parts ? o.parts.map((p) => (typeof p === 'string' ? p : p.label)).join('') : o.a);
+for (const o of objections) if (!o.a) o.a = faqText(o);
 
 // No aggregateRating here, on purpose. See the comment above serviceReviews.
 const productSchema = {
   '@context': 'https://schema.org',
   '@type': 'Product',
   name: `${fullName} Rental — Miami`,
-  description: `Rent the ${fullName} in Miami at $${priceDisplay} a day. ${s580.power} hp, ${s580.zeroToSixty} to 60, delivered across Miami.`,
+  description: `Rent the ${fullName}, the S-Class we have in Miami, at $${priceDisplay} a day or $${usd(threeDay)} a day for ${tiers[0].days} days or more. ${s580.power} hp, delivered across Miami. Not the Maybach S580.`,
   image: galleryImages.map((i) => `${SITE}${i}`),
   brand: { '@type': 'Brand', name: s580.make },
   sku: `LC-${s580.slug.toUpperCase()}-LP`,
@@ -108,13 +151,13 @@ const faqSchema = {
   mainEntity: objections.map((o) => ({
     '@type': 'Question',
     name: o.q,
-    acceptedAnswer: { '@type': 'Answer', text: o.a },
+    acceptedAnswer: { '@type': 'Answer', text: faqText(o) },
   })),
 };
 ---
 <Layout
   title="Mercedes-Benz S580 Rental Miami | Lussaro Collection"
-  description={`Rent the ${fullName} in Miami at $${priceDisplay} a day — ${s580.power} hp and ${s580.zeroToSixty} to 60. ${milesPerDay} miles a day included, ${rentalTerms.deposit.display} refundable deposit, delivered across Miami.`}
+  description="Rent the Mercedes-Benz S580 in Miami: $445 a day, or $395 a day for 3+ days. 496 hp, 100 miles included, $1,000 deposit. This is not the Maybach S580."
   breadcrumbName="Mercedes-Benz S580 Rental Miami"
   schema={[productSchema, faqSchema]}
 >
@@ -126,6 +169,9 @@ const faqSchema = {
       <h1 class="font-display text-center text-[2rem] leading-[1.08] md:text-5xl lg:text-[3.4rem] font-bold tracking-tight text-white uppercase">
         Mercedes-Benz S580 Rental Miami
       </h1>
+      <p class="text-white/70 text-center text-base md:text-lg leading-relaxed mt-4 max-w-2xl mx-auto">
+        The Mercedes S-Class we rent in Miami is the S580, at ${priceDisplay} a day. Book {tiers[0].days} days or more and the rate is ${usd(threeDay)} a day. This is not the Maybach S580.
+      </p>
 
       <div class="grid lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] gap-8 lg:gap-12 items-start mt-9 md:mt-12">
         <div>
@@ -138,6 +184,7 @@ const faqSchema = {
             ${priceDisplay}
             <span class="text-white/45 text-xl font-sans font-normal tracking-normal"> / day</span>
           </p>
+          <p class="text-white/70 text-sm mt-2">${usd(threeDay)} a day for {tiers[0].days} days or more</p>
           {onSale && (
             <p class="text-white/50 text-sm mt-1.5">
               <span class="line-through">${s580.wasPrice.toLocaleString('en-US')}</span>
@@ -161,34 +208,33 @@ const faqSchema = {
             <div>
               <p class="text-white/55 text-[11px] uppercase tracking-[0.16em]">0–60</p>
               <p class="font-display text-white text-3xl font-bold mt-1.5">{s580.zeroToSixty}</p>
-              <p class="text-white/55 text-sm mt-0.5">{s580.seats} seats</p>
+              <p class="text-white/55 text-sm mt-0.5">{seatLabel} seats</p>
             </div>
           </div>
 
           <div class="mt-8 flex flex-col sm:flex-row lg:flex-col gap-3 justify-center lg:justify-start">
             <a
+              href="#quote"
+              class="inline-flex items-center justify-center bg-white text-black px-7 py-4 rounded-full font-semibold hover:bg-[#ff1516] hover:text-white transition sm:flex-1 lg:flex-none"
+            >
+              Reserve the S580
+            </a>
+            <a
               href={wa}
               data-cta="s580_hero"
               target="_blank"
               rel="noopener noreferrer"
-              class="inline-flex items-center justify-center gap-2 bg-white text-black px-7 py-4 rounded-full font-semibold hover:bg-[#ff1516] hover:text-white transition sm:flex-1 lg:flex-none"
-            >
-              Message us <span class="w-2 h-2 rounded-full bg-[#1f7a3f]"></span>
-            </a>
-            <a
-              href={telHref}
-              data-cta="s580_hero"
-              data-call-inline
               class="inline-flex items-center justify-center border border-white/25 text-white px-7 py-4 rounded-full font-medium hover:border-[#ff1516] hover:text-[#ff1516] transition sm:flex-1 lg:flex-none"
             >
-              Call {business.phoneDisplayShort}
+              WhatsApp
             </a>
           </div>
+          <p class="text-white/70 text-sm mt-4">
+            Or call <a href={telHref} data-cta="s580_hero" data-call-inline class="text-white underline decoration-white/40 underline-offset-4 hover:decoration-white">{business.phoneDisplay}</a>
+          </p>
 
           <p class="text-white/50 text-sm mt-5">
-            <span class="text-[#ff1516]" aria-hidden="true">★</span> {averageRating.toFixed(1)} on Google
-            <span aria-hidden="true"> · </span>Owner operated
-            <span aria-hidden="true"> · </span>Replies usually take minutes
+            Owner operated
           </p>
         </div>
       </div>
@@ -196,7 +242,7 @@ const faqSchema = {
   </header>
 
   {/* ============ 2. THE ASK ========================================== */}
-  <section id="quote" class="bg-[#ffffff] py-16 md:py-24">
+  <section id="quote" class="bg-[#ffffff] py-16 md:py-24 scroll-mt-28">
     <div class="max-w-[1240px] mx-auto px-5 md:px-8">
       <div class="grid lg:grid-cols-[1fr_minmax(0,460px)] gap-10 lg:gap-14 items-center">
         <div class="text-[#0a0a0a]">
@@ -205,7 +251,7 @@ const faqSchema = {
           </h2>
           <p class="text-[#0a0a0a]/70 text-lg leading-relaxed mt-4 max-w-lg">
             Send us your name and number and we will come back with what is open, the total, and
-            delivery if you want it brought to you. No deposit to ask.
+            delivery if you want it brought to you. No deposit is needed just to ask.
           </p>
           <ul class="mt-7 space-y-2.5 list-none p-0 max-w-lg">
             {[
@@ -228,12 +274,60 @@ const faqSchema = {
             client:visible
             pricePerDay={s580.price}
             carName={fullName}
+            vehicleId={s580.dashboardId || null}
             tiers={tiers}
             milesPerDay={milesPerDay}
+            source="/mercedes-s580-rental-miami"
             allowDates={false}
           />
+          <p class="text-center mt-4">
+            <a href={wa} data-cta="s580_form" target="_blank" rel="noopener noreferrer" class="inline-flex items-center min-h-[48px] text-white text-sm underline decoration-white/40 underline-offset-4 hover:decoration-white">WhatsApp</a>
+          </p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section id="rates" class="bg-[#0a0a0a] py-16 md:py-20">
+    <div class="max-w-[1180px] mx-auto px-5 md:px-8 grid lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] gap-10 lg:gap-14 items-center">
+      <div>
+        <h2 class="font-display text-3xl md:text-4xl font-bold tracking-tight text-white">
+          What it costs to rent the S580 in Miami
+        </h2>
+        <p class="text-white/70 leading-relaxed mt-4">
+          ${usd(s580.price)} a day, or ${usd(threeDay)} a day for {tiers[0].days} days or more. The {rentalTerms.deposit.display} deposit is refundable and held separately. Taxes and fees of {taxPct}% are added to the rental.
+        </p>
+        <table class="w-full text-left text-[15px] mt-6">
+          <thead>
+            <tr class="text-white/60 text-xs uppercase tracking-[0.14em]">
+              <th scope="col" class="py-2 pr-3 font-medium">Length</th>
+              <th scope="col" class="py-2 pl-3 font-medium text-right">Per day</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rateRows.map((row) => (
+              <tr class="border-t border-white/10">
+                <th scope="row" class="py-3 pr-3 text-white/80 font-medium">{row.label}</th>
+                <td class="py-3 pl-3 text-right text-white">${usd(perDay(row.days))}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <p class="text-white/70 leading-relaxed mt-5 text-[15px]">
+          {milesPerDay} miles a day, pooled. Additional miles are ${overage} a mile. Delivery is {deliverySummary}, each way. Collection is typically the same fee.
+        </p>
+      </div>
+      <img
+        src={getImageKitSrc('/cars/mercedes-s580-rental-miami-front-quarter.jpg', 900)}
+        srcset={getImageKitSrcSet('/cars/mercedes-s580-rental-miami-front-quarter.jpg')}
+        sizes="(min-width: 1024px) 40vw, 100vw"
+        alt={altFor('/cars/mercedes-s580-rental-miami-front-quarter.jpg', 'Mercedes-Benz S580 in Miami')}
+        width="900"
+        height="600"
+        loading="lazy"
+        decoding="async"
+        class="w-full aspect-[3/2] object-cover rounded-[24px]"
+      />
     </div>
   </section>
 
@@ -247,19 +341,19 @@ const faqSchema = {
         There are two S580s. This is the {s580.make}.
       </h2>
       <p class="text-white/60 mt-3 max-w-2xl leading-relaxed">
-        The badge reads the same on both and the engine is the same V8. Everything else is
+        What the two cars share is the S580 designation, and the engine is the same V8. Everything else is
         different, including $
         {(maybachS580.price - s580.price).toLocaleString('en-US')} a day.
       </p>
 
       <div class="grid md:grid-cols-2 gap-6 mt-10">
         {[
-          { car: s580, tag: 'This page', note: `The S-Class you drive yourself. ${s580.seats} seats, the quickest of the two, and the lowest daily rate in the fleet.` },
-          { car: maybachS580, tag: 'The other one', note: `Longer, with ${maybachS580.seats} seats instead of ${s580.seats} and a reclining rear bench behind double-glazed glass. Booked to be driven in, not to drive.` },
+          { car: s580, tag: 'This page', note: s580CardNote },
+          { car: maybachS580, tag: 'The other one', note: `Longer, with ${maybachS580.seats} seats instead of ${seatLabel}, and reclining rear seats behind double-glazed glass. Booked to be driven in, not to drive.` },
         ].map(({ car, tag, note }) => (
           <article class="rounded-[22px] bg-[#0f0f0f] border border-white/10 p-6 md:p-7">
             <p class="text-[#ff1516] text-[11px] uppercase tracking-[0.18em] font-medium">{tag}</p>
-            <h3 class="font-display text-2xl font-bold text-white mt-2">{car.make} {car.name}</h3>
+            <h3 class="font-display text-2xl font-bold text-white mt-2">{cardName(car)}</h3>
             <p class="text-white/60 leading-relaxed mt-3 text-[15px]">{note}</p>
             <p class="text-white/55 text-sm mt-5">
               {car.power} hp<span aria-hidden="true"> · </span>{car.zeroToSixty} to 60
@@ -291,19 +385,18 @@ const faqSchema = {
           What people say about the service
         </h2>
         <p class="text-[#0a0a0a]/60 mt-3">
-          {averageRating.toFixed(1)} across every review we have.
+          The notes below are about the service. They do not name this car.
         </p>
         <div class="grid md:grid-cols-2 gap-6 mt-9">
           {serviceReviews.slice(0, 2).map((r) => (
             <figure class="rounded-[22px] border border-[#0a0a0a]/12 p-6">
-              <div class="text-[#e00e10]" aria-hidden="true">★★★★★</div>
-              <blockquote class="text-[#0a0a0a]/70 leading-relaxed mt-3 text-[15px]">{r.text}</blockquote>
+              <blockquote class="text-[#0a0a0a]/70 leading-relaxed text-[15px]">{r.text}</blockquote>
               <figcaption class="text-[#0a0a0a]/60 text-xs mt-4">{r.name}</figcaption>
             </figure>
           ))}
         </div>
         <p class="text-[#0a0a0a]/65 text-sm mt-7">
-          <SmartLink href="/reviews" class="text-[#e00e10] underline underline-offset-4">Read all {reviewCount} reviews</SmartLink>
+          <SmartLink href="/reviews" class="text-[#e00e10] underline underline-offset-4">Read the reviews</SmartLink>
         </p>
       </div>
     </section>
@@ -319,7 +412,9 @@ const faqSchema = {
         {objections.map((o) => (
           <div class="py-6 first:pt-0">
             <h3 class="font-display text-lg md:text-xl font-semibold text-white">{o.q}</h3>
-            <p class="text-white/65 leading-relaxed mt-2.5">{o.a}</p>
+            <p class="text-white/65 leading-relaxed mt-2.5">
+              {(o.parts ?? [o.a]).map((part) => typeof part === 'string' ? part : <SmartLink href={part.href} class="text-white underline decoration-white/40 underline-offset-4 hover:decoration-white">{part.label}</SmartLink>)}
+            </p>
           </div>
         ))}
       </div>
@@ -336,7 +431,9 @@ const faqSchema = {
     page="/mercedes-s580-rental-miami"
     message={waMessage}
     title={'Open the door and check.\nThat is the whole <span class="text-[#ff1516]">argument</span>'}
-    subtitle={`The Mercedes-Benz S580 at $${priceDisplay} a day, delivered across Miami. Replies usually take minutes.`}
+    quoteHref="#quote"
+    quoteLabel="Reserve the S580"
+    subtitle={`The Mercedes-Benz S580 at $${priceDisplay} a day, or $${usd(threeDay)} a day for ${tiers[0].days} days or more, delivered across Miami.`}
   />
   <StickyMobileCta message={waMessage} car={fullName} page="/mercedes-s580-rental-miami" />
 </Layout>

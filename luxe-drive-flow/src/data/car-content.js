@@ -8,9 +8,10 @@
 // Rules this file follows, deliberately:
 //   - Guidance, never invented customer history. No "our clients love", no
 //     claims about how often a car books.
-//   - Seat counts are NOT asserted for cars sold in both 4- and 5-seat rear
-//     layouts (the Urus, GLS 600, S580 and Cullinan all are). Those pages say
-//     what is certain and leave the rest to the owner.
+//   - The Urus is five seats with a three-place rear bench, per fleet.js.
+//     Seat counts are not asserted for the GLS 600, the S580, or the Cullinan,
+//     which are sold in more than one rear layout. Those pages say what is
+//     certain and leave the rest to the owner.
 //
 // `realMoment`, `operatorNotes` and `deliveryNotes` are for the owner. They are
 // the only place first-hand experience belongs, because only the owner has it.
@@ -22,15 +23,16 @@
 
 export const carContent = {
   'lamborghini-urus': {
-    useCases: `The Urus is the one to take when you want the Lamborghini without giving anything up. It is an SUV, so the hotel ramps and speed bumps that make a low supercar a liability are simply not the problem they would otherwise be, and the boot swallows several large cases — around 616 liters behind the rear seats. That covers the airport run, the group heading out to dinner, and the week where you only want to hire one car. Underneath it is still a twin-turbo V8 driving all four wheels, so none of that practicality costs you the drama.`,
+    headline: 'Lamborghini Urus: Specs, Photos and Rates',
+    useCases: `The Urus is the one to take when you want the Lamborghini without giving anything up. It is an SUV, so the hotel ramps and speed bumps that make a low supercar a liability are simply not the problem they would otherwise be, and the trunk swallows several large cases. That covers the airport run, the group heading out to dinner, and the week where you only want to rent one car. Underneath it is still a twin-turbo V8 driving all four wheels, so none of that practicality costs you the drama.`,
     goodToKnow: [
       'Adaptive air suspension with adjustable ride height — worth raising for steep driveways and ramps, since at its lowest setting ground clearance is only about 6.2 inches.',
-      'The boot is genuinely usable: around 616 liters behind the rear seats and roughly 1,596 with them folded. If the car has the optional four-seat rear layout, that drops to about 574.',
-      'Pure petrol twin-turbo V8 — no hybrid system and no electric-only mode. It takes premium fuel and returns mid-teens mpg.',
+      'The trunk is usable behind the rear seats, and those seats fold.',
+      'Pure gasoline twin-turbo V8 — no hybrid system and no electric-only mode. It takes premium fuel and returns mid-teens mpg.',
       'All-wheel drive on every Urus ever built; there has never been a rear-drive version.',
       'It is wide: about 79 inches across the body and nearly 86 with the mirrors out, so older Miami garages and narrow valet lanes need care.',
-      'The rear seat varies by car — the standard layout is a three-place folding bench, but a four-seat version with two individual rear seats was a factory option.',
-      'Drive modes sit on the centre tunnel: Strada for normal roads, Sport and Corsa for a sharper throttle and exhaust, Neve for low grip.',
+      'Five seats, with a three-place rear bench.',
+      'Drive modes sit on the center tunnel: Strada for normal roads, Sport and Corsa for a sharper throttle and exhaust, Neve for low grip.',
     ],
     faqQuestion: 'Will the Lamborghini Urus fit in a tight Miami garage?',
     faqAnswer:
@@ -44,18 +46,19 @@ export const carContent = {
   },
 
   'mercedes-s580': {
-    useCases: `The S580 is the quiet one, and that is precisely its job. It is the most affordable car we run at $445 a day, and the one to take when the occasion rewards arriving well rather than arriving loudly — a client meeting in Brickell, a wedding where you are not the couple, an airport run where a calm cabin beats a loud exhaust. The 4.0-liter V8 and air suspension mean it is quick and unruffled rather than theatrical. If you want the car to make an impression without making a scene, this is it.`,
+    headline: 'Mercedes-Benz S580: Specs, Photos and Rates',
+    useCases: `The S580 is the quiet one, and that is precisely its job. It is the most affordable car we run, and the one to take when the occasion rewards arriving well rather than arriving loudly — a client meeting in Brickell, a wedding where you are not the couple, an airport run where a calm cabin beats a loud exhaust. The 4.0-liter V8 and air suspension mean it is quick and unruffled rather than theatrical. If you want the car to make an impression without making a scene, this is it.`,
     goodToKnow: [
-      'Standard AIRMATIC air suspension with adjustable ride height — the smoothest car in the fleet over Miami road joints.',
+      'Standard AIRMATIC air suspension with adjustable ride height over Miami road joints.',
       'The V8 has 48-volt mild-hybrid assist, which never needs charging and cannot drive on electricity alone.',
       'US cars are long-wheelbase only, at roughly 208 inches — plan for that in tight garages and parallel spots.',
-      'The boot is about 12.9 cubic feet, which is modest for a car this size. Fine for luggage, tighter than the exterior suggests.',
+      'The trunk is about 12.9 cubic feet, which is modest for a car this size. Fine for luggage, tighter than the exterior suggests.',
       'Premium unleaded only, 91 octane or higher.',
     ],
     faqQuestion: 'Does the Mercedes-Benz S580 need charging?',
     faqAnswer:
-      'No. It is a 48-volt mild hybrid, not a plug-in. The electrical system assists the 4.0-liter V8 and recovers energy under braking, but it never runs on electricity alone and there is nothing to plug in. Fill it with premium unleaded, 91 octane or higher, and treat it exactly like any petrol car.',
-    siblings: ['mercedes-maybach-gls-600', 'rolls-royce-cullinan'],
+      'No. It is a 48-volt mild hybrid, not a plug-in. The electrical system assists the 4.0-liter V8 and recovers energy under braking, but it never runs on electricity alone and there is nothing to plug in. Fill it with premium unleaded, 91 octane or higher, and treat it exactly like any gasoline car.',
+    siblings: ['mercedes-maybach-gls-600', 'mercedes-maybach-s580', 'rolls-royce-cullinan'],
     category: { href: '/exotic-car-rental-miami', label: 'Exotic car rental in Miami' },
     realMoment: '',
     operatorNotes: '',
@@ -63,12 +66,13 @@ export const carContent = {
   },
 
   'mercedes-maybach-gls-600': {
+    headline: 'Mercedes-Maybach GLS 600: Specs, Photos and Rates',
     useCases: `The Maybach GLS 600 is the one to book when the passengers matter more than the driver. The back is the point: two reclining executive seats with powered leg and foot rests, and running boards that slide out as the door opens so nobody has to climb. That makes it the right call for airport collections, moving a client or a family in genuine comfort, or an evening where somebody else takes the wheel. It is a two-row car, so treat it as a four-seater with an exceptional back seat rather than a people carrier.`,
     goodToKnow: [
-      'Two rows only — unlike the standard GLS there is no third row, so plan for four or five people, never seven.',
+      'Two rows only — unlike the standard GLS there is no third row, so plan for four people, never seven.',
       'The rear executive seats recline with powered leg and foot rests.',
       'Power running boards extend automatically when a door opens, which makes getting in and out easy in a dress or a suit.',
-      'The boot is modest for the size — around 18 cubic feet — and the rear seats do not fold, so bulky loads are out.',
+      'The trunk is modest for the size — around 18 cubic feet — and the rear seats do not fold, so bulky loads are out.',
       'Big footprint: roughly 205 inches long, 72 inches tall, over 6,000 lb, with about a 41-foot turning circle.',
       'Premium fuel, and thirsty with it — EPA rates it around 15 mpg city and 20 highway.',
     ],

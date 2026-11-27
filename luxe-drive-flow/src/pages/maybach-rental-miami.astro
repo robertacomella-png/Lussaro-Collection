@@ -20,8 +20,8 @@ import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
 import BookingRequestCard from '@/components/booking/BookingRequestCard.jsx';
 import CarGallery from '@/components/fleet/CarGallery.jsx';
 import { cars } from '@/data/cars';
-import { rentalTerms, deliveryEachWaySummary } from '@/data/rental-terms';
-import { reviews, averageRating } from '@/data/reviews';
+import { rentalTerms, deliverySummary, rateForDays } from '@/data/rental-terms';
+import { reviews } from '@/data/reviews';
 import { business, telHref, whatsappWith } from '@/data/business';
 import { getImageKitSrc, getImageKitSrcSet } from '@/lib/imageKit';
 import { altFor } from '@/data/image-alt';
@@ -36,16 +36,36 @@ const fromDisplay = maybachFrom.toLocaleString('en-US');
 
 const milesPerDay = rentalTerms.mileage.includedPerDay;
 const overage = rentalTerms.mileage.overagePerMile;
-const tiers = rentalTerms.discountTiers;
-const weekPct = tiers.reduce((acc, t) => (7 >= t.days ? t.pct : acc), 0);
-const miamiDelivery = rentalTerms.delivery.find((d) => d.area === 'Miami');
+const taxPct = Math.round(rentalTerms.taxesAndFeesRate * 100);
+const usd = (n) => n.toLocaleString('en-US');
+const tiersFor = (c) => c.discountTiers ?? rentalTerms.discountTiers;
+const perDay = (c, days) => rateForDays(c.price, days, tiersFor(c)).perDay;
+const ladder = tiersFor(suv);
+const rateRows = [
+  { label: `1–${ladder[0].days - 1} days`, days: 1 },
+  ...ladder.map((t) => ({ label: `${t.days}+ days`, days: t.days })),
+];
+const threeDay = perDay(suv, tiersFor(suv)[0].days);
+const sameRates = rateRows.every((row) => perDay(suv, row.days) === perDay(sedan, row.days));
+const samePolicy = suv.insurancePerDay && sedan.insurancePerDay
+  && suv.insurancePerDay.from === sedan.insurancePerDay.from
+  && suv.insurancePerDay.to === sedan.insurancePerDay.to
+  ? suv.insurancePerDay
+  : null;
+const hourly = rentalTerms.chauffeurHourly.display;
 
 // Filtered off the `car` field rather than hand-picked, so a new Maybach review
 // appears on its own and a reordered reviews.js cannot swap in the wrong quote.
 const maybachReviews = reviews.filter((r) => (r.car ?? '').includes('Maybach'));
 
 const heroPhoto = '/cars/mercedes-maybach-gls-600-rental-miami-side-palms.jpg';
-const galleryImages = maybachs.flatMap((c) => c.images.slice(0, 4));
+const cardName = (c) =>
+  c.slug === 'mercedes-maybach-gls-600' ? 'Mercedes-Maybach GLS 600'
+  : c.slug === 'mercedes-maybach-s580' ? 'Mercedes-Maybach S580'
+  : (c.name.startsWith(c.make) ? c.name : `${c.make} ${c.name}`);
+const galleryImages = maybachs
+  .flatMap((c) => c.images.slice(0, 4))
+  .filter((src) => src !== '/cars/mercedes-maybach-s580-rental-miami-rear-quarter.jpg');
 
 const waMessage = `Hi, I'd like to rent a Maybach in Miami. Which dates do you have open?`;
 const wa = whatsappWith(waMessage, { car: 'Maybach', page: '/maybach-rental-miami' });
@@ -67,7 +87,7 @@ const objections = [
   },
   {
     q: 'Do I need my own insurance?',
-    a: `${rentalTerms.insurance.summary} You also need to be ${rentalTerms.minimumAge} or over with a valid driver's license. If coverage has to be arranged, the rate is confirmed in writing before you book rather than added at handover.`,
+    a: `${rentalTerms.insurance.summary} You also need to be ${rentalTerms.minimumAge} or over with a valid driver's license. ${samePolicy ? `If you need a daily policy for a Maybach, it is $${samePolicy.from} to $${samePolicy.to} a day, depending on driver age. The exact figure is confirmed in writing before you book, not added at handover.` : 'If coverage has to be arranged, the rate is confirmed in writing before you book rather than added at handover.'}`,
   },
   {
     q: 'What condition will the car actually be in?',
@@ -75,15 +95,40 @@ const objections = [
   },
   {
     q: 'Can you deliver it?',
-    a: `Delivery ${deliveryEachWaySummary}. Collection at the end is charged separately, so budget roughly double for a round trip. Hotels, Brickell addresses, South Beach and both airports are routine, and anywhere further is quoted before you commit.`,
+    a: `Delivery is ${deliverySummary}, each way. Collection is typically the same fee, confirmed in the quote. Hotels, Brickell addresses, South Beach and both airports are routine, and anywhere further is quoted before you commit.`,
+  },
+  {
+    q: 'How much does it cost to rent a Maybach in Miami?',
+    a: sameRates
+      ? `$${usd(perDay(suv, 1))} a day for the GLS 600 or the Maybach S580, with ${milesPerDay} miles included. Book ${ladder[0].days} days or more and it is $${usd(perDay(suv, ladder[0].days))} a day, $${usd(perDay(suv, ladder[1].days))} a day at ${ladder[1].days} days, or $${usd(perDay(suv, ladder[2].days))} a day at ${ladder[2].days} days. Taxes and fees of ${taxPct}% are added to the rental. The ${rentalTerms.deposit.display} deposit is refundable and held separately.`
+      : `The GLS 600 is $${usd(suv.price)} a day and the Maybach S580 is $${usd(sedan.price)} a day, with ${milesPerDay} miles included. Taxes and fees of ${taxPct}% are added to the rental. The ${rentalTerms.deposit.display} deposit is refundable and held separately.`,
+  },
+  {
+    q: 'What is the difference between the GLS 600 and the Maybach S580?',
+    parts: [
+      `${suv.price === sedan.price ? `Both are $${usd(suv.price)} a day. ` : ''}The GLS 600 is the Maybach SUV: two rows and reclining executive rear seats. The Maybach S580 is the sedan, built around a pair of reclining rear seats. If you want to compare the Maybach S580 with the standard Mercedes-Benz S580 we also rent, we wrote that out `,
+      { href: '/blog/mercedes-s580-vs-maybach-s580-rental-miami/', label: 'side by side' },
+      '.',
+    ],
+  },
+  {
+    q: 'Can I rent a Maybach with a chauffeur?',
+    parts: [
+      `Yes. Chauffeur service is offered in the GLS 600 from ${hourly} an hour, including fuel. Most bookings run a few hours or longer. Details are on the `,
+      { href: '/chauffeur-service-miami/', label: 'chauffeur page' },
+      '.',
+    ],
   },
 ];
+
+const faqText = (o) => (o.parts ? o.parts.map((p) => (typeof p === 'string' ? p : p.label)).join('') : o.a);
+for (const o of objections) if (!o.a) o.a = faqText(o);
 
 const productSchema = {
   '@context': 'https://schema.org',
   '@type': 'Product',
   name: 'Mercedes-Maybach Rental — Miami',
-  description: `Rent a Mercedes-Maybach in Miami from $${fromDisplay} a day. The GLS 600 SUV or the S580 executive sedan, delivered across Miami.`,
+  description: `Rent a Mercedes-Maybach in Miami from $${fromDisplay} a day, or $${usd(threeDay)} a day for ${ladder[0].days} days or more. The GLS 600 SUV or the Maybach S580, delivered across Miami.`,
   image: maybachs.map((c) => `${SITE}${c.images[0]}`),
   brand: { '@type': 'Brand', name: 'Mercedes-Maybach' },
   sku: 'LC-MAYBACH-MIAMI',
@@ -97,21 +142,14 @@ const productSchema = {
     availability: 'https://schema.org/InStock',
     seller: { '@id': `${SITE}/#business` },
   },
-  // Legitimate here, unlike on the car pages: the quotes these describe are
-  // rendered below, and the count covers only the Maybach reviews shown.
+  // The two Maybach quotes are rendered below. No AggregateRating: a score
+  // built from those quotes is not the Google listing, and this page does not
+  // print one.
   ...(maybachReviews.length
     ? {
-        aggregateRating: {
-          '@type': 'AggregateRating',
-          ratingValue: (
-            maybachReviews.reduce((a, r) => a + r.rating, 0) / maybachReviews.length
-          ).toFixed(1),
-          reviewCount: maybachReviews.length,
-        },
         review: maybachReviews.map((r) => ({
           '@type': 'Review',
           author: { '@type': 'Person', name: r.name },
-          reviewRating: { '@type': 'Rating', ratingValue: r.rating, bestRating: 5 },
           reviewBody: r.text,
         })),
       }
@@ -124,13 +162,13 @@ const faqSchema = {
   mainEntity: objections.map((o) => ({
     '@type': 'Question',
     name: o.q,
-    acceptedAnswer: { '@type': 'Answer', text: o.a },
+    acceptedAnswer: { '@type': 'Answer', text: faqText(o) },
   })),
 };
 ---
 <Layout
-  title={`Maybach Rental Miami from $${fromDisplay} a Day | Lussaro Collection`}
-  description={`Rent a Mercedes-Maybach in Miami from $${fromDisplay} a day — the GLS 600 SUV or the S580 executive sedan. ${milesPerDay} miles a day included, ${rentalTerms.deposit.display} deposit, delivered in Miami.`}
+  title={`Rent a Maybach in Miami from $${fromDisplay} a Day | Lussaro Collection`}
+  description="Rent a Maybach in Miami from $895 a day, or $745 a day for 3+ days. The GLS 600 or Maybach S580, 100 miles a day, $1,000 deposit, delivered across Miami."
   breadcrumbName="Maybach Rental Miami"
   schema={[productSchema, faqSchema]}
 >
@@ -145,8 +183,11 @@ const faqSchema = {
   <header class="bg-[#0a0a0a] pt-28 md:pt-32 pb-10 md:pb-14">
     <div class="max-w-[1240px] mx-auto px-5 md:px-8">
       <h1 class="font-display text-center text-[2rem] leading-[1.08] md:text-5xl lg:text-[3.4rem] font-bold tracking-tight text-white uppercase">
-        Mercedes-Maybach Rental Miami
+        Rent a Maybach in Miami
       </h1>
+      <p class="text-white/70 text-center text-base md:text-lg leading-relaxed mt-4 max-w-2xl mx-auto">
+        The Mercedes-Maybach GLS 600 and the Maybach S580, from ${fromDisplay} a day. Book {ladder[0].days} days or more and the rate is ${usd(threeDay)} a day.
+      </p>
 
       <div class="grid lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] gap-8 lg:gap-12 items-start mt-9 md:mt-12">
         <div>
@@ -157,11 +198,12 @@ const faqSchema = {
             decide whether someone keeps reading, then the numbers people
             actually look up. */}
         <div class="text-center lg:text-left lg:pt-4">
-          <p class="text-white/55 text-sm uppercase tracking-[0.2em]">Starting at</p>
+          <p class="text-white/55 text-sm uppercase tracking-[0.2em]">From</p>
           <p class="font-display text-white text-6xl md:text-7xl font-bold tracking-tight mt-2">
             ${fromDisplay}
             <span class="text-white/45 text-xl font-sans font-normal tracking-normal"> / day</span>
           </p>
+          <p class="text-white/70 text-sm mt-2">${usd(threeDay)} a day for {ladder[0].days} days or more</p>
 
           <ul class="mt-6 space-y-1.5 text-white/70 text-[15px] leading-relaxed list-none p-0">
             <li>{milesPerDay} miles per day included</li>
@@ -173,7 +215,7 @@ const faqSchema = {
           <div class="mt-8 pt-7 border-t border-white/10 grid grid-cols-2 gap-6">
             {maybachs.map((c) => (
               <div>
-                <p class="text-white/55 text-[11px] uppercase tracking-[0.16em]">{c.name}</p>
+                <p class="text-white/55 text-[11px] uppercase tracking-[0.16em]">{cardName(c)}</p>
                 <p class="font-display text-white text-3xl font-bold mt-1.5">{c.power}<span class="text-lg text-white/55"> hp</span></p>
                 <p class="text-white/55 text-sm mt-0.5">{c.zeroToSixty} to 60</p>
               </div>
@@ -182,28 +224,27 @@ const faqSchema = {
 
           <div class="mt-8 flex flex-col sm:flex-row lg:flex-col gap-3 justify-center lg:justify-start">
             <a
+              href="#quote"
+              class="inline-flex items-center justify-center bg-white text-black px-7 py-4 rounded-full font-semibold hover:bg-[#ff1516] hover:text-white transition sm:flex-1 lg:flex-none"
+            >
+              Reserve this Maybach
+            </a>
+            <a
               href={wa}
               data-cta="maybach_hero"
               target="_blank"
               rel="noopener noreferrer"
-              class="inline-flex items-center justify-center gap-2 bg-white text-black px-7 py-4 rounded-full font-semibold hover:bg-[#ff1516] hover:text-white transition sm:flex-1 lg:flex-none"
-            >
-              Message us <span class="w-2 h-2 rounded-full bg-[#1f7a3f]"></span>
-            </a>
-            <a
-              href={telHref}
-              data-cta="maybach_hero"
-              data-call-inline
               class="inline-flex items-center justify-center border border-white/25 text-white px-7 py-4 rounded-full font-medium hover:border-[#ff1516] hover:text-[#ff1516] transition sm:flex-1 lg:flex-none"
             >
-              Call {business.phoneDisplayShort}
+              WhatsApp
             </a>
           </div>
+          <p class="text-white/70 text-sm mt-4">
+            Or call <a href={telHref} data-cta="maybach_hero" data-call-inline class="text-white underline decoration-white/40 underline-offset-4 hover:decoration-white">{business.phoneDisplay}</a>
+          </p>
 
           <p class="text-white/50 text-sm mt-5">
-            <span class="text-[#ff1516]" aria-hidden="true">★</span> {averageRating.toFixed(1)} on Google
-            <span aria-hidden="true"> · </span>Owner operated
-            <span aria-hidden="true"> · </span>Replies usually take minutes
+            Owner operated
           </p>
         </div>
       </div>
@@ -218,22 +259,22 @@ const faqSchema = {
       rather than Maybach. Black-to-white is the harder visual break of
       the two anyway, and red survives here as the tick marks, in #e00e10
       because #ff1516 on white measures 3.91:1 and fails. */}
-  <section id="quote" class="bg-[#ffffff] py-16 md:py-24">
+  <section id="quote" class="bg-[#ffffff] py-16 md:py-24 scroll-mt-28">
     <div class="max-w-[1240px] mx-auto px-5 md:px-8">
       <div class="grid lg:grid-cols-[1fr_minmax(0,460px)] gap-10 lg:gap-14 items-center">
         <div class="text-[#0a0a0a]">
           <h2 class="font-display text-3xl md:text-[2.75rem] leading-[1.1] font-bold tracking-tight uppercase">
-            Reserve your Maybach
+            Reserve a Maybach
           </h2>
           <p class="text-[#0a0a0a]/70 text-lg leading-relaxed mt-4 max-w-lg">
-            Send us your name and number and we will come back with what is open, the total,
-            and delivery if you want it brought to you. No deposit to ask.
+            Tell us your dates and which Maybach you want. We will come back with what is open, the total,
+            and delivery if you want it brought to you. No deposit is needed just to ask.
           </p>
           <ul class="mt-7 space-y-2.5 list-none p-0 max-w-lg">
             {[
               'The published rate, with any multi-day discount already applied',
               'Delivery quoted up front, not added at handover',
-              'If both Maybachs are out, we say so rather than switch you',
+              'If both Maybachs are out on your dates, we say so rather than switch you',
             ].map((line) => (
               <li class="flex gap-3 text-[#0a0a0a]/75 text-[15px] leading-relaxed">
                 <span aria-hidden="true" class="text-[#e00e10] font-bold">✓</span>{line}
@@ -254,14 +295,70 @@ const faqSchema = {
         <div class="rounded-[30px] bg-[#0a0a0a] p-5 md:p-7 shadow-[0_26px_70px_rgba(0,0,0,0.38)]">
           <BookingRequestCard
             client:visible
-            pricePerDay={maybachFrom}
-            carName="Maybach"
-            tiers={tiers}
-            milesPerDay={milesPerDay}
+            vehicles={[
+              { name: suv.name, label: 'Mercedes-Maybach GLS 600', pricePerDay: suv.price, tiers: tiersFor(suv), vehicleId: suv.dashboardId || null, milesPerDay: suv.miles ?? milesPerDay },
+              { name: sedan.name, label: 'Mercedes-Maybach S580', pricePerDay: sedan.price, tiers: tiersFor(sedan), vehicleId: sedan.dashboardId || null, milesPerDay: sedan.miles ?? milesPerDay },
+            ]}
+            source="/maybach-rental-miami"
             allowDates={false}
           />
+          <p class="text-center mt-4">
+            <a href={wa} data-cta="maybach_form" target="_blank" rel="noopener noreferrer" class="inline-flex items-center min-h-[48px] text-white text-sm underline decoration-white/40 underline-offset-4 hover:decoration-white">WhatsApp</a>
+          </p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section id="rates" class="bg-[#0a0a0a] py-16 md:py-20 border-t border-white/10">
+    <div class="max-w-[1180px] mx-auto px-5 md:px-8 grid lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] gap-10 lg:gap-14 items-center">
+      <div>
+        <h2 class="font-display text-3xl md:text-4xl font-bold tracking-tight text-white">
+          What it costs to rent a Maybach in Miami
+        </h2>
+        <p class="text-white/70 leading-relaxed mt-4">
+          {sameRates
+            ? `Both Maybachs are $${usd(suv.price)} a day, or $${usd(threeDay)} a day for ${ladder[0].days} days or more.`
+            : `The GLS 600 is $${usd(suv.price)} a day. The Maybach S580 is $${usd(sedan.price)} a day.`}
+          {' '}The {rentalTerms.deposit.display} deposit is refundable and held separately. Taxes and fees of {taxPct}% are added to the rental.
+        </p>
+        <table class="w-full text-left text-[15px] mt-6">
+          <thead>
+            <tr class="text-white/60 text-xs uppercase tracking-[0.14em]">
+              <th scope="col" class="py-2 pr-3 font-medium">Length</th>
+              <th scope="col" class="py-2 px-3 font-medium text-right">GLS 600, per day</th>
+              <th scope="col" class="py-2 pl-3 font-medium text-right">Maybach S580, per day</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rateRows.map((row) => (
+              <tr class="border-t border-white/10">
+                <th scope="row" class="py-3 pr-3 text-white/80 font-medium">{row.label}</th>
+                <td class="py-3 px-3 text-right text-white">${usd(perDay(suv, row.days))}</td>
+                <td class="py-3 pl-3 text-right text-white">${usd(perDay(sedan, row.days))}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <p class="text-white/70 leading-relaxed mt-5 text-[15px]">
+          {milesPerDay} miles a day are included and pooled across the booking. Additional miles are ${overage} each. Delivery is {deliverySummary}, each way. Collection is typically the same fee, confirmed in the quote.
+        </p>
+        <p class="text-white/70 leading-relaxed mt-4 text-[15px]">
+          Full Maybach pricing, including what changes a weekend or an event week, is in{' '}
+          <SmartLink href="/blog/how-much-to-rent-a-maybach-miami/" class="text-white underline decoration-white/40 underline-offset-4 hover:decoration-white">How Much to Rent a Maybach in Miami</SmartLink>.
+        </p>
+      </div>
+      <img
+        src={getImageKitSrc('/cars/mercedes-maybach-gls-600-rental-miami-front-quarter.jpg', 900)}
+        srcset={getImageKitSrcSet('/cars/mercedes-maybach-gls-600-rental-miami-front-quarter.jpg')}
+        sizes="(min-width: 1024px) 40vw, 100vw"
+        alt={altFor('/cars/mercedes-maybach-gls-600-rental-miami-front-quarter.jpg', 'Mercedes-Maybach GLS 600 in Miami')}
+        width="900"
+        height="600"
+        loading="lazy"
+        decoding="async"
+        class="w-full aspect-[3/2] object-cover rounded-[24px]"
+      />
     </div>
   </section>
 
@@ -276,10 +373,9 @@ const faqSchema = {
         <div class="grid md:grid-cols-2 gap-5 mt-7">
           {maybachReviews.slice(0, 2).map((r) => (
             <figure class="rounded-[22px] bg-[#0f0f0f] border border-white/10 p-6">
-              <div class="text-[#ff1516]" aria-hidden="true">★★★★★</div>
-              <blockquote class="text-white/70 leading-relaxed mt-3 text-[15px]">{r.text}</blockquote>
+              <blockquote class="text-white/70 leading-relaxed text-[15px]">{r.text}</blockquote>
               <figcaption class="text-white/55 text-xs mt-4">
-                {r.name}<span aria-hidden="true"> · </span>{r.car}
+                {r.name}<span aria-hidden="true"> · </span>{r.car === 'GLS 600 Maybach' ? 'Mercedes-Maybach GLS 600' : r.car}
               </figcaption>
             </figure>
           ))}
@@ -325,7 +421,7 @@ const faqSchema = {
             </div>
             <div class="p-6 md:p-7 flex flex-col flex-1">
               <p class="text-[#e00e10] text-[11px] uppercase tracking-[0.18em] font-medium">{when}</p>
-              <h3 class="font-display text-2xl font-bold mt-2.5">{car.make} {car.name}</h3>
+              <h3 class="font-display text-2xl font-bold mt-2.5">{cardName(car)}</h3>
               <p class="text-[#0a0a0a]/65 leading-relaxed mt-3 flex-1">{why}</p>
               <p class="text-[#0a0a0a]/60 text-sm mt-5">
                 {car.power} hp<span aria-hidden="true"> · </span>{car.zeroToSixty} to 60
@@ -344,6 +440,33 @@ const faqSchema = {
     </div>
   </section>
 
+  <section class="bg-[#ffffff] text-[#0a0a0a] border-t border-[#0a0a0a]/10 py-16 md:py-20">
+    <div class="max-w-[1180px] mx-auto px-5 md:px-8 grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+      <img
+        src={getImageKitSrc('/cars/mercedes-maybach-gls-600-rental-miami-rear-executive-seats.jpg', 900)}
+        srcset={getImageKitSrcSet('/cars/mercedes-maybach-gls-600-rental-miami-rear-executive-seats.jpg')}
+        sizes="(min-width: 1024px) 46vw, 100vw"
+        alt={altFor('/cars/mercedes-maybach-gls-600-rental-miami-rear-executive-seats.jpg', 'Rear executive seats in the Mercedes-Maybach GLS 600')}
+        width="900"
+        height="600"
+        loading="lazy"
+        decoding="async"
+        class="w-full aspect-[3/2] object-cover rounded-[24px]"
+      />
+      <div>
+        <h2 class="font-display text-3xl md:text-4xl font-bold tracking-tight">
+          Arrive in the Maybach without driving it
+        </h2>
+        <p class="text-[#0a0a0a]/70 leading-relaxed mt-4">
+          If you would rather sit in the back, we can put a chauffeur in the GLS 600 from {hourly} an hour. Fuel is included. Most chauffeur reservations run a few hours or longer, and we confirm the window before you book.
+        </p>
+        <p class="mt-5">
+          <SmartLink href="/chauffeur-service-miami/" class="text-[#e00e10] underline underline-offset-4">Maybach chauffeur service in Miami</SmartLink>
+        </p>
+      </div>
+    </div>
+  </section>
+
   {/* ============ 7. OBJECTIONS =======================================
       The questions that actually stop a booking, answered plainly. Same
       array feeds the FAQPage schema, so the page and the structured data
@@ -357,7 +480,9 @@ const faqSchema = {
         {objections.map((o) => (
           <div class="py-6 first:pt-0">
             <h3 class="font-display text-lg md:text-xl font-semibold">{o.q}</h3>
-            <p class="text-[#0a0a0a]/65 leading-relaxed mt-2.5">{o.a}</p>
+            <p class="text-[#0a0a0a]/65 leading-relaxed mt-2.5">
+              {(o.parts ?? [o.a]).map((part) => typeof part === 'string' ? part : <SmartLink href={part.href} class="text-[#e00e10] underline underline-offset-4">{part.label}</SmartLink>)}
+            </p>
           </div>
         ))}
       </div>
@@ -378,8 +503,10 @@ const faqSchema = {
     car="Maybach"
     page="/maybach-rental-miami"
     message={waMessage}
+    quoteHref="#quote"
+    quoteLabel="Reserve this Maybach"
     title={'Open the door and check.\nThat is the whole <span class="text-[#ff1516]">argument</span>'}
-    subtitle={`Maybach from $${fromDisplay} a day, delivered across Miami. Replies usually take minutes.`}
+    subtitle={`Maybach from $${fromDisplay} a day, or $${usd(threeDay)} a day for ${ladder[0].days} days or more, delivered across Miami.`}
   />
   <StickyMobileCta message={waMessage} car="Maybach" page="/maybach-rental-miami" />
 </Layout>

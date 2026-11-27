@@ -14,7 +14,8 @@
 // Reviews that name this car come first; the rest fill in from DEFAULT_ORDER.
 import { reviews } from '@/data/reviews';
 import { business } from '@/data/business';
-const { carName = '', make = '' } = Astro.props;
+
+const { carName = '', make = '', showRating = false } = Astro.props;
 
 const EXCERPTS = {
   'Kiarash Vaezzadeh-Naderi': 'Smooth and easy process from start to finish',
@@ -51,6 +52,12 @@ const monthLabel = (m) =>
     {picks.map((r) => (
       <li class="relative snap-start shrink-0 w-[80%] sm:w-auto rounded-xl border border-white/15 bg-[#0f0f0f] p-4 flex flex-col">
         <p class="text-white text-[15px] font-semibold leading-snug">{r.name}</p>
+        {showRating && (
+          <>
+            <p class="text-[#FBBC04] text-[15px] tracking-[0.06em] leading-none mt-1.5" aria-hidden="true">{'★'.repeat(r.rating)}</p>
+            <span class="sr-only">{r.rating} out of 5 stars.</span>
+          </>
+        )}
         <blockquote class="mt-2.5 text-white/85 text-[15px] leading-relaxed flex-1">“{EXCERPTS[r.name]}”</blockquote>
         <p class="text-white/60 text-[13px] mt-3">
           <a href={business.googleProfileLink} target="_blank" rel="noopener noreferrer" class="underline decoration-white/30 underline-offset-2 hover:text-white">Google</a> · {monthLabel(r.month)}
