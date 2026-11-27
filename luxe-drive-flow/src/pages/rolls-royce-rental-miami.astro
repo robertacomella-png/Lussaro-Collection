@@ -1,49 +1,83 @@
 ---
 import LandingLayout from '@/layouts/LandingLayout.astro';
+import RateGrid from '@/components/site/RateGrid.astro';
+import { hoursSummary } from '@/data/business';
 import { rentalTerms } from '@/data/rental-terms';
-import { fleet } from '@/data/fleet';
+import {
+  assertMeta,
+  assertTitle,
+  carBySlug,
+  faqPage,
+  fllDelivery,
+  miamiDelivery,
+  hubCtaSubtitle,
+  itemListFor,
+  publicName,
+  usd,
+} from '@/lib/hub';
 
-const cullinan = fleet.find((c) => c.name === 'Cullinan');
+const cullinan = carBySlug('rolls-royce-cullinan');
 const { deposit, mileage, minimumAge } = rentalTerms;
+const name = publicName(cullinan);
+
+const title = assertTitle('Rolls-Royce', 'Rolls-Royce Rental Miami | Lussaro Collection');
+const description = assertMeta(
+  'Rolls-Royce',
+  `Rolls-Royce rental in Miami. The Cullinan is ${usd(cullinan.price)} a day. ${miamiDelivery.display} each way in Miami, ${fllDelivery.display} each way in Fort Lauderdale. Hours are 9 AM–8 PM, by appointment only.`,
+);
 
 const faqs = [
   {
     q: 'How do the coach doors work?',
-    a: 'The rear pair are hinged at the back, so they swing open away from you and you step out facing forward instead of twisting round. All four then close under power at the touch of a button, which means nobody has to lean out and haul a heavy door shut.',
+    a: 'The rear pair are hinged at the back, so they swing open away from you and you step out facing forward instead of twisting around. All four then close under power at the touch of a button, which means nobody has to lean out and haul a heavy door shut.',
   },
   {
     q: 'Is the Cullinan difficult to park in Miami?',
-    a: 'It asks for attention. The car runs to roughly 17.5 feet long and about 85 inches wide across the mirrors, so older garages are tight. Four-wheel steering is fitted as standard and shrinks the turning circle noticeably, which helps more than you would expect.',
+    a: 'It asks for attention. The car runs to roughly 17.5 feet long and about 85 inches wide across the mirrors, so older garages are tight. Four-wheel steering is fitted as standard and shrinks the turning circle, which helps.',
+  },
+  {
+    q: 'What does it cost per day?',
+    a: `The Cullinan is ${usd(cullinan.price)} a day. Book 3 days or more and the per-day rate drops. The table on this page is that ladder, taken from the current fleet price. ${mileage.includedPerDay} miles are included for every day of the booking.`,
+  },
+  {
+    q: 'What does delivery cost?',
+    a: `The Cullinan is ${miamiDelivery.display} each way in Miami, and ${fllDelivery.display} each way in Fort Lauderdale, and the handover point is agreed in your quote. Collection is typically the same fee as delivery.`,
   },
   {
     q: 'What is required to book it?',
-    a: `A driver of ${minimumAge} or over with a valid license and insurance that covers the vehicle, or a daily policy bought through us. The car carries a refundable ${deposit.display} deposit and ${mileage.includedPerDay} miles for every day of the booking.`,
+    a: `A driver of ${minimumAge} or over with a valid license and insurance that covers the vehicle, or a daily policy bought through us. The car carries a refundable ${deposit.display} deposit and ${mileage.includedPerDay} miles for every day of the booking. ${hoursSummary}.`,
   },
 ];
-
-const faqSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
-};
 ---
 <LandingLayout
-  title="Rolls-Royce Rental Miami | Lussaro Collection"
-  description={`Rolls-Royce rental in Miami — the Cullinan from $${cullinan.price.toLocaleString('en-US')}/day with 100 miles included. Delivery from ${rentalTerms.delivery.find((d) => d.area === 'Miami').display} each way for weddings, events and hotel arrivals.`}
+  title={title}
+  description={description}
   h1="Rolls-Royce Rental Miami"
-  intro={`One Rolls-Royce, the Cullinan, delivered anywhere in Miami from ${rentalTerms.delivery.find((d) => d.area === 'Miami').display} each way. It is built for the arrivals where the car is part of the occasion.`}
-  only={["rolls-royce-cullinan"]}
+  intro={`The Rolls-Royce in the fleet is the Cullinan, delivered in Miami from ${miamiDelivery.display} each way. It is the car for the moment it pulls up.`}
+  only={['rolls-royce-cullinan']}
+  fleetHeading="The Cullinan"
   fullFleetLink
   ctaTitle="Reserve the Cullinan"
-  schema={[faqSchema]}
+  heroImage="/cars/rolls-royce-cullinan-rental-miami-front-quarter.jpg"
+  showRating={false}
+  reserveNote="Tell us the car and the dates and we'll confirm availability."
+  leadNote="Prefer to talk now? Call or WhatsApp us."
+  ctaSubtitle={hubCtaSubtitle}
+  schema={[itemListFor([cullinan]), faqPage(faqs)]}
 >
-  <h2>The <a href="/cars/rolls-royce-cullinan">Cullinan</a>, specifically</h2>
-  <p>We run one Rolls-Royce and it is the SUV. At ${cullinan.price.toLocaleString()} a day it is the most expensive car in our fleet after the Ferrari, and while the engineering is remarkable, that is not really what it is for. The draw is what happens when it pulls up.</p>
-  <p>The rear doors hinge at the back rather than the front, so a passenger steps out facing the direction they are walking rather than shuffling sideways. Every door then closes on its own at the press of a button. Underneath sits a 6.75-liter twin-turbo V12 producing {cullinan.power} hp, quiet enough at a cruise that conversation carries without anyone raising their voice.</p>
-  <p>It is also more practical than its reputation suggests. The two-piece powered tailgate — Rolls-Royce calls it The Clasp — opens onto roughly 21 cubic feet behind the rear seats, which is real luggage capacity. There is an umbrella stowed in the door, dried by blowers built into the frame when you put it back. Expect around 12 mpg in the city on premium fuel — a 6.75-liter V12 is not an economy proposition.</p>
+  <h2>The <a href="/cars/rolls-royce-cullinan">Cullinan</a></h2>
+  <p>The Rolls-Royce we rent is the SUV. At {usd(cullinan.price)} a day the engineering is remarkable, and that is not really what it is for. The draw is what happens when it pulls up.</p>
+  <p>The rear doors hinge at the back rather than the front, so a passenger steps out facing the direction they are walking rather than shuffling sideways. Every door then closes on its own at the press of a button. Underneath sits a 6.75-liter twin-turbo V12 producing {cullinan.power} hp, quiet enough at a cruise that conversation carries without anyone raising their voice. {cullinan.zeroToSixty} to 60.</p>
+  <p>It is also more practical than its reputation suggests. The two-piece powered tailgate, which Rolls-Royce calls The Clasp, opens onto roughly 21 cubic feet behind the rear seats. There is an umbrella stowed in the door, dried by blowers built into the frame when you put it back. Expect around 12 mpg in the city on premium fuel. A 6.75-liter V12 is not an economy car.</p>
+  <p>Specs, photos and the booking form for this car sit on the Cullinan page linked above.</p>
+
+  <h2>Daily rates</h2>
+  <p>The Cullinan has its own ladder. The 1-day column is {usd(cullinan.price)}. Each longer column is the per-day rate once the rental reaches that length.</p>
+  <RateGrid items={[{ car: cullinan, href: '/cars/rolls-royce-cullinan', name }]} />
 
   <h2>Booking one</h2>
-  <p>Availability on a single car moves quickly, so dates matter more here than anywhere else in the fleet. Send us the day you need it and we will tell you straight away whether it is open. Every figure — deposit, mileage, delivery, multi-day rates — is published on the <a href="/pricing">rate card</a>, and the full detail sits in our <a href="/terms">terms</a>. To compare it against the rest, see <a href="/exotic-car-rental-miami">exotic car rental in Miami</a> or the <a href="/luxury-suv-rental-miami">luxury SUV comparison</a>.</p>
+  <p>Dates matter on a single car. Send the day you need and we will tell you whether it is open. Cullinan delivery is {miamiDelivery.display} each way in Miami, and {fllDelivery.display} each way in Fort Lauderdale, with the handover point agreed in your quote. {hoursSummary}. Deposit, mileage and the rest of the numbers are on the <a href="/pricing">rate card</a>, and the full detail sits in our <a href="/terms">terms</a>.</p>
+  <p>To set it beside the other SUVs, see the <a href="/luxury-suv-rental-miami">luxury SUV comparison</a>. For the wider fleet, start at <a href="/exotic-car-rental-miami">exotic car rental in Miami</a>.</p>
 
   <h2>Questions</h2>
   {faqs.map((f) => (

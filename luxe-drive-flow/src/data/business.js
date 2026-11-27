@@ -27,10 +27,9 @@ export const business = {
   phoneDisplay: '+1 (645) 248-7305',
   phoneDisplayShort: '(645) 248-7305',
 
-  // No business mailbox yet — info@lussarocollection.com is not set up, so the
-  // site publishes no email rather than a bouncing address. To add it later,
-  // set this string: the footer NAP and the JSON-LD both pick it up
-  // automatically, and neither renders anything while it is null.
+  // info@lussarocollection.com is set up on Google Workspace (owner, 27 Nov 2026).
+  // It is exported as contactEmail. This field stays null so the footer NAP,
+  // the privacy page and the site-wide JSON-LD do not publish an address.
   email: null,
 
   // Mon–Sun 09:00–20:00, by appointment only. Stated per day so the schema
@@ -57,6 +56,9 @@ export const business = {
   googleProfileLink: 'https://share.google/v2UH8foV5oPBRQmxg',
   googleReviewLink: 'https://g.page/r/CZ5wPpz0J7B1EBM/review',
 };
+
+/** Public contact mailbox. Not business.email, so the footer and JSON-LD stay unchanged. */
+export const contactEmail = 'info@lussarocollection.com';
 
 // --- derived helpers, so consumers don't re-implement formatting -------------
 

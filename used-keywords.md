@@ -12,6 +12,10 @@ This is what stops the site competing with itself — the failure mode where two
 
 | Primary keyword | Used on | Date | Cluster |
 |---|---|---|---|
+| exotic car rental downtown miami | [/exotic-car-rental-downtown-miami](../luxe-drive-flow/src/pages/exotic-car-rental-downtown-miami.astro) | 2026-11-27 | Downtown |
+| convertible car rental miami | [/convertible-car-rental-miami](../luxe-drive-flow/src/pages/convertible-car-rental-miami.astro) | 2026-11-27 | Convertible |
+| sports car rental miami | [/sports-car-rental-miami](../luxe-drive-flow/src/pages/sports-car-rental-miami.astro) | 2026-11-27 | Sports car |
+| mercedes rental miami | [/mercedes-rental-miami](../luxe-drive-flow/src/pages/mercedes-rental-miami.astro) | 2026-11-27 | Mercedes |
 | rent a lamborghini for a day | [/blog/rent-a-lamborghini-for-a-day-miami](../luxe-drive-flow/src/pages/blog/rent-a-lamborghini-for-a-day-miami.astro) | 2026-11-27 | Lamborghini |
 | how much to rent a maybach | [/blog/how-much-to-rent-a-maybach-miami](../luxe-drive-flow/src/pages/blog/how-much-to-rent-a-maybach-miami.astro) | 2026-11-26 | Maybach |
 | luxury car rental miami beach | [/blog/luxury-car-rental-miami-beach-art-basel](../luxe-drive-flow/src/pages/blog/luxury-car-rental-miami-beach-art-basel.astro) | 2026-11-25 | Art Basel |
@@ -24,6 +28,46 @@ This is what stops the site competing with itself — the failure mode where two
 ---
 
 ## Detail
+
+### exotic car rental downtown miami
+**Page:** `/exotic-car-rental-downtown-miami`
+**Date:** November 27, 2026
+
+**Why this primary:** the location page for Downtown, north of the Miami River. Brickell and South Beach keep their own pages. Downtown delivery is $100 each way.
+
+**Do not reuse.**
+
+---
+
+### mercedes rental miami
+**Page:** `/mercedes-rental-miami`
+**Date:** November 27, 2026
+
+**Why this primary:** it was an uncovered commercial gap. The hub lists the Mercedes-AMG G63, the Mercedes-Benz S580, the Mercedes-Maybach S580 and the Mercedes-Maybach GLS 600, and links down to each car page. It does not take `maybach rental miami` (`/maybach-rental-miami`), `mercedes s class rental miami` (`/mercedes-s580-rental-miami`), `g wagon rental miami` (`/g-wagon-rental-miami`), or `luxury suv rental miami`.
+
+**Do not reuse.**
+
+---
+
+### sports car rental miami
+**Page:** `/sports-car-rental-miami`
+**Date:** November 27, 2026
+
+**Why this primary:** `/fleet` owns `supercar rental miami` and never said "sports car", so the term was needs-work rather than covered. This page is the two-door choice: Huracán STO, Huracán EVO, Ferrari SF90 coupe, Huracán EVO Spyder and Porsche 911 Turbo S Cabriolet. It does not take `lamborghini rental miami`, `porsche rental miami`, or `supercar rental miami`. Roof operation stays on the convertible page.
+
+**Do not reuse.**
+
+---
+
+### convertible car rental miami
+**Page:** `/convertible-car-rental-miami`
+**Date:** November 27, 2026
+
+**Why this primary:** the only confirmed open cars are the Huracán EVO Spyder and the Porsche 911 Turbo S Cabriolet. The Ferrari SF90 in the fleet is a fixed-roof coupe. The page is about those two roofs. It does not take `porsche rental miami` or `porsche 911 turbo s convertible rental miami` (the car page keeps that variant). Coupes stay on `/sports-car-rental-miami`.
+
+**Do not reuse.**
+
+---
 
 ### how much is a rental lamborghini
 **Post:** `/blog/how-much-is-a-lamborghini-rental`

@@ -1,0 +1,83 @@
+---
+// /exotic-car-rental-downtown-miami
+//
+// Owns "exotic car rental downtown miami". The $100 each way covers Downtown
+// Miami and Edgewater only. Brickell stays on the Miami rate and its own page.
+// The fee lives in neighborhood-content.js as downtownDeliveryEachWay and is
+// not folded into rental-terms.js.
+import LandingLayout from '@/layouts/LandingLayout.astro';
+import { cars, depositException, ageException } from '@/data/cars';
+import { rentalTerms } from '@/data/rental-terms';
+import { contactEmail, hoursSummary } from '@/data/business';
+import { downtownDeliveryEachWay, neighborhoodFor } from '@/data/neighborhood-content';
+import { assertMeta, assertTitle, faqPage } from '@/lib/hub';
+
+const LABEL = 'Downtown';
+const title = assertTitle(LABEL, 'Exotic Car Rental Downtown Miami | Lussaro Collection');
+const description = assertMeta(
+  LABEL,
+  `Exotic car rental in Downtown Miami and Edgewater. Delivery is ${downtownDeliveryEachWay.display} each way to bayfront hotels and condos. Hours are ${hoursSummary}.`,
+);
+
+const { deposit, mileage, minimumAge } = rentalTerms;
+const miami = rentalTerms.delivery.find((d) => d.area === 'Miami');
+const local = neighborhoodFor('downtown');
+const usd = (n) => `$${Number(n).toLocaleString('en-US')}`;
+const bySlug = (slug) => cars.find((c) => c.slug === slug);
+const s580 = bySlug('mercedes-s580');
+const urus = bySlug('lamborghini-urus');
+const gls = bySlug('mercedes-maybach-gls-600');
+const cullinan = bySlug('rolls-royce-cullinan');
+const sto = bySlug('huracan-sto');
+const accent = (s) => s.replaceAll('Huracan', 'Huracán');
+
+const ctaSubtitle = `Downtown delivery is ${downtownDeliveryEachWay.display} each way. Send your details and we'll confirm availability for your dates.`;
+
+const faqs = [
+  {
+    q: 'Can the car be brought to a downtown hotel or condo?',
+    a: `Yes. Delivery is ${downtownDeliveryEachWay.display} each way to hotels and condos in Downtown Miami and Edgewater. Collection at the end of the rental is also ${downtownDeliveryEachWay.display}. Send the day and where you are staying, and the quote confirms the handover point.`,
+  },
+  {
+    q: 'Which cars suit a downtown garage?',
+    a: `The Mercedes-Benz S580 (${usd(s580.price)} a day), the Lamborghini Urus (${usd(urus.price)} a day) and the Mercedes-Maybach GLS 600 (${usd(gls.price)} a day) are the easier fit for a tower garage or a hotel drive. The Lamborghini Huracán STO (${usd(sto.price)} a day) sits low at the nose, so plan the handover at street level.`,
+  },
+  {
+    q: 'What is needed to book?',
+    a: `A driver aged ${minimumAge} or over${ageException ? `, except ${accent(ageException)}` : ''}, a valid license, and insurance that covers the car. The refundable deposit is ${deposit.display}${depositException ? `, except ${accent(depositException)}` : ''}. ${mileage.includedPerDay} miles are included for each day booked. Hours are ${hoursSummary}. Email ${contactEmail}.`,
+  },
+];
+---
+<LandingLayout
+  title={title}
+  description={description}
+  h1="Exotic Car Rental Downtown Miami"
+  intro={`Delivery is ${downtownDeliveryEachWay.display} each way to hotels and condos in Downtown Miami and Edgewater.`}
+  ctaTitle="Reserve your Downtown exotic"
+  ctaSubtitle={ctaSubtitle}
+  heroImage="/gallery/mercedes-maybach-gls-600-lamborghini-urus-rental-miami-metromover.jpg"
+  schema={[faqPage(faqs)]}
+>
+  <h2>Downtown Miami and Edgewater</h2>
+  <p>Downtown Miami runs along Biscayne Boulevard, with Bayfront Park and the Kaseya Center on the bay and Brightline's MiamiCentral station to the west. Edgewater is the neighborhood directly north of Downtown, along the same bay. Hotels and condo towers fill both. Delivery is {downtownDeliveryEachWay.display} each way to hotels and condos in Downtown Miami and Edgewater. Collection at the end of the rental is also {downtownDeliveryEachWay.display}.</p>
+  <p>Hours are {hoursSummary}. The handover is at your hotel or condo. Write to <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.</p>
+  {local?.deliveryLogistics && <p>{local.deliveryLogistics}</p>}
+
+  <h2>Out of downtown</h2>
+  <p>The MacArthur Causeway leaves downtown on I-395, crosses Watson Island, and comes ashore in <a href="/exotic-car-rental-south-beach">South Beach</a>. The Brickell Avenue Bridge crosses the Miami River onto Brickell Avenue. <a href="/exotic-car-rental-brickell">Brickell</a>, south of the river, is {miami.display} each way. For Key Biscayne, continue south through Brickell to the Rickenbacker Causeway entrance at the south end of Brickell, then across to Virginia Key and the island.</p>
+
+  <h2>Choosing a car for downtown</h2>
+  <p>Downtown handovers happen at a hotel drive, a valet lane, a condo garage ramp, or a curb on Biscayne Boulevard. The <a href="/cars/mercedes-s580">Mercedes-Benz S580</a> is {usd(s580.price)} a day and the simplest sedan for that. The <a href="/cars/lamborghini-urus">Lamborghini Urus</a> is {usd(urus.price)} a day, and the <a href="/cars/mercedes-maybach-gls-600">Mercedes-Maybach GLS 600</a> is {usd(gls.price)} a day. Both clear a normal garage entry more easily than a low coupe. The Rolls-Royce Cullinan is {usd(cullinan.price)} a day.</p>
+  <p>The <a href="/cars/huracan-sto">Lamborghini Huracán STO</a> is {usd(sto.price)} a day: two seats, and a nose that sits close to the road. Book it when the drive is the point — across the MacArthur, or south to the Rickenbacker — and take the handover at street level if the building has a steep ramp. The rest of the Lamborghinis are on the <a href="/lamborghini-rental-miami">Lamborghini rental in Miami</a> page. The wider service area is on our <a href="/exotic-car-rental-miami">Miami page</a>.</p>
+
+  <h2>Rates and requirements</h2>
+  <p>Every car carries a refundable {deposit.display} deposit{depositException ? `, except ${accent(depositException)}` : ''}, and {mileage.includedPerDay} miles for each day booked, pooled across the rental. Drivers must be {minimumAge} or over{ageException ? `, except ${accent(ageException)}` : ''}, with a valid license and insurance that covers the car. Downtown delivery is {downtownDeliveryEachWay.display} each way.</p>
+
+  <h2>Questions</h2>
+  {faqs.map((f) => (
+    <>
+      <h3>{f.q}</h3>
+      <p>{f.a}</p>
+    </>
+  ))}
+</LandingLayout>

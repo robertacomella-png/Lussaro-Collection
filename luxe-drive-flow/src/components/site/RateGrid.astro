@@ -1,0 +1,53 @@
+---
+import { publicName, rateRows, usd } from '@/lib/hub';
+import { rentalTerms } from '@/data/rental-terms';
+
+const { items } = Astro.props;
+const columns = items.length ? rateRows(items[0].car).map((row) => row.label) : [];
+// taxesAndFeesRate and deposit already live in rental-terms.js. The note
+// renders only while both are present, so a missing figure cannot be invented.
+const taxPct = Number.isFinite(rentalTerms.taxesAndFeesRate)
+  ? Math.round(rentalTerms.taxesAndFeesRate * 100)
+  : null;
+const deposit = rentalTerms.deposit?.display || '';
+// A car whose fleet.js deposit differs from the fleet default. The amount is
+// car.deposit.display, which cars.js builds from that fleet figure.
+const exceptions = (items || [])
+  .map((item) => item.car)
+  .filter((car) => car?.depositDiffers && car.deposit?.display)
+  .map((car) => `${car.deposit.display} on the ${publicName(car)}`);
+const exceptionClause = exceptions.length === 0
+  ? ''
+  : exceptions.length === 1
+    ? `, except ${exceptions[0]}`
+    : `, except ${exceptions.slice(0, -1).join(', ')} and ${exceptions.at(-1)}`;
+---
+{items.length > 0 && (
+  <div class="not-prose my-8 overflow-x-auto">
+    <table class="w-full text-sm text-left border-collapse">
+      <thead>
+        <tr class="border-b border-[#0a0a0a]/15">
+          <th scope="col" class="py-2 pr-3 font-semibold text-[#0a0a0a]">Car</th>
+          {columns.map((label) => (
+            <th scope="col" class="py-2 pl-3 font-semibold text-right text-[#0a0a0a]">{label}</th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {items.map((item) => (
+          <tr class="border-b border-[#0a0a0a]/10">
+            <th scope="row" class="py-2.5 pr-3 font-medium text-[#0a0a0a]">{item.name}</th>
+            {rateRows(item.car).map((row) => (
+              <td class="py-2.5 pl-3 text-right tabular-nums text-[#0a0a0a]">{usd(row.perDay)}</td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+)}
+{items.length > 0 && taxPct != null && deposit && (
+  <p class="not-prose text-sm text-[#0a0a0a]/70 -mt-4 mb-8">
+    Per-day rental rates before {taxPct}% taxes and fees. Delivery and collection are charged separately, and the {deposit} deposit is refundable{exceptionClause}.
+  </p>
+)}
