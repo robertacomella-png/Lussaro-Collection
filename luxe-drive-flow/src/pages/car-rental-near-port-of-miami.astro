@@ -1,0 +1,140 @@
+---
+// /car-rental-near-port-of-miami
+//
+// Owns "car rental near port of miami". Luxury and exotic delivery for a
+// cruise, not an on-port counter. The fee is the Miami row in rental-terms.js.
+// No ship-name requirement, terminal, meet point, or permit copy.
+import ContentPhoto from '@/components/site/ContentPhoto.astro';
+import LandingLayout from '@/layouts/LandingLayout.astro';
+import { cars } from '@/data/cars';
+import { business, telHref, whatsappWith } from '@/data/business';
+import { rentalTerms } from '@/data/rental-terms';
+import {
+  deliveryHoursLabel,
+  lateShipSentence,
+  miamiDelivery,
+  returnSentence,
+  displayName,
+} from '@/lib/delivery-facts';
+import { deliveryBusinessSchema, faqSchema } from '@/lib/delivery-schema';
+
+const PAGE = '/car-rental-near-port-of-miami';
+const SITE = 'https://www.lussarocollection.com';
+const PAGE_URL = `${SITE}${PAGE}`;
+
+const bySlug = (slug) => cars.find((c) => c.slug === slug);
+const named = displayName;
+
+const urus = bySlug('lamborghini-urus');
+const gls = bySlug('mercedes-maybach-gls-600');
+const cullinan = bySlug('rolls-royce-cullinan');
+const g63 = bySlug('mercedes-amg-g63');
+
+const waMessage = "Hi, I'd like the Lamborghini Urus delivered to the Port of Miami.";
+const wa = whatsappWith(waMessage, { car: urus.name, page: PAGE });
+
+const description = `Luxury and exotic car rental near the Port of Miami for a cruise day. Delivery is ${miamiDelivery.display} each way, the Miami rate. There is no rental counter at the port.`;
+
+const faqs = [
+  {
+    q: 'Do you deliver to the Port of Miami for a cruise?',
+    a: `Yes. Tell us whether you are embarking or disembarking. Delivery is ${miamiDelivery.display} each way, the Miami rate. This is not a rental counter at the port.`,
+  },
+  {
+    q: 'How much is delivery to the Port of Miami?',
+    a: `${miamiDelivery.display} each way, the Miami rate, on top of the daily rate. The quote shows it before you book.`,
+  },
+  {
+    q: 'Is there a Lussaro counter at the port?',
+    a: `No. If you are looking for car rental companies near the Port of Miami, this is not a desk at the port. The address is ${business.street}, ${business.city}, ${business.region} ${business.postalCode}. We deliver the car.`,
+  },
+  {
+    q: 'Can the car start at a hotel and end at the port?',
+    a: 'No. A hotel the night before and the port when you sail is not a one-way we offer. The return rule is stated once above, and in the terms.',
+  },
+  {
+    q: 'What if the ship is early or late?',
+    a: `${lateShipSentence} Hours are ${deliveryHoursLabel}. The quote is where the timing is agreed.`,
+  },
+  {
+    q: 'Which cars are practical with cruise luggage?',
+    a: `For a cruise, the four-door cars are the ${urus.name}, the ${named(gls)}, the ${named(cullinan)}, and the ${named(g63)}. A Huracán or a Ferrari SF90 is a different brief. The pricing page lists each rate.`,
+  },
+];
+
+const schema = [
+  deliveryBusinessSchema({
+    pageUrl: PAGE_URL,
+    areaServed: { '@type': 'Place', name: 'Port of Miami' },
+    description: `Luxury and exotic car rental delivered to the Port of Miami at the Miami rate of ${miamiDelivery.display} each way.`,
+    deliveryOffer: {
+      name: 'Delivery to the Port of Miami',
+      price: miamiDelivery.fee,
+      description: `Miami rate, ${miamiDelivery.display} each way, for delivery to the Port of Miami. Charged in addition to the daily rate.`,
+    },
+  }),
+  faqSchema(faqs),
+];
+---
+<LandingLayout
+  title="Car Rental Near Port of Miami | Cruise Delivery | Lussaro"
+  description={description}
+  h1="Luxury Car Rental Near the Port of Miami"
+  intro={`Lussaro Collection delivers a luxury or exotic car for a cruise at the Port of Miami. The fee is ${miamiDelivery.display} each way, the Miami rate. There is no counter on the property.`}
+  heroImage="/cars/rolls-royce-cullinan-rental-miami-front-quarter.jpg"
+  showRating={false}
+  bookingCar={urus.name}
+  bookingSource={PAGE_URL}
+  bookingCta="port_hero"
+  waMessage={waMessage}
+  fleetHeading="SUVs for a cruise day"
+  only={['lamborghini-urus', 'mercedes-maybach-gls-600', 'rolls-royce-cullinan']}
+  fullFleetLink={true}
+  ctaTitle="Book cruise-port delivery"
+  leadNote="Send the car, the dates, and whether you are embarking or disembarking."
+  bandSubtitle="Tell us the car and the dates. We reply with availability and the quote."
+  formNote="Prefer to talk now? Call or WhatsApp us."
+  schema={schema}
+>
+  <h2 id="short-answer">The short answer</h2>
+  <p>Car rental near the Port of Miami, from Lussaro Collection, means the car comes to you for a cruise. It does not mean a counter on the property. We are at {business.street}, {business.city}, {business.region} {business.postalCode}. The fee is {miamiDelivery.display} each way, the same published Miami rate as the rest of the city, and it sits on top of the daily rate.</p>
+  <p>{returnSentence} A hotel the night before and the port when you sail is not a one-way we offer. The rule is in the <a href="/terms">terms</a>. Hours are {deliveryHoursLabel}. {lateShipSentence}</p>
+  <p>
+    Call <a href={telHref} data-cta="port_body" data-call-inline>{business.phoneDisplay}</a>
+    or message <a href={wa} data-cta="port_body" target="_blank" rel="noopener noreferrer">WhatsApp</a>.
+    The form opens on the {urus.name}.
+  </p>
+
+  <h2 id="embarking-or-disembarking">Embarking or disembarking</h2>
+  <p>Tell us which way the cruise day runs. Embarking means you have the car before you sail, and we collect it or you bring it back to us. Disembarking means the car is there when you get off the ship, and the rental starts then. Send the car, the dates, and that choice. We reply with availability and the total, including the {miamiDelivery.display} delivery. An eligible driver has to be present to receive the car.</p>
+  <p>The quote is where the timing is agreed. We do not publish a timetable for the ship, and we do not ask you to name the vessel on this page.</p>
+
+  <ContentPhoto src="/cars/mercedes-maybach-gls-600-rental-miami-side-skyline.jpg" width={1600} height={1066} />
+
+  <h2 id="what-delivery-costs">What delivery costs</h2>
+  <p>Delivery to the Port of Miami is {miamiDelivery.display} each way, the Miami rate. The <a href="/pricing">rate card</a> does not keep a separate port line. <a href="/luxury-car-rental-miami-airport">The MIA page</a> uses this same fee. <a href="/luxury-car-rental-fll/">The FLL page</a> uses the Fort Lauderdale fee. A cruise rental does not become a flight return.</p>
+
+  <h2 id="which-cars">Cars that work with cruise luggage</h2>
+  <p>Suitcases want an SUV. The form selects the <a href="/cars/lamborghini-urus">{urus.name}</a>. The {named(gls)}, the {named(cullinan)}, and the {named(g63)} are the other SUVs we send when there is luggage. The pricing page lists the daily rate and the longer stay.</p>
+  <p>A Huracán or a Ferrari SF90 is the wrong tool for a pile of suitcases and the right one when the day in the city is the point. The Huracán STO is track-bred, street-only. The wider list is the <a href="/fleet">fleet</a>.</p>
+
+  <ContentPhoto src="/cars/ferrari-sf90-rental-miami-front-quarter.jpg" width={1600} height={1066} />
+
+  <h2 id="what-the-daily-rate-includes">What the daily rate includes</h2>
+  <p>For a cruise day, miles, the deposit, and cancellation are on the pricing page and in the terms.</p>
+
+  <h2 id="a-day-in-the-city">A day in the city</h2>
+  <p>The Miami delivery area covers the days on either side of the cruise, under the return rule above. Miami, South Beach, and Brickell are the neighborhoods on either side of that day. We do not publish a street-by-street schedule.</p>
+
+  <h2 id="prefer-to-be-driven">Prefer to be driven?</h2>
+  <p>Prefer a driver for the day around the cruise? Chauffeur service in the {named(gls)} is booked from the <a href="/chauffeur-service-miami">chauffeur page</a>.</p>
+
+  <h2 id="questions">Questions</h2>
+  {faqs.map((f) => (
+    <>
+      <h3>{f.q}</h3>
+      <p>{f.a}</p>
+    </>
+  ))}
+  <p>Anything else starts with a call or a WhatsApp message.</p>
+</LandingLayout>

@@ -36,6 +36,9 @@ const {
   bookingSource = '',
   bookingCta = 'landing_hero',
   waMessage: waMessageProp = '',
+  leadNote = "Tell us what and when — we'll confirm in minutes.",
+  bandSubtitle = 'Same-day availability across Miami. Reserve in under a minute.',
+  formNote = undefined,
 } = Astro.props;
 
 // ImageKit URLs keep the 1600px transform they have always used; a local photo
@@ -123,12 +126,12 @@ const wa = whatsappWith(waMessage, { page: waPage });
       <div class="reveal text-center mb-10">
         <p class="text-[#ff1516] tracking-[0.3em] uppercase text-xs mb-3">Reserve</p>
         <h2 class="font-display text-3xl md:text-5xl font-bold text-white">{ctaTitle}</h2>
-        <p class="text-white/55 mt-3 max-w-md mx-auto">Tell us what and when — we'll confirm in minutes.</p>
+        <p class="text-white/55 mt-3 max-w-md mx-auto">{leadNote}</p>
       </div>
-      <LeadForm client:visible defaultVehicle={bookingCar} source={bookingSource || 'lead_form'} />
+      <LeadForm client:visible defaultVehicle={bookingCar} source={bookingSource || 'lead_form'} note={formNote} />
     </div>
   </section>
 
-  <CtaBand message={waMessage} page={waPage} />
-  <StickyMobileCta message={waMessage} page={waPage} />
+  <CtaBand message={waMessage} page={waPage} subtitle={bandSubtitle} car={bookingCar || undefined} />
+  <StickyMobileCta message={waMessage} page={waPage} car={bookingCar || undefined} />
 </Layout>

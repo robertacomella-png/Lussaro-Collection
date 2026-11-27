@@ -45,6 +45,14 @@ const HOME = { name: 'Home', path: '/' };
 const FLEET = { name: 'Fleet', path: '/fleet' };
 const BLOG = { name: 'Rental Guides', path: '/blog' };
 
+// Delivery pages sit under Fleet: Home → Fleet → this page. They are not
+// children of the Miami, South Beach, or Brickell keyword pages.
+const DELIVERY_CRUMBS = {
+  '/luxury-car-rental-miami-airport': 'Luxury Car Rental Miami Airport',
+  '/luxury-car-rental-fll': 'Luxury Car Rental FLL',
+  '/car-rental-near-port-of-miami': 'Car Rental Near Port of Miami',
+};
+
 /**
  * Returns a BreadcrumbList for the given route, or null for routes that should
  * not carry one (the homepage itself, /fleet, /terms, /privacy, /404).
@@ -68,6 +76,8 @@ export const breadcrumbFor = (pathname, leafName) => {
     // page is worse than a shorter trail.
     if (!leafName) return null;
     trail = [HOME, BLOG, { name: leafName, path }];
+  } else if (DELIVERY_CRUMBS[path]) {
+    trail = [HOME, FLEET, { name: DELIVERY_CRUMBS[path], path }];
   } else if (LABELS[path]) {
     trail = [HOME, { name: LABELS[path], path }];
   } else {

@@ -79,7 +79,7 @@ const wa = whatsappWith(
   { car: 'Lamborghini Urus', page: PAGE },
 );
 
-const description = `Exotic car rental in Fort Lauderdale, delivered from Miami at ${fll.display} each way. Urus, Huracan, SF90, 911 Turbo S, Maybach and Cullinan, with ${miles} miles a day.`;
+const description = `Exotic car rental in Fort Lauderdale, delivered from Miami at ${fll.display} each way. Urus, Huracan, SF90, 911 Turbo S, Mercedes-Maybach and Cullinan, ${miles} miles a day.`;
 
 const faqs = [
   {
@@ -88,7 +88,7 @@ const faqs = [
   },
   {
     q: 'Can you drop a car at Fort Lauderdale Airport?',
-    a: `Yes. Fort Lauderdale-Hollywood International Airport is in the Fort Lauderdale delivery area, billed at ${fll.display} each way. The handover point is confirmed in the quote.`,
+    a: 'See the FLL page.',
   },
   {
     q: 'How much is exotic car rental in Fort Lauderdale?',
@@ -148,7 +148,7 @@ const faqSchema = {
   <h2 id="delivery-to-fort-lauderdale" class="scroll-mt-28">Delivery to Fort Lauderdale</h2>
   <p>We are based at {address}, and Fort Lauderdale is a published delivery area. The one-way fee is {fll.display}, each way. That is not a round-trip price. Collection is typically the same amount, and the quote states both fees before anything is booked.</p>
   <p>Miami delivery, for comparison, is {miami.display} each way. The same cars, mileage and deposit apply in both cities. The difference is the delivery charge.</p>
-  <p>Hours are {hoursSummary}. Tell us the address — a hotel, a residence, or Fort Lauderdale-Hollywood International Airport — and we will confirm the handover point and both fees in the quote.</p>
+  <p>Hours are {hoursSummary}. Tell us the address — a hotel or a residence — and we will confirm the handover point and both fees in the quote.</p>
 
   <ContentPhoto src="/cars/lamborghini-urus-rental-miami-downtown-skyline.jpg" width={2000} height={1333} />
 
@@ -176,7 +176,7 @@ const faqSchema = {
     </table>
   </div>
 
-  <p>If you are flying into FLL with luggage, start with an SUV: the <a href="/cars/lamborghini-urus">Urus</a>, the <a href="/cars/mercedes-maybach-gls-600">Maybach GLS 600</a>, the <a href="/cars/rolls-royce-cullinan">Cullinan</a>, or the <a href="/cars/mercedes-amg-g63">G63</a>. All of them have four doors and a proper trunk. Hotel ramps and garage entries are a simpler problem in these than in the low cars below.</p>
+  <p>If you are flying into FLL with luggage, start with an SUV on the <a href="/luxury-car-rental-fll/">FLL page</a>: the <a href="/cars/lamborghini-urus">Urus</a>, the <a href="/cars/mercedes-maybach-gls-600">Mercedes-Maybach GLS 600</a>, the <a href="/cars/rolls-royce-cullinan">Cullinan</a>, or the <a href="/cars/mercedes-amg-g63">G63</a>. All of them have four doors and a proper trunk. Hotel ramps and garage entries are a simpler problem in these than in the low cars below.</p>
 
   <ContentPhoto src="/cars/lamborghini-huracan-evo-rental-miami-front-quarter.jpg" width={2000} height={1333} />
 
@@ -184,13 +184,12 @@ const faqSchema = {
 
   <ContentPhoto src="/cars/porsche-911-turbo-s-cabriolet-rental-miami-front-quarter.jpg" width={2000} height={1333} />
 
-  <p>For a quieter arrival — a dinner on Las Olas, a hotel stay, a client meeting — the Maybach GLS 600, the <a href="/cars/mercedes-maybach-s580">Maybach S580</a> sedan, the Cullinan, or the <a href="/cars/mercedes-s580">Mercedes-Benz S580</a> are the better fit. Chauffeur service in the GLS 600 is from {rentalTerms.chauffeurHourly.display} an hour. That is a separate booking on our <a href="/chauffeur-service-miami">chauffeur page</a>.</p>
+  <p>For a quieter arrival — a dinner on Las Olas, a hotel stay, a client meeting — the Mercedes-Maybach GLS 600, the <a href="/cars/mercedes-maybach-s580">Mercedes-Maybach S580</a> sedan, the Cullinan, or the <a href="/cars/mercedes-s580">Mercedes-Benz S580</a> are the better fit. Chauffeur service in the Mercedes-Maybach GLS 600 is from {rentalTerms.chauffeurHourly.display} an hour. That is a separate booking on our <a href="/chauffeur-service-miami">chauffeur page</a>.</p>
 
   <ContentPhoto src="/cars/mercedes-maybach-gls-600-rental-miami-front-quarter.jpg" width={1092} height={698} />
 
   <h2 id="fort-lauderdale-airport-fll" class="scroll-mt-28">Fort Lauderdale Airport (FLL)</h2>
-  <p>Fort Lauderdale-Hollywood International Airport sits inside the Fort Lauderdale delivery area, at {fll.display} each way. Miami International (MIA) sits in the Miami delivery area, at the Miami rate of {miami.display} each way. The exact handover spot at the airport is agreed in your quote, so you are not left guessing which curb or garage to use on the day.</p>
-  <p>If you would rather be met and driven, chauffeur transfers in the Maybach GLS 600 are from {rentalTerms.chauffeurHourly.display} an hour and are booked through the <a href="/chauffeur-service-miami">chauffeur page</a>, not as a self-drive rental.</p>
+  <p>Airport delivery is on the <a href="/luxury-car-rental-fll/">FLL page</a>.</p>
 
   <ContentPhoto src="/cars/ferrari-sf90-rental-miami-front-quarter.jpg" width={1600} height={1066} />
 
@@ -208,7 +207,11 @@ const faqSchema = {
   {faqs.map((f) => (
     <>
       <h3>{f.q}</h3>
-      <p>{f.a}</p>
+      {f.q === 'Can you drop a car at Fort Lauderdale Airport?' ? (
+        <p set:html={f.a.replace('the FLL page', '<a href="/luxury-car-rental-fll/">the FLL page</a>')} />
+      ) : (
+        <p>{f.a}</p>
+      )}
     </>
   ))}
   <p>Chauffeur bookings are on the <a href="/chauffeur-service-miami">chauffeur service</a> page. For a Lamborghini specifically, see <a href="/lamborghini-rental-miami">Lamborghini rental in Miami</a> and the <a href="/lamborghini-urus-rental-miami">Urus page</a>.</p>

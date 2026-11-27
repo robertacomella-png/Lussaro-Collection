@@ -1,0 +1,141 @@
+---
+// /luxury-car-rental-fll
+//
+// Owns "luxury car rental fll". "Exotic car rental fort lauderdale" belongs to
+// the city page. This page is the airport only. The fee is the Fort Lauderdale
+// row in rental-terms.js, and this page does not call that fee the Miami rate.
+import ContentPhoto from '@/components/site/ContentPhoto.astro';
+import LandingLayout from '@/layouts/LandingLayout.astro';
+import { cars } from '@/data/cars';
+import { business, telHref, whatsappWith } from '@/data/business';
+import { rentalTerms } from '@/data/rental-terms';
+import {
+  deliveryHoursLabel,
+  flightTrackingSentence,
+  fortLauderdaleDelivery,
+  lateFlightSentence,
+  returnSentence,
+  displayName,
+} from '@/lib/delivery-facts';
+import { deliveryBusinessSchema, faqSchema } from '@/lib/delivery-schema';
+
+const PAGE = '/luxury-car-rental-fll';
+const SITE = 'https://www.lussarocollection.com';
+const PAGE_URL = `${SITE}${PAGE}`;
+
+const bySlug = (slug) => cars.find((c) => c.slug === slug);
+const named = displayName;
+
+const urus = bySlug('lamborghini-urus');
+const gls = bySlug('mercedes-maybach-gls-600');
+const cullinan = bySlug('rolls-royce-cullinan');
+const g63 = bySlug('mercedes-amg-g63');
+const sto = bySlug('huracan-sto');
+
+const waMessage = "Hi, I'd like the Lamborghini Urus delivered to Fort Lauderdale Airport (FLL).";
+const wa = whatsappWith(waMessage, { car: urus.name, page: PAGE });
+
+const description = `Luxury car rental to Fort Lauderdale-Hollywood International Airport (FLL). Delivery is ${fortLauderdaleDelivery.display} each way, outside the Miami rate. The car comes from Miami.`;
+
+const faqs = [
+  {
+    q: 'Do you deliver to FLL?',
+    a: `Yes. The car comes from Miami to FLL. Delivery is ${fortLauderdaleDelivery.display} each way because FLL is outside our local Miami area. We do not have a Fort Lauderdale office.`,
+  },
+  {
+    q: 'How much is delivery to FLL?',
+    a: `Delivery to FLL is ${fortLauderdaleDelivery.display} each way. That is the published fee, not the Miami fee. You see it in the quote before you book.`,
+  },
+  {
+    q: 'Do you have an office at the airport?',
+    a: `No. Our Miami office is ${business.street}, ${business.city}, ${business.region} ${business.postalCode}. The airport is not a second branch.`,
+  },
+  {
+    q: 'Can I fly in here and return the car in Miami, or at MIA?',
+    a: 'No. There is no one-way return to Miami or to MIA. The return rule is stated once above, and in the terms.',
+  },
+  {
+    q: 'What if my flight is late?',
+    a: `${lateFlightSentence} ${flightTrackingSentence} The daily window is ${deliveryHoursLabel}.`,
+  },
+];
+
+const schema = [
+  deliveryBusinessSchema({
+    pageUrl: PAGE_URL,
+    areaServed: {
+      '@type': 'Airport',
+      name: 'Fort Lauderdale-Hollywood International Airport',
+      iataCode: 'FLL',
+    },
+    description: `Luxury and exotic car rental delivered to Fort Lauderdale-Hollywood International Airport at ${fortLauderdaleDelivery.display} each way.`,
+    deliveryOffer: {
+      name: 'Delivery to Fort Lauderdale-Hollywood International Airport',
+      price: fortLauderdaleDelivery.fee,
+      description: `${fortLauderdaleDelivery.display} each way. Published fee for this airport, charged in addition to the daily rate.`,
+    },
+  }),
+  faqSchema(faqs),
+];
+---
+<LandingLayout
+  title="Luxury Car Rental FLL | Fort Lauderdale Airport | Lussaro"
+  description={description}
+  h1="Luxury Car Rental at Fort Lauderdale Airport (FLL)"
+  intro={`Lussaro Collection brings the car from Miami to Fort Lauderdale-Hollywood International Airport. Delivery is ${fortLauderdaleDelivery.display} each way because the airport is outside our local Miami area. There is no office on site.`}
+  heroImage="/cars/mercedes-maybach-gls-600-rental-miami-side-palms.jpg"
+  showRating={false}
+  bookingCar={urus.name}
+  bookingSource={PAGE_URL}
+  bookingCta="fll_hero"
+  waMessage={waMessage}
+  fleetHeading="SUVs for a flight into the airport"
+  only={['lamborghini-urus', 'mercedes-maybach-gls-600', 'rolls-royce-cullinan']}
+  fullFleetLink={true}
+  ctaTitle="Book the Urus for FLL delivery"
+  leadNote="Send the car, the dates, and your arrival window."
+  bandSubtitle="Tell us the car and the dates. We reply with availability and the quote."
+  formNote="Prefer to talk now? Call or WhatsApp us."
+  schema={schema}
+>
+  <h2 id="short-answer">The short answer</h2>
+  <p>This page is FLL only. The car leaves {business.street}, {business.city}, and comes north to FLL. The fee is {fortLauderdaleDelivery.display} each way, the published Fort Lauderdale figure, because FLL is outside our local Miami area. We do not keep a Fort Lauderdale office, a counter, or a second address there.</p>
+  <p>{returnSentence} There is no one-way return to Miami or to MIA. Read it in the <a href="/terms">terms</a>. The daily window is {deliveryHoursLabel}.</p>
+  <p>
+    <a href={telHref} data-cta="fll_body" data-call-inline>{business.phoneDisplay}</a>
+    takes a call, and <a href={wa} data-cta="fll_body" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+    takes a message. The {urus.name} is already selected in the form.
+  </p>
+  <p>Hotels, Las Olas, and the beach are on <a href="/exotic-car-rental-fort-lauderdale">the city page</a>.</p>
+
+  <h2 id="how-fll-delivery-works">How the airport delivery works</h2>
+  <p>Name the car and the dates, and add the arrival window. What we send back is availability and the total, and that total includes the Fort Lauderdale delivery of {fortLauderdaleDelivery.display} each way. The person who takes the keys has to be there: {sto.minimumAge} or older for the Huracán STO, {rentalTerms.minimumAge} or older for every other car, with a current driver's license and cover that includes this rental.</p>
+  <p>{lateFlightSentence} The timing sits in the quote. {flightTrackingSentence} We do not publish a minute-by-minute plan. The daily window is {deliveryHoursLabel}.</p>
+
+  <ContentPhoto src="/cars/mercedes-maybach-gls-600-rental-miami-rear-quarter.jpg" width={1600} height={1066} />
+
+  <h2 id="what-delivery-costs">What delivery costs</h2>
+  <p>Delivery to the airport is {fortLauderdaleDelivery.display} each way. The FLL fee is not the Miami fee, and it is not inside the daily rate. Both published fees are on the <a href="/pricing">rate card</a>.</p>
+  <p><a href="/luxury-car-rental-miami-airport">The MIA page</a> is a different delivery. The Port of Miami is a cruise delivery. Neither is a return point for a car that starts here.</p>
+
+  <h2 id="which-cars">Cars that work after a flight</h2>
+  <p>Luggage after a flight into FLL calls for an SUV. The form is set to the <a href="/cars/lamborghini-urus">{urus.name}</a>. Four doors also covers the {named(g63)}, the {named(cullinan)}, and the {named(gls)}. What a day costs, and what a longer booking costs, is on the pricing page.</p>
+  <p>When the bags matter less than the drive, look at the Huracán EVO and the Ferrari SF90. Track-bred, street-only describes the Huracán STO. Name that car in the quote if it is the one you want. Anything else we run is on the <a href="/fleet">fleet</a>.</p>
+
+  <ContentPhoto src="/cars/rolls-royce-cullinan-rental-miami-side-profile.jpg" width={1024} height={683} />
+
+  <h2 id="what-the-daily-rate-includes">What the daily rate includes</h2>
+  <p>Miles and the deposit for a car that starts at FLL are written up on the pricing page, and the terms hold the rest.</p>
+
+  <h2 id="prefer-to-be-driven">Prefer to be driven?</h2>
+  <p>For a driver during your Fort Lauderdale trip, chauffeur service in the {named(gls)} is on the <a href="/chauffeur-service-miami">chauffeur page</a>.</p>
+
+  <h2 id="questions">Questions</h2>
+  {faqs.map((f) => (
+    <>
+      <h3>{f.q}</h3>
+      <p>{f.a}</p>
+    </>
+  ))}
+  <p>To write instead of book a car, call or send a WhatsApp message.</p>
+</LandingLayout>
