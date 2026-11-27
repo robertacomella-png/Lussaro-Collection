@@ -218,6 +218,12 @@ const ogImage = firstImg && !firstImg.endsWith('.svg')
 // fleet.js `name` sometimes already carries the make ("Lamborghini Urus") and
 // sometimes does not ("S580"), so only prepend when it is missing.
 const fullName = car.name.startsWith(car.make) ? car.name : `${car.make} ${car.name}`;
+// /porsche-911-turbo-s-rental-miami owns "porsche rental miami" and leads with
+// "Porsche 911 Turbo S Rental Miami". This URL is the spec and booking record,
+// so its heading does not repeat that query.
+const detailH1 = car.slug === 'porsche-911-turbo-s'
+  ? 'Porsche 911 Turbo S Cabriolet Specs, Photos and Rates'
+  : '';
 
 // Carousel alt text: the reviewed description from image-alt.js where one
 // exists, otherwise a fallback that still names the car and the city.
@@ -341,12 +347,21 @@ const pageProductSchema = car.slug === 'huracan-sto'
         </p>
       )}
       <h1 class="font-display font-extrabold text-white uppercase text-center text-balance tracking-tight leading-[1.1] text-[clamp(1.25rem,3.4vw,2.625rem)]">
-        {content?.h1Lead ? (
+        {detailH1 ? (
+          detailH1
+        ) : content?.h1Lead ? (
           <>{content.h1Lead}{' '}<span class="text-[#ff1516]">{business.city}</span></>
         ) : (
           <>{fullName} Rental In <span class="text-[#ff1516]">{business.city}, {business.region}</span></>
         )}
       </h1>
+      {detailH1 && (
+        <p class="text-center text-white/70 text-sm md:text-base mt-4">
+          <a href="/porsche-911-turbo-s-rental-miami" class="text-[#ff1516] underline underline-offset-4">Porsche rental in Miami</a>
+          <span aria-hidden="true"> · </span>
+          rates, delivery and how this car compares
+        </p>
+      )}
     </div>
   </header>
 

@@ -214,7 +214,7 @@ export const carContent = {
     faqAnswer:
       'It is a 2+2. There are two full seats up front and two small seats behind them, which work for bags or a short trip across town but are tight for adults on a long drive. Book it as a two-seater with somewhere to put the luggage, and it is the most practical convertible we run.',
     siblings: ['huracan-evo-spyder', 'huracan-sto'],
-    category: { href: '/exotic-car-rental-miami', label: 'Exotic car rental in Miami' },
+    category: { href: '/porsche-911-turbo-s-rental-miami', label: 'Porsche rental in Miami' },
     realMoment: '',
     operatorNotes: '',
     deliveryNotes: '',

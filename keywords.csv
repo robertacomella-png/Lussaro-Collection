@@ -12,7 +12,7 @@ sports car rental miami,core,commercial,medium,/fleet,needs-work,,,,"Adjacent to
 exotic rental cars miami,core,commercial,medium,/exotic-car-rental-miami,covered,,,,Word-order variant. No separate page needed.
 rent exotic car miami,core,commercial,medium,/exotic-car-rental-miami,covered,,,,Verb-form variant.
 luxury suv rental miami,core,commercial,high,/luxury-suv-rental-miami,covered,,,,Urus and GLS 600 both qualify.
-exotic car rental fort lauderdale,core,commercial,high,,gap,,,,We deliver there at $175 each way. No page exists. Real revenue gap.
+exotic car rental fort lauderdale,core,commercial,high,/exotic-car-rental-fort-lauderdale,covered,,,,"Location page, 26 Nov 2026. Published Fort Lauderdale delivery fee only. Hollywood, Port Everglades, the FLL meet point and lead time are not in the data."
 lussaro collection,brand,navigational,high,/,covered,,,,Protect. Should rank first.
 lussaro collection reviews,brand,navigational,medium,/reviews,covered,,,,All 5 reviews are 5-star.
 lussaro collection miami,brand,navigational,medium,/,covered,,,,
@@ -25,9 +25,9 @@ lamborghini urus rental,car,commercial,high,/blog/how-much-is-a-lamborghini-rent
 lamborghini huracan rental,car,commercial,high,/blog/how-much-is-a-lamborghini-rental,covered,,,,Secondary in the Lamborghini cluster. EVO $1199/day.
 lamborghini huracan sto rental miami,car,commercial,high,/cars/huracan-sto,covered,,,,"PRIMARY for the STO car page; owner-chosen 15 Nov 2026. Opens the title and meta description. Do not give a landing page or blog post this primary - the car page owns it."
 huracan sto rental miami,car,commercial,medium,/cars/huracan-sto,covered,,,,"Variant of the STO primary; same page. A future STO vs EVO post may use it only as a secondary."
-porsche 911 turbo s rental miami,car,commercial,high,/cars/porsche-911-turbo-s,covered,,,,"PRIMARY for the 911 Turbo S car page; added 15 Nov 2026. Opens the title and meta description. The car page owns it - no landing page or post takes this primary."
+porsche 911 turbo s rental miami,car,commercial,high,/porsche-911-turbo-s-rental-miami,covered,,,,"Moved to the Porsche money page on Public Relations review, 26 Nov 2026. The car page keeps the specs title and H1."
 porsche 911 turbo s convertible rental miami,car,commercial,medium,/cars/porsche-911-turbo-s,covered,,,,"Variant; the car is the Cabriolet. Same page."
-porsche rental miami,car,commercial,high,/cars/porsche-911-turbo-s,needs-work,,,,"Only Porsche in the fleet, so the car page is the target for now. Revisit if a second Porsche arrives or a Porsche landing page is built."
+porsche rental miami,car,commercial,high,/porsche-911-turbo-s-rental-miami,covered,,,,"Head term for the Porsche money page, 26 Nov 2026. /cars/porsche-911-turbo-s stays the spec and booking record."
 lamborghini rental las vegas,geo-out-of-market,commercial,low,,do-not-target,,,,Out of market. Miami only - we cannot serve Nevada and should not rank for it.
 lamborghini rental dallas,geo-out-of-market,commercial,low,,do-not-target,,,,Out of market. Miami only.
 lamborghini rental los angeles,geo-out-of-market,commercial,low,,do-not-target,,,,Out of market. Miami only.
@@ -107,6 +107,10 @@ how much does it cost to rent a maybach,informational,informational,high,/blog/h
 how much to rent a maybach for a day,informational,informational,high,/blog/how-much-to-rent-a-maybach-miami,covered,170,4,,"Secondary on the Maybach price post. Day-rate answer."
 maybach rental price,informational,informational,medium,/blog/how-much-to-rent-a-maybach-miami,covered,260,10,,"Secondary on the Maybach price post. Rate card."
 maybach suv rental,car,commercial,medium,/blog/how-much-to-rent-a-maybach-miami,covered,140,5,,"Secondary on the Maybach price post. The GLS 600 is the SUV. Commercial maybach rental miami stays on /maybach-rental-miami."
+luxury car rental for wedding,occasion,commercial,high,/wedding-car-rental-miami,covered,,,,"Primary of the wedding page. Title and H1 are geo-qualified to Miami. No limousine, decoration policy or package rate is published."
+wedding car rental miami,occasion,commercial,medium,/wedding-car-rental-miami,covered,,,,"Miami variant covered by the wedding page. The national wedding car rental query is broader."
+exotic car rental for wedding,occasion,commercial,high,/wedding-car-rental-miami,covered,,,,"Secondary on the wedding page."
+rolls royce rental for wedding,occasion,commercial,high,/wedding-car-rental-miami,covered,,,,"Secondary. /rolls-royce-rental-miami and the Cullinan car page keep the car term."
 rent a lamborghini for a day,informational,informational,high,/blog/rent-a-lamborghini-for-a-day-miami,covered,480,8,0.46,"PRIMARY of the 27 Nov 2026 route guide. Informational day-and-route angle. /lamborghini-rental-miami keeps rent a lamborghini in miami. /cars/huracan-sto keeps lamborghini huracan sto rental miami. Volume from SE Ranking US, pulled 26 Nov 2026; the 27 Nov re-pull failed."
 best drives in miami,informational,informational,medium,/blog/rent-a-lamborghini-for-a-day-miami,covered,,,,"Secondary on the 27 Nov 2026 day guide. No SE Ranking volume on file. Covered by the four routes."
 lamborghini rental miami price,informational,informational,medium,/blog/rent-a-lamborghini-for-a-day-miami,covered,40,11,,"Secondary on the 27 Nov 2026 day guide. One-day total and the Lamborghini rate table. Commercial lamborghini rental miami stays on /lamborghini-rental-miami."
