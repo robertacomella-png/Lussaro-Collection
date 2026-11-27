@@ -37,6 +37,7 @@ export const carContent = {
       'Usually, but measure first. The Urus is about 79 inches across the body and close to 86 with the mirrors folded out, which is wide enough to make older Miami parking structures, narrow gates and valet lanes tight. Folding the mirrors buys you most of that difference on the way in.',
     siblings: ['mercedes-maybach-s580', 'mercedes-maybach-gls-600'],
     category: { href: '/luxury-suv-rental-miami', label: 'Luxury SUV rental in Miami' },
+    compareLink: { href: '/cars/huracan-sto', label: 'Compare with the Huracán STO' },
     realMoment: '',
     operatorNotes: '',
     deliveryNotes: '',
@@ -122,18 +123,77 @@ export const carContent = {
   },
 
   'huracan-sto': {
+    // DOM text of the H1. The shared car-page formula is "<name> Rental In Miami, FL",
+    // which is what the EVO and the Urus car page still use. This lead keeps the
+    // accented model name and drops the state so the heading is not the same pattern.
+    // The city is appended by the template and tinted there.
+    h1Lead: 'Lamborghini Huracán STO Rental in',
+    // Headings and paragraphs for the reading section. {{tokens}} are filled from
+    // fleet.js / rental-terms.js at render, so a price change does not stale the copy.
+    // Links are [label](/path). Retune headings here when the keyword cluster arrives.
+    sections: [
+      {
+        id: 'rent',
+        heading: 'Rent a Huracán STO in Miami',
+        paragraphs: [
+          'A Huracán STO rental is {{price}} a day, with {{miles}} miles included. Book {{threeDays}} days or more and it is {{threeDay}} a day, {{fiveDays}} days or more is {{fiveRate}} a day, and {{weekDays}} days or more is {{weekRate}} a day. Taxes and fees of {{tax}}% are added to the rental. The {{deposit}} deposit is refundable and held separately.',
+          'Delivery is {{miamiDelivery}} each way across Miami, Miami Beach, South Beach and Brickell, and {{ftlDelivery}} each way to Fort Lauderdale. Collection is charged separately, typically the same fee. Hotels, homes and both airports are covered. The same figures are on the [rate card](/pricing).',
+          'You need to be {{age}} or over, with a valid license and insurance that covers the car. That age is this car only. The rest of the fleet starts at 18, with a {{fleetDeposit}} deposit. The STO deposit is {{deposit}}.',
+        ],
+      },
+      {
+        id: 'car',
+        heading: 'What the Huracán STO is',
+        paragraphs: [
+          'Lamborghini built the STO from the Super Trofeo one-make car and homologated it for the street. The fixed rear wing and the roof scoop are the parts you can see. Under them is a naturally aspirated 5.2-liter V10, {{power}} hp, sending everything to the rear wheels. The quoted sprint is {{zero}} to 60. It is a fixed-roof coupe, with conventional doors.',
+          'The limits are specific: two seats, a firmer ride than the Huracán EVO, a low nose, and room for a soft bag rather than a suitcase. They are listed under Good to know. Read them if the booking is anything other than two people and a short drive.',
+        ],
+      },
+      {
+        id: 'miami',
+        heading: 'Driving a Huracán STO in Miami',
+        paragraphs: [
+          'South Beach and Ocean Drive are the loop this car is booked for. Collins Avenue is the same drive with fewer lights once you are north of the beach. Brickell suits a dinner and a short run, not a day of luggage and a garage ramp you have not walked.',
+          'It is the wrong car for four people, a week of highway with bags, or a ramp you cannot see the bottom of. Those bookings are the [Lamborghini Urus](/cars/lamborghini-urus). The same V10 with a softer ride is the [Huracán EVO](/cars/huracan-evo) at {{evoPrice}} a day ({{evoPower}} hp, {{evoZero}} to 60). The roof comes off on the [EVO Spyder](/cars/huracan-evo-spyder) at {{spyderPrice}} a day.',
+        ],
+      },
+      {
+        id: 'compare',
+        heading: 'Huracán STO, EVO, or Urus',
+        paragraphs: [
+          'Rent the STO when the drive is the point. Rent the EVO when you want that V10 with more comfort around town. Rent the Urus when people or luggage have to come too. The day rates below are the 1-day price. The three-way write-up, including the Spyder, is [Huracán STO vs EVO](/blog/lamborghini-huracan-sto-vs-evo-rental-miami).',
+        ],
+      },
+      {
+        id: 'lineup',
+        heading: 'Where the STO fits a Lamborghini rental in Miami',
+        paragraphs: [
+          'This page is the Huracán STO. [Lamborghini rental in Miami](/lamborghini-rental-miami) is the wider choice: the Urus when the booking needs doors and a trunk, the EVO when you want the V10 without the STO\'s firmer, track-bred setup. What the day rate does not include is in the [Lamborghini rental Miami price](/blog/how-much-is-a-lamborghini-rental) guide. If the STO is the car, the rate, the photos and the form on this page are the ones that apply.',
+        ],
+      },
+    ],
+    extraFaqs: [
+      {
+        q: 'How old do you have to be to rent a Huracán STO in Miami?',
+        a: '{{age}}, with a valid license and insurance that covers the car, or a daily policy from us at booking. The rest of the fleet starts at 18. The higher age is specific to this car.',
+      },
+      {
+        q: 'Can I rent the Huracán STO for one day?',
+        a: 'Yes. One day is {{price}}, with {{miles}} miles included. {{threeDays}} days or more drops the rate to {{threeDay}} a day.',
+      },
+    ],
     useCases: `The STO is the Huracan with the comfort taken out and the race car left in. Lamborghini built it from the Super Trofeo one-make series, and it shows: a fixed rear wing, a roof scoop, a firmer ride and a V10 that sends everything to the rear wheels. Book it when the driving is the event — a morning run with the city still quiet, a shoot, a birthday that deserves noise. It is the wrong car for a long cruise with luggage. If you want the same V10 with a softer ride, the EVO is the one.`,
     goodToKnow: [
       'Strictly two seats — driver plus one passenger, with no rear bench.',
-      'Rear-wheel drive, with the naturally aspirated 5.2-litre V10 tuned to 631 hp. No hybrid system and no electric mode.',
-      'Track-focused suspension. It rides noticeably firmer than the Huracan EVO, which you will feel on rough Miami streets.',
+      'Rear-wheel drive, with the naturally aspirated 5.2-liter V10 tuned to 631 hp. No hybrid system and no electric mode.',
+      'Track-bred suspension, set up for the street. It rides noticeably firmer than the Huracan EVO, which you will feel on rough Miami streets.',
       'Very low nose and front splitter. Take steep driveways, ramps and speed bumps slowly and at an angle.',
       'Fixed roof and conventional front-hinged doors — no Spyder version and no scissor doors.',
       'Space for luggage is minimal. Plan on a soft bag, not a suitcase.',
     ],
     faqQuestion: 'How is the Huracan STO different from the Huracan EVO?',
     faqAnswer:
-      'Both carry a naturally aspirated V10 and drive the rear wheels, but the STO is the track version. It makes 631 hp against the EVO\u2019s 602, wears a fixed rear wing and roof scoop from the Super Trofeo race car, and rides firmer. Book the STO for the most intense drive we offer in a Huracan, and the EVO if you want the same sound with more comfort around town.',
+      'Both carry a naturally aspirated V10 and drive the rear wheels, but the STO is the track-bred version, rented for street driving only. It makes 631 hp against the EVO\u2019s 602, wears a fixed rear wing and roof scoop from the Super Trofeo race car, and rides firmer. Book the STO for the most intense drive we offer in a Huracan, and the EVO if you want the same sound with more comfort around town.',
     siblings: ['huracan-evo', 'sf90'],
     category: { href: '/lamborghini-rental-miami', label: 'Lamborghini rental in Miami' },
     realMoment: '',
@@ -154,7 +214,7 @@ export const carContent = {
     faqAnswer:
       'It is a 2+2. There are two full seats up front and two small seats behind them, which work for bags or a short trip across town but are tight for adults on a long drive. Book it as a two-seater with somewhere to put the luggage, and it is the most practical convertible we run.',
     siblings: ['huracan-evo-spyder', 'huracan-sto'],
-    category: { href: '/exotic-car-rental-miami', label: 'Exotic car rental in Miami' },
+    category: { href: '/porsche-911-turbo-s-rental-miami', label: 'Porsche rental in Miami' },
     realMoment: '',
     operatorNotes: '',
     deliveryNotes: '',

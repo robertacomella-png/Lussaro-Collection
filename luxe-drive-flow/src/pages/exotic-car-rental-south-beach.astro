@@ -1,9 +1,13 @@
 ---
 import LandingLayout from '@/layouts/LandingLayout.astro';
+import { cars, ageException, depositException } from '@/data/cars';
 import { rentalTerms } from '@/data/rental-terms';
 import { neighborhoodFor } from '@/data/neighborhood-content';
 
-const { deposit, mileage, cancellation } = rentalTerms;
+const usd = (n) => `$${n.toLocaleString('en-US')}`;
+const sto = cars.find((c) => c.slug === 'huracan-sto');
+
+const { deposit, mileage, cancellation, minimumAge } = rentalTerms;
 const local = neighborhoodFor('south-beach');
 
 const faqs = [
@@ -13,11 +17,11 @@ const faqs = [
   },
   {
     q: 'How far ahead should I book for a big event week?',
-    a: `As early as you can settle your dates. Art Basel, the Grand Prix, Ultra, the Boat Show and spring break all compress supply across the city at once, and a six-car fleet has no slack in it. ${cancellation.summary}`,
+    a: `As early as you can settle your dates. Art Basel, the Grand Prix, Ultra, the Boat Show and spring break all compress supply across the city at once, and the fleet has no slack in those weeks. ${cancellation.summary}`,
   },
   {
     q: 'What does the daily rate cover?',
-    a: `${mileage.includedPerDay} miles for every day booked, counted as one pooled allowance across the rental instead of resetting each morning. A refundable ${deposit.display} deposit is held against the car and released once it has been checked over on return.`,
+    a: `${mileage.includedPerDay} miles for every day booked, counted as one pooled allowance across the rental instead of resetting each morning. A refundable ${deposit.display} deposit is held against the car${depositException ? `, except ${depositException}` : ''} and released once it has been checked over on return.${ageException ? ` Drivers must be ${minimumAge} or over, except ${ageException}.` : ''}`.replaceAll('Huracan', 'Huracán'),
   },
 ];
 
@@ -43,8 +47,17 @@ const faqSchema = {
   <p>The good news for anyone eyeing a supercar: the barrier that makes low cars awkward elsewhere — steep ramps down into a building — is largely absent here. Handovers happen at ground level, which suits the <a href="/cars/huracan-evo">Huracan EVO</a> and the <a href="/cars/sf90">Ferrari SF90</a> far better than a tower garage would. Both still sit low at the nose, so the usual caution applies at any raised kerb or driveway lip.</p>
   <p>What South Beach substitutes instead is congestion and tight kerbside space. Ocean Drive moves slowly by design, and hotel forecourts on the older blocks were not laid out for a car nearly seven feet wide. That is worth weighing if you are drawn to the <a href="/cars/rolls-royce-cullinan">Cullinan</a> or the <a href="/cars/mercedes-maybach-gls-600">Maybach GLS 600</a>, both of which are large enough to need a moment's thought at a busy forecourt. The <a href="/cars/mercedes-s580">S580</a> threads through it all with the least fuss.</p>
 
+  <h2>Lamborghini rental in South Beach</h2>
+  <p>
+    Ocean Drive and Collins Avenue are the loop people book a Huracán for, and the car with the wing
+    is the <a href="/cars/huracan-sto">Lamborghini Huracán STO</a>{sto ? ` at ${usd(sto.price)} a day` : ''}.
+    It is two seats, with a low nose, which suits a ground-level hotel handover and does not suit a
+    stack of suitcases. The rest of the Lamborghinis, including the Urus when the party is larger,
+    are on the <a href="/lamborghini-rental-miami">Lamborghini rental in Miami</a> page.
+  </p>
+
   <h2>Booking around the calendar</h2>
-  <p>A handful of weeks tighten availability across Miami, not just the beach. Art Basel lands in early December, the Grand Prix in May, Ultra in March, the Boat Show in February, and spring break runs from late February into April. With six cars, those dates go first — if your trip overlaps one, fix the dates early.</p>
+  <p>A handful of weeks tighten availability across Miami, not just the beach. Art Basel lands in early December, the Grand Prix in May, Ultra in March, the Boat Show in February, and spring break runs from late February into April. Those dates go first. If your trip overlaps one, fix the dates early.</p>
 
   <h2>Questions</h2>
   {faqs.map((f) => (

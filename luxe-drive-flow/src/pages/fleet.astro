@@ -29,13 +29,14 @@ const usd = (n) => `$${n.toLocaleString('en-US')}`;
 // The supercars specifically — the mid-engined cars a "supercar rental" search
 // is actually after. The fleet's cheapest car is a Mercedes sedan, so anchoring
 // this page's headline on $399 would promise a supercar at saloon money.
-const SUPERCAR_SLUGS = ['sf90', 'huracan-evo', 'huracan-evo-spyder'];
+const SUPERCAR_SLUGS = ['sf90', 'huracan-evo', 'huracan-evo-spyder', 'huracan-sto'];
 const supercars = cars.filter((c) => SUPERCAR_SLUGS.includes(c.slug));
 const supercarFrom = Math.min(...supercars.map((c) => c.price));
 const bySlug = (x) => cars.find((c) => c.slug === x);
 const sf90 = bySlug('sf90');
 const evo = bySlug('huracan-evo');
 const spyder = bySlug('huracan-evo-spyder');
+const sto = bySlug('huracan-sto');
 const perDayMiles = rentalTerms.mileage.includedPerDay;
 const fleetFrom = Math.min(...cars.map((c) => c.price));
 
@@ -124,9 +125,8 @@ const fleetSchema = {
 
       <!-- Trust chips — the whole pitch, scannable in one second -->
       <div class="mt-6 flex flex-wrap items-center justify-center gap-2">
-        <span class="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 backdrop-blur px-4 py-1.5 text-[13px] text-white/85"><span class="text-[#ff1516]">★</span> 5.0 on Google</span>
         <span class="inline-flex items-center rounded-full border border-white/15 bg-white/5 backdrop-blur px-4 py-1.5 text-[13px] text-white/85">Door-to-door delivery</span>
-        <span class="inline-flex items-center rounded-full border border-white/15 bg-white/5 backdrop-blur px-4 py-1.5 text-[13px] text-white/85">Same-day booking</span>
+        <span class="inline-flex items-center rounded-full border border-white/15 bg-white/5 backdrop-blur px-4 py-1.5 text-[13px] text-white/85">Delivered across Miami</span>
       </div>
 
       {/* WhatsApp replaces the old "See Cars & Prices ↓" jump link: on /fleet
@@ -173,8 +173,8 @@ const fleetSchema = {
       <div class="mt-7 space-y-5 text-white/70 leading-relaxed">
         <p>
           A supercar is mid-engined, seats two, and is built around the engine rather than the
-          cabin. In this fleet that means the {sf90.make} {sf90.name}, the {evo.make} {evo.name}
-          and the {spyder.name}. The {bySlug('lamborghini-urus').name}, the Cullinan, the Maybachs
+          cabin. In this fleet that means the {sf90.make} {sf90.name}, the {evo.make} {evo.name},
+          the {spyder.name} and the <a href="/cars/huracan-sto" class="text-white underline decoration-white/30 underline-offset-4 hover:decoration-white">Huracán STO</a>. The {bySlug('lamborghini-urus').name}, the Cullinan, the Maybachs
           and the G63 are luxury cars that happen to be quick, which is a different purchase.
         </p>
         <p>
@@ -185,21 +185,24 @@ const fleetSchema = {
           many people are coming.
         </p>
 
-        <h3 class="font-display text-xl md:text-2xl font-bold text-white pt-4">Which supercar suits the trip</h3>
+        <h3 class="font-display text-xl md:text-2xl font-bold text-white pt-4">Supercar rental in Miami, led by the Huracán STO</h3>
+        <p>
+          The <a href="/cars/huracan-sto" class="text-white underline decoration-white/30 underline-offset-4 hover:decoration-white">Lamborghini Huracán STO</a> is
+          the track-bred, street-only one: {sto.power} hp, rear-wheel drive, {sto.zeroToSixty} to 60, at {usd(sto.price)} a
+          day. Minimum age is {sto.minimumAge}, with a {sto.deposit.display} deposit.
+          Take it when the driving is the event.
+        </p>
+        <p>
+          The <a href="/cars/huracan-evo" class="text-white underline decoration-white/30 underline-offset-4 hover:decoration-white">{evo.make} {evo.name}</a> at
+          {' '}{usd(evo.price)} is the same naturally aspirated V10, {evo.power} hp, with a softer ride.
+          The <a href="/cars/huracan-evo-spyder" class="text-white underline decoration-white/30 underline-offset-4 hover:decoration-white">{spyder.name}</a> is
+          that coupe with the roof gone in seventeen seconds, at {usd(spyder.price)}.
+        </p>
         <p>
           The <a href="/cars/sf90" class="text-white underline decoration-white/30 underline-offset-4 hover:decoration-white">{sf90.make} {sf90.name}</a> is
           the quickest car we run — {sf90.power} hp, {sf90.zeroToSixty} to 60, at {usd(sf90.price)} a
           day. It is a hybrid, so it will leave a hotel forecourt in silence and then stop being
           silent.
-        </p>
-        <p>
-          The <a href="/cars/huracan-evo" class="text-white underline decoration-white/30 underline-offset-4 hover:decoration-white">{evo.make} {evo.name}</a> at
-          {' '}{usd(evo.price)} is the one most people picture: a naturally aspirated V10 making
-          {' '}{evo.power} hp, which is rare now and is most of the reason to book it. The
-          {' '}<a href="/cars/huracan-evo-spyder" class="text-white underline decoration-white/30 underline-offset-4 hover:decoration-white">{spyder.name}</a> is
-          the same car with the roof gone in seventeen seconds, at {usd(spyder.price)}. Take the
-          Spyder if the drive is the plan and the coupé if you are parking somewhere you cannot
-          watch it.
         </p>
 
         <h3 class="font-display text-xl md:text-2xl font-bold text-white pt-4">What is the same whichever you take</h3>
@@ -214,7 +217,9 @@ const fleetSchema = {
           Longer bookings cost less per day: {discountSummary}. The {sf90.name} runs its own ladder,
           which the price on its page already reflects. Rates are published here and are the same
           number for you as for anyone — see the full{' '}
-          <a href="/pricing" class="text-white underline decoration-white/30 underline-offset-4 hover:decoration-white">rate card and policies</a>.
+          <a href="/pricing" class="text-white underline decoration-white/30 underline-offset-4 hover:decoration-white">rate card and policies</a>,
+          and the <a href="/blog/how-much-is-a-lamborghini-rental" class="text-white underline decoration-white/30 underline-offset-4 hover:decoration-white">Lamborghini rental Miami price</a> guide
+          for what a Lamborghini day rate does and does not include.
         </p>
       </div>
     </div>
@@ -284,8 +289,8 @@ const fleetSchema = {
       <div class="reveal text-center mb-8">
         <p class="text-[#ff1516] tracking-[0.3em] uppercase text-xs mb-3">Reserve</p>
         <h2 class="font-display text-3xl md:text-5xl font-bold text-white tracking-tight text-balance">Lock in your dates</h2>
-        <p class="text-white/55 mt-4">Fastest on WhatsApp — or send your details and we'll confirm in minutes.</p>
-        <a href={business.googleMaps} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 mt-4 text-sm text-white/55 hover:text-white transition"><span class="text-[#ff1516]">★★★★★</span> 5.0 on Google — read reviews →</a>
+        <p class="text-white/55 mt-4">Message us on WhatsApp, or send your details and we'll confirm availability.</p>
+        <a href={business.googleMaps} target="_blank" rel="noopener noreferrer" class="inline-flex items-center mt-4 text-sm text-white/55 hover:text-white transition">Read our Google reviews</a>
       </div>
       <div class="reveal flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-10">
         <a href={wa} data-cta="fleet_reserve" target="_blank" rel="noopener noreferrer" class="flex-1 inline-flex items-center justify-center gap-2 bg-white text-black px-7 py-4 rounded-full font-semibold hover:bg-[#ff1516] transition">

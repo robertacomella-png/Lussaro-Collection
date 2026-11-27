@@ -14,15 +14,15 @@
     },
     {
       "path": "/cars/huracan-sto",
-      "title": "Lamborghini Huracán STO Rental Miami | Lussaro Collection",
-      "description": "Lamborghini Huracán STO rental in Miami: 631 hp race-bred V10, rear-wheel drive, $1,495/day with 100 miles included. Delivered to your door across Miami.",
-      "note": "fleet.js calls it \"Huracan STO\". Returned to the fleet 15 Nov 2026 at $1,495/day, same slug as the listing removed in June. Leads with the marque, like the other two Huracans. Retuned 15 Nov 2026 to the owner's target keyword, 'Lamborghini Huracán STO rental Miami', which opens both the title and the description. Accented Huracán, which is how the car is written; Google matches the unaccented search as well."
+      "title": "Lamborghini Huracán STO Rental Miami – $1,495/Day | Lussaro",
+      "description": "Rent the Lamborghini Huracán STO in Miami, FL from $1,495/day, $1,395/day for 3+ days. 631 hp, 100 miles/day, delivery from $125 each way. Book on WhatsApp.",
+      "note": "fleet.js price is 1495 and three-day-deals.json is 1395. Delivery from $125 is the Miami each-way fee in rental-terms.js, so the line does not read as free delivery. 156 characters. This page is the only STO money page."
     },
     {
       "path": "/cars/porsche-911-turbo-s",
-      "title": "Porsche 911 Turbo S Rental Miami | Lussaro Collection",
-      "description": "Porsche 911 Turbo S rental in Miami: 640 hp Cabriolet, 0–60 in 2.7s, all-wheel drive, $1,295/day with 100 miles included. Delivered to your door across Miami.",
-      "note": "fleet.js calls it \"911 Turbo S Cabriolet\"; slug set in cars.js. Added 15 Nov 2026 at $1,295/day. Target keyword 'Porsche 911 Turbo S rental Miami' opens the title and description, the same treatment as the Huracan STO."
+      "title": "Porsche 911 Turbo S Cabriolet Specs | Lussaro Collection",
+      "description": "2023 Porsche 911 Turbo S Cabriolet specs and photos: 640 hp, 0-60 in 2.7 seconds, all-wheel drive. Daily rate $1,295, with 100 miles a day and a $1,000 deposit.",
+      "note": "fleet.js calls it \"911 Turbo S Cabriolet\". Retargeted 26 Nov 2026. 'porsche rental miami' and the H1 'Porsche 911 Turbo S Rental Miami' belong to /porsche-911-turbo-s-rental-miami. This page is the spec, photo and booking record, the same split as the Urus and the Mercedes-Benz S580."
     },
     {
       "path": "/cars/lamborghini-urus",
