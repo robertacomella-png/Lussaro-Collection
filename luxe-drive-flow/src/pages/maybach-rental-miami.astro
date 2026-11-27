@@ -215,7 +215,7 @@ const faqSchema = {
           <div class="mt-8 pt-7 border-t border-white/10 grid grid-cols-2 gap-6">
             {maybachs.map((c) => (
               <div>
-                <p class="text-white/55 text-[11px] uppercase tracking-[0.16em]">{c.name}</p>
+                <p class="text-white/55 text-[11px] uppercase tracking-[0.16em]">{cardName(c)}</p>
                 <p class="font-display text-white text-3xl font-bold mt-1.5">{c.power}<span class="text-lg text-white/55"> hp</span></p>
                 <p class="text-white/55 text-sm mt-0.5">{c.zeroToSixty} to 60</p>
               </div>
@@ -375,7 +375,7 @@ const faqSchema = {
             <figure class="rounded-[22px] bg-[#0f0f0f] border border-white/10 p-6">
               <blockquote class="text-white/70 leading-relaxed text-[15px]">{r.text}</blockquote>
               <figcaption class="text-white/55 text-xs mt-4">
-                {r.name}<span aria-hidden="true"> · </span>{r.car}
+                {r.name}<span aria-hidden="true"> · </span>{r.car === 'GLS 600 Maybach' ? 'Mercedes-Maybach GLS 600' : r.car}
               </figcaption>
             </figure>
           ))}

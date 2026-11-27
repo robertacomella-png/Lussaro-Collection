@@ -33,16 +33,16 @@ export const business = {
   // automatically, and neither renders anything while it is null.
   email: null,
 
-  // Mon–Sun 09:00–22:00, stated per day so the schema can group them and the
-  // footer can summarise. Matches the Google Business Profile.
+  // Mon–Sun 09:00–20:00, by appointment only. Stated per day so the schema
+  // can group them and the footer can summarise. Matches the Google Business Profile.
   hours: [
-    { day: 'Monday', opens: '09:00', closes: '22:00' },
-    { day: 'Tuesday', opens: '09:00', closes: '22:00' },
-    { day: 'Wednesday', opens: '09:00', closes: '22:00' },
-    { day: 'Thursday', opens: '09:00', closes: '22:00' },
-    { day: 'Friday', opens: '09:00', closes: '22:00' },
-    { day: 'Saturday', opens: '09:00', closes: '22:00' },
-    { day: 'Sunday', opens: '09:00', closes: '22:00' },
+    { day: 'Monday', opens: '09:00', closes: '20:00' },
+    { day: 'Tuesday', opens: '09:00', closes: '20:00' },
+    { day: 'Wednesday', opens: '09:00', closes: '20:00' },
+    { day: 'Thursday', opens: '09:00', closes: '20:00' },
+    { day: 'Friday', opens: '09:00', closes: '20:00' },
+    { day: 'Saturday', opens: '09:00', closes: '20:00' },
+    { day: 'Sunday', opens: '09:00', closes: '20:00' },
   ],
 
   whatsapp: 'https://wa.me/16452487305',
@@ -80,12 +80,20 @@ export const postalAddress = {
   addressCountry: business.country,
 };
 
-/** "Mon–Sun 09:00–22:00" when every day is identical, else a per-day list. */
+/** "9 AM" from "09:00", "8 PM" from "20:00". Minutes stay when they are not :00. */
+const formatClock = (hhmm) => {
+  const [h, m] = hhmm.split(':').map(Number);
+  const suffix = h >= 12 ? 'PM' : 'AM';
+  const h12 = h % 12 || 12;
+  return m === 0 ? `${h12} ${suffix}` : `${h12}:${String(m).padStart(2, '0')} ${suffix}`;
+};
+
+/** "9 AM–8 PM daily, by appointment only" when every day is identical, else a per-day list. */
 export const hoursSummary = (() => {
   const { opens, closes } = business.hours[0];
   const uniform = business.hours.every((h) => h.opens === opens && h.closes === closes);
   return uniform
-    ? `Mon–Sun ${opens}–${closes}`
+    ? `${formatClock(opens)}–${formatClock(closes)} daily, by appointment only`
     : business.hours.map((h) => `${h.day.slice(0, 3)} ${h.opens}–${h.closes}`).join(', ');
 })();
 

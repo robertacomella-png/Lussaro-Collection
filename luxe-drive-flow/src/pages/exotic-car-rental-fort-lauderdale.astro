@@ -1,0 +1,216 @@
+---
+// /exotic-car-rental-fort-lauderdale
+//
+// Owns "exotic car rental fort lauderdale". Miami, South Beach and Brickell
+// keep their own pages. Lamborghini Fort Lauderdale queries link through to
+// the Lamborghini pages rather than being retargeted here.
+//
+// Delivery facts stop at rental-terms.js. The Fort Lauderdale fee is published.
+// The airport meet point, flight tracking for a self-drive handover, Port
+// Everglades, the Hollywood fee and the lead time are not, so this page does
+// not state them.
+import LandingLayout from '@/layouts/LandingLayout.astro';
+import ContentPhoto from '@/components/site/ContentPhoto.astro';
+import { cars } from '@/data/cars';
+import { rentalTerms, rateForDays } from '@/data/rental-terms';
+import { business, hoursSummary, whatsappWith } from '@/data/business';
+
+const PAGE = '/exotic-car-rental-fort-lauderdale';
+const SITE = 'https://www.lussarocollection.com';
+
+const bySlug = (slug) => cars.find((c) => c.slug === slug);
+const usd = (n) => `$${Number(n).toLocaleString('en-US')}`;
+const multiDay = (c) => c.threeDayDeal ?? rateForDays(c.price, 3, c.discountTiers ?? rentalTerms.discountTiers).perDay;
+
+const fll = rentalTerms.delivery.find((d) => d.area === 'Fort Lauderdale');
+const miami = rentalTerms.delivery.find((d) => d.area === 'Miami');
+const miles = rentalTerms.mileage.includedPerDay;
+const overage = rentalTerms.mileage.overagePerMile;
+const taxPct = rentalTerms.taxesAndFeesRate * 100;
+const sto = bySlug('huracan-sto');
+const maybach = bySlug('mercedes-maybach-gls-600');
+const policy = maybach.insurancePerDay;
+
+const LABEL = {
+  'mercedes-s580': 'Mercedes-Benz S580',
+  'mercedes-amg-g63': 'Mercedes-AMG G63',
+  'mercedes-maybach-gls-600': 'Mercedes-Maybach GLS 600',
+  'mercedes-maybach-s580': 'Mercedes-Maybach S580',
+  'lamborghini-urus': 'Lamborghini Urus',
+  'huracan-evo': 'Lamborghini Huracan EVO',
+  'huracan-evo-spyder': 'Lamborghini Huracan EVO Spyder',
+  'porsche-911-turbo-s': 'Porsche 911 Turbo S Cabriolet',
+  'rolls-royce-cullinan': 'Rolls-Royce Cullinan',
+  'huracan-sto': 'Lamborghini Huracan STO',
+  sf90: 'Ferrari SF90',
+};
+
+const ORDER = [
+  'mercedes-s580',
+  'mercedes-amg-g63',
+  'mercedes-maybach-gls-600',
+  'mercedes-maybach-s580',
+  'lamborghini-urus',
+  'huracan-evo',
+  'huracan-evo-spyder',
+  'porsche-911-turbo-s',
+  'rolls-royce-cullinan',
+  'huracan-sto',
+  'sf90',
+];
+
+const rows = ORDER.map((slug) => {
+  const car = bySlug(slug);
+  return {
+    slug,
+    label: LABEL[slug],
+    href: slug === 'porsche-911-turbo-s' ? '/porsche-911-turbo-s-rental-miami' : `/cars/${slug}`,
+    day: car.price,
+    multi: multiDay(car),
+  };
+});
+
+const low = rows.reduce((a, b) => (a.day < b.day ? a : b));
+const high = rows.reduce((a, b) => (a.day > b.day ? a : b));
+
+const address = `${business.street}, ${business.city}, ${business.region} ${business.postalCode}`;
+const wa = whatsappWith(
+  "Hi, I'd like an exotic car delivered to Fort Lauderdale. I'm looking at the Lamborghini Urus.",
+  { car: 'Lamborghini Urus', page: PAGE },
+);
+
+const description = `Exotic car rental in Fort Lauderdale, delivered from Miami at ${fll.display} each way. Urus, Huracan, SF90, 911 Turbo S, Maybach and Cullinan, with ${miles} miles a day.`;
+
+const faqs = [
+  {
+    q: 'Do you deliver exotic cars to Fort Lauderdale?',
+    a: `Yes. Delivery is ${fll.display} each way, and collection is typically the same fee, confirmed in your quote. We are based in Miami and bring the car to you.`,
+  },
+  {
+    q: 'Can you drop a car at Fort Lauderdale Airport?',
+    a: `Yes. Fort Lauderdale-Hollywood International Airport is in the Fort Lauderdale delivery area, billed at ${fll.display} each way. The handover point is confirmed in the quote.`,
+  },
+  {
+    q: 'How much is exotic car rental in Fort Lauderdale?',
+    a: `The car rates are the same as in Miami, from ${usd(low.day)} a day for the ${low.label} to ${usd(high.day)} a day for the ${high.label}. Delivery to Fort Lauderdale is ${fll.display} each way on top of the rental.`,
+  },
+  {
+    q: 'Do you have an office in Fort Lauderdale?',
+    a: `No. The address is ${address}. Fort Lauderdale is a delivery area, not a second branch.`,
+  },
+  {
+    q: 'What do I need to book?',
+    a: `A driver aged ${rentalTerms.minimumAge} or over (${sto.minimumAge} for the ${LABEL['huracan-sto']}), a valid license, and insurance that covers the car. On a Maybach, a daily policy is ${usd(policy.from)} to ${usd(policy.to)} if you do not have qualifying cover. The deposit is ${rentalTerms.deposit.display}, or ${sto.deposit.display} on the Huracan STO.`,
+  },
+  {
+    q: 'Can I be driven instead?',
+    a: `Yes. Chauffeur service in the Mercedes-Maybach GLS 600 is from ${rentalTerms.chauffeurHourly.display} an hour. That is a separate booking from a self-drive rental.`,
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+<LandingLayout
+  title="Exotic Car Rental Fort Lauderdale | Lussaro Collection"
+  description={description}
+  h1="Exotic Car Rental Fort Lauderdale"
+  intro={`Lussaro Collection delivers exotic car rental to Fort Lauderdale from Miami. Delivery is ${fll.display} each way. Collection at the end of the rental is charged separately and is typically the same fee. Both figures are confirmed in your quote before you book.`}
+  heroImage="/cars/lamborghini-urus-rental-miami-front-skyline.jpg"
+  image={`${SITE}/og/exotic-car-rental-fort-lauderdale.jpg`}
+  showRating={false}
+  bookingCar="Lamborghini Urus"
+  bookingSource={`${SITE}${PAGE}`}
+  bookingCta="ftl_hero"
+  waMessage="Hi, I'd like an exotic car delivered to Fort Lauderdale. I'm looking at the Lamborghini Urus."
+  fleetHeading="The cars"
+  ctaTitle="Book the Urus for Fort Lauderdale"
+  schema={[faqSchema]}
+>
+  <p>Daily rates run from {usd(low.day)} for the {low.label} to {usd(high.day)} for the {high.label}. Every day includes {miles} miles. A {rentalTerms.deposit.display} refundable deposit is held on every car except the {LABEL['huracan-sto']}, which is {sto.deposit.display}.</p>
+
+  <nav aria-label="On this page" class="not-prose flex flex-wrap gap-x-4 gap-y-2 text-sm my-6">
+    <a class="text-[#e00e10] underline underline-offset-4" href="#delivery-to-fort-lauderdale">Delivery and fees</a>
+    <a class="text-[#e00e10] underline underline-offset-4" href="#cars-we-deliver-to-fort-lauderdale">The cars</a>
+    <a class="text-[#e00e10] underline underline-offset-4" href="#fort-lauderdale-airport-fll">Fort Lauderdale Airport</a>
+    <a class="text-[#e00e10] underline underline-offset-4" href="#las-olas-the-beach-and-nearby">Las Olas and the beach</a>
+    <a class="text-[#e00e10] underline underline-offset-4" href="#what-the-daily-rate-includes">What the rate includes</a>
+    <a class="text-[#e00e10] underline underline-offset-4" href="#questions">Questions</a>
+  </nav>
+
+  <h2 id="delivery-to-fort-lauderdale" class="scroll-mt-28">Delivery to Fort Lauderdale</h2>
+  <p>We are based at {address}, and Fort Lauderdale is a published delivery area. The one-way fee is {fll.display}, each way. That is not a round-trip price. Collection is typically the same amount, and the quote states both fees before anything is booked.</p>
+  <p>Miami delivery, for comparison, is {miami.display} each way. The same cars, mileage and deposit apply in both cities. The difference is the delivery charge.</p>
+  <p>Hours are {hoursSummary}. Tell us the address — a hotel, a residence, or Fort Lauderdale-Hollywood International Airport — and we will confirm the handover point and both fees in the quote.</p>
+
+  <ContentPhoto src="/cars/lamborghini-urus-rental-miami-downtown-skyline.jpg" width={2000} height={1333} />
+
+  <h2 id="cars-we-deliver-to-fort-lauderdale" class="scroll-mt-28">Cars we deliver to Fort Lauderdale</h2>
+  <p>Rates below are the same as on our <a href="/pricing">pricing</a> page. The 3-day column is the per-day rate when you book three days or more.</p>
+
+  <div class="not-prose my-8 overflow-x-auto">
+    <table class="w-full text-sm text-left border-collapse">
+      <thead>
+        <tr class="border-b border-[#0a0a0a]/15">
+          <th class="py-2 pr-4 font-semibold">Car</th>
+          <th class="py-2 pr-4 font-semibold text-right">Daily rate</th>
+          <th class="py-2 font-semibold text-right">3+ day rate</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((row) => (
+          <tr class="border-b border-[#0a0a0a]/10">
+            <td class="py-2.5 pr-4"><a href={row.href} class="text-[#e00e10] underline underline-offset-4">{row.label}</a></td>
+            <td class="py-2.5 pr-4 text-right tabular-nums">{usd(row.day)}</td>
+            <td class="py-2.5 text-right tabular-nums">{usd(row.multi)}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <p>If you are flying into FLL with luggage, start with an SUV: the <a href="/cars/lamborghini-urus">Urus</a>, the <a href="/cars/mercedes-maybach-gls-600">Maybach GLS 600</a>, the <a href="/cars/rolls-royce-cullinan">Cullinan</a>, or the <a href="/cars/mercedes-amg-g63">G63</a>. All of them have four doors and a proper trunk. Hotel ramps and garage entries are a simpler problem in these than in the low cars below.</p>
+
+  <ContentPhoto src="/cars/lamborghini-huracan-evo-rental-miami-front-quarter.jpg" width={2000} height={1333} />
+
+  <p>The low cars are a different brief. The Huracan EVO, Huracan STO and <a href="/cars/sf90">Ferrari SF90</a> sit low at the nose. They are the ones to book when the drive itself is the point, and a street-level handover is the sensible plan if the building has a steep ramp. The <a href="/cars/huracan-evo-spyder">Huracan EVO Spyder</a> and the <a href="/porsche-911-turbo-s-rental-miami">911 Turbo S Cabriolet</a> are the two convertibles, which suits Fort Lauderdale Beach and a run along A1A.</p>
+
+  <ContentPhoto src="/cars/porsche-911-turbo-s-cabriolet-rental-miami-front-quarter.jpg" width={2000} height={1333} />
+
+  <p>For a quieter arrival — a dinner on Las Olas, a hotel stay, a client meeting — the Maybach GLS 600, the <a href="/cars/mercedes-maybach-s580">Maybach S580</a> sedan, the Cullinan, or the <a href="/cars/mercedes-s580">Mercedes-Benz S580</a> are the better fit. Chauffeur service in the GLS 600 is from {rentalTerms.chauffeurHourly.display} an hour. That is a separate booking on our <a href="/chauffeur-service-miami">chauffeur page</a>.</p>
+
+  <ContentPhoto src="/cars/mercedes-maybach-gls-600-rental-miami-front-quarter.jpg" width={1092} height={698} />
+
+  <h2 id="fort-lauderdale-airport-fll" class="scroll-mt-28">Fort Lauderdale Airport (FLL)</h2>
+  <p>Fort Lauderdale-Hollywood International Airport sits inside the Fort Lauderdale delivery area, at {fll.display} each way. Miami International (MIA) sits in the Miami delivery area, at the Miami rate of {miami.display} each way. The exact handover spot at the airport is agreed in your quote, so you are not left guessing which curb or garage to use on the day.</p>
+  <p>If you would rather be met and driven, chauffeur transfers in the Maybach GLS 600 are from {rentalTerms.chauffeurHourly.display} an hour and are booked through the <a href="/chauffeur-service-miami">chauffeur page</a>, not as a self-drive rental.</p>
+
+  <ContentPhoto src="/cars/ferrari-sf90-rental-miami-front-quarter.jpg" width={1600} height={1066} />
+
+  <h2 id="las-olas-the-beach-and-nearby" class="scroll-mt-28">Las Olas, the beach, and nearby</h2>
+  <p>We deliver to hotels and residences in Fort Lauderdale, including Las Olas Boulevard, Fort Lauderdale Beach, and Harbor Beach. Give us the property and the date. The handover point is confirmed in advance, the same way we handle a South Beach hotel.</p>
+  <p>Hollywood, Florida, sits between Miami and Fort Lauderdale. It is not one of the two published delivery fees. If that is your pickup or return point, ask for the fee in the quote rather than assuming either the {miami.display} Miami rate or the {fll.display} Fort Lauderdale rate.</p>
+
+  <h2 id="what-the-daily-rate-includes" class="scroll-mt-28">What the daily rate includes</h2>
+  <p>Every rental includes {miles} miles per day, pooled across the booking — a three-day rental is {miles * 3} miles in total, used however you like. Additional miles are {usd(overage)} each. Taxes and fees are {taxPct}% of the rental subtotal after any multi-day rate.</p>
+  <p>Drivers must be {rentalTerms.minimumAge} or older with a valid license, except on the Huracan STO, which requires {sto.minimumAge}. You must carry insurance that covers the rental vehicle. If you do not have qualifying coverage and you are booking a Maybach, we can sell a daily policy for {usd(policy.from)} to {usd(policy.to)} a day, depending on the driver's age. A refundable {rentalTerms.deposit.display} deposit is held against the car, or {sto.deposit.display} on the STO, and released after the return inspection.</p>
+  <p>{rentalTerms.cancellation.summary} The full figures live on the <a href="/pricing">rate card</a> and in the <a href="/terms">terms</a>.</p>
+  <p>Message us on WhatsApp at <a href={wa} data-cta="ftl_body" target="_blank" rel="noopener noreferrer">{business.phoneDisplay}</a> if you would rather write than use the form.</p>
+
+  <h2 id="questions" class="scroll-mt-28">Questions</h2>
+  {faqs.map((f) => (
+    <>
+      <h3>{f.q}</h3>
+      <p>{f.a}</p>
+    </>
+  ))}
+  <p>Chauffeur bookings are on the <a href="/chauffeur-service-miami">chauffeur service</a> page. For a Lamborghini specifically, see <a href="/lamborghini-rental-miami">Lamborghini rental in Miami</a> and the <a href="/lamborghini-urus-rental-miami">Urus page</a>.</p>
+  <p>Staying in Miami rather than Fort Lauderdale? See <a href="/exotic-car-rental-miami">exotic car rental in Miami</a>, <a href="/exotic-car-rental-south-beach">South Beach</a>, or <a href="/exotic-car-rental-brickell">Brickell</a>. The full list of cars is on <a href="/fleet">the fleet</a>.</p>
+</LandingLayout>

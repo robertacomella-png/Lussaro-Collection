@@ -194,12 +194,12 @@ const faqSchema = {
             <div>
               <p class="text-white/55 text-[11px] uppercase tracking-[0.16em]">Power</p>
               <p class="font-display text-white text-3xl font-bold mt-1.5">{urus.power}<span class="text-lg text-white/55"> hp</span></p>
-              <p class="text-white/55 text-sm mt-0.5">{urus.drivetrain}</p>
+              <p class="text-white/55 text-sm mt-0.5">{urus.drivetrain.replaceAll('4.0L', '4.0-liter')}</p>
             </div>
             <div>
               <p class="text-white/55 text-[11px] uppercase tracking-[0.16em]">0–60</p>
               <p class="font-display text-white text-3xl font-bold mt-1.5">{urus.zeroToSixty}</p>
-              <p class="text-white/55 text-sm mt-0.5">Seat layout confirmed before you book</p>
+              <p class="text-white/55 text-sm mt-0.5">5 seats</p>
             </div>
           </div>
 
@@ -366,8 +366,10 @@ const faqSchema = {
 
       <p class="text-[#0a0a0a]/65 leading-relaxed mt-10 max-w-3xl">
         The Urus also appears in our{' '}
-        <SmartLink href="/blog/how-much-is-a-lamborghini-rental" class="text-[#e00e10] underline underline-offset-4">Lamborghini pricing guide</SmartLink>, and
-        the other Lamborghinis we rent, including the Huracan, are on the{' '}
+        <SmartLink href="/blog/how-much-is-a-lamborghini-rental" class="text-[#e00e10] underline underline-offset-4">Lamborghini pricing guide</SmartLink>.
+        If you want the two-seat STO instead,{' '}
+        <SmartLink href="/cars/huracan-sto" class="text-[#e00e10] underline underline-offset-4">compare with the Huracán STO</SmartLink>.
+        The other Lamborghinis we rent, including the Huracan, are on the{' '}
         <SmartLink href="/lamborghini-rental-miami" class="text-[#e00e10] underline underline-offset-4">Lamborghini page</SmartLink>. Full specification and
         photographs for this car sit on its{' '}
         <SmartLink href={`/cars/${urus.slug}`} class="text-[#e00e10] underline underline-offset-4">own page</SmartLink>.

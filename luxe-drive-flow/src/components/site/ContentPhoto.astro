@@ -1,0 +1,23 @@
+---
+// A body photo inside a landing-page prose column. Alt text comes from
+// image-alt.js. The src is the pre-built WebP, never the full JPEG.
+import { altFor } from '@/data/image-alt';
+import { getImageKitSrc, getImageKitSrcSet } from '@/lib/imageKit';
+
+const { src, width, height } = Astro.props;
+const alt = altFor(src);
+if (!alt) throw new Error(`ContentPhoto has no alt text for ${src}`);
+---
+<figure class="not-prose my-8">
+  <img
+    src={getImageKitSrc(src, 1200)}
+    srcset={getImageKitSrcSet(src)}
+    sizes="(min-width: 768px) 720px, 100vw"
+    alt={alt}
+    width={width}
+    height={height}
+    loading="lazy"
+    decoding="async"
+    class="w-full h-auto rounded-2xl"
+  />
+</figure>

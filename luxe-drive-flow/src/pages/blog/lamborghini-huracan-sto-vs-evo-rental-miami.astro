@@ -352,6 +352,7 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
         <p>
           On the steering wheel sits a switch with three modes: STO for the road, Trofeo for the track
           and Pioggia for rain. In Miami you will use the first and, in summer, occasionally the third.
+          Every Lussaro rental is street-only.
         </p>
 
         <figure class="not-prose my-10">
@@ -399,7 +400,7 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
         <ul>
           <li><strong>You are under {sto.minimumAge}.</strong> The STO is {sto.minimumAge}+; the EVO and the Spyder are {evo.minimumAge}+. That settles it.</li>
           <li><strong>The deposit matters.</strong> The STO takes {sto.deposit.display}, the EVO and Spyder {evo.deposit.display}. All three are refundable, but the hold is real money for the length of the rental.</li>
-          <li><strong>Comfort comes first.</strong> The STO is set up for a track and rides firmly over rough Miami streets. If most of the booking is a long cruise, the <a href={`/cars/${evo.slug}`}>Huracán EVO</a> is the more relaxed car.</li>
+          <li><strong>Comfort comes first.</strong> The STO is track-bred and rides firmly over rough Miami streets. If most of the booking is a long cruise, the <a href={`/cars/${evo.slug}`}>Huracán EVO</a> is the more relaxed car.</li>
           <li><strong>You want the roof down.</strong> Only the Spyder does that, and it costs {usd(stoOverSpyder)} a day less than the STO.</li>
         </ul>
 

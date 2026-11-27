@@ -39,18 +39,6 @@ const drive = (c) => c.drivetrain.split(' · ')[0].toLowerCase();
 const toSixty = (c) => c.zeroToSixty.replace(/s$/, ' seconds');
 const seatsCell = (c) => (c.seatsNote ? `${c.seats} (${c.seatsNote})` : String(c.seats));
 
-const clock = (hhmm) => {
-  const [h, m] = hhmm.split(':').map(Number);
-  const suffix = h >= 12 ? 'p.m.' : 'a.m.';
-  const h12 = h % 12 || 12;
-  return `${h12}:${String(m).padStart(2, '0')} ${suffix}`;
-};
-const days = business.hours;
-const sameHours = days.every((d) => d.opens === days[0].opens && d.closes === days[0].closes);
-const hoursPhrase = sameHours
-  ? `${days[0].day} through ${days[days.length - 1].day}, ${clock(days[0].opens)} to ${clock(days[0].closes)}`
-  : hoursSummary;
-
 const SITE = 'https://www.lussarocollection.com';
 const SLUG = 'luxury-car-rental-miami-beach-art-basel';
 const PATH = `/blog/${SLUG}`;
@@ -466,7 +454,7 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
         <h2 id="how-to-book">How to book</h2>
 
         <p>
-          The shortest path is <a href={wa} data-cta="blog_body" target="_blank" rel="noopener noreferrer">WhatsApp</a> or a call to <a href={telHref} data-cta="blog_body" data-call-inline>{business.phoneDisplay}</a>. Tell us the car, the dates, and the Miami Beach or South Beach property. We confirm the car and the handover point, then send the quote. Hours are {hoursPhrase}.
+          The shortest path is <a href={wa} data-cta="blog_body" target="_blank" rel="noopener noreferrer">WhatsApp</a> or a call to <a href={telHref} data-cta="blog_body" data-call-inline>{business.phoneDisplay}</a>. Tell us the car, the dates, and the Miami Beach or South Beach property. We confirm the car and the handover point, then send the quote. Hours are {hoursSummary}.
         </p>
 
         <p>

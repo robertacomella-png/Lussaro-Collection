@@ -89,6 +89,7 @@ const usdFmt = (n) => `$${n.toLocaleString('en-US')}`;
 const firstTier = bookingTiers[0];
 const multiDayRate = rateForDays(car.price, firstTier.days, bookingTiers).perDay;
 const weekTier = bookingTiers.at(-1);
+const fiveTier = bookingTiers.find((t) => t.days === 5) ?? bookingTiers[1] ?? firstTier;
 const taxPct = Math.round(rentalTerms.taxesAndFeesRate * 100);
 const faqPlain = (a) => (Array.isArray(a) ? a.map((p) => (typeof p === 'string' ? p : p.label)).join('') : a);
 const linkTo = (href, label) => ({ href, label });
@@ -208,23 +209,87 @@ const useCasesText = content?.useCases && car.slug === 'mercedes-s580' && car.pr
   ? content.useCases.replace('It is the most affordable car we run, and the one to take', 'It is the one to take')
   : content?.useCases;
 
+const miamiDelivery = rentalTerms.delivery.find((d) => d.area === 'Miami');
+const ftlDelivery = rentalTerms.delivery.find((d) => d.area === 'Fort Lauderdale');
+// Copy tokens for cars that carry `sections` / `extraFaqs` in car-content.js.
+// Every figure comes from fleet.js or rental-terms.js. A missing car yields ''.
+const carBySlug = (s) => cars.find((c) => c.slug === s);
+const evoCar = carBySlug('huracan-evo');
+const spyderCar = carBySlug('huracan-evo-spyder');
+const copyVars = {
+  price: usdFmt(car.price),
+  threeDay: usdFmt(multiDayRate),
+  threeDays: String(firstTier.days),
+  weekDays: String(weekTier.days),
+  weekRate: usdFmt(rateForDays(car.price, weekTier.days, bookingTiers).perDay),
+  fiveDays: String(fiveTier.days),
+  fiveRate: usdFmt(rateForDays(car.price, fiveTier.days, bookingTiers).perDay),
+  miamiDelivery: miamiDelivery?.display ?? '',
+  ftlDelivery: ftlDelivery?.display ?? '',
+  miles: String(milesPerDay),
+  power: String(car.power),
+  zero: car.zeroToSixty,
+  deposit: car.deposit.display,
+  age: String(car.minimumAge),
+  tax: String(taxPct),
+  fleetDeposit: rentalTerms.deposit.display,
+  evoPrice: evoCar ? usdFmt(evoCar.price) : '',
+  evoPower: evoCar ? String(evoCar.power) : '',
+  evoZero: evoCar ? evoCar.zeroToSixty : '',
+  spyderPrice: spyderCar ? usdFmt(spyderCar.price) : '',
+};
+const fillCopy = (s) => String(s ?? '').replace(/\{\{(\w+)\}\}/g, (_, k) => (k in copyVars ? String(copyVars[k]) : ''));
+// [label](/path) only. The path must be site-root relative so copy cannot inject an off-site URL.
+const linkParts = (s) => {
+  const filled = fillCopy(s);
+  const out = [];
+  const re = /\[([^\]]+)\]\((\/[^)\s]+)\)/g;
+  let last = 0;
+  let m;
+  while ((m = re.exec(filled))) {
+    if (m.index > last) out.push({ type: 'text', value: filled.slice(last, m.index) });
+    out.push({ type: 'link', href: m[2], label: m[1] });
+    last = re.lastIndex;
+  }
+  if (last < filled.length) out.push({ type: 'text', value: filled.slice(last) });
+  return out;
+};
+const compareRows = ['huracan-sto', 'huracan-evo', 'huracan-evo-spyder', 'lamborghini-urus']
+  .map(carBySlug)
+  .filter(Boolean);
+// 1-day rate, then each multi-day tier on this car. The 3-day deal in
+// three-day-deals.json is already folded into bookingTiers.
+const rateLadder = [
+  { label: '1 day', perDay: car.price },
+  ...bookingTiers.map((t) => ({
+    label: `${t.days} days+`,
+    perDay: rateForDays(car.price, t.days, bookingTiers).perDay,
+  })),
+];
+const driveLabel = (c) => (c.drivetrain || '').split('·')[0].trim();
+const publicName = (c) =>
+  c.slug === 'mercedes-maybach-gls-600' ? 'Mercedes-Maybach GLS 600'
+  : c.slug === 'mercedes-maybach-s580' ? 'Mercedes-Maybach S580'
+  : (c.name.startsWith(c.make) ? c.name : `${c.make} ${c.name}`);
+const shown = (c) => (isDetailPage ? publicName(c) : named(c));
+const drivetrainLabel = isDetailPage ? String(car.drivetrain || '').replaceAll('4.0L', '4.0-liter') : car.drivetrain;
 const carFaqs = content ? [
   {
     // Added 15 Nov 2026: "<car> rental price" is a common search and nothing
     // on the page answered it directly. Every figure is derived.
-    q: `How much does it cost to rent the ${named(car)} in Miami?`,
+    q: `How much does it cost to rent the ${shown(car)} in Miami?`,
     a: `${usdFmt(car.price)} a day, with ${milesPerDay} miles included. Book ${firstTier.days} days or more and it drops to ${usdFmt(rateForDays(car.price, firstTier.days, bookingTiers).perDay)} a day, or ${usdFmt(rateForDays(car.price, weekTier.days, bookingTiers).perDay)} a day for ${weekTier.days} days or more. Taxes and fees of ${taxPct}% are added to the rental, and the ${car.deposit.display} deposit is refundable and held separately.`,
   },
   {
-    q: `What is the security deposit on the ${car.name}?`,
-    a: `${car.deposit.display}${car.depositDiffers ? ` on the ${car.name}, above the ${rentalTerms.deposit.display} that applies to the rest of the fleet` : ''}, taken when your booking is confirmed. ${rentalTerms.deposit.note} It can also cover excess mileage, a late return, cleaning, or fines picked up during the rental.`,
+    q: `What is the security deposit on the ${shown(car)}?`,
+    a: `${car.deposit.display}${car.depositDiffers ? ` on the ${shown(car)}, above the ${rentalTerms.deposit.display} that applies to the rest of the fleet` : ''}, taken when your booking is confirmed. ${rentalTerms.deposit.note} It can also cover excess mileage, a late return, cleaning, or fines picked up during the rental.`,
   },
   {
-    q: `How many miles come with the ${car.name}?`,
+    q: `How many miles come with the ${shown(car)}?`,
     a: `${milesPerDay} a day, pooled across the whole booking rather than capped daily. Take it for ${exDays} days and you have ${milesPerDay * exDays} miles to spend however suits you — only the total showing at return is counted. ${rentalTerms.mileage.overagePerMile ? `Anything past that is $${rentalTerms.mileage.overagePerMile} a mile, and it can come out of your deposit.` : 'Anything past that is charged at a per-mile rate confirmed before you book, and can come out of your deposit.'}`,
   },
   {
-    q: `Will you bring the ${car.name} to my hotel?`,
+    q: `Will you bring the ${shown(car)} to my hotel?`,
     a: `Yes, along with residences, offices and both airports. Delivery is ${deliveryEachWaySummary}, and collection at the end of the rental is charged separately at typically the same fee. Beyond those two areas we quote you first, so nothing lands on the invoice unannounced.`,
   },
   {
@@ -232,6 +297,9 @@ const carFaqs = content ? [
     a: content.faqAnswer,
   },
   ...(pageCopy?.faqs ?? []),
+  // Extra questions are rendered in the same list, so FAQPage schema cannot
+  // describe a question the visitor cannot see.
+  ...(content.extraFaqs ?? []).map((f) => ({ q: fillCopy(f.q), a: fillCopy(f.a) })),
 ] : [];
 
 const faqSchema = carFaqs.length ? {
@@ -279,10 +347,16 @@ const ogImage = firstImg && !firstImg.endsWith('.svg')
 // fleet.js `name` sometimes already carries the make ("Lamborghini Urus") and
 // sometimes does not ("S580"), so only prepend when it is missing.
 const fullName = car.name.startsWith(car.make) ? car.name : `${car.make} ${car.name}`;
+// /porsche-911-turbo-s-rental-miami owns "porsche rental miami" and leads with
+// "Porsche 911 Turbo S Rental Miami". This URL is the spec and booking record,
+// so its heading does not repeat that query.
+const detailH1 = car.slug === 'porsche-911-turbo-s'
+  ? 'Porsche 911 Turbo S Cabriolet Specs, Photos and Rates'
+  : '';
 
 // Carousel alt text: the reviewed description from image-alt.js where one
 // exists, otherwise a fallback that still names the car and the city.
-const galleryAlts = imgs.map((src, i) => altFor(src, `${fullName} rental in Miami — photo ${i + 1}`));
+const galleryAlts = imgs.map((src, i) => altFor(src, `${isDetailPage ? shown(car) : fullName} rental in Miami — photo ${i + 1}`));
 const abs = (u) => (u.startsWith('http') ? u : `${SITE}${u}`);
 
 // One PropertyValue per spec that actually exists on the car.
@@ -303,7 +377,7 @@ const additionalProperty = [
 const productSchema = {
   '@context': 'https://schema.org',
   '@type': 'Product',
-  name: `${fullName} Rental — Miami`,
+  name: `${isDetailPage ? shown(car) : fullName} Rental — Miami`,
   image: imgs.map(abs),
   // Same hand-written line the page's <meta name="description"> uses, so the
   // structured data and the visible-to-Google copy cannot disagree. The old
@@ -331,13 +405,49 @@ const productSchema = {
   },
   ...(additionalProperty.length ? { additionalProperty } : {}),
 };
+
+// The STO page asks for a Vehicle/Car entity with the same Offer the visitor
+// sees. Car is a Vehicle and a Product, so this stays ONE node — a second
+// Product beside it would be two competing offers on one URL. Other car pages
+// keep the shared Product shape; a site-wide schema pass can rebase this block.
+const engineLabel = (car.drivetrain || '').split('·').slice(1).join('·').trim();
+const pageProductSchema = car.slug === 'huracan-sto'
+  ? {
+      ...productSchema,
+      '@type': ['Product', 'Car'],
+      model: 'Huracán STO',
+      vehicleModelDate: String(car.year),
+      bodyType: 'Coupe',
+      vehicleSeatingCapacity: car.seats,
+      numberOfDoors: car.doors,
+      driveWheelConfiguration: 'https://schema.org/RearWheelDriveConfiguration',
+      fuelType: 'Gasoline',
+      accelerationTime: {
+        '@type': 'QuantitativeValue',
+        name: '0–60 mph',
+        value: parseFloat(car.zeroToSixty),
+        unitCode: 'SEC',
+        unitText: 'seconds',
+      },
+      vehicleEngine: {
+        '@type': 'EngineSpecification',
+        name: engineLabel || 'Naturally aspirated V10',
+        fuelType: 'Gasoline',
+        enginePower: {
+          '@type': 'QuantitativeValue',
+          value: car.power,
+          unitText: 'hp',
+        },
+      },
+    }
+  : productSchema;
 ---
 <Layout
   title={pageTitle}
   description={pageDescription}
   image={ogImage}
-  schema={faqSchema ? [productSchema, faqSchema] : [productSchema]}
-  breadcrumbName={car.name}
+  schema={faqSchema ? [pageProductSchema, faqSchema] : [pageProductSchema]}
+  breadcrumbName={isDetailPage ? shown(car) : car.name}
 >
   <Nav />
 
@@ -366,11 +476,26 @@ const productSchema = {
         </p>
       )}
       <h1 class="font-display font-extrabold text-white uppercase text-center text-balance tracking-tight leading-[1.1] text-[clamp(1.25rem,3.4vw,2.625rem)]">
-        {content?.headline ? content.headline : <>{fullName} Rental In <span class="text-[#ff1516]">{business.city}, {business.region}</span></>}
+        {content?.headline ? (
+          content.headline
+        ) : detailH1 ? (
+          detailH1
+        ) : content?.h1Lead ? (
+          <>{content.h1Lead}{' '}<span class="text-[#ff1516]">{business.city}</span></>
+        ) : (
+          <>{fullName} Rental In <span class="text-[#ff1516]">{business.city}, {business.region}</span></>
+        )}
       </h1>
       {pageCopy?.lead && (
         <p class="text-white/70 text-center text-base md:text-lg leading-relaxed mt-4 max-w-3xl mx-auto">
           {pageCopy.lead.map((part) => typeof part === 'string' ? part : <a href={part.href} class="text-white underline decoration-white/40 underline-offset-4 hover:decoration-white">{part.label}</a>)}
+        </p>
+      )}
+      {detailH1 && !content?.headline && (
+        <p class="text-center text-white/70 text-sm md:text-base mt-4">
+          <a href="/porsche-911-turbo-s-rental-miami" class="text-[#ff1516] underline underline-offset-4">Porsche rental in Miami</a>
+          <span aria-hidden="true"> · </span>
+          rates, delivery and how this car compares
         </p>
       )}
     </div>
@@ -385,7 +510,7 @@ const productSchema = {
 
       <!-- 1 · PHOTOS -->
       <div class="relative lg:col-start-1 lg:row-start-1">
-        <CarGallery images={imgs} name={car.name} slug={`g-${car.slug}`} alts={galleryAlts} client:visible />
+        <CarGallery images={imgs} name={isDetailPage ? shown(car) : car.name} slug={`g-${car.slug}`} alts={galleryAlts} client:visible />
         {car.model && (
           <a href="#see-in-3d" class="absolute top-3 left-3 z-10 inline-flex items-center gap-1.5 bg-white text-black text-[11px] font-semibold px-3 py-1.5 rounded-full hover:bg-[#ff1516] transition shadow-lg">
             ◆ View in 3D{car.usdz ? ' & AR' : ''}
@@ -429,7 +554,7 @@ const productSchema = {
           {/* Google rating pill, beside the price — brief point 01. The weekly
               rate line that sat here was cut to shorten the card (owner, 15 Nov
               2026); the multi-day rates still show in the estimate. */}
-          {!isDetailPage && (
+          {car.slug !== 'huracan-sto' && !isDetailPage && (
             <div class="-mt-2 mb-5">
               <GoogleRatingBadge />
             </div>
@@ -518,7 +643,7 @@ const productSchema = {
         <ReviewCards carName={car.name} make={car.make} showRating={!isDetailPage} />
         {carFaqs.length > 0 && (
           <div class="space-y-3">
-            <h2 class="font-display text-xl md:text-2xl font-bold text-white tracking-tight">{car.name} questions</h2>
+            <h2 class="font-display text-xl md:text-2xl font-bold text-white tracking-tight">{shown(car)} questions</h2>
             <div class="divide-y divide-white/10 border-y border-white/10">
               {carFaqs.map((f) => (
                 <details class="group py-5">
@@ -566,7 +691,7 @@ const productSchema = {
             </div>
           ))}
         </div>
-        {car.drivetrain && <p class="text-white/50 text-xs mt-3">{car.drivetrain}</p>}
+        {drivetrainLabel && <p class="text-white/50 text-xs mt-3">{drivetrainLabel}</p>}
 
         {guides.length > 0 && (
           <p class="text-white/60 text-sm mt-6">
@@ -589,9 +714,85 @@ const productSchema = {
   {content && (
     <section class="bg-black border-t border-white/5 py-12 md:py-16">
       <div class="max-w-3xl mx-auto px-5 md:px-8 space-y-10">
+        {content.sections?.map((section) => (
+          <div class="space-y-4">
+            <h2 class="reveal font-display text-2xl md:text-3xl font-bold text-white tracking-tight">{section.heading}</h2>
+            {section.paragraphs.map((p) => (
+              <p class="reveal text-white/70 leading-relaxed">
+                {linkParts(p).map((bit) => bit.type === 'link'
+                  ? <a href={bit.href} class="text-[#ff1516] hover:underline">{bit.label}</a>
+                  : bit.value)}
+              </p>
+            ))}
+            {section.id === 'rent' && (
+              <div class="reveal overflow-x-auto">
+                <table class="w-full text-left text-sm border-collapse">
+                  <caption class="text-left text-white/60 text-sm mb-3">Huracán STO rental rates in Miami, per day, before taxes and fees. The 1-day price is the rate in the offer.</caption>
+                  <thead>
+                    <tr class="text-white/50 text-[11px] uppercase tracking-wide">
+                      <th scope="col" class="py-2 pr-3 font-medium">Length</th>
+                      <th scope="col" class="py-2 font-medium">Per day</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {rateLadder.map((row) => (
+                      <tr class="border-t border-white/10">
+                        <th scope="row" class="py-3 pr-3 font-normal text-white">{row.label}</th>
+                        <td class="py-3">{usdFmt(row.perDay)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+            {section.id === 'compare' && compareRows.length > 0 && (
+              <div class="reveal overflow-x-auto">
+                <table class="w-full text-left text-sm border-collapse">
+                  <caption class="text-left text-white/60 text-sm mb-3">1-day rate for the STO, the EVO, the EVO Spyder and the Urus. Deposits and minimum ages are per car.</caption>
+                  <thead>
+                    <tr class="text-white/50 text-[11px] uppercase tracking-wide">
+                      <th scope="col" class="py-2 pr-3 font-medium">Car</th>
+                      <th scope="col" class="py-2 pr-3 font-medium">1 day</th>
+                      <th scope="col" class="py-2 pr-3 font-medium">Power</th>
+                      <th scope="col" class="py-2 pr-3 font-medium">0–60</th>
+                      <th scope="col" class="py-2 pr-3 font-medium">Drive</th>
+                      <th scope="col" class="py-2 pr-3 font-medium">Age</th>
+                      <th scope="col" class="py-2 font-medium">Deposit</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {compareRows.map((c) => (
+                      <tr class="border-t border-white/10">
+                        <th scope="row" class="py-3 pr-3 font-normal text-white">
+                          {c.slug === car.slug ? (
+                            <span aria-current="page">{named(c)}</span>
+                          ) : (
+                            <a href={`/cars/${c.slug}`} class="text-[#ff1516] hover:underline">{named(c)}</a>
+                          )}
+                        </th>
+                        <td class="py-3 pr-3">{usdFmt(c.price)}</td>
+                        <td class="py-3 pr-3">{c.power} hp</td>
+                        <td class="py-3 pr-3">{c.zeroToSixty}</td>
+                        <td class="py-3 pr-3">{driveLabel(c)}</td>
+                        <td class="py-3 pr-3">{c.minimumAge}+</td>
+                        <td class="py-3">{c.deposit.display}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        ))}
+
         <div class="space-y-4">
-          <h2 class="reveal font-display text-2xl md:text-3xl font-bold text-white tracking-tight">Is the {car.name} right for your trip?</h2>
+          <h2 class="reveal font-display text-2xl md:text-3xl font-bold text-white tracking-tight">Is the {shown(car)} right for your trip?</h2>
           <p class="reveal text-white/70 leading-relaxed">{useCasesText}</p>
+          {content.compareLink && (
+            <p class="reveal text-sm">
+              <a href={content.compareLink.href} class="text-[#ff1516] hover:underline">{content.compareLink.label} →</a>
+            </p>
+          )}
         </div>
 
         <div class="space-y-4">
@@ -636,7 +837,7 @@ const productSchema = {
             <div class="reveal grid gap-3 sm:grid-cols-2">
               {siblingCars.map((s) => (
                 <a href={`/cars/${s.slug}`} class="rounded-2xl border border-white/10 bg-[#0f0f0f] p-4 hover:border-[#ff1516]/50 transition">
-                  <p class="text-white font-display text-lg">{named(s)}</p>
+                  <p class="text-white font-display text-lg">{shown(s)}</p>
                   <p class="text-white/50 text-sm mt-1">${s.price.toLocaleString()}/day{s.seats ? ` · ${s.seats} seats` : ''} · {s.zeroToSixty} to 60</p>
                 </a>
               ))}
@@ -673,8 +874,8 @@ const productSchema = {
     <div class="max-w-3xl mx-auto px-5 md:px-8">
       <div class="reveal text-center mb-8">
         <p class="text-[#ff1516] tracking-[0.3em] uppercase text-xs mb-3">Reserve</p>
-        <h2 class="font-display text-3xl md:text-5xl font-bold text-white tracking-tight text-balance">Book the {car.name}</h2>
-        <p class="text-white/55 mt-3">Fastest reply on WhatsApp — or send your details and we'll confirm availability.</p>
+        <h2 class="font-display text-3xl md:text-5xl font-bold text-white tracking-tight text-balance">Book the {shown(car)}</h2>
+        <p class="text-white/55 mt-3">{isDetailPage ? "Send your details and we'll confirm availability." : "Fastest reply on WhatsApp — or send your details and we'll confirm availability."}</p>
       </div>
 
       <div class="reveal flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-10">
@@ -688,7 +889,17 @@ const productSchema = {
         </a>
       </div>
 
-      <LeadForm client:visible defaultVehicle={car.name} note={isDetailPage ? 'Prefer to talk now? Call or WhatsApp us.' : undefined} />
+      {/* `defaultVehicle` is the fleet.js name, the select's option value.
+          The STO page also sends its path as the lead source. The three
+          model pages drop the reply-time line. */}
+      {car.slug === 'huracan-sto' ? (
+        <>
+          <p class="text-white/60 text-sm text-center mb-4">The form opens on the Huracán STO. Switch the car if you need a different one.</p>
+          <LeadForm client:visible defaultVehicle={car.name} source={routePath} />
+        </>
+      ) : (
+        <LeadForm client:visible defaultVehicle={car.name} note={isDetailPage ? "Prefer to talk now? Call or WhatsApp us." : undefined} />
+      )}
       <p class="text-white/50 text-xs mt-8 text-center max-w-md mx-auto">{carTermsSummary} {rentalTerms.cancellation.summary} <a href="/pricing" class="underline hover:text-white/60">Pricing &amp; policies</a> · <a href="/terms" class="underline hover:text-white/60">Full terms</a>.</p>
     </div>
   </section>
