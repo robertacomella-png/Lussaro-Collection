@@ -17,6 +17,8 @@ const usd = (n) => `$${n.toLocaleString('en-US')}`;
 const fleetFrom = Math.min(...cars.map((c) => c.price));
 const perDayMiles = rentalTerms.mileage.includedPerDay;
 const sto = cars.find((c) => c.slug === 'huracan-sto');
+const miamiDelivery = rentalTerms.delivery.find((d) => d.area === 'Miami');
+if (!miamiDelivery) throw new Error('Miami delivery row missing from rental-terms.js');
 
 // The same ItemList /fleet emits for the identical car grid. The homepage
 // rendered the grid without it, so the one page most likely to be crawled
@@ -320,11 +322,11 @@ const fleetSchema = {
   <!-- TRUST STRIP -->
   <section class="bg-black border-y border-white/5 py-6">
     <div class="max-w-7xl mx-auto px-5 md:px-8 flex flex-wrap items-center justify-center md:justify-between gap-x-8 gap-y-3 text-center text-white/55 text-sm">
-      <span>Delivered across Miami</span>
+      <span>Delivery from {miamiDelivery.display}</span>
       <span class="hidden md:inline text-white/15" aria-hidden="true">|</span>
-      <span>🛡️ Flexible insurance options</span>
+      <span>Flexible insurance options</span>
       <span class="hidden md:inline text-white/15" aria-hidden="true">|</span>
-      <span>🚗 Delivered to your door</span>
+      <span>Delivered to your door</span>
       <span class="hidden md:inline text-white/15" aria-hidden="true">|</span>
       <span>💬 60-second WhatsApp booking</span>
     </div>
