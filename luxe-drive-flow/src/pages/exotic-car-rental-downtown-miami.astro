@@ -8,7 +8,7 @@
 import LandingLayout from '@/layouts/LandingLayout.astro';
 import { cars, depositException, ageException } from '@/data/cars';
 import { rentalTerms } from '@/data/rental-terms';
-import { business, hoursSummary } from '@/data/business';
+import { contactEmail, hoursSummary } from '@/data/business';
 import { downtownDeliveryEachWay, neighborhoodFor } from '@/data/neighborhood-content';
 import { assertMeta, assertTitle, faqPage } from '@/lib/hub';
 
@@ -29,7 +29,6 @@ const gls = bySlug('mercedes-maybach-gls-600');
 const cullinan = bySlug('rolls-royce-cullinan');
 const sto = bySlug('huracan-sto');
 const accent = (s) => s.replaceAll('Huracan', 'Huracán');
-const CONTACT_EMAIL = 'info@lussarocollection.com';
 
 const ctaSubtitle = `Downtown delivery is ${downtownDeliveryEachWay.display} each way. Send your details and we'll confirm availability for your dates.`;
 
@@ -44,11 +43,7 @@ const faqs = [
   },
   {
     q: 'What is needed to book?',
-    a: `A driver aged ${minimumAge} or over${ageException ? `, except ${accent(ageException)}` : ''}, a valid license, and insurance that covers the car. The refundable deposit is ${deposit.display}${depositException ? `, except ${accent(depositException)}` : ''}. ${mileage.includedPerDay} miles are included for each day booked. Hours are ${hoursSummary}. Email ${CONTACT_EMAIL}.`,
-  },
-  {
-    q: 'Where are the cars kept?',
-    a: `Our cars are stored at ${business.street}. The handover is at the downtown hotel or condo you name. Hours are ${hoursSummary}.`,
+    a: `A driver aged ${minimumAge} or over${ageException ? `, except ${accent(ageException)}` : ''}, a valid license, and insurance that covers the car. The refundable deposit is ${deposit.display}${depositException ? `, except ${accent(depositException)}` : ''}. ${mileage.includedPerDay} miles are included for each day booked. Hours are ${hoursSummary}. Email ${contactEmail}.`,
   },
 ];
 ---
@@ -64,7 +59,7 @@ const faqs = [
 >
   <h2>Delivered north of the river</h2>
   <p>Downtown Miami sits north of the Miami River. Biscayne Boulevard runs along the bay, with Bayfront Park between the boulevard and the water and the Kaseya Center beside Bayside Marketplace. Brightline's MiamiCentral station is on the west side of downtown, and the Metromover links that side to the bayfront. Hotels and condo towers fill the boulevard and the blocks around Miami Worldcenter. Send the address and the day. Downtown delivery is {downtownDeliveryEachWay.display} each way. Collection at the end of the rental is also {downtownDeliveryEachWay.display}.</p>
-  <p>Hours are {hoursSummary}. Our cars are stored at {business.street}. The handover is at your hotel or condo. Write to <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
+  <p>Hours are {hoursSummary}. The handover is at your hotel or condo. Write to <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.</p>
   {local?.deliveryLogistics && <p>{local.deliveryLogistics}</p>}
 
   <h2>Out of downtown</h2>

@@ -4,7 +4,6 @@ import SmartLink from '@/components/site/SmartLink.astro';
 import { business, telHref, mailHref, addressLine, hoursSummary } from '@/data/business';
 import { whatsappWith } from '@/data/business';
 import { deliveryEachWaySummary } from '@/data/rental-terms';
-import { downtownDeliveryEachWay } from '@/data/neighborhood-content';
 // A car whose landing page should take the footer link instead of its own
 // /cars/ page. The footer renders on every route, so this is 33 inbound links
 // — the single biggest internal-link lever on the site, and the reason the
@@ -130,7 +129,7 @@ const year = new Date().getFullYear();
       <li><SmartLink href="/exotic-car-rental-south-beach" class="hover:text-white transition-colors">South Beach</SmartLink></li>
       <li><SmartLink href="/exotic-car-rental-downtown-miami" class="hover:text-white transition-colors">Downtown Miami</SmartLink></li>
     </ul>
-    <p class="text-white/50 text-xs mt-3 max-w-xl">Delivery is {deliveryEachWaySummary}. Downtown delivery is {downtownDeliveryEachWay.display} each way.</p>
+    <p class="text-white/50 text-xs mt-3 max-w-xl">Delivery is {deliveryEachWaySummary}.</p>
   </div>
 
   {/* text-white/50 is the floor for body text on this black: /40 measures

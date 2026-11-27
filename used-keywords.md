@@ -12,6 +12,7 @@ This is what stops the site competing with itself — the failure mode where two
 
 | Primary keyword | Used on | Date | Cluster |
 |---|---|---|---|
+| exotic car rental downtown miami | [/exotic-car-rental-downtown-miami](../luxe-drive-flow/src/pages/exotic-car-rental-downtown-miami.astro) | 2026-11-27 | Downtown |
 | convertible car rental miami | [/convertible-car-rental-miami](../luxe-drive-flow/src/pages/convertible-car-rental-miami.astro) | 2026-11-27 | Convertible |
 | sports car rental miami | [/sports-car-rental-miami](../luxe-drive-flow/src/pages/sports-car-rental-miami.astro) | 2026-11-27 | Sports car |
 | mercedes rental miami | [/mercedes-rental-miami](../luxe-drive-flow/src/pages/mercedes-rental-miami.astro) | 2026-11-27 | Mercedes |
@@ -27,6 +28,16 @@ This is what stops the site competing with itself — the failure mode where two
 ---
 
 ## Detail
+
+### exotic car rental downtown miami
+**Page:** `/exotic-car-rental-downtown-miami`
+**Date:** November 27, 2026
+
+**Why this primary:** the location page for Downtown, north of the Miami River. Brickell and South Beach keep their own pages. Downtown delivery is $100 each way.
+
+**Do not reuse.**
+
+---
 
 ### mercedes rental miami
 **Page:** `/mercedes-rental-miami`
