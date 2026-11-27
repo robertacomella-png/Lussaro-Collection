@@ -21,11 +21,22 @@
 // actually happens, what a given building requires. It renders nothing while
 // empty, exactly like the car-page owner fields.
 
+// Downtown only. Owner-confirmed 27 Nov 2026: $100 each way.
+// Kept out of rental-terms.js `delivery`, which is Miami ($125) and Fort
+// Lauderdale ($175) and feeds the sitewide each-way summary.
+export const downtownDeliveryEachWay = {
+  fee: 100,
+  display: '$100',
+};
+
 export const neighborhoodContent = {
   brickell: {
     deliveryLogistics: '',
   },
   'south-beach': {
+    deliveryLogistics: '',
+  },
+  downtown: {
     deliveryLogistics: '',
   },
 };

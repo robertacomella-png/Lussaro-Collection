@@ -1,0 +1,87 @@
+---
+// /exotic-car-rental-downtown-miami
+//
+// Owns "exotic car rental downtown miami". Brickell (south of the river) and
+// South Beach keep their own pages. The Downtown fee lives in
+// neighborhood-content.js as downtownDeliveryEachWay — $100 each way — and is
+// not folded into rental-terms.js, which still prices Miami and Fort Lauderdale.
+import LandingLayout from '@/layouts/LandingLayout.astro';
+import { cars, depositException, ageException } from '@/data/cars';
+import { rentalTerms } from '@/data/rental-terms';
+import { business, hoursSummary } from '@/data/business';
+import { downtownDeliveryEachWay, neighborhoodFor } from '@/data/neighborhood-content';
+import { assertMeta, assertTitle, faqPage } from '@/lib/hub';
+
+const LABEL = 'Downtown';
+const title = assertTitle(LABEL, 'Exotic Car Rental Downtown Miami | Lussaro Collection');
+const description = assertMeta(
+  LABEL,
+  `Exotic car rental in Downtown Miami. Downtown delivery is ${downtownDeliveryEachWay.display} each way to Biscayne Boulevard hotels and condos. Hours are ${hoursSummary}.`,
+);
+
+const { deposit, mileage, minimumAge } = rentalTerms;
+const local = neighborhoodFor('downtown');
+const usd = (n) => `$${Number(n).toLocaleString('en-US')}`;
+const bySlug = (slug) => cars.find((c) => c.slug === slug);
+const s580 = bySlug('mercedes-s580');
+const urus = bySlug('lamborghini-urus');
+const gls = bySlug('mercedes-maybach-gls-600');
+const cullinan = bySlug('rolls-royce-cullinan');
+const sto = bySlug('huracan-sto');
+const accent = (s) => s.replaceAll('Huracan', 'Huracán');
+const CONTACT_EMAIL = 'info@lussarocollection.com';
+
+const ctaSubtitle = `Downtown delivery is ${downtownDeliveryEachWay.display} each way. Send your details and we'll confirm availability for your dates.`;
+
+const faqs = [
+  {
+    q: 'Can the car be brought to a downtown hotel or condo?',
+    a: `Yes. Downtown delivery is ${downtownDeliveryEachWay.display} each way, to hotels and condo towers north of the Miami River. Collection at the end of the rental is charged separately and is typically the same fee. Send the address and the day, and the quote confirms the handover point and both fees.`,
+  },
+  {
+    q: 'Which cars suit a downtown garage?',
+    a: `The Mercedes-Benz S580 (${usd(s580.price)} a day), the Lamborghini Urus (${usd(urus.price)} a day) and the Mercedes-Maybach GLS 600 (${usd(gls.price)} a day) are the easier fit for a tower garage or a hotel drive. The Lamborghini Huracán STO (${usd(sto.price)} a day) sits low at the nose, so plan the handover at street level.`,
+  },
+  {
+    q: 'What is needed to book?',
+    a: `A driver aged ${minimumAge} or over${ageException ? `, except ${accent(ageException)}` : ''}, a valid license, and insurance that covers the car. The refundable deposit is ${deposit.display}${depositException ? `, except ${accent(depositException)}` : ''}. ${mileage.includedPerDay} miles are included for each day booked. Hours are ${hoursSummary}. Email ${CONTACT_EMAIL}.`,
+  },
+  {
+    q: 'Where are the cars kept?',
+    a: `Our cars are stored at ${business.street}. The handover is at the downtown hotel or condo you name. Hours are ${hoursSummary}.`,
+  },
+];
+---
+<LandingLayout
+  title={title}
+  description={description}
+  h1="Exotic Car Rental Downtown Miami"
+  intro={`Downtown delivery is ${downtownDeliveryEachWay.display} each way, to hotels and condo towers on Biscayne Boulevard, at Bayfront Park, and around Brightline's MiamiCentral station and the Kaseya Center.`}
+  ctaTitle="Reserve your Downtown exotic"
+  ctaSubtitle={ctaSubtitle}
+  heroImage="/gallery/mercedes-maybach-gls-600-lamborghini-urus-rental-miami-metromover.jpg"
+  schema={[faqPage(faqs)]}
+>
+  <h2>Delivered north of the river</h2>
+  <p>Downtown Miami sits north of the Miami River. Biscayne Boulevard runs along the bay, with Bayfront Park between the boulevard and the water and the Kaseya Center beside Bayside Marketplace. Brightline's MiamiCentral station is on the west side of downtown, and the Metromover links that side to the bayfront. Hotels and condo towers fill the boulevard and the blocks around Miami Worldcenter. Send the address and the day. Downtown delivery is {downtownDeliveryEachWay.display} each way. Collection at the end of the rental is charged separately and is typically the same fee, and the quote states both before you book.</p>
+  <p>Hours are {hoursSummary}. Our cars are stored at {business.street}. The handover is at your hotel or condo. Write to <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
+  {local?.deliveryLogistics && <p>{local.deliveryLogistics}</p>}
+
+  <h2>Out of downtown</h2>
+  <p>The MacArthur Causeway leaves downtown on I-395, crosses Watson Island, and comes ashore in <a href="/exotic-car-rental-south-beach">South Beach</a>. The Brickell Avenue Bridge crosses the Miami River onto Brickell Avenue. <a href="/exotic-car-rental-brickell">Brickell</a>, south of the river, has its own page. For Key Biscayne, continue south through Brickell to the Rickenbacker Causeway entrance at the south end of Brickell, then across to Virginia Key and the island.</p>
+
+  <h2>Choosing a car for downtown</h2>
+  <p>Most handovers here are a hotel drive or a condo garage: a ramp, a valet lane, or a curb on Biscayne Boulevard. The <a href="/cars/mercedes-s580">Mercedes-Benz S580</a> is {usd(s580.price)} a day and the simplest sedan for that. The <a href="/cars/lamborghini-urus">Lamborghini Urus</a> is {usd(urus.price)} a day, and the <a href="/cars/mercedes-maybach-gls-600">Mercedes-Maybach GLS 600</a> is {usd(gls.price)} a day. Both clear a normal garage entry more easily than a low coupe. The Rolls-Royce Cullinan is {usd(cullinan.price)} a day.</p>
+  <p>The <a href="/cars/huracan-sto">Lamborghini Huracán STO</a> is {usd(sto.price)} a day: two seats, and a nose that sits close to the road. Book it when the drive is the point — across the MacArthur, or south to the Rickenbacker — and take the handover at street level if the building has a steep ramp. The rest of the Lamborghinis are on the <a href="/lamborghini-rental-miami">Lamborghini rental in Miami</a> page. The wider service area is on our <a href="/exotic-car-rental-miami">Miami page</a>.</p>
+
+  <h2>Rates and requirements</h2>
+  <p>Every car carries a refundable {deposit.display} deposit{depositException ? `, except ${accent(depositException)}` : ''}, and {mileage.includedPerDay} miles for each day booked, pooled across the rental. Drivers must be {minimumAge} or over{ageException ? `, except ${accent(ageException)}` : ''}, with a valid license and insurance that covers the car. Downtown delivery is {downtownDeliveryEachWay.display} each way.</p>
+
+  <h2>Questions</h2>
+  {faqs.map((f) => (
+    <>
+      <h3>{f.q}</h3>
+      <p>{f.a}</p>
+    </>
+  ))}
+</LandingLayout>

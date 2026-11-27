@@ -28,6 +28,7 @@ const LABELS = {
   '/rolls-royce-rental-miami': 'Rolls-Royce Rental Miami',
   '/exotic-car-rental-brickell': 'Exotic Car Rental Brickell',
   '/exotic-car-rental-south-beach': 'Exotic Car Rental South Beach',
+  '/exotic-car-rental-downtown-miami': 'Exotic Car Rental Downtown Miami',
   '/exotic-car-rental-fort-lauderdale': 'Exotic Car Rental Fort Lauderdale',
   '/wedding-car-rental-miami': 'Luxury Car Rental for a Wedding in Miami',
   '/porsche-911-turbo-s-rental-miami': 'Porsche 911 Turbo S Rental Miami',

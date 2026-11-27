@@ -61,6 +61,7 @@ When an agency asks how edits are tracked, this is the answer.
 | /luxury-suv-rental-miami | Lussaro | locked | SEO landing copy. |
 | /exotic-car-rental-brickell | Lussaro | locked | SEO landing copy, neighbourhood targeting. |
 | /exotic-car-rental-south-beach | Lussaro | locked | SEO landing copy, neighbourhood targeting. |
+| /exotic-car-rental-downtown-miami | Lussaro | locked | New location page, 27 Nov 2026. Owns "exotic car rental downtown miami". Downtown delivery is $100 each way, in neighborhood-content.js. 900 Biscayne Blvd is storage only. Snapshot is the blob under Approved locked edits. |
 | /exotic-car-rental-fort-lauderdale | Public Relations, 26 Nov 2026 | locked | New location page, 26 Nov 2026. Owns "exotic car rental fort lauderdale". Delivery copy stops at the published Fort Lauderdale fee. Snapshot is the blob under Approved locked edits. |
 | /wedding-car-rental-miami | Public Relations, 26 Nov 2026 | locked | New occasion page, 26 Nov 2026. Owns "luxury car rental for wedding", geo-qualified to Miami. Does not take maybach rental miami, rolls royce cullinan rental miami, or limousine queries. Snapshot is the blob under Approved locked edits. |
 | /porsche-911-turbo-s-rental-miami | Public Relations, 26 Nov 2026 | locked | New money page, 26 Nov 2026. Owns "porsche rental miami". The car page stays the spec and booking URL. Snapshot is the blob under Approved locked edits. |
@@ -224,3 +225,4 @@ A `locked` file stays locked after an approval. Approval covers one snapshot of 
 | luxe-drive-flow/src/pages/sports-car-rental-miami.astro | 7b8b6274c72a9e7bf796032684efddec8da94b87 | Public Relations, 27 Nov 2026 | PR review: SF90 described from fleet facts, no superlative, body links trimmed, STO deposit exception on the rate grid. |
 | luxe-drive-flow/src/pages/rolls-royce-rental-miami.astro | f281500494177165c9e5c81bc6ce168c9f76b5ce | Public Relations, 27 Nov 2026 | The specs sentence points at the Cullinan link in the heading above it. |
 | luxe-drive-flow/src/pages/sports-car-rental-miami.astro | 92b75688f5606163bc63b31ebf0a45d1665491ea | Public Relations, 27 Nov 2026 | The intro points at the open-car section below it. The FAQ is unchanged. |
+| luxe-drive-flow/src/pages/exotic-car-rental-downtown-miami.astro | 1f9beed615d3cef4dc9cd3597a67f315c447a1ad | Lussaro, 27 Nov 2026 | First publication. Downtown delivery is $100 each way. 900 Biscayne Blvd is storage only. |
