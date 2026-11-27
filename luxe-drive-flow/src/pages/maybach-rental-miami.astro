@@ -20,8 +20,8 @@ import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
 import BookingRequestCard from '@/components/booking/BookingRequestCard.jsx';
 import CarGallery from '@/components/fleet/CarGallery.jsx';
 import { cars } from '@/data/cars';
-import { rentalTerms, deliverySummary, rateForDays } from '@/data/rental-terms';
-import { assertMeta, assertTitle, fllDelivery, miamiDelivery, productFor } from '@/lib/hub';
+import { rentalTerms, rateForDays } from '@/data/rental-terms';
+import { assertMeta, assertTitle, fllDelivery, hubCtaSubtitle, itemListFor, miamiDelivery } from '@/lib/hub';
 import { reviews } from '@/data/reviews';
 import { business, hoursSummary, telHref, whatsappWith } from '@/data/business';
 import { getImageKitSrc, getImageKitSrcSet } from '@/lib/imageKit';
@@ -94,7 +94,7 @@ const objections = [
   },
   {
     q: 'Can you deliver it?',
-    a: `A Maybach is ${miamiDelivery.display} each way in Miami and at the Port of Miami, and ${fllDelivery.display} each way in Fort Lauderdale. Hotels in Miami, Brickell and South Beach use the Miami fee, and the handover point is agreed in your quote. Collection is typically the same fee, confirmed in the quote.`,
+    a: `A Maybach is ${miamiDelivery.display} each way in Miami, and ${fllDelivery.display} each way in Fort Lauderdale. Hotels in Miami, Brickell and South Beach use the Miami fee, and the handover point is agreed in your quote. Collection is typically the same fee, confirmed in the quote.`,
   },
   {
     q: 'How much does it cost to rent a Maybach in Miami?',
@@ -121,8 +121,9 @@ const objections = [
 const faqText = (o) => (o.parts ? o.parts.map((p) => (typeof p === 'string' ? p : p.label)).join('') : o.a);
 for (const o of objections) if (!o.a) o.a = faqText(o);
 
-// Visible quotes stay on the page. They are not copied into review markup.
-const products = [suv, sedan].filter(Boolean).map(productFor);
+// ItemList of links to the car pages. Visible quotes stay on the page
+// and are not copied into review markup.
+const lineup = itemListFor([suv, sedan].filter(Boolean));
 
 const faqSchema = {
   '@context': 'https://schema.org',
@@ -141,7 +142,7 @@ const faqSchema = {
     `Rent a Maybach in Miami from $${fromDisplay} a day, or $${usd(threeDay)} for 3+ days. Mercedes-Maybach GLS 600 or Mercedes-Maybach S580. Delivery from ${miamiDelivery.display} each way. By appointment.`,
   )}
   breadcrumbName="Maybach Rental Miami"
-  schema={[...products, faqSchema]}
+  schema={[lineup, faqSchema]}
 >
   <Nav />
 
@@ -312,7 +313,7 @@ const faqSchema = {
           </tbody>
         </table>
         <p class="text-white/70 leading-relaxed mt-5 text-[15px]">
-          {milesPerDay} miles a day are included and pooled across the booking. Additional miles are ${overage} each. Maybach delivery is {miamiDelivery.display} each way in Miami and at the Port of Miami, and {fllDelivery.display} each way in Fort Lauderdale, with the handover point agreed in your quote. {hoursSummary}.
+          {milesPerDay} miles a day are included and pooled across the booking. Additional miles are ${overage} each. Maybach delivery is {miamiDelivery.display} each way in Miami, and {fllDelivery.display} each way in Fort Lauderdale, with the handover point agreed in your quote. {hoursSummary}.
         </p>
         <p class="text-white/70 leading-relaxed mt-4 text-[15px]">
           Full Maybach pricing, including what changes a weekend or an event week, is in{' '}
@@ -480,7 +481,7 @@ const faqSchema = {
     quoteHref="#quote"
     quoteLabel="Reserve this Maybach"
     title={'Open the door and check.\nThat is the whole <span class="text-[#ff1516]">argument</span>'}
-    subtitle={`Mercedes-Maybach GLS 600 or Mercedes-Maybach S580 from $${fromDisplay} a day, or $${usd(threeDay)} a day for ${ladder[0].days} days or more. Delivery from ${deliverySummary} each way.`}
+    subtitle={hubCtaSubtitle}
   />
   <StickyMobileCta message={waMessage} car="Maybach" page="/maybach-rental-miami" />
 </Layout>

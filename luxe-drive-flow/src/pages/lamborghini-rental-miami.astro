@@ -10,7 +10,8 @@ import {
   faqPage,
   fllDelivery,
   miamiDelivery,
-  productFor,
+  hubCtaSubtitle,
+  itemListFor,
   publicName,
   usd,
 } from '@/lib/hub';
@@ -52,7 +53,7 @@ const faqs = [
   },
   {
     q: 'What does delivery cost?',
-    a: `A Lamborghini is ${miamiDelivery.display} each way in Miami and at the Port of Miami, and ${fllDelivery.display} each way in Fort Lauderdale, and the handover point is agreed in your quote. Collection is typically the same fee as delivery.`,
+    a: `A Lamborghini is ${miamiDelivery.display} each way in Miami, and ${fllDelivery.display} each way in Fort Lauderdale, and the handover point is agreed in your quote. Collection is typically the same fee as delivery.`,
   },
   {
     q: 'What does a Lamborghini rental include?',
@@ -73,7 +74,8 @@ const faqs = [
   showRating={false}
   reserveNote="Tell us the car and the dates and we'll confirm availability."
   leadNote="Prefer to talk now? Call or WhatsApp us."
-  schema={[...lambos.map(productFor), faqPage(faqs)]}
+  ctaSubtitle={hubCtaSubtitle}
+  schema={[itemListFor(lambos), faqPage(faqs)]}
 >
   <h2>Huracán STO, EVO, Spyder and Urus</h2>
   <p>Pick by the job. The figure beside each name is the 1-day price. A longer booking costs less per day, and the table under these notes is the live ladder.</p>
@@ -122,7 +124,7 @@ const faqs = [
   <p>The coupes and the SF90, set beside these Huracáns, are on the <a href="/sports-car-rental-miami">sports car rental</a> page. The Urus stays on this page because it is the Lamborghini SUV, not a sports car.</p>
 
   <h2>Terms, briefly</h2>
-  <p>Delivery is {miamiDelivery.display} each way in Miami and at the Port of Miami, and {fllDelivery.display} each way in Fort Lauderdale, with the handover point agreed in your quote. {hoursSummary}. The worked figures for a Lamborghini day rate sit in the <a href="/blog/how-much-is-a-lamborghini-rental">Lamborghini rental price</a> guide, and every other number is on the <a href="/pricing">rate card</a>.</p>
+  <p>Delivery is {miamiDelivery.display} each way in Miami, and {fllDelivery.display} each way in Fort Lauderdale, with the handover point agreed in your quote. {hoursSummary}. The worked figures for a Lamborghini day rate sit in the <a href="/blog/how-much-is-a-lamborghini-rental">Lamborghini rental price</a> guide, and every other number is on the <a href="/pricing">rate card</a>.</p>
 
   <h2>Questions</h2>
   {faqs.map((f) => (

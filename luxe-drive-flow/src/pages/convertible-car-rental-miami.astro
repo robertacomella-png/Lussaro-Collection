@@ -17,7 +17,8 @@ import {
   fllDelivery,
   isOpenTop,
   miamiDelivery,
-  productFor,
+  hubCtaSubtitle,
+  itemListFor,
   publicName,
   usd,
 } from '@/lib/hub';
@@ -60,7 +61,7 @@ const faqs = [
   },
   {
     q: 'What does delivery cost?',
-    a: `An open car is ${miamiDelivery.display} each way in Miami and at the Port of Miami, and ${fllDelivery.display} each way in Fort Lauderdale, with the handover point agreed in your quote. ${mileage.includedPerDay} miles a day are included, the refundable deposit is ${deposit.display}, and drivers must be ${minimumAge} or over with a valid license. ${hoursSummary}.`,
+    a: `An open car is ${miamiDelivery.display} each way in Miami, and ${fllDelivery.display} each way in Fort Lauderdale, with the handover point agreed in your quote. ${mileage.includedPerDay} miles a day are included, the refundable deposit is ${deposit.display}, and drivers must be ${minimumAge} or over with a valid license. ${hoursSummary}.`,
   },
 ];
 ---
@@ -77,7 +78,8 @@ const faqs = [
   showRating={false}
   reserveNote="Tell us the car and the dates and we'll confirm availability."
   leadNote="Prefer to talk now? Call or WhatsApp us."
-  schema={[...open.map(productFor), faqPage(faqs)]}
+  ctaSubtitle={hubCtaSubtitle}
+  schema={[itemListFor(open), faqPage(faqs)]}
 >
   <p>The Ferrari SF90 in the fleet is a fixed-roof coupe. It is not listed here. The Huracán STO and the Huracán EVO are coupes as well. Those three, plus these two open cars, are compared as sports cars on the <a href="/sports-car-rental-miami">sports car rental</a> page. This page stays with the roofs.</p>
 
@@ -100,7 +102,7 @@ const faqs = [
   <p>Book the Spyder when the sound and the two-seat cabin are the point. Book the Cabriolet when you want the roof down and still have somewhere for a weekend's bags, plus all-wheel drive if the afternoon rain arrives. Neither car is a track car. The Huracán STO, which is track-bred and street-only, is a coupe and lives on the sports car page.</p>
 
   <h2>Delivery and hours</h2>
-  <p>Roof-down delivery in Miami and at the Port of Miami is {miamiDelivery.display} each way, and Fort Lauderdale is {fllDelivery.display} each way, with the handover point agreed in your quote. {hoursSummary}. Miles, deposit and insurance are on the <a href="/terms">terms page</a>.</p>
+  <p>Roof-down delivery in Miami is {miamiDelivery.display} each way, and Fort Lauderdale is {fllDelivery.display} each way, with the handover point agreed in your quote. {hoursSummary}. Miles, deposit and insurance are on the <a href="/terms">terms page</a>.</p>
 
   <h2>Questions</h2>
   {faqs.map((f) => (

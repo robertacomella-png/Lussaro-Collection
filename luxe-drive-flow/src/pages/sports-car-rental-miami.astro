@@ -17,7 +17,8 @@ import {
   fllDelivery,
   isOpenTop,
   miamiDelivery,
-  productFor,
+  hubCtaSubtitle,
+  itemListFor,
   publicName,
   usd,
 } from '@/lib/hub';
@@ -64,7 +65,7 @@ const faqs = [
   },
   {
     q: 'What does delivery cost?',
-    a: `A sports car is ${miamiDelivery.display} each way in Miami and at the Port of Miami, and ${fllDelivery.display} each way in Fort Lauderdale, with the handover point agreed in your quote. ${mileage.includedPerDay} miles a day are included. The refundable deposit is ${deposit.display}${sto?.depositDiffers ? `, except ${sto.deposit.display} on the Huracán STO` : ''}. Drivers are ${minimumAge} or over${sto && sto.minimumAge !== minimumAge ? `, except ${sto.minimumAge} for the Huracán STO` : ''}. ${hoursSummary}.`,
+    a: `A sports car is ${miamiDelivery.display} each way in Miami, and ${fllDelivery.display} each way in Fort Lauderdale, with the handover point agreed in your quote. ${mileage.includedPerDay} miles a day are included. The refundable deposit is ${deposit.display}${sto?.depositDiffers ? `, except ${sto.deposit.display} on the Huracán STO` : ''}. Drivers are ${minimumAge} or over${sto && sto.minimumAge !== minimumAge ? `, except ${sto.minimumAge} for the Huracán STO` : ''}. ${hoursSummary}.`,
   },
 ];
 ---
@@ -81,7 +82,8 @@ const faqs = [
   showRating={false}
   reserveNote="Tell us the car and the dates and we'll confirm availability."
   leadNote="Prefer to talk now? Call or WhatsApp us."
-  schema={[...sports.map(productFor), faqPage(faqs)]}
+  ctaSubtitle={hubCtaSubtitle}
+  schema={[itemListFor(sports), faqPage(faqs)]}
 >
   <p>The job of this page is the choice among those cars. Brand pages keep their own questions: <a href="/lamborghini-rental-miami">Lamborghini rental Miami</a> for the Huracáns and the Urus, and <a href="/porsche-911-turbo-s-rental-miami">Porsche rental Miami</a> for the 911. If the roof is the whole decision, use the <a href="/convertible-car-rental-miami">convertible page</a>.</p>
 
@@ -121,7 +123,7 @@ const faqs = [
   <p>The Lamborghini Urus, the Mercedes-AMG G63, the Cullinan and the sedans are not sports cars. They sit higher and they carry more. Start with <a href="/lamborghini-rental-miami">Lamborghini rental Miami</a> if the Urus is in the running, or with the fleet if you have not chosen a shape yet.</p>
 
   <h2>Delivery and hours</h2>
-  <p>A sports car delivered in Miami or at the Port of Miami is {miamiDelivery.display} each way, and Fort Lauderdale is {fllDelivery.display} each way, with the handover point agreed in your quote. {hoursSummary}. The rest of the terms are on the <a href="/pricing">rate card</a>.</p>
+  <p>A sports car delivered in Miami is {miamiDelivery.display} each way, and Fort Lauderdale is {fllDelivery.display} each way, with the handover point agreed in your quote. {hoursSummary}. The rest of the terms are on the <a href="/pricing">rate card</a>.</p>
 
   <h2>Questions</h2>
   {faqs.map((f) => (

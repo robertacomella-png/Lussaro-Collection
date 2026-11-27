@@ -1,8 +1,15 @@
 ---
 import { rateRows, usd } from '@/lib/hub';
+import { rentalTerms } from '@/data/rental-terms';
 
 const { items } = Astro.props;
 const columns = items.length ? rateRows(items[0].car).map((row) => row.label) : [];
+// taxesAndFeesRate and deposit already live in rental-terms.js. The note
+// renders only while both are present, so a missing figure cannot be invented.
+const taxPct = Number.isFinite(rentalTerms.taxesAndFeesRate)
+  ? Math.round(rentalTerms.taxesAndFeesRate * 100)
+  : null;
+const deposit = rentalTerms.deposit?.display || '';
 ---
 {items.length > 0 && (
   <div class="not-prose my-8 overflow-x-auto">
@@ -29,4 +36,9 @@ const columns = items.length ? rateRows(items[0].car).map((row) => row.label) : 
       </tbody>
     </table>
   </div>
+)}
+{items.length > 0 && taxPct != null && deposit && (
+  <p class="not-prose text-sm text-[#0a0a0a]/70 -mt-4 mb-8">
+    Per-day rental rates before {taxPct}% taxes and fees. Delivery and collection are charged separately, and the {deposit} deposit is refundable.
+  </p>
 )}

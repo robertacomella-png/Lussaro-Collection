@@ -10,7 +10,8 @@ import {
   faqPage,
   fllDelivery,
   miamiDelivery,
-  productFor,
+  hubCtaSubtitle,
+  itemListFor,
   publicName,
   usd,
 } from '@/lib/hub';
@@ -40,7 +41,7 @@ const faqs = [
   },
   {
     q: 'What does delivery cost?',
-    a: `The Cullinan is ${miamiDelivery.display} each way in Miami and at the Port of Miami, and ${fllDelivery.display} each way in Fort Lauderdale, and the handover point is agreed in your quote. Collection is typically the same fee as delivery.`,
+    a: `The Cullinan is ${miamiDelivery.display} each way in Miami, and ${fllDelivery.display} each way in Fort Lauderdale, and the handover point is agreed in your quote. Collection is typically the same fee as delivery.`,
   },
   {
     q: 'What is required to book it?',
@@ -61,7 +62,8 @@ const faqs = [
   showRating={false}
   reserveNote="Tell us the car and the dates and we'll confirm availability."
   leadNote="Prefer to talk now? Call or WhatsApp us."
-  schema={[productFor(cullinan), faqPage(faqs)]}
+  ctaSubtitle={hubCtaSubtitle}
+  schema={[itemListFor([cullinan]), faqPage(faqs)]}
 >
   <h2>The <a href="/cars/rolls-royce-cullinan">Cullinan</a></h2>
   <p>The Rolls-Royce we rent is the SUV. At {usd(cullinan.price)} a day the engineering is remarkable, and that is not really what it is for. The draw is what happens when it pulls up.</p>
@@ -74,7 +76,7 @@ const faqs = [
   <RateGrid items={[{ car: cullinan, href: '/cars/rolls-royce-cullinan', name }]} />
 
   <h2>Booking one</h2>
-  <p>Dates matter on a single car. Send the day you need and we will tell you whether it is open. Cullinan delivery is {miamiDelivery.display} each way in Miami and at the Port of Miami, and {fllDelivery.display} each way in Fort Lauderdale, with the handover point agreed in your quote. {hoursSummary}. Deposit, mileage and the rest of the numbers are on the <a href="/pricing">rate card</a>, and the full detail sits in our <a href="/terms">terms</a>.</p>
+  <p>Dates matter on a single car. Send the day you need and we will tell you whether it is open. Cullinan delivery is {miamiDelivery.display} each way in Miami, and {fllDelivery.display} each way in Fort Lauderdale, with the handover point agreed in your quote. {hoursSummary}. Deposit, mileage and the rest of the numbers are on the <a href="/pricing">rate card</a>, and the full detail sits in our <a href="/terms">terms</a>.</p>
   <p>To set it beside the other SUVs, see the <a href="/luxury-suv-rental-miami">luxury SUV comparison</a>. For the wider fleet, start at <a href="/exotic-car-rental-miami">exotic car rental in Miami</a>.</p>
 
   <h2>Questions</h2>

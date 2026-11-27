@@ -24,20 +24,15 @@ const NAMES = {
   'porsche-911-turbo-s': 'Porsche 911 Turbo S Cabriolet',
 };
 
-const BRANDS = {
-  'mercedes-maybach-s580': 'Mercedes-Maybach',
-  'mercedes-maybach-gls-600': 'Mercedes-Maybach',
-  'mercedes-amg-g63': 'Mercedes-AMG',
-};
-
 export const usd = (n) => `$${Number(n).toLocaleString('en-US')}`;
+
+/** Closer under the hubs. CtaBand's own default is left alone. */
+export const hubCtaSubtitle = "Message us on WhatsApp, or send your details and we'll confirm availability for your dates.";
 
 export const carBySlug = (slug) => cars.find((c) => c.slug === slug);
 
 export const publicName = (car) =>
   NAMES[car.slug] ?? (car.name.startsWith(car.make) ? car.name : `${car.make} ${car.name}`);
-
-export const publicBrand = (car) => BRANDS[car.slug] ?? car.make;
 
 export const miamiDelivery = rentalTerms.delivery.find((d) => d.area === 'Miami');
 export const fllDelivery = rentalTerms.delivery.find((d) => d.area === 'Fort Lauderdale');
@@ -59,26 +54,20 @@ export const carsInOrder = (slugs) => slugs.map(carBySlug).filter(Boolean);
 /** Spyder / Spider / Cabriolet in the name or slug. Coupes do not match. */
 export const isOpenTop = (car) => /spyder|spider|cabriolet/i.test(`${car.slug} ${car.name}`);
 
-export const productFor = (car) => {
-  const photos = (car.images || []).filter((src) => src && !src.endsWith('.svg'));
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: `${publicName(car)} Rental — Miami`,
-    image: photos.map((src) => (src.startsWith('http') ? src : `${SITE}${src}`)),
-    description: `${publicName(car)} rental in Miami, ${usd(car.price)} a day.`,
-    brand: { '@type': 'Brand', name: publicBrand(car) },
-    sku: `LC-${car.slug.toUpperCase()}`,
-    offers: {
-      '@type': 'Offer',
-      url: `${SITE}/cars/${car.slug}`,
-      price: Number(car.price).toFixed(2),
-      priceCurrency: 'USD',
-      availability: 'https://schema.org/InStock',
-      seller: { '@id': `${SITE}/#business` },
-    },
-  };
-};
+/**
+ * Cars on a hub, as links to their /cars/ pages. No price, availability, or rating.
+ * The visible rate table is the price; this list only points at the car pages.
+ */
+export const itemListFor = (list) => ({
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  itemListElement: list.map((car, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: publicName(car),
+    url: `${SITE}/cars/${car.slug}`,
+  })),
+});
 
 export const faqPage = (faqs) => ({
   '@context': 'https://schema.org',

@@ -15,7 +15,8 @@ import {
   faqPage,
   fllDelivery,
   miamiDelivery,
-  productFor,
+  hubCtaSubtitle,
+  itemListFor,
   publicName,
   usd,
 } from '@/lib/hub';
@@ -32,7 +33,7 @@ const { mileage, minimumAge, deposit } = rentalTerms;
 const title = assertTitle('Mercedes', 'Mercedes Rental Miami | Lussaro Collection');
 const description = assertMeta(
   'Mercedes',
-  `Mercedes rental in Miami: Mercedes-AMG G63, Mercedes-Benz S580, Mercedes-Maybach S580 and Mercedes-Maybach GLS 600. From ${miamiDelivery.display} each way. FLL is ${fllDelivery.display} each way.`,
+  `Mercedes rental in Miami: Mercedes-AMG G63, Mercedes-Benz S580, Mercedes-Maybach S580 and Mercedes-Maybach GLS 600. Delivery from ${miamiDelivery.display} each way in Miami.`,
 );
 
 const item = (car, href) => ({ car, href, name: publicName(car) });
@@ -59,7 +60,7 @@ const faqs = [
   },
   {
     q: 'What does delivery cost?',
-    a: `Any of these Mercedes cars is ${miamiDelivery.display} each way in Miami and at the Port of Miami, and ${fllDelivery.display} each way in Fort Lauderdale, with the handover point agreed in your quote. ${mileage.includedPerDay} miles a day are included, the refundable deposit is ${deposit.display}, and drivers must be ${minimumAge} or over with a valid license. ${hoursSummary}.`,
+    a: `Any of these Mercedes cars is ${miamiDelivery.display} each way in Miami, and ${fllDelivery.display} each way in Fort Lauderdale, with the handover point agreed in your quote. ${mileage.includedPerDay} miles a day are included, the refundable deposit is ${deposit.display}, and drivers must be ${minimumAge} or over with a valid license. ${hoursSummary}.`,
   },
 ];
 ---
@@ -76,7 +77,8 @@ const faqs = [
   showRating={false}
   reserveNote="Tell us the car and the dates and we'll confirm availability."
   leadNote="Prefer to talk now? Call or WhatsApp us."
-  schema={[...mercs.map(productFor), faqPage(faqs)]}
+  ctaSubtitle={hubCtaSubtitle}
+  schema={[itemListFor(mercs), faqPage(faqs)]}
 >
   <p>This page owns the Mercedes lineup. A single model keeps its own page, linked under each car. The day rates in the table are the live fleet prices.</p>
 
@@ -115,7 +117,7 @@ const faqs = [
   <p>The Mercedes-Maybach S580 and the Mercedes-Maybach GLS 600 together, including chauffeur in the GLS 600, are on <a href="/maybach-rental-miami">Maybach rental Miami</a>. This page does not take that query.</p>
 
   <h2>Delivery and hours</h2>
-  <p>Mercedes delivery is {miamiDelivery.display} each way in Miami and at the Port of Miami, and {fllDelivery.display} each way in Fort Lauderdale, with the handover point agreed in your quote. {hoursSummary}. Deposit, miles and insurance are on the <a href="/pricing">rate card</a>.</p>
+  <p>Mercedes delivery is {miamiDelivery.display} each way in Miami, and {fllDelivery.display} each way in Fort Lauderdale, with the handover point agreed in your quote. {hoursSummary}. Deposit, miles and insurance are on the <a href="/pricing">rate card</a>.</p>
 
   <h2>Questions</h2>
   {faqs.map((f) => (

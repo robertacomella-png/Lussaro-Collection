@@ -32,6 +32,9 @@ const {
   // and does not state a response time. The star row is gone.
   reserveNote = "Tell us what and when and we'll confirm availability.",
   leadNote,
+  // Empty keeps CtaBand's own subtitle. Hubs pass their own so the default
+  // same-day line stays off these pages without editing CtaBand.astro.
+  ctaSubtitle = '',
   // Fleet `name` (the lead-form option value). When set, the hero leads with
   // the booking form and WhatsApp sits under it. Empty keeps the WhatsApp pill.
   bookingCar = '',
