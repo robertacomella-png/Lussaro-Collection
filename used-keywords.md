@@ -12,6 +12,7 @@ This is what stops the site competing with itself — the failure mode where two
 
 | Primary keyword | Used on | Date | Cluster |
 |---|---|---|---|
+| rent a lamborghini for a day | [/blog/rent-a-lamborghini-for-a-day-miami](../luxe-drive-flow/src/pages/blog/rent-a-lamborghini-for-a-day-miami.astro) | 2026-11-27 | Lamborghini |
 | how much to rent a maybach | [/blog/how-much-to-rent-a-maybach-miami](../luxe-drive-flow/src/pages/blog/how-much-to-rent-a-maybach-miami.astro) | 2026-11-26 | Maybach |
 | luxury car rental miami beach | [/blog/luxury-car-rental-miami-beach-art-basel](../luxe-drive-flow/src/pages/blog/luxury-car-rental-miami-beach-art-basel.astro) | 2026-11-25 | Art Basel |
 | how much is a rental lamborghini | [/blog/how-much-is-a-lamborghini-rental](../luxe-drive-flow/src/pages/blog/how-much-is-a-lamborghini-rental.astro) | 2026-08-14 | Lamborghini |
@@ -163,6 +164,23 @@ conclusion themselves, which is the version a competitor cannot copy.
 **Why this primary:** informational price question, 320/mo, KD 3. No page targeted it. `/maybach-rental-miami` keeps the commercial term `maybach rental miami`. This post answers the price and links through to the GLS 600, the Maybach S580, and the Mercedes-Benz S580.
 
 **Do not reuse.** Close variants that return the same SERP — "how much is it to rent a maybach", "how much does it cost to rent a maybach", and "how much to rent a maybach for a day" — stay secondaries on this post. They are not a second primary.
+
+---
+
+### rent a lamborghini for a day
+**Post:** `/blog/rent-a-lamborghini-for-a-day-miami`
+**Date:** November 27, 2026
+
+**Secondaries used:**
+- best drives in miami *(no SE Ranking volume on file; the four routes cover it)*
+- lamborghini rental miami price *(40/mo, KD 11)*
+- how much is it to rent a lamborghini huracan for a day *(one FAQ here; the STO vs EVO post keeps it)*
+- lamborghini huracan sto rental miami *(anchor text only; `/cars/huracan-sto` keeps it)*
+- rent a lamborghini in miami *(anchor text only; `/lamborghini-rental-miami` keeps it)*
+
+**Why this primary:** highest-volume, lowest-KD unused term in the Huracán STO cluster. 480/mo, KD 8, CPC $0.46, intent informational. SE Ranking US database, pulled 26 Nov 2026. A live re-pull on 27 Nov 2026 failed because the connector did not start. No page targeted the day-and-route question. `/lamborghini-rental-miami` keeps the commercial verb phrase, and `/cars/huracan-sto` keeps the STO rental term. This post plans the day: routes, the mile budget, and a worked total.
+
+**Do not reuse.**
 
 ---
 
