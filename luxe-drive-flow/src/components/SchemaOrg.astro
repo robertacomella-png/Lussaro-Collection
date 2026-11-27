@@ -72,7 +72,9 @@ const graph = {
     {
       '@type': ['AutoRental', 'LocalBusiness'],
       '@id': `${BASE}#business`,
-      name: `${business.brandName} – Exotic Car Rental Miami`,
+      // The Google Business Profile name, with no keyword suffix. A second
+      // trading name on the same NAP splits the entity.
+      name: business.brandName,
       parentOrganization: { '@id': `${BASE}#org` },
       url: BASE,
       image: PHOTO,

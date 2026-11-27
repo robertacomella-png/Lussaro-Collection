@@ -15,6 +15,7 @@ const LABELS = {
   '/contact': 'Contact',
   '/pricing': 'Pricing & Policies',
   '/gallery': 'Gallery',
+  '/reviews': 'Reviews',
   '/chauffeur-service-miami': 'Chauffeur Service Miami',
   '/exotic-car-rental-miami': 'Exotic Car Rental Miami',
   '/best-exotic-car-rental-miami': 'Best Exotic Car Rental Miami',

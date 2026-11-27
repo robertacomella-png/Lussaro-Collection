@@ -1,3 +1,4 @@
+import { readFile, writeFile } from 'node:fs/promises';
 import { defineConfig, envField } from 'astro/config';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
@@ -5,6 +6,30 @@ import vercel from '@astrojs/vercel';
 import keystatic from '@keystatic/astro';
 import path from 'node:path';
 import { lastmodFor } from './sitemap-lastmod.mjs';
+
+// The adapter turns an Astro redirect for "/cars" into the route "^/cars$".
+// That misses "/cars/", which is what a directory-style request sends. The
+// adapter is registered first, so this hook runs after it writes config.json.
+// "^/cars/?$" is /cars and /cars/ only; /cars/<slug> does not match.
+function carsIndexRedirect() {
+  return {
+    name: 'cars-index-redirect',
+    hooks: {
+      'astro:build:done': async () => {
+        const file = new URL('./.vercel/output/config.json', import.meta.url);
+        const json = JSON.parse(await readFile(file, 'utf8'));
+        const route = (json.routes ?? []).find(
+          (r) => r.status === 301 && r.headers?.Location === '/fleet' && (r.src === '^/cars$' || r.src === '^/cars/?$'),
+        );
+        if (!route) {
+          throw new Error('Expected a 301 from /cars to /fleet in the Vercel build output.');
+        }
+        route.src = '^/cars/?$';
+        await writeFile(file, JSON.stringify(json));
+      },
+    },
+  };
+}
 
 // Fallback only — real dates come from git, per page. See sitemap-lastmod.mjs.
 const buildDate = new Date().toISOString();
@@ -20,7 +45,13 @@ export default defineConfig({
   server: { host: true, port: 4321 },
   // Crawlers and SEO tools probe /sitemap.xml first, but @astrojs/sitemap only
   // emits sitemap-index.xml — point one at the other rather than duplicating.
-  redirects: { '/home': '/', '/sitemap.xml': '/sitemap-index.xml' },
+  // /cars is not a page. The fleet hub is /fleet. Both /cars and /cars/ 301
+  // there; /cars/<slug> is a real page and must not match this redirect.
+  redirects: {
+    '/home': '/',
+    '/sitemap.xml': '/sitemap-index.xml',
+    '/cars': { status: 301, destination: '/fleet' },
+  },
   // Keystatic's API route imports `getSecret` from `astro:env/server`, and that
   // virtual module only exists once an env schema is declared — without this
   // the admin shell renders but every save fails on an unresolved import.
@@ -54,6 +85,7 @@ export default defineConfig({
       priority: 0.7,
       serialize: (item) => ({ ...item, lastmod: lastmodFor(item.url, buildDate) }),
     }),
+    carsIndexRedirect(),
   ],
   adapter: vercel(),
   vite: {
