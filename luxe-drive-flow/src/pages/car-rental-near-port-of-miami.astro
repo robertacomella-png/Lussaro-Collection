@@ -14,6 +14,7 @@ import {
   lateShipSentence,
   miamiDelivery,
   returnSentence,
+  suvRateSentence,
 } from '@/lib/delivery-facts';
 import { deliveryBusinessSchema, faqSchema } from '@/lib/delivery-schema';
 
@@ -35,11 +36,7 @@ const low = priced[0];
 const high = priced[priced.length - 1];
 const { deposit, mileage, cancellation, insurance, minimumAge } = rentalTerms;
 const policy = gls.insurancePerDay;
-const suvRates = `The 1-day rate is ${usd(urus.price)} for the ${urus.name}, ${usd(gls.price)} for the ${named(gls)}, ${usd(cullinan.price)} for the ${named(cullinan)}, and ${usd(g63.price)} for the ${named(g63)}.${
-  g63.threeDayDeal === gls.threeDayDeal
-    ? ` From 3 days, the ${named(g63)} and the ${named(gls)} are both ${usd(g63.threeDayDeal)} a day.`
-    : ''
-}`;
+const suvRates = suvRateSentence(urus, gls, cullinan, g63);
 
 const waMessage = "Hi, I'd like the Lamborghini Urus delivered to the Port of Miami.";
 const wa = whatsappWith(waMessage, { car: urus.name, page: PAGE });
@@ -69,7 +66,7 @@ const faqs = [
   },
   {
     q: 'Which cars are practical with cruise luggage?',
-    a: `${suvRates} The low cars are a different brief.`,
+    a: 'Start with an SUV. The 1-day, 3-day, 5-day, and 7-day rates are above. The low cars are a different brief.',
   },
   {
     q: 'Can I be driven instead?',
@@ -95,7 +92,7 @@ const schema = [
   title="Car Rental Near Port of Miami | Cruise Delivery | Lussaro"
   description={description}
   h1="Luxury Car Rental Near the Port of Miami"
-  intro={`Lussaro Collection delivers to the Port of Miami. Delivery is ${miamiDelivery.display} each way, the Miami rate. This is delivery for a cruise, not a rental counter at the port.`}
+  intro={`Lussaro Collection delivers to the Port of Miami. Delivery is ${miamiDelivery.display} each way, the Miami rate. You return the car to our location, or we pick it up for a fee agreed in your quote. This is delivery for a cruise, not a rental counter at the port.`}
   heroImage="/cars/rolls-royce-cullinan-rental-miami-front-quarter.jpg"
   showRating={false}
   bookingCar={urus.name}
@@ -122,7 +119,7 @@ const schema = [
   <h2 id="how-cruise-delivery-works">How cruise-day delivery works</h2>
   <p>Send the car, the dates, the ship name, and the arrival or departure window. We reply with availability and the total. The Miami delivery fee of {miamiDelivery.display} each way is part of that total, written out before you book. An eligible driver has to be present to receive the car.</p>
   <p>{lateShipSentence} That includes a ship outside the daily hours above. The quote is where the timing is agreed.</p>
-  <p>{returnSentence} A hotel the night before, and the port the morning you sail, is not a one-way drop-off we offer. The return is our location, or a pickup we price in the quote.</p>
+  <p>{returnSentence} A hotel the night before, and the port the morning you sail, is not a one-way drop-off we offer.</p>
 
   <h2 id="what-delivery-costs">What delivery costs</h2>
   <p>Delivery to the Port of Miami is {miamiDelivery.display} each way, the Miami rate. The rate card does not keep a separate port line, so this page uses that published Miami fee and no other number. It is an extra charge, not a discount off the daily rate. See <a href="/pricing">pricing</a> and the <a href="/terms">terms</a>.</p>

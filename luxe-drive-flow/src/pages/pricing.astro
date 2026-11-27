@@ -28,7 +28,7 @@ const zoneName = {
   Miami: 'Miami area, including MIA and the Port of Miami',
   'Fort Lauderdale': 'Fort Lauderdale (FLL)',
 };
-const deliveryAnswer = `Miami-area delivery, including MIA airport and the Port of Miami, is ${miamiDelivery.display} each way. Fort Lauderdale (FLL) is ${fortLauderdaleDelivery.display} each way. At the end of the rental you return the car to our location, or we pick it up for a fee. Anywhere outside those areas is quoted before you book.`;
+const deliveryAnswer = `Miami-area delivery, including MIA airport and the Port of Miami, is ${miamiDelivery.display} each way. Fort Lauderdale (FLL) is ${fortLauderdaleDelivery.display} each way. At the end of the rental you return the car to our location, or we pick it up for a fee agreed in your quote. There are no one-way drop-offs anywhere else. Anywhere outside those areas is quoted before you book.`;
 const usd = (n) => `$${n.toLocaleString('en-US')}`;
 const named = (c) => (c.name.startsWith(c.make) ? c.name : `${c.make} ${c.name}`);
 // Per-car ladder from cars.js, which folds in the owner's 3-Day Deals and the

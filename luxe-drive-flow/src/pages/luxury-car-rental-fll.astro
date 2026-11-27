@@ -16,6 +16,7 @@ import {
   lateFlightSentence,
   miamiDelivery,
   returnSentence,
+  suvRateSentence,
 } from '@/lib/delivery-facts';
 import { deliveryBusinessSchema, faqSchema } from '@/lib/delivery-schema';
 
@@ -37,11 +38,7 @@ const low = priced[0];
 const high = priced[priced.length - 1];
 const { deposit, mileage, cancellation, insurance, minimumAge } = rentalTerms;
 const policy = gls.insurancePerDay;
-const suvRates = `The 1-day rate is ${usd(urus.price)} for the ${urus.name}, ${usd(gls.price)} for the ${named(gls)}, ${usd(cullinan.price)} for the ${named(cullinan)}, and ${usd(g63.price)} for the ${named(g63)}.${
-  g63.threeDayDeal === gls.threeDayDeal
-    ? ` From 3 days, the ${named(g63)} and the ${named(gls)} are both ${usd(g63.threeDayDeal)} a day.`
-    : ''
-}`;
+const suvRates = suvRateSentence(urus, gls, cullinan, g63);
 
 const waMessage = "Hi, I'd like the Lamborghini Urus delivered to Fort Lauderdale Airport (FLL).";
 const wa = whatsappWith(waMessage, { car: urus.name, page: PAGE });
@@ -101,7 +98,7 @@ const schema = [
   title="Luxury Car Rental FLL | Fort Lauderdale Airport | Lussaro"
   description={description}
   h1="Luxury Car Rental at Fort Lauderdale Airport (FLL)"
-  intro={`Lussaro Collection delivers to Fort Lauderdale-Hollywood International Airport from Miami. Fort Lauderdale delivery is ${fortLauderdaleDelivery.display} each way. You return the car to our Miami address, or we pick it up for a fee agreed in your quote.`}
+  intro={`Lussaro Collection delivers to Fort Lauderdale-Hollywood International Airport from Miami. Fort Lauderdale delivery is ${fortLauderdaleDelivery.display} each way. You return the car to our location, or we pick it up for a fee agreed in your quote.`}
   heroImage="/cars/mercedes-maybach-gls-600-rental-miami-side-palms.jpg"
   showRating={false}
   bookingCar={urus.name}
@@ -139,7 +136,7 @@ const schema = [
 
   <h2 id="which-cars">Cars that work well after a flight</h2>
   <p>With luggage, start with an SUV. {suvRates} The form on this page starts on the <a href="/cars/lamborghini-urus">{urus.name}</a>. See the <a href="/luxury-suv-rental-miami">luxury SUV</a> page, the <a href="/cars/mercedes-maybach-gls-600">{named(gls)}</a>, the <a href="/cars/rolls-royce-cullinan">{named(cullinan)}</a>, the <a href="/cars/mercedes-amg-g63">{named(g63)}</a>, and the <a href="/lamborghini-urus-rental-miami">Urus page</a>.</p>
-  <p>For a Lamborghini in general, use the <a href="/lamborghini-rental-miami">Lamborghini rental</a> page rather than treating this airport page as the Lamborghini guide. The low cars, the <a href="/cars/huracan-evo">Huracan EVO</a> and the <a href="/cars/sf90">Ferrari SF90</a>, are the choice when the drive matters more than the bags. The {named(sto)} is track-bred, street-only. The whole list is on the <a href="/fleet">fleet</a>.</p>
+  <p>For a Lamborghini, use the <a href="/lamborghini-rental-miami">Lamborghini rental</a> page. The <a href="/cars/huracan-evo">Huracan EVO</a> and the <a href="/cars/sf90">Ferrari SF90</a> are the low cars. The {named(sto)} is track-bred, street-only. The list is on the <a href="/fleet">fleet</a>.</p>
 
   <ContentPhoto src="/cars/rolls-royce-cullinan-rental-miami-front-quarter.jpg" width={1024} height={683} />
 
