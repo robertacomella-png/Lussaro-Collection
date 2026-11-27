@@ -25,7 +25,7 @@ import BlogBookingCta from '@/components/blog/BlogBookingCta.astro';
 import { cars } from '@/data/cars';
 import { reviews } from '@/data/reviews';
 import { business, telHref, whatsappWith, addressLine, hoursSummary } from '@/data/business';
-import { rentalTerms, rateForDays } from '@/data/rental-terms';
+import { rentalTerms, rateForDays, deliveryEachWaySummary } from '@/data/rental-terms';
 
 const bySlug = (s) => cars.find((c) => c.slug === s);
 const sto = bySlug('huracan-sto');
@@ -82,6 +82,15 @@ const midTier = stoTiers[1];
 const miami = delivery.find((d) => d.area === 'Miami');
 const lauderdale = delivery.find((d) => d.area === 'Fort Lauderdale');
 const taxAmount = Math.round(sto.price * taxesAndFeesRate * 100) / 100;
+// 160 miles each way is a map estimate. The round trip, the miles a two-day
+// allowance leaves over, the cost of those miles, and the days that cover the
+// round trip all follow from that estimate and the mileage fields.
+const keyWestEachWay = 160;
+const keyWestRoundTrip = keyWestEachWay * 2;
+const twoDayMiles = perDay * 2;
+const keyWestExtraOnTwoDays = keyWestRoundTrip - twoDayMiles;
+const keyWestExtraCost = keyWestExtraOnTwoDays * mileage.overagePerMile;
+const daysForKeyWest = Math.ceil(keyWestRoundTrip / perDay);
 const typicalTotal = sto.price + taxAmount + miami.fee * 2;
 const dayGap = sto.price - urus.price;
 const otherLambos = lambos.filter((c) => c.slug !== sto.slug);
@@ -153,7 +162,7 @@ const faqs = [
   },
   {
     q: 'Do you deliver the Lamborghini to my hotel?',
-    a: `Yes, to hotels, residences, offices and both airports. Delivery is ${usd(miami.fee)} each way in ${miami.area} and ${usd(lauderdale.fee)} in ${lauderdale.area}. Collection is charged separately, usually at the same rate.`,
+    a: `Yes, to hotels, residences, offices and both airports. Delivery is ${deliveryEachWaySummary}. Collection is charged separately, usually at the same rate.`,
   },
   {
     q: 'How old do you have to be to rent a Lamborghini for a day?',
@@ -322,7 +331,7 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
         <ul>
           <li><strong>{perDay} miles.</strong> Extra miles are {usd(mileage.overagePerMile)} each.</li>
           <li><strong>A refundable deposit:</strong> {sto.deposit.display} on the {label(sto)}, {deposit.display} on every other car. It is held separately and returned after the car is inspected.</li>
-          <li><strong>Delivery</strong> to your hotel, home, office or either airport: {usd(miami.fee)} each way in {miami.area}, {usd(lauderdale.fee)} in {lauderdale.area}. Collection is charged separately, usually at the same rate.</li>
+          <li><strong>Delivery</strong> to your hotel, home, office or either airport: {deliveryEachWaySummary}. Collection is charged separately, usually at the same rate.</li>
           <li><strong>Age:</strong> {sto.minimumAge} and over for the {label(sto)}, {minimumAge} and over for the rest of our Lamborghinis, with a valid license and insurance that covers the car. If you have no qualifying policy, we can sell you a daily one; <a href="/blog/no-insurance-rentals-miami">here is how that works</a>.</li>
         </ul>
 
@@ -452,7 +461,7 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
         </figure>
 
         <p>
-          A day's allowance is {perDay} miles. That is more than it sounds if you plan, and less than it sounds if you aim for Key West, which is about 160 miles each way. Here is a day that fits:
+          A day's allowance is {perDay} miles. That is more than it sounds if you plan. Key West is about {keyWestEachWay} miles each way, roughly {keyWestRoundTrip} round trip. Two pooled days give {twoDayMiles} miles, which leaves about {keyWestExtraOnTwoDays} miles over at {usd(mileage.overagePerMile)} a mile, about {usd(keyWestExtraCost)}, with nothing left for the city. A Key West round trip takes about {keyWestExtraOnTwoDays} extra miles, roughly {usd(keyWestExtraCost)} at {usd(mileage.overagePerMile)} a mile on a two-day rental, or about {numWord(daysForKeyWest)} days to stay within the included miles. Here is a day in the city that fits:
         </p>
 
         <ul>
@@ -467,7 +476,7 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
         </p>
 
         <p>
-          <strong>Our view:</strong> if you want both the Keys and the city, book two days, not one. Our miles are pooled across the whole rental, not capped each day. Two days gives you {perDay * 2} miles to spend however you like, so a long run on day one does not cost you anything if the car rests on day two. A daily cap that resets at midnight would charge you for that.
+          <strong>Our view:</strong> our miles are pooled across the whole rental, not capped each day. Two days gives you {twoDayMiles} miles to spend however you like, so a long run on day one does not cost you anything if the car rests on day two. A daily cap that resets at midnight would charge you for that.
         </p>
 
         <h2 id="what-one-day-costs">What one day really costs</h2>
@@ -531,7 +540,7 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
             <p>“{testimonial.text}”</p>
           </blockquote>
           <figcaption class="mt-4 text-sm text-[#0a0a0a]/60">
-            <span class="font-semibold text-[#0a0a0a]">{testimonial.name}</span> — verified Google review
+            <span class="font-semibold text-[#0a0a0a]">{testimonial.name}</span> — Google review
           </figcaption>
         </figure>
 
@@ -577,7 +586,7 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
             </div>
             <div>
               <dt class="font-semibold">Delivery area</dt>
-              <dd class="text-[#0a0a0a]/70">Miami, South Beach, Brickell, both airports. Fort Lauderdale at {usd(lauderdale.fee)} each way.</dd>
+              <dd class="text-[#0a0a0a]/70">Delivery is {deliveryEachWaySummary}.</dd>
             </div>
           </dl>
           <p class="mt-5">

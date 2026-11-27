@@ -124,4 +124,4 @@ A `locked` file stays locked after an approval. Approval covers one snapshot of 
 | luxe-drive-flow/src/pages/blog/well-kept-exotic-car-rental-miami.astro | 85cda92d73a51ea114822c8b3058263eef55aa91 | Public Relations, 25 Nov 2026 | Blog CTA change. Same hero form, no car pre-selected, See all cars. Copy unchanged. |
 | luxe-drive-flow/src/pages/blog/how-much-is-a-lamborghini-rental.astro | b963610c05289294c0f5043cc619cf06fe4ddbc8 | Public Relations, 25 Nov 2026 | Blog CTA change. Same hero form, no car pre-selected, See all cars. Copy unchanged. |
 | luxe-drive-flow/src/pages/blog/how-much-to-rent-a-maybach-miami.astro | 513cd44c4f764332f756488006600ec1da7aa23e | Public Relations, 26 Nov 2026 | First publication. |
-| luxe-drive-flow/src/pages/blog/rent-a-lamborghini-for-a-day-miami.astro | 49a20827f12ad983009d2dd8772c868e4d1fdd09 | Public Relations, 27 Nov 2026 | First publication. |
+| luxe-drive-flow/src/pages/blog/rent-a-lamborghini-for-a-day-miami.astro | ba1bd6ba066d083716d095fb51430de2b668d4e5 | Public Relations, 27 Nov 2026 | First publication. |
