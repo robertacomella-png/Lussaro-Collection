@@ -125,3 +125,5 @@ A `locked` file stays locked after an approval. Approval covers one snapshot of 
 | luxe-drive-flow/src/pages/blog/how-much-is-a-lamborghini-rental.astro | b963610c05289294c0f5043cc619cf06fe4ddbc8 | Public Relations, 25 Nov 2026 | Blog CTA change. Same hero form, no car pre-selected, See all cars. Copy unchanged. |
 | luxe-drive-flow/src/pages/blog/how-much-to-rent-a-maybach-miami.astro | 513cd44c4f764332f756488006600ec1da7aa23e | Public Relations, 26 Nov 2026 | First publication. |
 | luxe-drive-flow/src/pages/blog/rent-a-lamborghini-for-a-day-miami.astro | 30a06678b7c47bfa9b297f35bca487a56786cf93 | Public Relations, 27 Nov 2026 | First publication. |
+| luxe-drive-flow/src/data/business.js | fd79fe0670d2f1b00274e143fa9ada41fad498ce | Robert, 27 Nov 2026 | Hours only: Monday–Sunday close moves from 22:00 to 20:00. Visible line is 9 AM–8 PM daily, by appointment only. |
+| luxe-drive-flow/src/pages/blog/luxury-car-rental-miami-beach-art-basel.astro | 685aace29752309fd18b597a158543275ce23858 | Robert, 27 Nov 2026 | Hours sentence only. It now reads the shared hours line (9 AM–8 PM daily, by appointment only) instead of a local 10:00 p.m. clock. |
