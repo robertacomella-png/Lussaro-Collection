@@ -384,7 +384,7 @@ export function withAttribution(payload, placement, env) {
   return base;
 }
 
-// Click ids and UTMs for whatsapp_click / call_click. Never email or phone.
+// Click ids and UTMs for whatsapp_click / phone_call_click. Never email or phone.
 export function campaignFields(stored) {
   try {
     const data = stored || readAttribution();

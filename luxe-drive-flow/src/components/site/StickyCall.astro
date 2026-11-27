@@ -13,8 +13,9 @@
 // Order matches the hero pair (WhatsApp left, Call right) so the two contact
 // affordances on a page never appear in opposite orders.
 //
-// Both clicks are auto-tracked in Layout.astro off data-cta: the tel: fires
-// call_click, the wa.me fires whatsapp_click, each tagged with its location.
+// Both clicks are auto-tracked from the base layout off data-cta: the tel:
+// fires phone_call_click, the wa.me fires whatsapp_click, each tagged with
+// its location.
 // The show/hide observer keys off data-sticky-cta on the WRAPPER, not on the
 // anchors — hiding one anchor would strand the other on screen.
 import { Phone } from 'lucide-react';
