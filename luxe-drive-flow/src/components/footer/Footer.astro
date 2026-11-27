@@ -3,6 +3,7 @@ import { cars } from '@/data/cars';
 import SmartLink from '@/components/site/SmartLink.astro';
 import { business, telHref, mailHref, addressLine, hoursSummary } from '@/data/business';
 import { whatsappWith } from '@/data/business';
+import { deliveryEachWaySummary } from '@/data/rental-terms';
 // A car whose landing page should take the footer link instead of its own
 // /cars/ page. The footer renders on every route, so this is 33 inbound links
 // — the single biggest internal-link lever on the site, and the reason the
@@ -67,11 +68,11 @@ const year = new Date().getFullYear();
     <div>
       <h4 class="text-white text-sm uppercase tracking-[0.25em] mb-4">Rent in Miami</h4>
       <ul class="space-y-3 text-white/60 text-sm">
+        <li><SmartLink href="/lamborghini-rental-miami" class="hover:text-white transition-colors">Lamborghini rental</SmartLink></li>
         <li><SmartLink href="/rolls-royce-rental-miami" class="hover:text-white transition-colors">Rolls-Royce rental</SmartLink></li>
         <li><SmartLink href="/g-wagon-rental-miami" class="hover:text-white transition-colors">G-Wagon rental</SmartLink></li>
         <li><SmartLink href="/luxury-suv-rental-miami" class="hover:text-white transition-colors">Luxury SUV rental</SmartLink></li>
-        <li><SmartLink href="/exotic-car-rental-brickell" class="hover:text-white transition-colors">Exotic cars in Brickell</SmartLink></li>
-        <li><SmartLink href="/exotic-car-rental-south-beach" class="hover:text-white transition-colors">Exotic cars in South Beach</SmartLink></li>
+        <li><SmartLink href="/porsche-911-turbo-s-rental-miami" class="hover:text-white transition-colors">Porsche rental</SmartLink></li>
         <li><SmartLink href="/exotic-car-rental-fort-lauderdale" class="hover:text-white transition-colors">Exotic cars in Fort Lauderdale</SmartLink></li>
         <li><SmartLink href="/wedding-car-rental-miami" class="hover:text-white transition-colors">Wedding car rental</SmartLink></li>
       </ul>
@@ -114,6 +115,16 @@ const year = new Date().getFullYear();
         <li><a href={business.googleProfileLink} target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">Google Reviews</a></li>
       </ul>
     </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-6 mt-12">
+    <h4 class="text-white text-sm uppercase tracking-[0.25em] mb-4">Areas we deliver</h4>
+    <ul class="flex flex-wrap gap-x-6 gap-y-3 text-white/60 text-sm">
+      <li><SmartLink href="/exotic-car-rental-miami" class="hover:text-white transition-colors">Miami</SmartLink></li>
+      <li><SmartLink href="/exotic-car-rental-brickell" class="hover:text-white transition-colors">Brickell</SmartLink></li>
+      <li><SmartLink href="/exotic-car-rental-south-beach" class="hover:text-white transition-colors">South Beach</SmartLink></li>
+    </ul>
+    <p class="text-white/50 text-xs mt-3 max-w-xl">Delivery is {deliveryEachWaySummary}.</p>
   </div>
 
   {/* text-white/50 is the floor for body text on this black: /40 measures

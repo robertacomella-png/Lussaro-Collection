@@ -51,6 +51,7 @@ When an agency asks how edits are tracked, this is the answer.
 | /blog/how-old-do-you-have-to-be-to-rent-an-exotic-car-in-miami | Lussaro | locked | Published 15 Nov 2026, 1,569 words, 54/54 on the verifier. Rental-age guide: 18+ on every car except the STO (21), both derived from rental-terms.js and cars.js. Cites Florida s. 322.38. Edit sections, never regenerate. |
 | /blog/luxury-car-rental-miami-beach-art-basel | Lussaro | locked | Published 25 Nov 2026, 2,841 words. Art Basel week on Miami Beach: Urus, Maybach GLS 600, and Mercedes-Benz S580. Specs, age, and the cancellation window render from fleet.js and rental-terms.js. Edit sections, never regenerate. |
 | /blog/how-much-to-rent-a-maybach-miami | Lussaro | locked | Published 26 Nov 2026, 1,718 words, 54/54 on the verifier. Pricing guide for how much to rent a Maybach: GLS 600 and S580 Maybach rates from fleet.js and cars.js, with the Mercedes-Benz S580 as the self-drive alternative. Edit sections, never regenerate. |
+| /blog/rent-a-lamborghini-for-a-day-miami | Lussaro | locked | Published 27 Nov 2026, 1,641 words, 54/54 on the verifier. Route guide for renting a Lamborghini for a day: Huracán STO, four Miami drives, and the one-day total. Rates, miles, deposit and age render from fleet.js and rental-terms.js. Edit sections, never regenerate. |
 | /lamborghini-rental-miami | Lussaro | locked | SEO landing copy. Owns the Lamborghini commercial cluster. |
 | /rolls-royce-rental-miami | Lussaro | locked | SEO landing copy. |
 | /g-wagon-rental-miami | Lussaro | locked | SEO landing copy. |
@@ -129,3 +130,4 @@ A `locked` file stays locked after an approval. Approval covers one snapshot of 
 | luxe-drive-flow/src/pages/exotic-car-rental-fort-lauderdale.astro | 7ce2a6aed6fda06efb4c8ee36d46ca81b0688535 | Public Relations, 26 Nov 2026 | PR review: MIA is the Miami delivery rate, and "boot" is "trunk". |
 | luxe-drive-flow/src/pages/wedding-car-rental-miami.astro | 85b459072dc6f4935a21f3d1ed8b7b91b0da7cd0 | Public Relations, 26 Nov 2026 | PR review: title is exactly "Luxury Car Rental for a Wedding in Miami | Lussaro" (50 characters), and "boot" is "trunk". |
 | luxe-drive-flow/src/pages/porsche-911-turbo-s-rental-miami.astro | 479b53a8a6d2e0a3af26d3d6d817561854cc18f7 | Public Relations, 26 Nov 2026 | First publication. Porsche money page. Copy awaits Public Relations review. |
+| luxe-drive-flow/src/pages/blog/rent-a-lamborghini-for-a-day-miami.astro | 30a06678b7c47bfa9b297f35bca487a56786cf93 | Public Relations, 27 Nov 2026 | First publication. |

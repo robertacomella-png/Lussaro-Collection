@@ -265,7 +265,8 @@ export default function UrusHero({ src = MODEL_URL, poster = POSTER }) {
         src={poster}
         alt="Exotic car rental in Miami"
         className="absolute inset-0 w-full h-full object-cover opacity-60 transition-opacity duration-700"
-        fetchPriority="high"
+        loading="lazy"
+        fetchPriority="low"
       />
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full opacity-0 transition-opacity duration-1000" />
     </div>
