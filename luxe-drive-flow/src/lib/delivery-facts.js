@@ -1,12 +1,11 @@
 // Facts shared by the MIA, FLL, and Port of Miami delivery pages.
 //
-// Hours here are the window Robert set for these pages (9:00 AM–8:00 PM daily,
-// appointment only). They are not business.js, which still says 09:00–22:00
-// for the footer and the sitewide schema. Fees come from rental-terms.js.
+// The visible hours line is business.hoursSummary. Fees come from rental-terms.js.
 
+import { hoursSummary } from '../data/business.js';
 import { rentalTerms, rateForDays } from '../data/rental-terms.js';
 
-export const deliveryHoursLabel = '9:00 AM–8:00 PM daily, by appointment only';
+export const deliveryHoursLabel = hoursSummary;
 
 export const miamiDelivery = rentalTerms.delivery.find((d) => d.area === 'Miami');
 export const fortLauderdaleDelivery = rentalTerms.delivery.find((d) => d.area === 'Fort Lauderdale');
@@ -39,5 +38,5 @@ export function suvRateSentence(urus, gls, cullinan, g63) {
 export const flightTrackingSentence =
   'We track the flight for a self-drive delivery and for a chauffeur booking.';
 
-export const lateFlightSentence = 'Late-night flight arrivals are handled.';
-export const lateShipSentence = 'Late-night ship arrivals are handled.';
+export const lateFlightSentence = 'Late-night flight arrivals are by arrangement.';
+export const lateShipSentence = 'Late-night ship arrivals are by arrangement.';

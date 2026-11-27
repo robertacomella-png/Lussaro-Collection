@@ -1,8 +1,8 @@
 // Page-level AutoRental for the delivery landing pages.
 //
-// Opening hours are 09:00–20:00, every day, appointment only. This file does
-// not read business.js hours, which are still 09:00–22:00 on the sitewide
-// entity. Delivery prices are passed in from rental-terms.js.
+// Opening hours are 09:00–20:00, every day, appointment only, the same window
+// as business.js. The description repeats business.hoursSummary. Delivery
+// prices are passed in from rental-terms.js.
 
 import { business, postalAddress } from '../data/business.js';
 import { fleet } from '../data/fleet.js';
