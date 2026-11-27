@@ -128,7 +128,7 @@ const productSchema = {
   '@context': 'https://schema.org',
   '@type': 'Product',
   name: 'Mercedes-Maybach Rental — Miami',
-  description: `Rent a Mercedes-Maybach in Miami from $${fromDisplay} a day, or $${usd(threeDay)} a day for ${ladder[0].days} days or more. The Mercedes-Maybach GLS 600 or S580, delivery from ${deliverySummary} each way.`,
+  description: `Rent a Mercedes-Maybach in Miami from $${fromDisplay} a day, or $${usd(threeDay)} a day for ${ladder[0].days} days or more. The GLS 600 SUV or the Mercedes-Maybach S580, delivery from ${deliverySummary} each way.`,
   image: maybachs.map((c) => `${SITE}${c.images[0]}`),
   brand: { '@type': 'Brand', name: 'Mercedes-Maybach' },
   sku: 'LC-MAYBACH-MIAMI',
@@ -142,6 +142,18 @@ const productSchema = {
     availability: 'https://schema.org/InStock',
     seller: { '@id': `${SITE}/#business` },
   },
+  // The two Maybach quotes are rendered below. No AggregateRating: a score
+  // built from those quotes is not the Google listing, and this page does not
+  // print one.
+  ...(maybachReviews.length
+    ? {
+        review: maybachReviews.map((r) => ({
+          '@type': 'Review',
+          author: { '@type': 'Person', name: r.name },
+          reviewBody: r.text,
+        })),
+      }
+    : {}),
 };
 
 const faqSchema = {

@@ -176,7 +176,7 @@ export default function VehicleBookingCard({
         <p className="text-[#ff1516] text-3xl leading-none mb-3" aria-hidden="true">✓</p>
         <h3 className="font-display text-xl font-semibold text-white mb-2">Request received</h3>
         <p className="text-white/70 text-[15px] leading-relaxed">
-          We will confirm the {carName} for your dates shortly. You can also message us
+          We will confirm the {carName} for your dates shortly. For the fastest reply, message us
           on WhatsApp.
         </p>
       </div>

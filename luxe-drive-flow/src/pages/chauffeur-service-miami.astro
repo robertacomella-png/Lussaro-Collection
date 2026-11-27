@@ -5,7 +5,7 @@ import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
 import CtaBand from '@/components/site/CtaBand.astro';
 import LeadForm from '@/components/site/LeadForm.jsx';
 import { getImageKitSrc, getImageKitSrcSet } from '@/lib/imageKit';
-import { business, hoursSummary, telHref, whatsappWith } from '@/data/business';
+import { business, telHref, whatsappWith } from '@/data/business';
 import { rentalTerms } from '@/data/rental-terms';
 // Derived so every WhatsApp link says which page it was tapped from without
 // a path being threaded through each route by hand.
@@ -46,9 +46,9 @@ const faqs = [
   { q: `What’s included in the ${rentalTerms.chauffeurHourly.display} per hour?`, a: 'Your professional chauffeur, the Mercedes‑Maybach GLS 600, and fuel. Share your itinerary and we’ll confirm an all‑in rate before you book — no surprises.' },
   { q: 'Is there a minimum booking?', a: 'Most chauffeur reservations run a few hours or longer. Tell us what you have in mind and we’ll tailor the booking to your night or your day.' },
   { q: 'Which areas do you serve?', a: 'All of Miami — South Beach, Brickell, Wynwood, Miami Beach, Coral Gables — plus Fort Lauderdale, the airports, and private jet terminals. Longer trips are available on request.' },
-  { q: 'Can you handle airport and private‑jet pickups?', a: 'Yes. We cover MIA and FLL as well as FBOs, and we track your flight.' },
-  { q: 'How far in advance should I book?', a: "The more notice the better, especially on weekends and event nights. Message us with the date and we'll confirm availability." },
-  { q: 'Can I be chauffeured in a different vehicle?', a: 'The Maybach is our signature, but a Rolls‑Royce Cullinan and other vehicles from the Lussaro fleet are available on request.' },
+  { q: 'Can you handle airport and private‑jet pickups?', a: 'Yes. We cover MIA and FLL as well as FBOs, track your flight, and meet you curbside so there’s never a wait.' },
+  { q: 'How far in advance should I book?', a: 'The more notice the better, especially on weekends and event nights — but same‑day requests are often possible. Message us and we’ll let you know right away.' },
+  { q: 'Can I be chauffeured in a different vehicle?', a: 'The Maybach is our signature, but a Rolls‑Royce Cullinan and other vehicles from the Lussaro fleet are available on request for an elevated arrival.' },
   { q: 'How do I book and pay?', a: 'Reserve by WhatsApp or phone. A deposit confirms your chauffeur and vehicle, with the balance settled around your service.' },
 ];
 
@@ -82,8 +82,8 @@ const faqSchema = {
 };
 ---
 <Layout
-  title={`Miami Chauffeur Service | Maybach from ${rentalTerms.chauffeurHourly.display}/hr | Lussaro`}
-  description={`Be driven in a Mercedes-Maybach GLS 600 from ${rentalTerms.chauffeurHourly.display} an hour across Miami, including the airports. Hours are ${hoursSummary}. Fuel included.`}
+  title="Miami Chauffeur Service | Maybach $250/hr | Lussaro Collection"
+  description="Be driven in a Mercedes-Maybach GLS 600 from $250/hr. Airport transfers, nights out and events across Miami with a professional chauffeur."
   image={getImageKitSrc(maybach, 1200)}
   schema={[serviceSchema, faqSchema]}
 >
@@ -218,7 +218,7 @@ const faqSchema = {
     <div class="reveal max-w-6xl mx-auto px-5 md:px-8 grid grid-cols-3 gap-6 text-center">
       <div><p class="font-display text-2xl font-bold text-white">Pro</p><p class="text-white/50 text-sm mt-1">Vetted chauffeurs</p></div>
       <div><p class="font-display text-2xl font-bold text-white">Insured</p><p class="text-white/50 text-sm mt-1">Licensed &amp; covered</p></div>
-      <div><p class="font-display text-2xl font-bold text-white">Nights</p><p class="text-white/50 text-sm mt-1">Day or night</p></div>
+      <div><p class="font-display text-2xl font-bold text-white">24/7</p><p class="text-white/50 text-sm mt-1">Day or night</p></div>
     </div>
   </section>
 

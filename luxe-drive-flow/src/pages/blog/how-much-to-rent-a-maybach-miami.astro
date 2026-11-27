@@ -15,6 +15,7 @@ import Layout from '@/layouts/Layout.astro';
 import Nav from '@/components/site/Nav.astro';
 import CtaBand from '@/components/site/CtaBand.astro';
 import StickyMobileCta from '@/components/site/StickyMobileCta.astro';
+import RelatedPosts from '@/components/blog/RelatedPosts.astro';
 import BlogBookingCta from '@/components/blog/BlogBookingCta.astro';
 import { altFor } from '@/data/image-alt';
 import { cars } from '@/data/cars';
@@ -520,7 +521,7 @@ const jumps = [
         </p>
 
         <p>
-          For a fuller plan of that week, read our <a href="/blog/luxury-car-rental-miami-beach-art-basel">Art Basel guide to luxury car rental in Miami Beach</a>. For every Maybach in one place, see our Maybach rental Miami page.
+          For a fuller plan of that week, the Art Basel dates are in the paragraph above. For every Maybach in one place, see our Maybach rental Miami page.
         </p>
 
         <figure class="not-prose my-10">
@@ -564,6 +565,8 @@ const jumps = [
             Call {business.phoneDisplayShort}
           </a>
         </div>
+
+        <RelatedPosts currentSlug={SLUG} limit={1} />
 
         <aside class="not-prose mt-12 rounded-2xl border border-black/10 bg-[#fafafa] p-6 flex flex-col sm:flex-row gap-5">
           <img src="/favicon-96.png" width="64" height="64" alt="" aria-hidden="true"
