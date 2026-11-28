@@ -57,7 +57,6 @@ const usd = (n) => {
   });
 };
 const label = (c) => {
-  if (c.slug === 'mercedes-amg-g63') return 'Mercedes-AMG G63';
   const shown = carLabel(c);
   if (shown !== c.name) return shown;
   return c.name.startsWith(c.make) ? shown : `${c.make} ${c.name}`;
@@ -548,7 +547,7 @@ const headerLink = 'text-white underline decoration-white/40 underline-offset-2 
             <p>“{testimonial.text}”</p>
           </blockquote>
           <figcaption class="mt-4 text-sm text-[#0a0a0a]/60">
-            <span class="font-semibold text-[#0a0a0a]">{testimonial.name}</span> — verified Google review
+            <span class="font-semibold text-[#0a0a0a]">{testimonial.name}</span> — Google review
           </figcaption>
         </figure>
 
@@ -600,7 +599,7 @@ const headerLink = 'text-white underline decoration-white/40 underline-offset-2 
             </div>
             <div>
               <dt class="font-semibold">Delivery area</dt>
-              <dd class="text-[#0a0a0a]/70">Miami, South Beach, Brickell, both airports. Fort Lauderdale at {usd(fll.fee)} each way. Downtown Miami and Edgewater at {downtown.display} each way.</dd>
+              <dd class="text-[#0a0a0a]/70">Delivery is {miami.display} each way in Miami, including Miami International, Brickell and South Beach. Downtown Miami and Edgewater are {downtown.display} each way. Fort Lauderdale is {fll.display} each way.</dd>
             </div>
           </dl>
           <p class="mt-5">
