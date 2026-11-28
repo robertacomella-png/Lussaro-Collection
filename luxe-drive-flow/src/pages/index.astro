@@ -6,9 +6,8 @@ import CtaBand from '@/components/site/CtaBand.astro';
 import LeadForm from '@/components/site/LeadForm.jsx';
 import Car3DViewer from '@/components/hero/Car3DViewer.jsx';
 import FleetCollection from '@/components/fleet/FleetCollection.astro';
-import QuoteDialog from '@/components/site/QuoteDialog.astro';
-import { Phone, Tag } from 'lucide-react';
-import { business, telHref } from '@/data/business';
+import HeroQuoteBar from '@/components/site/HeroQuoteBar.astro';
+import { business } from '@/data/business';
 import { cars } from '@/data/cars';
 import { carLabel } from '@/data/fleet';
 import { rentalTerms, deliveryEachWaySummary, discountSummary } from '@/data/rental-terms';
@@ -260,36 +259,16 @@ const fleetSchema = {
 
       <!-- CTAs + rating — bottom on mobile and desktop -->
       <div class="mt-auto">
-        {/* Two contact CTAs, structurally identical — same pill, padding,
-            weight, icon gap and ring — so they read as one pair: Get a Quote in red,
-            Call in white. Browsing the fleet keeps its white treatment
-            but moves beneath them. */}
-        {/* Side by side from the smallest screen up, so the hero video is not
-            buried under a stack of three full-width pills. The labels shorten
-            below sm because "Call (645) 248-7305" cannot fit in half of a 390px
-            viewport — the number returns as soon as there is room for it.
-            min-h-[48px] keeps the touch target at the accessible floor even
-            though the vertical padding drops. */}
         {/* Desktop only: one line, never two. nowrap so a narrow laptop cannot
             break it — a marque list that wraps reads as a sentence. */}
         <p class="hidden md:block text-white/75 text-sm font-light mb-5 whitespace-nowrap">
           Lamborghini<span class="text-white/35 px-2">·</span>Rolls-Royce<span class="text-white/35 px-2">·</span>Ferrari<span class="text-white/35 px-2">·</span>Mercedes
         </p>
-        <div class="flex flex-row gap-2.5 sm:gap-3 max-w-sm md:max-w-md mx-auto md:mx-0">
-          {/* Get a Quote replaced WhatsApp here (23 Nov 2026): a WhatsApp tap
-              arrives with no name, car or dates and never reaches the Rental
-              Dashboard; this opens QuoteDialog, which creates a dashboard lead.
-              Colours swapped at the owner's request (23 Nov 2026): Quote is the
-              red pill with the pulse, Call is white with ink-red #e00e10 type —
-              the red that clears 4.5:1 on white. */}
-          <button type="button" data-quote-open aria-haspopup="dialog" aria-controls="quote-dialog" class="call-pop flex-1 min-h-[48px] inline-flex items-center justify-center gap-2 bg-[#e00e10] text-white px-3 py-3 sm:px-5 sm:py-3 rounded-full font-semibold text-sm sm:text-sm whitespace-nowrap shadow-[0_8px_24px_rgba(255,21,22,0.45)] ring-1 ring-white/15 hover:bg-[#c40c0e] transition-colors">
-            <Tag className="w-4 h-4 shrink-0" />
-            Get a Quote
-          </button>
-          <a href={telHref} data-cta="hero" data-call-inline class="flex-1 min-h-[48px] order-first sm:order-none inline-flex items-center justify-center gap-2 bg-white text-[#e00e10] px-3 py-3 sm:px-5 sm:py-3 rounded-full font-semibold text-sm sm:text-sm whitespace-nowrap shadow-[0_8px_24px_rgba(0,0,0,0.35)] ring-1 ring-white/15 hover:bg-white/90 transition-colors">
-            <Phone className="w-4 h-4 shrink-0" />
-            Call
-          </a>
+        {/* Inline quote bar (27 Nov 2026, owner's request) replaces the Get a
+            Quote pill and the dialog it opened. The hero's Call button lives
+            inside the bar, to the right of Get a quote. */}
+        <div class="max-w-6xl mx-auto md:mx-0">
+          <HeroQuoteBar source="home_hero" />
         </div>
         {/* Matched to the Call/WhatsApp pills above: same vertical rhythm, same
             type scale, same 48px floor. It was the heaviest button in the group
@@ -297,14 +276,16 @@ const fleetSchema = {
         {/* "Delivered to your door" replaces "Miami Delivery" here rather than
             going in the marque line: it is a reassurance, not a product list,
             so it belongs beside the rating where people look for one. */}
-        {/* The cue replaces the white "See Cars & Prices" pill on mobile too —
+        {/* Desktop only since 27 Nov 2026: on a phone the quote form now holds
+            the foot of the hero and the fleet starts one swipe below.
+            Earlier note: the cue replaced the white "See Cars & Prices" pill on mobile too —
             that pill was the brightest object in the hero and sat on the car.
             Static in the stack on a phone, where an absolutely positioned cue
             would land under the sticky CTA; centred at the foot of frame on
             desktop, which is dead road. */}
         <a
           href="#fleet"
-          class="hero-cue mt-6 md:mt-0 self-center md:self-auto flex flex-col items-center gap-1.5 text-white/75 hover:text-white transition-colors md:absolute md:bottom-6 md:left-1/2 md:-translate-x-1/2"
+          class="hero-cue hidden md:flex self-center md:self-auto flex-col items-center gap-1.5 text-white/75 hover:text-white transition-colors md:absolute md:bottom-6 md:left-1/2 md:-translate-x-1/2"
           aria-label="Scroll to cars and prices"
         >
           <span class="text-[11px] tracking-[0.22em] uppercase">See cars &amp; prices</span>
@@ -404,7 +385,6 @@ const fleetSchema = {
   <CtaBand title={'Your Miami arrival,<br><span class="text-[#ff1516]">unforgettable.</span>'} />
 
   <StickyMobileCta />
-  <QuoteDialog source="home_hero" />
   {/* client:visible, not client:idle. This bundle is 688 KB — three.js plus the
       viewer — and it sits at the very bottom of the page, yet client:idle
       fetched and executed it the moment the browser went idle, whether anyone

@@ -1,0 +1,188 @@
+---
+// Inline quote form over the homepage hero video (27 Nov 2026, owner's
+// request). Replaces the hero's "Get a Quote" pill and the QuoteDialog it
+// opened: the form is now on the page rather than one tap away.
+//
+// Same four fields as QuoteDialog — name, phone, email, car — the same
+// contact checks (lib/contactCheck.js) and the same /api/lead payload, so the
+// dashboard lead, the email copy and generate_lead are unchanged. Source stays
+// "home_hero", which the endpoint requires an email for.
+//
+// Plain <form> and a module script, not a React island: it sits in the hero,
+// so it must work on first paint, and client:load would charge every visitor.
+//
+// Layout: one row from lg up; two columns from md (glass box around it).
+// Phones: Name|Phone, Email|Car, button full width, straight on the video
+// with no glass box (27 Nov 2026). A collapsed car-and-button-only version
+// was tried the same day and dropped: it read as a form with fields missing.
+import { fleet, carLabel } from '@/data/fleet';
+import { business, telHref } from '@/data/business';
+import { ChevronsUpDown, Phone } from 'lucide-react';
+
+const { source = 'home_hero' } = Astro.props;
+
+// The liquid glass recipe from CLAUDE.md, verbatim.
+// md: and up only — on a phone the fields sit straight on the video.
+const glass = 'md:bg-white/[0.12] md:backdrop-blur-2xl md:backdrop-saturate-[180%] md:backdrop-brightness-[0.78] md:ring-1 md:ring-white/20 md:shadow-[inset_0_1px_0_rgba(255,255,255,0.35),inset_0_-1px_0_rgba(255,255,255,0.06),0_10px_40px_rgba(0,0,0,0.28)]';
+// text-base (16px) so iOS Safari does not zoom the page on focus.
+const field = 'w-full h-12 rounded-full bg-black/50 md:bg-black/40 max-md:backdrop-blur-md ring-1 ring-white/15 px-4 sm:px-5 text-white text-base placeholder-white/80 focus:outline-none focus:ring-2 focus:ring-[#ff1516] transition';
+---
+{/* From lg up the Call button stands on its own beside the glass bar
+    (owner's request, 27 Nov 2026); below lg it sits next to Get a quote
+    inside the form. Only one of the two Call links is ever displayed. */}
+<div class="lg:flex lg:items-center lg:gap-3">
+<div class={`hero-quote w-full lg:flex-1 lg:min-w-0 rounded-[28px] md:p-3 text-left ${glass}`}>
+  <form id="hero-quote-form" data-source={source} data-astro-reload novalidate
+        class="grid grid-cols-2 gap-2 sm:gap-2.5 md:gap-2.5 lg:grid-cols-[1fr_1fr_1.15fr_1.15fr_auto]">
+    <label for="hq-name" class="sr-only">Name</label>
+    <input id="hq-name" name="name" required autocomplete="name" placeholder="Name" aria-label="Your name" class={field} />
+
+    <label for="hq-phone" class="sr-only">Phone</label>
+    <input id="hq-phone" name="phone" required type="tel" inputmode="tel" autocomplete="tel" placeholder="Phone" aria-label="Your phone number" aria-describedby="hq-error" class={field} />
+
+    <label for="hq-email" class="sr-only">Email</label>
+    <input id="hq-email" name="email" required type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="Email" aria-label="Your email address" aria-describedby="hq-error" class={`${field}`} />
+
+    <label for="hq-car" class="sr-only">Car</label>
+    <div class="relative">
+      <select id="hq-car" name="vehicle" aria-label="Choose a car" class={`${field} appearance-none !pr-9 sm:!pr-11 cursor-pointer`}>
+        <option value="" class="bg-[#111]">Choose a car</option>
+        {fleet.map((c) => (
+          <option value={c.name} data-dashboard-id={c.dashboardId || ''} class="bg-[#111]">{carLabel(c)}</option>
+        ))}
+      </select>
+      <ChevronsUpDown className="pointer-events-none absolute right-3.5 sm:right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/80" aria-hidden="true" />
+    </div>
+
+    {/* Quote then Call, side by side below lg (owner's request,
+        27 Nov 2026). Quote keeps the red fill with white type; Call is the
+        white pill with ink-red #e00e10 type, as on the old hero pair — the red
+        that clears 4.5:1 on white. data-call-inline hides the sticky Call pill
+        while this one is on screen. */}
+    <div class="col-span-2 lg:col-span-1 flex gap-2 sm:gap-2.5">
+      <button type="submit"
+              class="flex-1 h-12 px-6 md:px-7 rounded-full bg-[#e00e10] text-white font-semibold whitespace-nowrap shadow-[0_8px_24px_rgba(255,21,22,0.45)] ring-1 ring-white/15 hover:bg-[#c40c0e] transition-colors disabled:opacity-60">
+        Get a quote
+      </button>
+      <a href={telHref} data-cta="hero" data-call-inline aria-label={`Call ${business.phoneDisplay}`} title={`Call ${business.phoneDisplay}`}
+         class="lg:hidden h-12 px-5 md:px-6 inline-flex items-center justify-center gap-2 rounded-full bg-white text-[#e00e10] font-semibold whitespace-nowrap shadow-[0_8px_24px_rgba(0,0,0,0.35)] ring-1 ring-white/15 hover:bg-white/90 transition-colors">
+        <Phone className="w-4 h-4 shrink-0" aria-hidden="true" />
+        Call
+      </a>
+    </div>
+  </form>
+
+  <p id="hq-error" role="alert" class="hidden px-3 pt-2 pb-0.5 text-[#ff8a8a] text-sm font-medium [text-shadow:0_1px_8px_rgba(0,0,0,0.9)]"></p>
+
+  <div data-hq-done class="hidden px-4 py-3 text-center max-md:rounded-2xl max-md:bg-black/55 max-md:backdrop-blur-xl" tabindex="-1">
+    <p class="font-display text-white text-lg font-semibold">Request received</p>
+    <p class="text-white/80 text-sm mt-1">We will text you your rate shortly. Need it sooner? <a href={telHref} data-cta="hero_quote_done" class="underline underline-offset-4 text-white">Call {business.phoneDisplay}</a>.</p>
+  </div>
+</div>
+  {/* Same glass shell and padding as the quote bar, with the Call pill
+      inside it, so the two read as a matched pair. */}
+  <div class={`hidden lg:block shrink-0 rounded-[28px] p-3 ${glass}`}>
+    <a href={telHref} data-cta="hero" data-call-inline aria-label={`Call ${business.phoneDisplay}`} title={`Call ${business.phoneDisplay}`}
+       class="h-12 px-7 inline-flex items-center justify-center gap-2 rounded-full bg-white text-[#e00e10] font-semibold whitespace-nowrap shadow-[0_8px_24px_rgba(0,0,0,0.35)] ring-1 ring-white/15 hover:bg-white/90 transition-colors">
+      <Phone className="w-4 h-4 shrink-0" aria-hidden="true" />
+      Call
+    </a>
+  </div>
+</div>
+
+<script>
+  import { withAttribution } from '@/lib/attribution';
+  import { trackLead } from '@/lib/track';
+  import { checkPhone, checkEmail } from '@/lib/contactCheck';
+
+  const INVALID = '!ring-[#ff8a8a]';
+
+  function setError(form, msg, ids = []) {
+    const err = document.getElementById('hq-error');
+    if (err) {
+      err.textContent = msg || '';
+      err.classList.toggle('hidden', !msg);
+    }
+    for (const id of ['hq-name', 'hq-phone', 'hq-email']) {
+      const el = form.querySelector('#' + id);
+      if (!el) continue;
+      const bad = ids.includes(id);
+      el.classList.toggle(INVALID, bad);
+      if (bad) el.setAttribute('aria-invalid', 'true');
+      else el.removeAttribute('aria-invalid');
+    }
+  }
+
+  // Delegated from document so it survives view-transition swaps.
+  document.addEventListener('input', (e) => {
+    const t = e.target;
+    if (t instanceof HTMLInputElement && t.id.startsWith('hq-')) {
+      const form = t.form;
+      if (form && t.getAttribute('aria-invalid')) setError(form, '');
+    }
+  });
+
+  document.addEventListener('submit', async (e) => {
+    const form = e.target;
+    if (!(form instanceof HTMLFormElement) || form.id !== 'hero-quote-form') return;
+    e.preventDefault();
+
+    const fd = new FormData(form);
+    const name = String(fd.get('name') || '').trim();
+    const phone = checkPhone(String(fd.get('phone') || ''));
+    const email = checkEmail(String(fd.get('email') || ''));
+
+    if (!name) {
+      setError(form, 'Please add your name.', ['hq-name']);
+      form.querySelector('#hq-name').focus();
+      return;
+    }
+    if (phone.error || email.error) {
+      const ids = [phone.error && 'hq-phone', email.error && 'hq-email'].filter(Boolean);
+      setError(form, phone.error || email.error, ids);
+      form.querySelector('#' + ids[0]).focus();
+      return;
+    }
+    setError(form, '');
+
+    const opt = form.querySelector('#hq-car').selectedOptions[0];
+    const payload = withAttribution({
+      name,
+      phone: phone.value,
+      email: email.value,
+      vehicle: fd.get('vehicle'),
+      vehicle_id: opt?.dataset.dashboardId || '',
+      source: form.dataset.source || 'home_hero',
+    }, 'HeroQuoteBar');
+
+    const btn = form.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+    try {
+      const res = await fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.ok) throw new Error(data.error || 'Something went wrong. Please call or WhatsApp us.');
+      trackLead({
+        vehicle: payload.vehicle || 'unspecified',
+        lead_source: payload.source,
+        lead_id: data.lead_id,
+        email: payload.email,
+        phone: payload.phone,
+      });
+      form.reset();
+      form.classList.add('hidden');
+      const done = form.parentElement.querySelector('[data-hq-done]');
+      done.classList.remove('hidden');
+      done.focus();
+    } catch (ex) {
+      setError(form, ex.message);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Get a quote';
+    }
+  }, true);
+</script>
