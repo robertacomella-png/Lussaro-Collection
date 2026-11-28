@@ -16,6 +16,26 @@
 
 export const posts = [
   {
+    slug: 'things-to-do-on-new-years-eve-miami',
+    title: "Things to Do on New Year's Eve in Miami",
+    excerpt:
+      "Official New Year's Eve fireworks at Bayfront Park and on Miami Beach, and which car to take if the night ends after midnight.",
+    published: '2026-11-28',
+    updated: '2026-11-28',
+    hero: '/cars/mercedes-maybach-gls-600-rental-miami-side-skyline.jpg',
+    cluster: "New Year's Eve",
+    readingMinutes: 7,
+    relatedCars: [
+      'mercedes-maybach-gls-600',
+      'mercedes-maybach-s580',
+      'mercedes-s580',
+      'lamborghini-urus',
+      'mercedes-amg-g63',
+      'rolls-royce-cullinan',
+      'porsche-911-turbo-s',
+    ],
+  },
+  {
     slug: 'rent-a-lamborghini-for-a-day-miami',
     title: 'Rent a Lamborghini for a Day in Miami: How to Spend It',
     excerpt:
