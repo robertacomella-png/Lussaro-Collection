@@ -12,6 +12,7 @@ This is what stops the site competing with itself — the failure mode where two
 
 | Primary keyword | Used on | Date | Cluster |
 |---|---|---|---|
+| things to do on new years eve miami | [/blog/things-to-do-on-new-years-eve-miami](../luxe-drive-flow/src/pages/blog/things-to-do-on-new-years-eve-miami.astro) | 2026-11-28 | New Year's Eve |
 | exotic car rental downtown miami | [/exotic-car-rental-downtown-miami](../luxe-drive-flow/src/pages/exotic-car-rental-downtown-miami.astro) | 2026-11-27 | Downtown |
 | convertible car rental miami | [/convertible-car-rental-miami](../luxe-drive-flow/src/pages/convertible-car-rental-miami.astro) | 2026-11-27 | Convertible |
 | sports car rental miami | [/sports-car-rental-miami](../luxe-drive-flow/src/pages/sports-car-rental-miami.astro) | 2026-11-27 | Sports car |
@@ -225,6 +226,23 @@ conclusion themselves, which is the version a competitor cannot copy.
 **Why this primary:** highest-volume, lowest-KD unused term in the Huracán STO cluster. 480/mo, KD 8, CPC $0.46, intent informational. SE Ranking US database, pulled 26 Nov 2026. A live re-pull on 27 Nov 2026 failed because the connector did not start. No page targeted the day-and-route question. `/lamborghini-rental-miami` keeps the commercial verb phrase, and `/cars/huracan-sto` keeps the STO rental term. This post plans the day: routes, the mile budget, and a worked total.
 
 **Do not reuse.**
+
+---
+
+### things to do on new years eve miami
+**Post:** `/blog/things-to-do-on-new-years-eve-miami`
+**Date:** November 28, 2026
+
+**Secondaries used:**
+- miami new years eve events *(500/mo, KD 15)*
+- bayfront park miami new years eve *(390/mo, KD 17)*
+- new years eve miami beach *(260/mo, KD 14)*
+- south beach new years eve *(140/mo, KD 9)*
+- new years eve miami *(80/mo, KD 13)*
+
+**Why this primary:** informational city guide, 170/mo, KD 9, CPC $0.34. SE Ranking US database, pulled 2026-11-26. No page targeted New Year's Eve. Commercial car terms stay on their money pages and are linked. The Art Basel post keeps `luxury car rental miami beach`.
+
+**Do not reuse.** Close variants that return the same SERP — "things to do in miami on new years eve" and "what to do in miami on new year's eve" — stay with this post. They are not a second primary.
 
 ---
 
